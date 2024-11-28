@@ -18,7 +18,7 @@ Bônus:
 - Registrar aluguel das vagas de garagem, com o preço por dia, e qual apto ocupará
 
 Mais informações:
-- Deve ser possível alterar os dados a qualquer momento
+- Deve permitir a alteração dos dados, editar ou excluir
 - Deve ser possível cancelar reservas
 - Não devem haver custos adicionais
 - Deve ser compatível com windows 10, fedora41 (linux), iOS 18.1.1 e android 14
