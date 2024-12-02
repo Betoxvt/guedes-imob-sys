@@ -37,69 +37,69 @@ Mais informações:
 
 ### Tabela apartamentos
 
-- Coluna apartamento: O apartamento é identificado com o bloco+número, por exemplo A251. (primary key)
-- Coluna edificio: O nome do edifício em que o apartamento está inserido
-- Coluna endereco: Endereço do edifício
-- Coluna celesc: Código da unidade consumidora
-- Coluna supergasbras: Código da unidade consumidora
-- Coluna internet: Provedor de internet
-- Coluna wifiid: Identificação da rede wireless
-- Coluna wifipass: Senha da rede wifi
-- Coluna lockpass: Senha da fechadura
-- Coluna proprietario: cpf do proprietário (foreign key - proprietarios)
+- Coluna apartamento [TEXT]: O apartamento é identificado com o bloco+número, por exemplo A251. (primary key)
+- Coluna edificio [TEXT]: O nome do edifício em que o apartamento está inserido
+- Coluna endereco [TEXT]: Endereço do edifício
+- Coluna celesc [INTEGER]: Código da unidade consumidora
+- Coluna supergasbras [INTEGER]: Código da unidade consumidora
+- Coluna internet [TEXT]: Provedor de internet
+- Coluna wifiid [TEXT]: Identificação da rede wireless
+- Coluna wifipass [TEXT]: Senha da rede wifi
+- Coluna lockpass [INTEGER]: Senha da fechadura
+- Coluna proprietario [INTEGER]: cpf do proprietário (foreign-key - proprietarios)
 
 ### Tabela proprietarios
 
-- Coluna cpf: cpf do proprietário
-- Coluna nome: nome do proprietário
-- Coluna telefone: número do telefone, preferenciávelmente whatsapp, do proprietário
-- Coluna email: endereço de email do proprietário
-- Coluna apto1: número do apto do proprietário (foreign key - apartamentos)
-- Coluna apto2: número do apto do proprietário (foreign key - apartamentos)
-- Coluna apto3: número do apto do proprietário (foreign key - apartamentos)
-- Coluna apto4: número do apto do proprietário (foreign key - apartamentos)
+- Coluna cpf [INTEGER]: cpf do proprietário ou documento de estrangeiro
+- Coluna nome [TEXT]: nome do proprietário
+- Coluna telefone [INTEGER]: número do telefone, preferenciávelmente whatsapp, do proprietário
+- Coluna email [TEXT]: endereço de email do proprietário
+- Coluna apto1 [TEXT]: número do apto do proprietário (foreign-key - apartamentos)
+- Coluna apto2 [TEXT]: número do apto do proprietário (foreign-key - apartamentos)
+- Coluna apto3 [TEXT]: número do apto do proprietário (foreign-key - apartamentos)
+- Coluna apto4 [TEXT]: número do apto do proprietário (foreign-key - apartamentos)
 
 ### Tabela despesas_fixas
 
-- Coluna id: identificação única (primary-key)
-- Coluna data_pagamento: yyyymmdd do pagamento
-- Coluna valor: em reais da conta
-- Coluna tipo_despesa: iptu, condominio, gas, luz, internet...
-- Coluna apto: número do apto (foreign key - apartamentos)
+- Coluna id [INTEGER]: identificação única (primary-key)
+- Coluna data_pagamento [TEXT]: ("YYYY-MM-DD HH:MM:SS.SSS") do pagamento
+- Coluna valor [REAL]: em reais da conta
+- Coluna tipo_despesa [TEXT]: iptu, condominio, gas, luz, internet...
+- Coluna apto [TEXT]: número do apto (foreign-key - apartamentos)
 
 ### Tabela gastos_variaveis
 
-- Coluna id: identificação única (primary-key)
-- Coluna data_pagamento: yyyymmdd do pagamento
-- Coluna valor_material: custo com materiais, peças, etc.
-- Coluna valor_mo: custo com mão-de-obra
-- Coluna valor_total: custo total do gasto em reais
-- Coluna descricao: breve descrição do gasto
-- Coluna apto: número do apto (foreign key - apartamentos)
+- Coluna id [INTEGER]: identificação única (primary-key)
+- Coluna data_pagamento [TEXT]: ("YYYY-MM-DD HH:MM:SS.SSS") do pagamento
+- Coluna valor_material [REAL]: custo com materiais, peças, etc.
+- Coluna valor_mo [REAL]: custo com mão-de-obra
+- Coluna valor_total [REAL]: custo total do gasto em reais
+- Coluna descricao [TEXT]: breve descrição do gasto
+- Coluna apto [TEXT]: número do apto (foreign-key - apartamentos)
 
 ### Tabela alugueis
 
-- Coluna id: identificação única (primary-key)
-- Coluna checkin: yyyymmdd
-- Coluna checkout: yyyymmdd
-- Coluna diarias: quantidade de dias
-- Coluna valor_diaria: preço em reais da diária
-- Coluna taxa_adm: percentual retido pela imobiliaria
-- Coluna valor_total: diarias * valor_diária
-- Coluna valor_imob: valor_total * taxa_adm
-- Coluna valor_prop: valor_total - valor_imob
-- Coluna apto: número do apto (foreign key - apartamentos)
+- Coluna id [INTEGER]: identificação única (primary-key)
+- Coluna checkin [TEXT]: ("YYYY-MM-DD HH:MM:SS.SSS")
+- Coluna checkout [TEXT]: ("YYYY-MM-DD HH:MM:SS.SSS")
+- Coluna diarias [INTEGER]: quantidade de dias
+- Coluna valor_diaria [REAL]: preço em reais da diária
+- Coluna taxa_adm [REAL]: percentual retido pela imobiliaria
+- Coluna valor_total [REAL]: diarias * valor_diária
+- Coluna valor_imob [REAL]: valor_total * taxa_adm
+- Coluna valor_prop [REAL]: valor_total - valor_imob
+- Coluna apto [TEXT]: número do apto (foreign-key - apartamentos)
 
 ### Tabela garagens
 
-- Coluna id: identificação única (primary-key)
-- Coluna checkin: yyyymmdd
-- Coluna checkout: yyyymmdd
-- Coluna diarias: quantidade de dias
-- Coluna valor_diaria: preço em reais da diária
-- Coluna taxa_adm: percentual retido pela imobiliaria
-- Coluna valor_total: diarias * valor_diária
-- Coluna valor_imob: valor_total * taxa_adm
-- Coluna valor_prop: valor_total - valor_imob
-- Coluna apto_destino: apto para qual a vaga foi alugada
-- Coluna apto_origem: apto proprietário da vaga
+- Coluna id [INTEGER]: identificação única (primary-key)
+- Coluna checkin [TEXT]: ("YYYY-MM-DD HH:MM:SS.SSS")
+- Coluna checkout [TEXT]: ("YYYY-MM-DD HH:MM:SS.SSS")
+- Coluna diarias [INTEGER]: quantidade de dias
+- Coluna valor_diaria [REAL]: preço em reais da diária
+- Coluna taxa_adm [REAL]: percentual retido pela imobiliaria
+- Coluna valor_total [REAL]: diarias * valor_diária
+- Coluna valor_imob [REAL]: valor_total * taxa_adm
+- Coluna valor_prop [REAL]: valor_total - valor_imob
+- Coluna apto_destino [TEXT]: apto para qual a vaga foi alugada (foreign-key - apartamentos)
+- Coluna apto_origem [TEXT]: apto proprietário da vaga (foreign-key - apartamentos)
