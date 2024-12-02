@@ -64,7 +64,7 @@ Mais informações:
 - Coluna id [INTEGER]: identificação única (primary-key)
 - Coluna data_pagamento [TEXT]: ISO8601 ("YYYY-MM-DD") do pagamento
 - Coluna valor [REAL]: em reais da conta
-- Coluna tipo_despesa [TEXT]: iptu, condominio, gas, luz, internet...
+- Coluna descricao [TEXT]: iptu, condominio, gas, luz, internet...
 - Coluna apto [TEXT]: número do apto (foreign-key - apartamentos)
 
 ### Tabela gastos_variaveis
