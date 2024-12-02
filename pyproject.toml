@@ -9,4 +9,5 @@ dependencies = [
     "fastapi>=0.115.5",
     "sqlmodel>=0.0.22",
     "streamlit>=1.40.2",
+    "uvicorn>=0.32.1",
 ]

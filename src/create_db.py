@@ -5,8 +5,8 @@ from typing import Optional, List
 class Apartamento(SQLModel, table=True):
     __tablename__ = "apartamentos"
     apartamento: str = Field(primary_key=True)  # Primary Key
-    edificio: str
-    endereco: str
+    edificio: str = "Imperatriz"
+    endereco: str = "Av. Atlântica, 2554, Balneário Camboriú - SC"
     celesc: Optional[int]
     supergasbras: Optional[int]
     internet: Optional[str]
