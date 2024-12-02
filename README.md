@@ -62,7 +62,7 @@ Mais informações:
 ### Tabela despesas_fixas
 
 - Coluna id [INTEGER]: identificação única (primary-key)
-- Coluna data_pagamento [TEXT]: ("YYYY-MM-DD HH:MM:SS.SSS") do pagamento
+- Coluna data_pagamento [TEXT]: ISO8601 ("YYYY-MM-DD") do pagamento
 - Coluna valor [REAL]: em reais da conta
 - Coluna tipo_despesa [TEXT]: iptu, condominio, gas, luz, internet...
 - Coluna apto [TEXT]: número do apto (foreign-key - apartamentos)
@@ -70,7 +70,7 @@ Mais informações:
 ### Tabela gastos_variaveis
 
 - Coluna id [INTEGER]: identificação única (primary-key)
-- Coluna data_pagamento [TEXT]: ("YYYY-MM-DD HH:MM:SS.SSS") do pagamento
+- Coluna data_pagamento [TEXT]: ISO8601 ("YYYY-MM-DD") do pagamento
 - Coluna valor_material [REAL]: custo com materiais, peças, etc.
 - Coluna valor_mo [REAL]: custo com mão-de-obra
 - Coluna valor_total [REAL]: custo total do gasto em reais
@@ -80,9 +80,9 @@ Mais informações:
 ### Tabela alugueis
 
 - Coluna id [INTEGER]: identificação única (primary-key)
-- Coluna checkin [TEXT]: ("YYYY-MM-DD HH:MM:SS.SSS")
-- Coluna checkout [TEXT]: ("YYYY-MM-DD HH:MM:SS.SSS")
-- Coluna diarias [INTEGER]: quantidade de dias
+- Coluna checkin [TEXT]: ISO8601 ("YYYY-MM-DD")
+- Coluna checkout [TEXT]: ISO8601 ("YYYY-MM-DD")
+- Coluna diarias [INTEGER]: quantidade de dias checkout - checkin (JULIANDAYS)
 - Coluna valor_diaria [REAL]: preço em reais da diária
 - Coluna taxa_adm [REAL]: percentual retido pela imobiliaria
 - Coluna valor_total [REAL]: diarias * valor_diária
@@ -93,9 +93,9 @@ Mais informações:
 ### Tabela garagens
 
 - Coluna id [INTEGER]: identificação única (primary-key)
-- Coluna checkin [TEXT]: ("YYYY-MM-DD HH:MM:SS.SSS")
-- Coluna checkout [TEXT]: ("YYYY-MM-DD HH:MM:SS.SSS")
-- Coluna diarias [INTEGER]: quantidade de dias
+- Coluna checkin [TEXT]: ISO8601 ("YYYY-MM-DD")
+- Coluna checkout [TEXT]: ISO8601 ("YYYY-MM-DD")
+- Coluna diarias [INTEGER]: quantidade de dias checkout - checkin (JULIANDAYS)
 - Coluna valor_diaria [REAL]: preço em reais da diária
 - Coluna taxa_adm [REAL]: percentual retido pela imobiliaria
 - Coluna valor_total [REAL]: diarias * valor_diária
@@ -103,3 +103,5 @@ Mais informações:
 - Coluna valor_prop [REAL]: valor_total - valor_imob
 - Coluna apto_destino [TEXT]: apto para qual a vaga foi alugada (foreign-key - apartamentos)
 - Coluna apto_origem [TEXT]: apto proprietário da vaga (foreign-key - apartamentos)
+
+
