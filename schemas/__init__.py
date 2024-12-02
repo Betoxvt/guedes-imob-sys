@@ -1,5 +1,5 @@
-from sqlmodel import Field, SQLModel, create_engine, Relationship
-from typing import Optional
+from sqlmodel import Field, SQLModel, Relationship
+from typing import List, Optional
 
 # Tabelas do banco de dados
 
@@ -15,8 +15,10 @@ class Aluguel(SQLModel, table=True):
     valor_total: float
     valor_imob: float
     valor_prop: float
-    apto: str = Field(foreign_key="apartamentos.apartamento")  # Foreign Key
+    apto: str = Field(foreign_key="apartamentos.apartamento")  # Foreign Key    
 
+    # Relationships
+    apto_obj: "Apartamento" = Relationship(back_populates="alugueis")
 
 # Tabela apartamentos
 class Apartamento(SQLModel, table=True):
@@ -32,6 +34,13 @@ class Apartamento(SQLModel, table=True):
     lockpass: Optional[int]
     proprietario: Optional[int] = Field(foreign_key="proprietarios.cpf")  # Foreign Key
 
+    # Relationships
+    alugueis: List["Aluguel"] = Relationship(back_populates="apto")
+    despesas_fixas: List["DespesaFixa"] = Relationship(back_populates="apto")
+    gastos_variaveis: List["GastoVariavel"] = Relationship(back_populates="apto")
+    garagens_destino: List["Garagem"] = Relationship(back_populates="apto_destino")
+    garagens_origem: List["Garagem"] = Relationship(back_populates="apto_origem")
+    proprietario_obj: List["Proprietario"] = Relationship(back_populates="apartamentos")
 
 # Tabela despesas_fixas
 class DespesaFixa(SQLModel, table=True):
@@ -42,6 +51,8 @@ class DespesaFixa(SQLModel, table=True):
     descricao: str
     apto: str = Field(foreign_key="apartamentos.apartamento")  # Foreign Key
 
+    # Relationships
+    apto_obj: "Apartamento" = Relationship(back_populates="despesas_fixas")
 
 # Tabela garagens
 class Garagem(SQLModel, table=True):
@@ -58,6 +69,9 @@ class Garagem(SQLModel, table=True):
     apto_destino: str = Field(foreign_key="apartamentos.apartamento")  # Foreign Key
     apto_origem: str = Field(foreign_key="apartamentos.apartamento")  # Foreign Key
 
+    # Relationships
+    apto_destino_obj: "Apartamento" = Relationship(back_populates="garagens_destino")
+    apto_origem_obj: "Apartamento" = Relationship(back_populates="garagens_origem")
 
 # Tabela gastos_variaveis
 class GastoVariavel(SQLModel, table=True):
@@ -70,6 +84,8 @@ class GastoVariavel(SQLModel, table=True):
     descricao: str
     apto: str = Field(foreign_key="apartamentos.apartamento")  # Foreign Key
 
+    # Relationships
+    apto_obj: "Apartamento" = Relationship(back_populates="gastos_variaveis")
 
 # Tabela proprietarios
 class Proprietario(SQLModel, table=True):
@@ -82,6 +98,9 @@ class Proprietario(SQLModel, table=True):
     apto2: Optional[str] = Field(foreign_key="apartamentos.apartamento")
     apto3: Optional[str] = Field(foreign_key="apartamentos.apartamento")
     apto4: Optional[str] = Field(foreign_key="apartamentos.apartamento")
+
+    # Relationships
+    apartamentos: List["Apartamento"] = Relationship(back_populates="proprietario_obj")
 
 # Patch - Atualizar tabelas, permite alterações parciais
 
