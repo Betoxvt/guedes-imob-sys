@@ -33,7 +33,7 @@ Mais informações:
 - Frontend com Streamlit
 - Produção em conteineres com Kubernetes
 
-## Banco de Dados imob_db
+## Banco de Dados imob
 
 ### Tabela apartamentos
 
