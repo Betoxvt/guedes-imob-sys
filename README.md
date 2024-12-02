@@ -33,35 +33,35 @@ Mais informações:
 - Frontend com Streamlit
 - Produção em conteineres com Kubernetes
 
-## Banco de dados
+## Banco de Dados imob_db
 
 ### Tabela apartamentos
 
 - Coluna apartamento [TEXT]: O apartamento é identificado com o bloco+número, por exemplo A251. (primary key)
 - Coluna edificio [TEXT]: O nome do edifício em que o apartamento está inserido
 - Coluna endereco [TEXT]: Endereço do edifício
-- Coluna celesc [INTEGER]: Código da unidade consumidora
-- Coluna supergasbras [INTEGER]: Código da unidade consumidora
-- Coluna internet [TEXT]: Provedor de internet
-- Coluna wifiid [TEXT]: Identificação da rede wireless
-- Coluna wifipass [TEXT]: Senha da rede wifi
-- Coluna lockpass [INTEGER]: Senha da fechadura
-- Coluna proprietario [INTEGER]: cpf do proprietário (foreign-key - proprietarios)
+- Coluna celesc [INTEGER] [OPTIONAL]: Código da unidade consumidora
+- Coluna supergasbras [INTEGER] [OPTIONAL]: Código da unidade consumidora
+- Coluna internet [TEXT] [OPTIONAL]: Provedor de internet
+- Coluna wifiid [TEXT] [OPTIONAL]: Identificação da rede wireless
+- Coluna wifipass [TEXT] [OPTIONAL]: Senha da rede wifi
+- Coluna lockpass [INTEGER] [OPTIONAL]: Senha da fechadura
+- Coluna proprietario [INTEGER] [OPTIONAL]: cpf do proprietário (foreign-key - proprietarios)
 
 ### Tabela proprietarios
 
 - Coluna cpf [INTEGER]: cpf do proprietário ou documento de estrangeiro
 - Coluna nome [TEXT]: nome do proprietário
-- Coluna telefone [INTEGER]: número do telefone, preferenciávelmente whatsapp, do proprietário
-- Coluna email [TEXT]: endereço de email do proprietário
+- Coluna telefone [INTEGER] [OPTIONAL]: número do telefone, preferenciávelmente whatsapp, do proprietário
+- Coluna email [TEXT] [OPTIONAL]: endereço de email do proprietário
 - Coluna apto1 [TEXT]: número do apto do proprietário (foreign-key - apartamentos)
-- Coluna apto2 [TEXT]: número do apto do proprietário (foreign-key - apartamentos)
-- Coluna apto3 [TEXT]: número do apto do proprietário (foreign-key - apartamentos)
-- Coluna apto4 [TEXT]: número do apto do proprietário (foreign-key - apartamentos)
+- Coluna apto2 [TEXT] [OPTIONAL]: número do apto do proprietário (foreign-key - apartamentos)
+- Coluna apto3 [TEXT] [OPTIONAL]: número do apto do proprietário (foreign-key - apartamentos)
+- Coluna apto4 [TEXT] [OPTIONAL]: número do apto do proprietário (foreign-key - apartamentos)
 
 ### Tabela despesas_fixas
 
-- Coluna id [INTEGER]: identificação única (primary-key)
+- Coluna id [INTEGER] [OPTIONAL]: identificação única (primary-key)
 - Coluna data_pagamento [TEXT]: ISO8601 ("YYYY-MM-DD") do pagamento
 - Coluna valor [REAL]: em reais da conta
 - Coluna descricao [TEXT]: iptu, condominio, gas, luz, internet...
@@ -69,17 +69,17 @@ Mais informações:
 
 ### Tabela gastos_variaveis
 
-- Coluna id [INTEGER]: identificação única (primary-key)
+- Coluna id [INTEGER] [OPTIONAL]: identificação única (primary-key)
 - Coluna data_pagamento [TEXT]: ISO8601 ("YYYY-MM-DD") do pagamento
-- Coluna valor_material [REAL]: custo com materiais, peças, etc.
-- Coluna valor_mo [REAL]: custo com mão-de-obra
+- Coluna valor_material [REAL] [OPTIONAL]: custo com materiais, peças, etc.
+- Coluna valor_mo [REAL] [OPTIONAL]: custo com mão-de-obra
 - Coluna valor_total [REAL]: custo total do gasto em reais
 - Coluna descricao [TEXT]: breve descrição do gasto
 - Coluna apto [TEXT]: número do apto (foreign-key - apartamentos)
 
 ### Tabela alugueis
 
-- Coluna id [INTEGER]: identificação única (primary-key)
+- Coluna id [INTEGER] [OPTIONAL]: identificação única (primary-key)
 - Coluna checkin [TEXT]: ISO8601 ("YYYY-MM-DD")
 - Coluna checkout [TEXT]: ISO8601 ("YYYY-MM-DD")
 - Coluna diarias [INTEGER]: quantidade de dias checkout - checkin (JULIANDAYS)
@@ -92,7 +92,7 @@ Mais informações:
 
 ### Tabela garagens
 
-- Coluna id [INTEGER]: identificação única (primary-key)
+- Coluna id [INTEGER] [OPTIONAL]: identificação única (primary-key)
 - Coluna checkin [TEXT]: ISO8601 ("YYYY-MM-DD")
 - Coluna checkout [TEXT]: ISO8601 ("YYYY-MM-DD")
 - Coluna diarias [INTEGER]: quantidade de dias checkout - checkin (JULIANDAYS)
