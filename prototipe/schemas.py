@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-class Aluguel(BaseModel):
+class AluguelSchema(BaseModel):
     id: int
     checkin: str
     checkout: str
@@ -15,7 +15,7 @@ class Aluguel(BaseModel):
     class Config:
         from_attributes = True
 
-class Apartamento(BaseModel):
+class ApartamentoSchema(BaseModel):
     apartamento: str
     edificio: str
     endereco: str
@@ -30,7 +30,7 @@ class Apartamento(BaseModel):
     class Config:
         from_attributes = True
 
-class DespesaFixa(BaseModel):
+class DespesaFixaSchema(BaseModel):
     id: int
     data_pagamento: str
     valor: float
@@ -40,7 +40,7 @@ class DespesaFixa(BaseModel):
     class Config:
         from_attributes = True
 
-class Garagem(BaseModel):
+class GaragemSchema(BaseModel):
     id: int
     checkin: str
     checkout: str
@@ -56,7 +56,7 @@ class Garagem(BaseModel):
     class Config:
         from_attributes = True
 
-class GastoVariavel(BaseModel):
+class GastoVariavelSchema(BaseModel):
     id: int
     data_pagamento: str
     valor_material: float
@@ -68,7 +68,7 @@ class GastoVariavel(BaseModel):
     class Config:
         from_attributes = True
 
-class Proprietario(BaseModel):
+class ProprietarioSchema(BaseModel):
     cpf: int
     nome: str
     telefone: int
