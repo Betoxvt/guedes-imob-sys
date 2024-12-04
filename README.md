@@ -36,6 +36,7 @@ Mais informações:
 ### Primeira versão
 
 - Criar banco de dados MongoDB para armazenar imagens ou PDFs de recibos, notas, contratos e serviços
+- Configurar backup automático dos bancos de dados
 - Implantar em contêineres utilizando Kubernetes
 - Documentar e orquestrar SQL com o DBT-core
 - Aproveitar para utilizar o briefer
