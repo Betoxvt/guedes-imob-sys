@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
 from sqlmodel import Session, select
-from schemas import Aluguel, Apartamento, DespesaFixa, Garagem, GastoVariavel, Proprietario, AluguelPatch, ApartamentoPatch, DespesaFixaPatch, GaragemPatch, GastoVariavelPatch, ProprietarioPatch
+from schemasOld import Aluguel, Apartamento, DespesaFixa, Garagem, GastoVariavel, Proprietario, AluguelPatch, ApartamentoPatch, DespesaFixaPatch, GaragemPatch, GastoVariavelPatch, ProprietarioPatch
 from src import engine
 
 # Instância do FastAPI
