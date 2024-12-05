@@ -37,13 +37,13 @@ Mais informações:
 
 - Criar banco de dados MongoDB para armazenar imagens ou PDFs de recibos, notas, contratos e serviços
 - Configurar backup automático dos bancos de dados
-- Implantar em contêineres utilizando Kubernetes
+- Implantar em contêineres utilizando Docker
 - Documentar e orquestrar SQL com o DBT-core
 - Aproveitar para utilizar o briefer
 
 ### Segunda versão
 
-- Criar banco de dados vetorial para o funcionamento da IA
-- Implementar IA
-
+- Criar banco de dados vetorial para o funcionamento da IA (ChromeDB?)
+- Implementar IA (Groq?)
+- Integrar com whatsapp (EvolutionAPI?)
 
