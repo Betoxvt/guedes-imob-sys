@@ -21,14 +21,11 @@ class Aluguel(Base):
     valor_imob = Column(Numeric(10, 2), nullable=False)
     valor_prop = Column(Numeric(10, 2), nullable=False)
 
-    # Relationships
-    apartamento = relationship('Apartamento', back_populates='alugueis')
-
     # Constraints
     __table_args__ = (
-        CheckConstraint('taxa_adm >= 0 AND taxa_adm <= 100', name='ck_taxa_adm_range'),
-        CheckConstraint('valor_diaria >= 0', name='ck_valor_diaria_nonnegative'),
-        CheckConstraint('valor_total >= 0', name='ck_valor_total_nonnegative'),
+        CheckConstraint('taxa_adm >= 0 AND taxa_adm <= 100', name='check_taxa_adm_range'),
+        CheckConstraint('valor_diaria >= 0', name='check_valor_diaria_nonnegative'),
+        CheckConstraint('valor_total >= 0', name='check_valor_total_nonnegative'),
     )
 
 # Apartments table
@@ -46,20 +43,10 @@ class Apartamento(Base):
     wifipass = Column(Text)
     lockpass = Column(Integer)
 
-    # Relationships
-    alugueis = relationship('Aluguel', back_populates='apartamento')
-    edificio = relationship('EnderecoEdificio', back_populates='apartamentos')
-    proprietario = relationship('Proprietario', back_populates='apartamentos')
-    despesas = relationship('Despesa', back_populates='apartamentos')
-    gastos = relationship('Gasto', back_populates='apartamentos')
-    garagens = relationship('Garagem', back_populates='apartamentos')
-    garagens_destino = relationship('Garagem', foreign_keys='Garagem.apto_destino_id', back_populates='apto_destino_obj')
-    garagens_origem = relationship('Garagem', foreign_keys='Garagem.apto_origem_id', back_populates='apto_origem_obj')
-
 
     # Constraints
     __table_args__ = (
-        UniqueConstraint('apartamento', 'edificio_id', name='uq_apartamento_edificio'),
+        UniqueConstraint('apartamento', 'edificio_id', name='unique_apartamento_edificio'),
     )
     
 # Recurrent expenditure table
@@ -72,11 +59,9 @@ class Despesa(Base):
     valor = Column(Numeric(10, 2), nullable=False)
     descricao = Column(Text, nullable=False)
 
-    # Relationships
-    apartamento = relationship('Apartamento', back_populates='despesas')
 
 # Building address table
-class EnderecoEdificio(Base):
+class Edificio(Base):
     __tablename__ = 'edificios'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -88,13 +73,11 @@ class EnderecoEdificio(Base):
     uf = Column(String(2))
     cep = Column(Integer)
 
-    # Relationships
-    apartamentos = relationship('Apartamento', back_populates='edificio')
-
     # Constraints
     __table_args__ = (
-        CheckConstraint("char_length(estado) = 2", name="ck_estado_length"),
+        CheckConstraint("char_length(uf) = 2", name="check_uf_length"),
     )
+
 
 # Parking rentals table
 class Garagem(Base):
@@ -112,9 +95,10 @@ class Garagem(Base):
     valor_imob = Column(Numeric(10, 2), nullable=False)
     valor_prop = Column(Numeric(10, 2), nullable=False)
 
-    # Relationships
-    apto_destino_obj = relationship('Apartamento', foreign_keys=[apto_destino_id], back_populates='garagens_destino')
-    apto_origem_obj = relationship('Apartamento', foreign_keys=[apto_origem_id], back_populates='garagens_origem')
+    # Constraints
+    __table_args__ = (
+            CheckConstraint('apto_origem_id != apto_destino_id', name='check_apto_ids_not_equal'),
+        )
 
 # Non-Recurrent expenses table
 class Gasto(Base):
@@ -128,8 +112,6 @@ class Gasto(Base):
     valor_total = Column(Numeric(10, 2), nullable=False)
     descricao = Column(Text, nullable=False)
 
-    # Relationships
-    apartamento = relationship('Apartamento', back_populates='gastos')
 
 # Owners table
 class Proprietario(Base):
@@ -140,6 +122,3 @@ class Proprietario(Base):
     cpf = Column(BigInteger, unique=True)
     telefone = Column(BigInteger, unique=True)
     email = Column(Text, unique=True)
-
-    # Relationships
-    apartamentos = relationship('Apartamento', back_populates='proprietario')
