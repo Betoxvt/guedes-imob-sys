@@ -37,11 +37,12 @@ class DespesaBase(BaseModel):
 
 class EdificioBase(BaseModel):
     nome: str
-    endereco: Optional[str]
+    logradouro: Optional[str]
     numero: Optional[PositiveInt]
     bairro: Optional[str]
     cidade: Optional[str]
     uf: Optional[str]
+    pais: Optional[str]
     cep: Optional[PositiveInt]
 
 class GaragemBase(BaseModel):
@@ -199,11 +200,12 @@ class DespesaUpdate(BaseModel):
 
 class EdificioUpdate(BaseModel):
     nome: Optional[str]
-    endereco: Optional[str]
+    logradouro: Optional[str]
     numero: Optional[PositiveInt]
     bairro: Optional[str]
     cidade: Optional[str]
     uf: Optional[str]
+    pais: Optional[str]
     cep: Optional[PositiveInt]
 
 

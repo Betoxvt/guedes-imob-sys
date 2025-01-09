@@ -66,11 +66,12 @@ class Edificio(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     nome = Column(Text, nullable=False)
-    endereco = Column(Text)
+    logradouro = Column(Text)
     numero = Column(Integer)
     bairro = Column(Text)
     cidade = Column(Text)
     uf = Column(String(2))
+    pais = Column(Text)
     cep = Column(Integer)
 
     # Constraints
