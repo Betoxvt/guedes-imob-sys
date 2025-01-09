@@ -1,12 +1,12 @@
 from sqlalchemy.orm import Session
 from schemas import (
-    AluguelBase, AluguelCreate, AluguelUpdate,
-    ApartamentoBase, ApartamentoCreate, ApartamentoUpdate,
-    DespesaBase, DespesaCreate, DespesaUpdate,
-    GaragemBase,GaragemCreate, GaragemUpdate,
-    EdificioBase, EdificioCreate, EdificioUpdate,
-    GastoBase, GastoCreate, GastoUpdate,
-    ProprietarioBase, ProprietarioCreate, ProprietarioUpdate
+    AluguelCreate, AluguelUpdate,
+    ApartamentoCreate, ApartamentoUpdate,
+    DespesaCreate, DespesaUpdate,
+    GaragemCreate, GaragemUpdate,
+    EdificioCreate, EdificioUpdate,
+    GastoCreate, GastoUpdate,
+    ProprietarioCreate, ProprietarioUpdate
 )
 from models import (
     Aluguel, Apartamento, Despesa, Edificio, Garagem, Gasto, Proprietario
