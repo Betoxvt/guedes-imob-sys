@@ -11,6 +11,7 @@ class Aluguel(Base):
     __tablename__ = 'alugueis'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
+    apartamento_id = Column(Integer, ForeignKey('apartamentos.id'), nullable=False)
     checkin = Column(Date, nullable=False)
     checkout = Column(Date, nullable=False)
     diarias = Column(Integer, nullable=False)
@@ -19,7 +20,6 @@ class Aluguel(Base):
     valor_total = Column(Numeric(10, 2), nullable=False)
     valor_imob = Column(Numeric(10, 2), nullable=False)
     valor_prop = Column(Numeric(10, 2), nullable=False)
-    apartamento_id = Column(Integer, ForeignKey('apartamentos.id'))
 
     # Relationships
     apartamento = relationship('Apartamento', back_populates='alugueis')
@@ -37,14 +37,14 @@ class Apartamento(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     apartamento = Column(String(10), nullable=False)
+    edificio_id = Column(Integer, ForeignKey('edificios.id'),nullable=False)
+    proprietario_id = Column(Integer, ForeignKey('proprietarios.id'), nullable=False)
     celesc = Column(Integer)
     supergasbras = Column(Integer)
     internet_provedor = Column(Text)
     wifiid = Column(Text)
     wifipass = Column(Text)
     lockpass = Column(Integer)
-    edificio_id = Column(Integer, ForeignKey('edificios.id'))
-    proprietario_id = Column(Integer, ForeignKey('proprietarios.id'))
 
     # Relationships
     alugueis = relationship('Aluguel', back_populates='apartamento')
@@ -67,10 +67,10 @@ class Despesa(Base):
     __tablename__ = 'despesas'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
+    apartamento_id = Column(Integer, ForeignKey('apartamentos.id'))
     data_pagamento = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     valor = Column(Numeric(10, 2), nullable=False)
     descricao = Column(Text, nullable=False)
-    apartamento_id = Column(Integer, ForeignKey('apartamentos.id'))
 
     # Relationships
     apartamento = relationship('Apartamento', back_populates='despesas')
@@ -85,7 +85,7 @@ class EnderecoEdificio(Base):
     numero = Column(Integer)
     bairro = Column(Text)
     cidade = Column(Text)
-    estado = Column(String(2))
+    uf = Column(String(2))
     cep = Column(Integer)
 
     # Relationships
@@ -101,6 +101,8 @@ class Garagem(Base):
     __tablename__ = 'garagens'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
+    apto_origem_id = Column(Integer, ForeignKey('apartamentos.id'), nullable=False)
+    apto_destino_id = Column(Integer, ForeignKey('apartamentos.id'), nullable=False)
     checkin = Column(Date, nullable=False)
     checkout = Column(Date, nullable=False)
     diarias = Column(Integer, nullable=False)
@@ -109,8 +111,6 @@ class Garagem(Base):
     valor_total = Column(Numeric(10, 2), nullable=False)
     valor_imob = Column(Numeric(10, 2), nullable=False)
     valor_prop = Column(Numeric(10, 2), nullable=False)
-    apto_destino_id = Column(Integer, ForeignKey('apartamentos.id'))
-    apto_origem_id = Column(Integer, ForeignKey('apartamentos.id'))
 
     # Relationships
     apto_destino_obj = relationship('Apartamento', foreign_keys=[apto_destino_id], back_populates='garagens_destino')
@@ -121,12 +121,12 @@ class Gasto(Base):
     __tablename__ = 'gastos'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
+    apartamento_id = Column(Integer, ForeignKey('apartamentos.id'), nullable=False)
     data_pagamento = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     valor_material = Column(Numeric(10, 2))
     valor_mo = Column(Numeric(10, 2))
     valor_total = Column(Numeric(10, 2), nullable=False)
     descricao = Column(Text, nullable=False)
-    apartamento_id = Column(Integer, ForeignKey('apartamentos.id'))
 
     # Relationships
     apartamento = relationship('Apartamento', back_populates='gastos')
@@ -136,9 +136,9 @@ class Proprietario(Base):
     __tablename__ = 'proprietarios'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    cpf = Column(BigInteger, unique=True)
     nome = Column(Text, nullable=False)
-    telefone = Column(BigInteger)
+    cpf = Column(BigInteger, unique=True)
+    telefone = Column(BigInteger, unique=True)
     email = Column(Text, unique=True)
 
     # Relationships

@@ -3,8 +3,9 @@ from datetime import datetime
 from typing import Optional
 
 
-# BaseModel schemas
+# Base schemas
 class AluguelBase(BaseModel):
+    apartamento_id: PositiveInt
     checkin: datetime
     checkout: datetime
     diarias: PositiveInt
@@ -13,30 +14,39 @@ class AluguelBase(BaseModel):
     valor_total: PositiveFloat
     valor_imob: PositiveFloat
     valor_prop: PositiveFloat
-    apto: str
 
 
 class ApartamentoBase(BaseModel):
     apartamento: str
-    edificio: str
-    endereco: Optional[str]
+    edificio_id: PositiveInt
+    proprietario_id: PositiveInt
     celesc: Optional[PositiveInt]
     supergasbras: Optional[PositiveInt]
-    internet: Optional[str]
+    internet_provedor: Optional[str]
     wifiid: Optional[str]
     wifipass: Optional[str]
     lockpass: Optional[int]
-    proprietario: PositiveInt
 
 
-class DespesaFixaBase(BaseModel):
+class DespesaBase(BaseModel):
+    apartamento_id: str
     data_pagamento: datetime
     valor: PositiveFloat
     descricao: str
-    apto: str
 
+
+class EdificioBase(BaseModel):
+    nome: str
+    endereco: Optional[str]
+    numero: Optional[PositiveInt]
+    bairro: Optional[str]
+    cidade: Optional[str]
+    uf: Optional[str]
+    cep: Optional[PositiveInt]
 
 class GaragemBase(BaseModel):
+    apto_origem_id: str
+    apto_destino_id: str
     checkin: datetime
     checkout: datetime
     diarias: PositiveInt
@@ -45,24 +55,75 @@ class GaragemBase(BaseModel):
     valor_total: PositiveFloat
     valor_imob: PositiveFloat
     valor_prop: PositiveFloat
-    apto_origem: str
-    apto_destino: str
 
 
-class GastoVariavelBase(BaseModel):
+class GastoBase(BaseModel):
+    apartamento_id: str
     data_pagamento: datetime
     valor_material: Optional[PositiveFloat]
     valor_mo: Optional[PositiveFloat]
     valor_total: PositiveFloat
     descricao: str
-    apto: str
 
 
 class ProprietarioBase(BaseModel):
-    cpf: Optional[PositiveInt]
     nome: str
+    cpf: Optional[PositiveInt]
     telefone: Optional[int]
     email: Optional[EmailStr]
 
 
-#
+# Create schemas
+class AluguelCreate(AluguelBase):
+    pass
+
+
+class ApartamentoCreate(ApartamentoBase):
+    pass
+
+
+class DespesaFixaCreate(DespesaFixaBase):
+    pass
+
+
+class GaragemCreate(GaragemBase):
+    pass
+
+
+class GastoVariavelCreate(GastoVariavelBase):
+    pass
+
+
+class ProprietarioCreate(ProprietarioBase):
+    pass
+
+
+# Response schemas
+class AluguelResponse(AluguelBase):
+    id: PositiveInt
+    checkin: datetime
+    checkout: datetime
+
+    class Config:
+        from_attributes = True
+
+
+class ApartamentoResponse(ApartamentoBase):
+    id: PositiveInt
+    apartamento: str
+    edificio_id: PositiveInt
+
+    class Config:
+        from_attributes = True
+
+
+class DespesaFixaResponse(DespesaFixaBase):
+    id: PositiveInt
+    data_pagamento: datetime
+    apartamendo_id: PositiveInt
+
+    class Config:
+        from_attributes = True
+
+
+class GaragemResponse(GaragemBase):
