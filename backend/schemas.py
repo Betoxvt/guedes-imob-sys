@@ -122,7 +122,7 @@ class ApartamentoResponse(ApartamentoBase):
         from_attributes = True
 
 
-class DespesaFixaResponse(DespesaBase):
+class DespesaResponse(DespesaBase):
     id: PositiveInt
     data_pagamento: datetime
     apartamendo_id: PositiveInt
