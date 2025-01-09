@@ -1,79 +1,64 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, PositiveFloat, EmailStr, PositiveInt
+from datetime import datetime
+from typing import Optional
 
 class AluguelSchema(BaseModel):
-    id: int
-    checkin: str
-    checkout: str
-    diarias: int
-    valor_diaria: float
-    taxa_adm: float
-    valor_total: float
-    valor_imob: float
-    valor_prop: float
+    checkin: datetime
+    checkout: datetime
+    diarias: PositiveInt
+    valor_diaria: PositiveFloat
+    taxa_adm: PositiveFloat
+    valor_total: PositiveFloat
+    valor_imob: PositiveFloat
+    valor_prop: PositiveFloat
     apto: str
 
-    class Config:
-        from_attributes = True
 
 class ApartamentoSchema(BaseModel):
     apartamento: str
     edificio: str
-    endereco: str
-    celesc: int
-    supergasbras: int
-    internet: str
-    wifiid: str
-    wifipass: str
-    lockpass: int
-    proprietario: int
+    endereco: Optional[str]
+    celesc: Optional[PositiveInt]
+    supergasbras: Optional[PositiveInt]
+    internet: Optional[str]
+    wifiid: Optional[str]
+    wifipass: Optional[str]
+    lockpass: Optional[int]
+    proprietario: PositiveInt
 
-    class Config:
-        from_attributes = True
 
 class DespesaFixaSchema(BaseModel):
-    id: int
-    data_pagamento: str
-    valor: float
+    data_pagamento: datetime
+    valor: PositiveFloat
     descricao: str
     apto: str
 
-    class Config:
-        from_attributes = True
 
 class GaragemSchema(BaseModel):
-    id: int
-    checkin: str
-    checkout: str
-    diarias: int
-    valor_diaria: float
-    taxa_adm: float
-    valor_total: float
-    valor_imob: float
-    valor_prop: float
-    apto_destino: str
+    checkin: datetime
+    checkout: datetime
+    diarias: PositiveInt
+    valor_diaria: PositiveFloat
+    taxa_adm: PositiveFloat
+    valor_total: PositiveFloat
+    valor_imob: PositiveFloat
+    valor_prop: PositiveFloat
     apto_origem: str
+    apto_destino: str
 
-    class Config:
-        from_attributes = True
 
 class GastoVariavelSchema(BaseModel):
-    id: int
-    data_pagamento: str
-    valor_material: float
-    valor_mo: float
-    valor_total: float
+    data_pagamento: datetime
+    valor_material: Optional[PositiveFloat]
+    valor_mo: Optional[PositiveFloat]
+    valor_total: PositiveFloat
     descricao: str
     apto: str
 
-    class Config:
-        from_attributes = True
 
 class ProprietarioSchema(BaseModel):
-    cpf: int
+    cpf: Optional[PositiveInt]
     nome: str
-    telefone: int
-    email: str
-
-    class Config:
-        from_attributes = True
+    telefone: Optional[int]
+    email: Optional[EmailStr]
         
