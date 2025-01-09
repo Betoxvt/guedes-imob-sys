@@ -2,7 +2,9 @@ from pydantic import BaseModel, PositiveFloat, EmailStr, PositiveInt
 from datetime import datetime
 from typing import Optional
 
-class AluguelSchema(BaseModel):
+
+# BaseModel schemas
+class AluguelBase(BaseModel):
     checkin: datetime
     checkout: datetime
     diarias: PositiveInt
@@ -14,7 +16,7 @@ class AluguelSchema(BaseModel):
     apto: str
 
 
-class ApartamentoSchema(BaseModel):
+class ApartamentoBase(BaseModel):
     apartamento: str
     edificio: str
     endereco: Optional[str]
@@ -27,14 +29,14 @@ class ApartamentoSchema(BaseModel):
     proprietario: PositiveInt
 
 
-class DespesaFixaSchema(BaseModel):
+class DespesaFixaBase(BaseModel):
     data_pagamento: datetime
     valor: PositiveFloat
     descricao: str
     apto: str
 
 
-class GaragemSchema(BaseModel):
+class GaragemBase(BaseModel):
     checkin: datetime
     checkout: datetime
     diarias: PositiveInt
@@ -47,7 +49,7 @@ class GaragemSchema(BaseModel):
     apto_destino: str
 
 
-class GastoVariavelSchema(BaseModel):
+class GastoVariavelBase(BaseModel):
     data_pagamento: datetime
     valor_material: Optional[PositiveFloat]
     valor_mo: Optional[PositiveFloat]
@@ -56,9 +58,11 @@ class GastoVariavelSchema(BaseModel):
     apto: str
 
 
-class ProprietarioSchema(BaseModel):
+class ProprietarioBase(BaseModel):
     cpf: Optional[PositiveInt]
     nome: str
     telefone: Optional[int]
     email: Optional[EmailStr]
-        
+
+
+#
