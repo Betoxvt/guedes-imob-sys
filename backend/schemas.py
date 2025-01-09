@@ -82,7 +82,11 @@ class ApartamentoCreate(ApartamentoBase):
     pass
 
 
-class DespesaFixaCreate(DespesaFixaBase):
+class DespesaCreate(DespesaBase):
+    pass
+
+
+class EdificioCreate(EdificioBase):
     pass
 
 
@@ -90,7 +94,7 @@ class GaragemCreate(GaragemBase):
     pass
 
 
-class GastoVariavelCreate(GastoVariavelBase):
+class GastoCreate(GastoBase):
     pass
 
 
@@ -117,7 +121,7 @@ class ApartamentoResponse(ApartamentoBase):
         from_attributes = True
 
 
-class DespesaFixaResponse(DespesaFixaBase):
+class DespesaFixaResponse(DespesaBase):
     id: PositiveInt
     data_pagamento: datetime
     apartamendo_id: PositiveInt
@@ -126,4 +130,35 @@ class DespesaFixaResponse(DespesaFixaBase):
         from_attributes = True
 
 
+class EdificioResponse(EdificioBase):
+    id: PositiveInt
+    nome: str
+
+    class Config:
+        from_attributes = True
+
+
 class GaragemResponse(GaragemBase):
+    id: PositiveInt
+    apto_origem_id: PositiveInt
+    apto_destino_id: PositiveInt
+
+    class Config:
+        from_attributes = True
+
+
+class GastoResponse(GastoBase):
+    id: PositiveInt
+    apartamento_id: PositiveInt
+    data_pagamento: datetime
+
+    class Config:
+        from_attributes = True
+
+
+class ProprietarioResponse(ProprietarioBase):
+    id: PositiveInt
+    nome: str
+
+    class Config:
+        from_attributes = True
