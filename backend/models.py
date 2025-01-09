@@ -6,7 +6,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.schema import CheckConstraint, UniqueConstraint
 from database import Base
 
-# Tabela para registros de aluguéis
+# Rentals table
 class Aluguel(Base):
     __tablename__ = 'alugueis'
 
@@ -31,7 +31,7 @@ class Aluguel(Base):
         CheckConstraint('valor_total >= 0', name='ck_valor_total_nonnegative'),
     )
 
-# Tabela para cadastro de apartamentos
+# Apartments table
 class Apartamento(Base):
     __tablename__ = 'apartamentos'
 
@@ -62,7 +62,7 @@ class Apartamento(Base):
         UniqueConstraint('apartamento', 'edificio_id', name='uq_apartamento_edificio'),
     )
     
-# Tabela para registros de despesas fixas
+# Recurrent expenditure table
 class Despesa(Base):
     __tablename__ = 'despesas'
 
@@ -75,7 +75,7 @@ class Despesa(Base):
     # Relationships
     apartamento = relationship('Apartamento', back_populates='despesas')
 
-# Tabela para cadastro de edifícios
+# Building address table
 class EnderecoEdificio(Base):
     __tablename__ = 'edificios'
 
@@ -96,7 +96,7 @@ class EnderecoEdificio(Base):
         CheckConstraint("char_length(estado) = 2", name="ck_estado_length"),
     )
 
-# Tabela para registro de aluguéis de garagens e controle de vagas
+# Parking rentals table
 class Garagem(Base):
     __tablename__ = 'garagens'
 
@@ -116,7 +116,7 @@ class Garagem(Base):
     apto_destino_obj = relationship('Apartamento', foreign_keys=[apto_destino_id], back_populates='garagens_destino')
     apto_origem_obj = relationship('Apartamento', foreign_keys=[apto_origem_id], back_populates='garagens_origem')
 
-# Tabela para registros de gastos variáveis
+# Non-Recurrent expenses table
 class Gasto(Base):
     __tablename__ = 'gastos'
 
@@ -131,7 +131,7 @@ class Gasto(Base):
     # Relationships
     apartamento = relationship('Apartamento', back_populates='gastos')
 
-# Tabela para cadastro dos proprietários (ou responsáveis) dos apartamentos
+# Owners table
 class Proprietario(Base):
     __tablename__ = 'proprietarios'
 
