@@ -1,4 +1,4 @@
-from db import Base, engine, SessionLocal
+from database import Base, engine, SessionLocal
 from models import Aluguel, Apartamento, DespesaFixa, Garagem, GastoVariavel, Proprietario
 from schemas import AluguelSchema, ApartamentoSchema, DespesaFixaSchema, GaragemSchema, GastoVariavelSchema, ProprietarioSchema
 

@@ -4,7 +4,7 @@ from sqlalchemy import (
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 from sqlalchemy.schema import CheckConstraint, UniqueConstraint
-from db import Base
+from database import Base
 
 # Tabela para registros de aluguéis
 class Aluguel(Base):
