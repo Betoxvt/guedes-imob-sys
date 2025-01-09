@@ -451,3 +451,13 @@ def update_proprietario(db: Session, proprietario_id: int, proprietario: Proprie
     db.commit()
     db.refresh(db_proprietario)
     return db_proprietario
+
+
+def delete_proprietario(db: Session, proprietario_id: int):
+    """
+    Deletes a specific element from the database table proprietarios
+    """
+    db_proprietario = db.query(Proprietario).filter(Proprietario.id == proprietario_id).first()
+    db.delete(db_proprietario)
+    db.commit()
+    return db_proprietario
