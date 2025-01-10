@@ -348,7 +348,7 @@ def get_gastos(db: Session, skip: int = 0, limit: int = 100):
     """
     Returns all elements from the database table gastos
     """
-    return db.query(Gasto).offset(skip).limit(limit).all()
+    return db.query(Gasto).order_by(Gasto.id.desc()).offset(skip).limit(limit).all()
 
 
 def get_gasto(db: Session, gasto_id: int):
