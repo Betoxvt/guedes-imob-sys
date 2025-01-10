@@ -106,8 +106,8 @@ class ProprietarioCreate(ProprietarioBase):
 # Response schemas
 class AluguelResponse(AluguelBase):
     id: PositiveInt
-    checkin: date
-    checkout: date
+    criado_em: date
+    modificado_em: date
 
     class Config:
         from_attributes = True
@@ -115,8 +115,9 @@ class AluguelResponse(AluguelBase):
 
 class ApartamentoResponse(ApartamentoBase):
     id: PositiveInt
-    apartamento: str
-    edificio_id: PositiveInt
+    criado_em: date
+    modificado_em: date
+
 
     class Config:
         from_attributes = True
@@ -124,8 +125,9 @@ class ApartamentoResponse(ApartamentoBase):
 
 class DespesaResponse(DespesaBase):
     id: PositiveInt
-    data_pagamento: date
-    apartamendo_id: PositiveInt
+    criado_em: date
+    modificado_em: date
+
 
     class Config:
         from_attributes = True
@@ -133,7 +135,9 @@ class DespesaResponse(DespesaBase):
 
 class EdificioResponse(EdificioBase):
     id: PositiveInt
-    nome: str
+    criado_em: date
+    modificado_em: date
+
 
     class Config:
         from_attributes = True
@@ -141,8 +145,9 @@ class EdificioResponse(EdificioBase):
 
 class GaragemResponse(GaragemBase):
     id: PositiveInt
-    apto_origem_id: PositiveInt
-    apto_destino_id: PositiveInt
+    criado_em: date
+    modificado_em: date
+
 
     class Config:
         from_attributes = True
@@ -150,8 +155,9 @@ class GaragemResponse(GaragemBase):
 
 class GastoResponse(GastoBase):
     id: PositiveInt
-    apartamento_id: PositiveInt
-    data_pagamento: date
+    criado_em: date
+    modificado_em: date
+
 
     class Config:
         from_attributes = True
@@ -159,7 +165,9 @@ class GastoResponse(GastoBase):
 
 class ProprietarioResponse(ProprietarioBase):
     id: PositiveInt
-    nome: str
+    criado_em: date
+    modificado_em: date
+    
 
     class Config:
         from_attributes = True
