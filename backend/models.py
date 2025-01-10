@@ -5,8 +5,8 @@ from sqlalchemy import (
 )
 from database import Base
 
-DEFAULT_TAXA_ADM = 0.15
-DEFAULT_EDIFICIO_ID = 1
+DEFAULT_TAXA_ADM = '0.15'
+DEFAULT_EDIFICIO_ID = '1'
 
 
 class Aluguel(Base):
