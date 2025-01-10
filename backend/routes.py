@@ -12,13 +12,13 @@ from schemas import (
     ProprietarioCreate, ProprietarioResponse, ProprietarioUpdate
 )
 from crud import (
-    create_aluguel, get_aluguel, get_alugueis, update_aluguel, delete_aluguel,
-    create_apartamento, get_apartamento, get_apartamentos, update_apartamento, delete_apartamento,
-    create_despesa, get_despesa, get_despesas, update_despesa, delete_despesa,
-    create_edificio, get_edificio, get_edificios, update_edificio, delete_edificio,
-    create_garagem, get_garagem, get_garagens, update_garagem, delete_garagem,
-    create_gasto, get_gasto, get_gastos, update_gasto, delete_gasto,
-    create_proprietario, get_proprietario, get_proprietarios, update_proprietario, delete_proprietario
+    create_aluguel, read_alugueis, read_aluguel, update_aluguel, delete_aluguel,
+    create_apartamento, read_apartamentos, read_apartamento, update_apartamento, delete_apartamento,
+    create_despesa, read_despesas, read_despesa, update_despesa, delete_despesa,
+    create_edificio, read_edificio, read_edificios, update_edificio, delete_edificio,
+    create_garagem, read_garagem, read_garagens, update_garagem, delete_garagem,
+    create_gasto, read_gasto, read_gastos, update_gasto, delete_gasto,
+    create_proprietario, read_proprietario, read_proprietarios, update_proprietario, delete_proprietario
 )
 
 router = APIRouter()
@@ -30,13 +30,13 @@ def create_aluguel_route(aluguel: AluguelCreate, db: Session = Depends(get_db)):
 
 @router.get("/alugueis", response_model=List[AluguelResponse])
 def read_alugueis_route(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    alugueis = get_alugueis(db, skip=skip, limit=limit)
+    alugueis = read_alugueis(db, skip=skip, limit=limit)
     return alugueis
 
 
 @router.get("/alugueis/{aluguel_id}", response_model=AluguelResponse)
 def read_aluguel_route(aluguel_id: int, db: Session = Depends(get_db)):
-    aluguel = get_aluguel(db, aluguel_id=aluguel_id)
+    aluguel = read_aluguel(db, aluguel_id=aluguel_id)
     if aluguel is None:
         raise HTTPException(status_code=404, detail="Aluguel not found")
     return aluguel
@@ -65,13 +65,13 @@ def create_apartamento_route(apartamento: ApartamentoCreate, db: Session = Depen
 
 @router.get("/apartamentos", response_model=List[ApartamentoResponse])
 def read_apartamentos_route(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    apartamentos = get_apartamentos(db, skip=skip, limit=limit)
+    apartamentos = read_apartamentos(db, skip=skip, limit=limit)
     return apartamentos
 
 
 @router.get("/apartamentos/{apartamento_id}", response_model=ApartamentoResponse)
 def read_apartamento_route(apartamento_id: int, db: Session = Depends(get_db)):
-    apartamento = get_apartamento(db, apartamento_id=apartamento_id)
+    apartamento = read_apartamento(db, apartamento_id=apartamento_id)
     if apartamento is None:
         raise HTTPException(status_code=404, detail="Apartamento not found")
     return apartamento
@@ -100,13 +100,13 @@ def create_despesa_route(despesa: DespesaCreate, db: Session = Depends(get_db)):
 
 @router.get("/despesas", response_model=List[DespesaResponse])
 def read_despesas_route(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    despesas = get_despesas(db, skip=skip, limit=limit)
+    despesas = read_despesas(db, skip=skip, limit=limit)
     return despesas
 
 
 @router.get("/despesas/{despesa_id}", response_model=DespesaResponse)
 def read_despesa_route(despesa_id: int, db: Session = Depends(get_db)):
-    despesa = get_despesa(db, despesa_id=despesa_id)
+    despesa = read_despesa(db, despesa_id=despesa_id)
     if despesa is None:
         raise HTTPException(status_code=404, detail="Despesa not found")
     return despesa
@@ -135,13 +135,13 @@ def create_edificio_route(edificio: EdificioCreate, db: Session = Depends(get_db
 
 @router.get("/edificios", response_model=List[EdificioResponse])
 def read_edificios_route(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    edificios = get_edificios(db, skip=skip, limit=limit)
+    edificios = read_edificios(db, skip=skip, limit=limit)
     return edificios
 
 
 @router.get("/edificios/{edificio_id}", response_model=EdificioResponse)
 def read_edificio_route(edificio_id: int, db: Session = Depends(get_db)):
-    edificio = get_edificio(db, edificio_id=edificio_id)
+    edificio = read_edificio(db, edificio_id=edificio_id)
     if edificio is None:
         raise HTTPException(status_code=404, detail="Edificio not found")
     return edificio
@@ -170,13 +170,13 @@ def create_garagem_route(garagem: GaragemCreate, db: Session = Depends(get_db)):
 
 @router.get("/garagens", response_model=List[GaragemResponse])
 def read_garagens_route(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    garagens = get_garagens(db, skip=skip, limit=limit)
+    garagens = read_garagens(db, skip=skip, limit=limit)
     return garagens
 
 
 @router.get("/garagens/{garagem_id}", response_model=GaragemResponse)
 def read_garagem_route(garagem_id: int, db: Session = Depends(get_db)):
-    garagem = get_garagem(db, garagem_id=garagem_id)
+    garagem = read_garagem(db, garagem_id=garagem_id)
     if garagem is None:
         raise HTTPException(status_code=404, detail="Garagem not found")
     return garagem
@@ -205,13 +205,13 @@ def create_gasto_route(gasto: GastoCreate, db: Session = Depends(get_db)):
 
 @router.get("/gastos", response_model=List[GastoResponse])
 def read_gastos_route(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    gastos = get_gastos(db, skip=skip, limit=limit)
+    gastos = read_gastos(db, skip=skip, limit=limit)
     return gastos
 
 
 @router.get("/gastos/{gasto_id}", response_model=GastoResponse)
 def read_gasto_route(gasto_id: int, db: Session = Depends(get_db)):
-    gasto = get_gasto(db, gasto_id=gasto_id)
+    gasto = read_gasto(db, gasto_id=gasto_id)
     if gasto is None:
         raise HTTPException(status_code=404, detail="Gasto not found")
     return gasto
@@ -240,13 +240,13 @@ def create_proprietario_route(proprietario: ProprietarioCreate, db: Session = De
 
 @router.get("/proprietarios", response_model=List[ProprietarioResponse])
 def read_proprietarios_route(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    proprietarios = get_proprietarios(db, skip=skip, limit=limit)
+    proprietarios = read_proprietarios(db, skip=skip, limit=limit)
     return proprietarios
 
 
 @router.get("/proprietarios/{proprietario_id}", response_model=ProprietarioResponse)
 def read_proprietario_route(proprietario_id: int, db: Session = Depends(get_db)):
-    proprietario = get_proprietario(db, proprietario_id=proprietario_id)
+    proprietario = read_proprietario(db, proprietario_id=proprietario_id)
     if proprietario is None:
         raise HTTPException(status_code=404, detail="Proprietario not found")
     return proprietario
