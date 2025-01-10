@@ -14,16 +14,16 @@ class Aluguel(Base):
 
     id = Column(Integer, primary_key=True)
     apartamento_id = Column(Integer, ForeignKey('apartamentos.id'), nullable=False)
-    checkin = Column(Date(timezone=True), nullable=False)
-    checkout = Column(Date(timezone=True), nullable=False)
+    checkin = Column(Date(), nullable=False)
+    checkout = Column(Date(), nullable=False)
     diarias = Column(Integer, nullable=False)
     valor_diaria = Column(Numeric(10, 2), nullable=False)
     taxa_adm = Column(Numeric(5, 2), server_default=DEFAULT_TAXA_ADM, nullable=False)
     valor_total = Column(Numeric(10, 2), nullable=False)
     valor_imob = Column(Numeric(10, 2), nullable=False)
     valor_prop = Column(Numeric(10, 2), nullable=False)
-    criado_em = Column(Date(timezone=True), server_default=func.now(), nullable=False)
-    modificado_em = Column(Date(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)
+    criado_em = Column(Date(), server_default=func.now(), nullable=False)
+    modificado_em = Column(Date(), server_default=func.now(), onupdate=func.now(), nullable=False)
 
     # Constraints
     __table_args__ = (
@@ -57,8 +57,8 @@ class Apartamento(Base):
     wifiid = Column(Text)
     wifipass = Column(Text)
     lockpass = Column(Integer)
-    criado_em = Column(Date(timezone=True), server_default=func.now(), nullable=False)
-    modificado_em = Column(Date(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)
+    criado_em = Column(Date(), server_default=func.now(), nullable=False)
+    modificado_em = Column(Date(), server_default=func.now(), onupdate=func.now(), nullable=False)
 
     # Constraints
     __table_args__ = (
@@ -71,11 +71,11 @@ class Despesa(Base):
 
     id = Column(Integer, primary_key=True)
     apartamento_id = Column(Integer, ForeignKey('apartamentos.id'))
-    data_pagamento = Column(Date(timezone=True), server_default=func.now(), nullable=False)
+    data_pagamento = Column(Date(), server_default=func.now(), nullable=False)
     valor = Column(Numeric(10, 2), nullable=False)
     descricao = Column(Text, nullable=False)
-    criado_em = Column(Date(timezone=True), server_default=func.now(), nullable=False)
-    modificado_em = Column(Date(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)
+    criado_em = Column(Date(), server_default=func.now(), nullable=False)
+    modificado_em = Column(Date(), server_default=func.now(), onupdate=func.now(), nullable=False)
 
 
 class Edificio(Base):
@@ -90,8 +90,8 @@ class Edificio(Base):
     uf = Column(String(2))
     pais = Column(Text)
     cep = Column(Integer)
-    criado_em = Column(Date(timezone=True), server_default=func.now(), nullable=False)
-    modificado_em = Column(Date(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)
+    criado_em = Column(Date(), server_default=func.now(), nullable=False)
+    modificado_em = Column(Date(), server_default=func.now(), onupdate=func.now(), nullable=False)
 
     # Constraints
     __table_args__ = (
@@ -105,16 +105,16 @@ class Garagem(Base):
     id = Column(Integer, primary_key=True)
     apto_origem_id = Column(Integer, ForeignKey('apartamentos.id'), nullable=False)
     apto_destino_id = Column(Integer, ForeignKey('apartamentos.id'), nullable=False)
-    checkin = Column(Date(timezone=True), nullable=False)
-    checkout = Column(Date(timezone=True), nullable=False)
+    checkin = Column(Date(), nullable=False)
+    checkout = Column(Date(), nullable=False)
     diarias = Column(Integer, nullable=False)
     valor_diaria = Column(Numeric(10, 2), nullable=False)
     taxa_adm = Column(Numeric(5, 2), nullable=False)
     valor_total = Column(Numeric(10, 2), nullable=False)
     valor_imob = Column(Numeric(10, 2), nullable=False)
     valor_prop = Column(Numeric(10, 2), nullable=False)
-    criado_em = Column(Date(timezone=True), server_default=func.now(), nullable=False)
-    modificado_em = Column(Date(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)
+    criado_em = Column(Date(), server_default=func.now(), nullable=False)
+    modificado_em = Column(Date(), server_default=func.now(), onupdate=func.now(), nullable=False)
 
     # Constraints
     __table_args__ = (
@@ -138,13 +138,13 @@ class Gasto(Base):
 
     id = Column(Integer, primary_key=True)
     apartamento_id = Column(Integer, ForeignKey('apartamentos.id'), nullable=False)
-    data_pagamento = Column(Date(timezone=True), server_default=func.now(), nullable=False)
+    data_pagamento = Column(Date(), server_default=func.now(), nullable=False)
     valor_material = Column(Numeric(10, 2))
     valor_mo = Column(Numeric(10, 2))
     valor_total = Column(Numeric(10, 2), nullable=False)
     descricao = Column(Text, nullable=False)
-    criado_em = Column(Date(timezone=True), server_default=func.now(), nullable=False)
-    modificado_em = Column(Date(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)
+    criado_em = Column(Date(), server_default=func.now(), nullable=False)
+    modificado_em = Column(Date(), server_default=func.now(), onupdate=func.now(), nullable=False)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -160,5 +160,5 @@ class Proprietario(Base):
     cpf = Column(BigInteger, unique=True)
     telefone = Column(BigInteger, unique=True)
     email = Column(Text, unique=True)
-    criado_em = Column(Date(timezone=True), server_default=func.now(), nullable=False)
-    modificado_em = Column(Date(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)
+    criado_em = Column(Date(), server_default=func.now(), nullable=False)
+    modificado_em = Column(Date(), server_default=func.now(), onupdate=func.now(), nullable=False)
