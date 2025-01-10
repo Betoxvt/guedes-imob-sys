@@ -1,13 +1,13 @@
 from pydantic import BaseModel, PositiveFloat, EmailStr, PositiveInt
-from datetime import datetime
+from datetime import date
 from typing import Optional
 
 
 # Base schemas
 class AluguelBase(BaseModel):
     apartamento_id: PositiveInt
-    checkin: datetime
-    checkout: datetime
+    checkin: date
+    checkout: date
     diarias: PositiveInt
     valor_diaria: PositiveFloat
     taxa_adm: PositiveFloat
@@ -30,7 +30,7 @@ class ApartamentoBase(BaseModel):
 
 class DespesaBase(BaseModel):
     apartamento_id: str
-    data_pagamento: datetime
+    data_pagamento: date
     valor: PositiveFloat
     descricao: str
 
@@ -48,8 +48,8 @@ class EdificioBase(BaseModel):
 class GaragemBase(BaseModel):
     apto_origem_id: str
     apto_destino_id: str
-    checkin: datetime
-    checkout: datetime
+    checkin: date
+    checkout: date
     diarias: PositiveInt
     valor_diaria: PositiveFloat
     taxa_adm: PositiveFloat
@@ -60,7 +60,7 @@ class GaragemBase(BaseModel):
 
 class GastoBase(BaseModel):
     apartamento_id: str
-    data_pagamento: datetime
+    data_pagamento: date
     valor_material: Optional[PositiveFloat]
     valor_mo: Optional[PositiveFloat]
     valor_total: PositiveFloat
@@ -106,8 +106,8 @@ class ProprietarioCreate(ProprietarioBase):
 # Response schemas
 class AluguelResponse(AluguelBase):
     id: PositiveInt
-    checkin: datetime
-    checkout: datetime
+    checkin: date
+    checkout: date
 
     class Config:
         from_attributes = True
@@ -124,7 +124,7 @@ class ApartamentoResponse(ApartamentoBase):
 
 class DespesaResponse(DespesaBase):
     id: PositiveInt
-    data_pagamento: datetime
+    data_pagamento: date
     apartamendo_id: PositiveInt
 
     class Config:
@@ -151,7 +151,7 @@ class GaragemResponse(GaragemBase):
 class GastoResponse(GastoBase):
     id: PositiveInt
     apartamento_id: PositiveInt
-    data_pagamento: datetime
+    data_pagamento: date
 
     class Config:
         from_attributes = True
@@ -169,8 +169,8 @@ class ProprietarioResponse(ProprietarioBase):
 
 class AluguelUpdate(BaseModel):
     apartamento_id: Optional[PositiveInt]
-    checkin: Optional[datetime]
-    checkout: Optional[datetime]
+    checkin: Optional[date]
+    checkout: Optional[date]
     diarias: Optional[PositiveInt]
     valor_diaria: Optional[PositiveFloat]
     taxa_adm: Optional[PositiveFloat]
@@ -193,7 +193,7 @@ class ApartamentoUpdate(BaseModel):
 
 class DespesaUpdate(BaseModel):
     apartamento_id: Optional[str]
-    data_pagamento: Optional[datetime]
+    data_pagamento: Optional[date]
     valor: Optional[PositiveFloat]
     descricao: Optional[str]
 
@@ -212,8 +212,8 @@ class EdificioUpdate(BaseModel):
 class GaragemUpdate(BaseModel):
     apto_origem_id: Optional[str]
     apto_destino_id: Optional[str]
-    checkin: Optional[datetime]
-    checkout: Optional[datetime]
+    checkin: Optional[date]
+    checkout: Optional[date]
     diarias: Optional[PositiveInt]
     valor_diaria: Optional[PositiveFloat]
     taxa_adm: Optional[PositiveFloat]
@@ -224,7 +224,7 @@ class GaragemUpdate(BaseModel):
 
 class GastoUpdate(BaseModel):
     apartamento_id: Optional[str]
-    data_pagamento: Optional[datetime]
+    data_pagamento: Optional[date]
     valor_material: Optional[PositiveFloat]
     valor_mo: Optional[PositiveFloat]
     valor_total: Optional[PositiveFloat]
