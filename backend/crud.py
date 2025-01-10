@@ -13,11 +13,11 @@ from models import (
 )
 
 
-def get_alugueis(db: Session):
+def get_alugueis(db: Session, skip: int = 0, limit: int = 100):
     """
     Returns all elements from the database table alugueis
     """
-    return db.query(Aluguel).all()
+    return db.query(Aluguel).order_by(Aluguel.id.desc()).offset(skip).limit(limit).all()
 
 
 def get_aluguel(db: Session, aluguel_id: int):
@@ -81,11 +81,12 @@ def delete_aluguel(db: Session, aluguel_id: int):
     return db_aluguel
 
 
-def get_apartamentos(db: Session):
+def get_apartamentos(db: Session, skip: int = 0, limit: int = 100):
+
     """
     Returns all elements from the database table apartamentos
     """
-    return db.query(Apartamento).all()
+    return db.query(Apartamento).offset(skip).limit(limit).all()
 
 
 def get_apartamento(db: Session, apartamento_id: int):
@@ -149,11 +150,11 @@ def delete_apartamento(db: Session, apartamento_id: int):
     return db_apartamento
 
 
-def get_despesas(db: Session):
+def get_despesas(db: Session, skip: int = 0, limit: int = 100):
     """
     Returns all elements from the database table despesas
     """
-    return db.query(Despesa).all()
+    return db.query(Despesa).orderby(Despesa.id.desc()).offset(skip).limit(limit).all()
 
 
 def get_despesa(db: Session, despesa_id: int):
@@ -207,11 +208,11 @@ def delete_despesa(db: Session, despesa_id: int):
     return db_despesa
 
 
-def get_edificios(db: Session):
+def get_edificios(db: Session, skip: int = 0, limit: int = 100):
     """
     Returns all elements from the database table edificios
     """
-    return db.query(Edificio).all()
+    return db.query(Edificio).offset(skip).limit(limit).all()
 
 
 def get_edificio(db: Session, edificio_id: int):
@@ -273,11 +274,11 @@ def delete_edificio(db: Session, edificio_id: int):
     return db_edificio
 
 
-def get_garagens(db: Session):
+def get_garagens(db: Session, skip: int = 0, limit: int = 100):
     """
     Returns all elements from the database table garagens
     """
-    return db.query(Garagem).all()
+    return db.query(Garagem).order_by(Garagem.id.desc()).offset(skip).limit(limit).all()
 
 
 def get_garagem(db: Session, garagem_id: int):
@@ -343,11 +344,11 @@ def delete_garagem(db: Session, garagem_id: int):
     return db_garagem
 
 
-def get_gastos(db: Session):
+def get_gastos(db: Session, skip: int = 0, limit: int = 100):
     """
     Returns all elements from the database table gastos
     """
-    return db.query(Gasto).all()
+    return db.query(Gasto).offset(skip).limit(limit).all()
 
 
 def get_gasto(db: Session, gasto_id: int):
@@ -405,11 +406,11 @@ def delete_gasto(db: Session, gasto_id: int):
     return db_gasto
 
 
-def get_proprietarios(db: Session):
+def get_proprietarios(db: Session, skip: int = 0, limit: int = 100):
     """
     Returns all elements from the database table proprietarios
     """
-    return db.query(Proprietario).all()
+    return db.query(Proprietario).offset(skip).limit(limit).all()
 
 
 def get_proprietario(db: Session, proprietario_id: int):
