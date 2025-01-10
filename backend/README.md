@@ -2,11 +2,11 @@
 
 ## Tasks:
 1. [x] Adicionar colunas para data de criação e data de modificação.
-2. [ ] Ver no `models.py`, a questão de valores default para agilizar no trabalho de criar elementos ou se isto vai para o **frontend**.
+2. [ ] Criar valores default em `models.py` para agilizar e facilitar o trabalho.
 3. [ ] Rever aqui no `README.md` a descrição, a estrutura e a descrição dos módulos.
 4. [ ] Criar e melhorar as docstrings, comentários e documentação. (De preferência em inglês, exceto o banco de dados que deve se manter em português).
-5. [ ] Criar um módulo que permita preencher a 'ficha de controle de inquilino' requisitada pelo condomínio. E assim associar estes dados ao seu respectivo aluguel. Acredito que uma nova tabela seja necessária.
-6. [ ] Verificar se realmente há necessidade do skip e limit nas funções de `read_<all>` em `crud.py` ou se fica melhor diretamente no **frontend**.
+5. [ ] Criar um módulo que permita preencher a 'ficha de controle de inquilino' requisitada pelo condomínio. E assim associar estes dados ao seu respectivo aluguel. Acredito que uma nova tabela seja necessária, seriam os dados do inquilino, acompanhantes e veículo.
+6. [x] Verificar se realmente há necessidade do offset e limit nas funções de `read_<all>` em `crud.py` ou se fica melhor diretamente no **frontend**.
 
 
 # Banco de Dados - Sistema de Reservas Imobiliárias

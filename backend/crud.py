@@ -24,11 +24,11 @@ def create_aluguel(db: Session, aluguel: AluguelCreate):
     return db_aluguel
 
 
-def read_alugueis(db: Session, skip: int = 0, limit: int = 100):
+def read_alugueis(db: Session, offset: int = 0, limit: int = 100):
     """
     Returns all elements from the database table alugueis
     """
-    return db.query(Aluguel).order_by(Aluguel.id.desc()).offset(skip).limit(limit).all()
+    return db.query(Aluguel).order_by(Aluguel.id.desc()).offset(offset).limit(limit).all()
 
 
 def read_aluguel(db: Session, aluguel_id: int):
@@ -92,12 +92,12 @@ def create_apartamento(db: Session, apartamento: ApartamentoCreate):
     return db_apartamento
 
 
-def read_apartamentos(db: Session, skip: int = 0, limit: int = 100):
+def read_apartamentos(db: Session, offset: int = 0, limit: int = 100):
 
     """
     Returns all elements from the database table apartamentos
     """
-    return db.query(Apartamento).offset(skip).limit(limit).all()
+    return db.query(Apartamento).offset(offset).limit(limit).all()
 
 
 def read_apartamento(db: Session, apartamento_id: int):
@@ -161,11 +161,11 @@ def create_despesa(db: Session, despesa: DespesaCreate):
     return db_despesa
 
 
-def read_despesas(db: Session, skip: int = 0, limit: int = 100):
+def read_despesas(db: Session, offset: int = 0, limit: int = 100):
     """
     Returns all elements from the database table despesas
     """
-    return db.query(Despesa).orderby(Despesa.id.desc()).offset(skip).limit(limit).all()
+    return db.query(Despesa).orderby(Despesa.id.desc()).offset(offset).limit(limit).all()
 
 
 def read_despesa(db: Session, despesa_id: int):
@@ -219,11 +219,11 @@ def create_edificio(db: Session, edificio: EdificioCreate):
     return db_edificio
 
 
-def read_edificios(db: Session, skip: int = 0, limit: int = 100):
+def read_edificios(db: Session, offset: int = 0, limit: int = 100):
     """
     Returns all elements from the database table edificios
     """
-    return db.query(Edificio).offset(skip).limit(limit).all()
+    return db.query(Edificio).offset(offset).limit(limit).all()
 
 
 def read_edificio(db: Session, edificio_id: int):
@@ -285,11 +285,11 @@ def create_garagem(db: Session, garagem: GaragemCreate):
     return db_garagem
 
 
-def read_garagens(db: Session, skip: int = 0, limit: int = 100):
+def read_garagens(db: Session, offset: int = 0, limit: int = 100):
     """
     Returns all elements from the database table garagens
     """
-    return db.query(Garagem).order_by(Garagem.id.desc()).offset(skip).limit(limit).all()
+    return db.query(Garagem).order_by(Garagem.id.desc()).offset(offset).limit(limit).all()
 
 
 def read_garagem(db: Session, garagem_id: int):
@@ -355,11 +355,11 @@ def create_gasto(db: Session, gasto: GastoCreate):
     return db_gasto
 
 
-def read_gastos(db: Session, skip: int = 0, limit: int = 100):
+def read_gastos(db: Session, offset: int = 0, limit: int = 100):
     """
     Returns all elements from the database table gastos
     """
-    return db.query(Gasto).order_by(Gasto.id.desc()).offset(skip).limit(limit).all()
+    return db.query(Gasto).order_by(Gasto.id.desc()).offset(offset).limit(limit).all()
 
 
 def read_gasto(db: Session, gasto_id: int):
@@ -417,11 +417,11 @@ def create_proprietario(db: Session, proprietario: ProprietarioCreate):
     return db_proprietario
 
 
-def read_proprietarios(db: Session, skip: int = 0, limit: int = 100):
+def read_proprietarios(db: Session, offset: int = 0, limit: int = 100):
     """
     Returns all elements from the database table proprietarios
     """
-    return db.query(Proprietario).offset(skip).limit(limit).all()
+    return db.query(Proprietario).offset(offset).limit(limit).all()
 
 
 def read_proprietario(db: Session, proprietario_id: int):

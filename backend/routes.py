@@ -29,8 +29,8 @@ def create_aluguel_route(aluguel: AluguelCreate, db: Session = Depends(get_db)):
 
 
 @router.get("/alugueis", response_model=List[AluguelResponse])
-def read_alugueis_route(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    alugueis = read_alugueis(db, skip=skip, limit=limit)
+def read_alugueis_route(offset: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    alugueis = read_alugueis(db, offset=offset, limit=limit)
     return alugueis
 
 
@@ -64,8 +64,8 @@ def create_apartamento_route(apartamento: ApartamentoCreate, db: Session = Depen
 
 
 @router.get("/apartamentos", response_model=List[ApartamentoResponse])
-def read_apartamentos_route(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    apartamentos = read_apartamentos(db, skip=skip, limit=limit)
+def read_apartamentos_route(offset: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    apartamentos = read_apartamentos(db, offset=offset, limit=limit)
     return apartamentos
 
 
@@ -99,8 +99,8 @@ def create_despesa_route(despesa: DespesaCreate, db: Session = Depends(get_db)):
 
 
 @router.get("/despesas", response_model=List[DespesaResponse])
-def read_despesas_route(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    despesas = read_despesas(db, skip=skip, limit=limit)
+def read_despesas_route(offset: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    despesas = read_despesas(db, offset=offset, limit=limit)
     return despesas
 
 
@@ -134,8 +134,8 @@ def create_edificio_route(edificio: EdificioCreate, db: Session = Depends(get_db
 
 
 @router.get("/edificios", response_model=List[EdificioResponse])
-def read_edificios_route(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    edificios = read_edificios(db, skip=skip, limit=limit)
+def read_edificios_route(offset: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    edificios = read_edificios(db, offset=offset, limit=limit)
     return edificios
 
 
@@ -169,8 +169,8 @@ def create_garagem_route(garagem: GaragemCreate, db: Session = Depends(get_db)):
 
 
 @router.get("/garagens", response_model=List[GaragemResponse])
-def read_garagens_route(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    garagens = read_garagens(db, skip=skip, limit=limit)
+def read_garagens_route(offset: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    garagens = read_garagens(db, offset=offset, limit=limit)
     return garagens
 
 
@@ -204,8 +204,8 @@ def create_gasto_route(gasto: GastoCreate, db: Session = Depends(get_db)):
 
 
 @router.get("/gastos", response_model=List[GastoResponse])
-def read_gastos_route(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    gastos = read_gastos(db, skip=skip, limit=limit)
+def read_gastos_route(offset: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    gastos = read_gastos(db, offset=offset, limit=limit)
     return gastos
 
 
@@ -239,8 +239,8 @@ def create_proprietario_route(proprietario: ProprietarioCreate, db: Session = De
 
 
 @router.get("/proprietarios", response_model=List[ProprietarioResponse])
-def read_proprietarios_route(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    proprietarios = read_proprietarios(db, skip=skip, limit=limit)
+def read_proprietarios_route(offset: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    proprietarios = read_proprietarios(db, offset=offset, limit=limit)
     return proprietarios
 
 
