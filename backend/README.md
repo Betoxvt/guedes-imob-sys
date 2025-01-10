@@ -1,8 +1,13 @@
 # Protótipo - Backend
 
-Precisa rever aqui no README.md a descrição, a estrutura e a descrição dos módulos.
-Precisa ver no models.py e talvez no schemas.py também, a questão de valores default para agilizar no trabalho de criar elementos.
-Precisa melhorar as docstrings, comentários e documentação. (De preferência em inglês, exceto o banco de dados que deve se manter em português)
+## Tasks:
+1. Adicionar colunas para data de criação e data de modificação.
+2. Ver no `models.py` e talvez no `schemas.py` também, a questão de valores default para agilizar no trabalho de criar elementos.
+3. Rever aqui no `README.md` a descrição, a estrutura e a descrição dos módulos.
+4. Criar e melhorar as docstrings, comentários e documentação. (De preferência em inglês, exceto o banco de dados que deve se manter em português).
+5. Criar um módulo que permita preencher a ficha de inquilino requisitada pelo condomínio.
+6. Verificar se realmente há necessidade do skip e limit nas funções de `read_<all>` em `crud.py` ou se fica melhor diretamente no **frontend**.
+
 
 # Banco de Dados - Sistema de Reservas Imobiliárias
 
