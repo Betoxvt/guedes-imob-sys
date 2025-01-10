@@ -70,7 +70,7 @@ class Despesa(Base):
     __tablename__ = 'despesas'
 
     id = Column(Integer, primary_key=True)
-    apartamento_id = Column(Integer, ForeignKey('apartamentos.id'))
+    apartamento_id = Column(Integer, ForeignKey('apartamentos.id'), nullable=False)
     data_pagamento = Column(Date(), server_default=func.now(), nullable=False)
     valor = Column(Numeric(10, 2), nullable=False)
     descricao = Column(Text, nullable=False)

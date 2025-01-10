@@ -20,8 +20,8 @@ class ApartamentoBase(BaseModel):
     apartamento: str
     edificio_id: PositiveInt
     proprietario_id: PositiveInt
-    celesc: Optional[PositiveInt]
-    supergasbras: Optional[PositiveInt]
+    celesc: Optional[int]
+    supergasbras: Optional[int]
     internet_provedor: Optional[str]
     wifiid: Optional[str]
     wifipass: Optional[str]
@@ -29,7 +29,7 @@ class ApartamentoBase(BaseModel):
 
 
 class DespesaBase(BaseModel):
-    apartamento_id: str
+    apartamento_id: PositiveInt
     data_pagamento: date
     valor: PositiveFloat
     descricao: str
@@ -38,16 +38,16 @@ class DespesaBase(BaseModel):
 class EdificioBase(BaseModel):
     nome: str
     logradouro: Optional[str]
-    numero: Optional[PositiveInt]
+    numero: Optional[int]
     bairro: Optional[str]
     cidade: Optional[str]
     uf: Optional[str]
     pais: Optional[str]
-    cep: Optional[PositiveInt]
+    cep: Optional[int]
 
 class GaragemBase(BaseModel):
-    apto_origem_id: str
-    apto_destino_id: str
+    apto_origem_id: PositiveInt
+    apto_destino_id: PositiveInt
     checkin: date
     checkout: date
     diarias: PositiveInt
@@ -59,7 +59,7 @@ class GaragemBase(BaseModel):
 
 
 class GastoBase(BaseModel):
-    apartamento_id: str
+    apartamento_id: PositiveInt
     data_pagamento: date
     valor_material: Optional[PositiveFloat]
     valor_mo: Optional[PositiveFloat]
@@ -69,7 +69,7 @@ class GastoBase(BaseModel):
 
 class ProprietarioBase(BaseModel):
     nome: str
-    cpf: Optional[PositiveInt]
+    cpf: Optional[int]
     telefone: Optional[int]
     email: Optional[EmailStr]
 
@@ -191,8 +191,8 @@ class ApartamentoUpdate(BaseModel):
     apartamento: Optional[str]
     edificio_id: Optional[PositiveInt]
     proprietario_id: Optional[PositiveInt]
-    celesc: Optional[PositiveInt]
-    supergasbras: Optional[PositiveInt]
+    celesc: Optional[int]
+    supergasbras: Optional[int]
     internet_provedor: Optional[str]
     wifiid: Optional[str]
     wifipass: Optional[str]
@@ -200,7 +200,7 @@ class ApartamentoUpdate(BaseModel):
 
 
 class DespesaUpdate(BaseModel):
-    apartamento_id: Optional[str]
+    apartamento_id: Optional[PositiveInt]
     data_pagamento: Optional[date]
     valor: Optional[PositiveFloat]
     descricao: Optional[str]
@@ -209,17 +209,17 @@ class DespesaUpdate(BaseModel):
 class EdificioUpdate(BaseModel):
     nome: Optional[str]
     logradouro: Optional[str]
-    numero: Optional[PositiveInt]
+    numero: Optional[int]
     bairro: Optional[str]
     cidade: Optional[str]
     uf: Optional[str]
     pais: Optional[str]
-    cep: Optional[PositiveInt]
+    cep: Optional[int]
 
 
 class GaragemUpdate(BaseModel):
-    apto_origem_id: Optional[str]
-    apto_destino_id: Optional[str]
+    apto_origem_id: Optional[PositiveInt]
+    apto_destino_id: Optional[PositiveInt]
     checkin: Optional[date]
     checkout: Optional[date]
     diarias: Optional[PositiveInt]
@@ -231,7 +231,7 @@ class GaragemUpdate(BaseModel):
 
 
 class GastoUpdate(BaseModel):
-    apartamento_id: Optional[str]
+    apartamento_id: Optional[PositiveInt]
     data_pagamento: Optional[date]
     valor_material: Optional[PositiveFloat]
     valor_mo: Optional[PositiveFloat]
@@ -241,6 +241,6 @@ class GastoUpdate(BaseModel):
 
 class ProprietarioUpdate(BaseModel):
     nome: Optional[str]
-    cpf: Optional[PositiveInt]
+    cpf: Optional[int]
     telefone: Optional[int]
     email: Optional[EmailStr]
