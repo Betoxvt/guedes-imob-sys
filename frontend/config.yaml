@@ -1,0 +1,16 @@
+credentials:
+  usernames:
+    testeri:
+      email: testing@gmail.com
+      logged_in: False
+      name: Tester I
+      password: abcd1234
+    testerii:
+      email: alsotesting@gmail.com
+      logged_in: False
+      name: Tester II
+      password: 1234abcd
+cookie:
+  expiry_days: 1
+  key: some_signature_key
+  name: some_cookie_name
