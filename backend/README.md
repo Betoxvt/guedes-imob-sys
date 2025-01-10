@@ -7,7 +7,7 @@
 4. [ ] Criar e melhorar as docstrings, comentários e documentação. (De preferência em inglês, exceto o banco de dados que deve se manter em português).
 5. [ ] Criar um módulo que permita preencher a 'ficha de controle de inquilino' requisitada pelo condomínio. E assim associar estes dados ao seu respectivo aluguel. Acredito que uma nova tabela seja necessária, seriam os dados do inquilino, acompanhantes e veículo.
 6. [x] Verificar se realmente há necessidade do offset e limit nas funções de `read_<all>` em `crud.py` ou se fica melhor diretamente no **frontend**.
-7. [ ] renomear routes para router e checar os schemas de response.
+7. [x] renomear routes para router e checar os schemas de response.
 
 
 # Banco de Dados - Sistema de Reservas Imobiliárias
