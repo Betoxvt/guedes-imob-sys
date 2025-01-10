@@ -1,4 +1,8 @@
-# Protótipo
+# Protótipo - Backend
+
+Precisa rever aqui no README.md a descrição, a estrutura e a descrição dos módulos.
+Precisa ver no models.py e talvez no schemas.py também, a questão de valores default para agilizar no trabalho de criar elementos.
+Precisa melhorar as docstrings, comentários e documentação. (De preferência em inglês, exceto o banco de dados que deve se manter em português)
 
 # Banco de Dados - Sistema de Reservas Imobiliárias
 
@@ -148,12 +152,14 @@ Armazena informações dos proprietários dos apartamentos.
 
 ---
 
-# Módulo controller
-
-# Módulo db
+# Módulo database
 
 # Módulo models
 
 # Módulo schemas
 
+# Módulo crud
+
 # Módulo routes
+
+# Módulo main
