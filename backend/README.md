@@ -6,7 +6,7 @@ Precisa melhorar as docstrings, comentários e documentação. (De preferência 
 
 # Banco de Dados - Sistema de Reservas Imobiliárias
 
-Este documento apresenta a especificação técnica do modelo de banco de dados utilizado no sistema de reservas imobiliárias. O objetivo do sistema é gerenciar informações relacionadas a aluguéis, apartamentos, despesas, garagens, gastos variáveis e proprietários.
+Este documento apresenta a especificação técnica do modelo de banco de dados utilizado no sistema de reservas imobiliárias. O objetivo do sistema é gerenciar informações relacionadas a aluguéis temporários, apartamentos, despesas recorrentes, edifícios, alugueis de vagas de garagem, gastos variáveis e proprietários.
 
 ---
 
