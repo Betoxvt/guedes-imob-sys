@@ -1,0 +1,44 @@
+name: estate_system
+services:
+  postgres:
+    image: postgres:latest
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydatabase
+    networks:
+      - mynetwork
+  
+  backend:
+    build:
+      context: ./backend
+      dockerfile: dockerfile
+    volumes:
+      - ./backend:/app
+    environment:
+      DATABASE_URL: postgres://user:password@postgres/mydatabase
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    networks:
+      - mynetwork
+
+  # frontend:
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Dockerfile
+  #   volumes:
+  #     - ./frontend:/app
+  #   ports:
+  #     - "8501:8501"
+  #   networks:
+  #     - mynetwork
+
+networks:
+  mynetwork:
+
+volumes:
+  postgres_data:
