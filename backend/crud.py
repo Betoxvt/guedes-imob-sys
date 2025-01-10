@@ -13,6 +13,17 @@ from models import (
 )
 
 
+def create_aluguel(db: Session, aluguel: AluguelCreate):
+    """
+    Creates a new element in the database table alugueis
+    """
+    db_aluguel = Aluguel(**aluguel.model_dump())
+    db.add(db_aluguel)
+    db.commit()
+    db.refresh(db_aluguel)
+    return db_aluguel
+
+
 def get_alugueis(db: Session, skip: int = 0, limit: int = 100):
     """
     Returns all elements from the database table alugueis
@@ -25,17 +36,6 @@ def get_aluguel(db: Session, aluguel_id: int):
     Returns a specific element from the database table alugueis
     """
     return db.query(Aluguel).filter(Aluguel.id == aluguel_id).first()
-
-
-def create_aluguel(db: Session, aluguel: AluguelCreate):
-    """
-    Creates a new element in the database table alugueis
-    """
-    db_aluguel = Aluguel(**aluguel.model_dump())
-    db.add(db_aluguel)
-    db.commit()
-    db.refresh(db_aluguel)
-    return db_aluguel
 
 
 def update_aluguel(db: Session, aluguel_id: int, aluguel: AluguelUpdate):
@@ -81,6 +81,17 @@ def delete_aluguel(db: Session, aluguel_id: int):
     return db_aluguel
 
 
+def create_apartamento(db: Session, apartamento: ApartamentoCreate):
+    """
+    Creates a new element in the database table apartamentos
+    """
+    db_apartamento = Apartamento(**apartamento.model_dump())
+    db.add(db_apartamento)
+    db.commit()
+    db.refresh(db_apartamento)
+    return db_apartamento
+
+
 def get_apartamentos(db: Session, skip: int = 0, limit: int = 100):
 
     """
@@ -94,17 +105,6 @@ def get_apartamento(db: Session, apartamento_id: int):
     Returns a specific element from the database table apartamentos
     """
     return db.query(Apartamento).filter(Apartamento.id == apartamento_id).first()
-
-
-def create_apartamento(db: Session, apartamento: ApartamentoCreate):
-    """
-    Creates a new element in the database table apartamentos
-    """
-    db_apartamento = Apartamento(**apartamento.model_dump())
-    db.add(db_apartamento)
-    db.commit()
-    db.refresh(db_apartamento)
-    return db_apartamento
 
 
 def update_apartamento(db: Session, apartamento_id: int, apartamento: ApartamentoUpdate):
@@ -150,6 +150,17 @@ def delete_apartamento(db: Session, apartamento_id: int):
     return db_apartamento
 
 
+def create_despesa(db: Session, despesa: DespesaCreate):
+    """
+    Creates a new element in the database table despesas
+    """
+    db_despesa = Despesa(**despesa.model_dump())
+    db.add(db_despesa)
+    db.commit()
+    db.refresh(db_despesa)
+    return db_despesa
+
+
 def get_despesas(db: Session, skip: int = 0, limit: int = 100):
     """
     Returns all elements from the database table despesas
@@ -162,17 +173,6 @@ def get_despesa(db: Session, despesa_id: int):
     Returns a specific element from the database table despesas
     """
     return db.query(Despesa).filter(Despesa.id == despesa_id).first()
-
-
-def create_despesa(db: Session, despesa: DespesaCreate):
-    """
-    Creates a new element in the database table despesas
-    """
-    db_despesa = Despesa(**despesa.model_dump())
-    db.add(db_despesa)
-    db.commit()
-    db.refresh(db_despesa)
-    return db_despesa
 
 
 def update_despesa(db: Session, despesa_id: int, despesa: DespesaUpdate):
@@ -208,6 +208,17 @@ def delete_despesa(db: Session, despesa_id: int):
     return db_despesa
 
 
+def create_edificio(db: Session, edificio: EdificioCreate):
+    """
+    Creates a new element in the database table edificios
+    """
+    db_edificio = Edificio(**edificio.model_dump())
+    db.add(db_edificio)
+    db.commit()
+    db.refresh(db_edificio)
+    return db_edificio
+
+
 def get_edificios(db: Session, skip: int = 0, limit: int = 100):
     """
     Returns all elements from the database table edificios
@@ -220,17 +231,6 @@ def get_edificio(db: Session, edificio_id: int):
     Returns a specific element from the database table edificios
     """
     return db.query(Edificio).filter(Edificio.id == edificio_id).first()
-
-
-def create_edificio(db: Session, edificio: EdificioCreate):
-    """
-    Creates a new element in the database table edificios
-    """
-    db_edificio = Edificio(**edificio.model_dump())
-    db.add(db_edificio)
-    db.commit()
-    db.refresh(db_edificio)
-    return db_edificio
 
 
 def update_edificio(db: Session, edificio_id: int, edificio: EdificioUpdate):
@@ -274,6 +274,17 @@ def delete_edificio(db: Session, edificio_id: int):
     return db_edificio
 
 
+def create_garagem(db: Session, garagem: GaragemCreate):
+    """
+    Creates a new element in the database table garagens
+    """
+    db_garagem = Garagem(**garagem.model_dump())
+    db.add(db_garagem)
+    db.commit()
+    db.refresh(db_garagem)
+    return db_garagem
+
+
 def get_garagens(db: Session, skip: int = 0, limit: int = 100):
     """
     Returns all elements from the database table garagens
@@ -286,17 +297,6 @@ def get_garagem(db: Session, garagem_id: int):
     Returns a specific element from the database table garagens
     """
     return db.query(Garagem).filter(Garagem.id == garagem_id).first()
-
-
-def create_garagem(db: Session, garagem: GaragemCreate):
-    """
-    Creates a new element in the database table garagens
-    """
-    db_garagem = Garagem(**garagem.model_dump())
-    db.add(db_garagem)
-    db.commit()
-    db.refresh(db_garagem)
-    return db_garagem
 
 
 def update_garagem(db: Session, garagem_id: int, garagem: GaragemUpdate):
@@ -344,6 +344,17 @@ def delete_garagem(db: Session, garagem_id: int):
     return db_garagem
 
 
+def create_gasto(db: Session, gasto: GastoCreate):
+    """
+    Creates a new element in the database table gastos
+    """
+    db_gasto = Gasto(**gasto.model_dump())
+    db.add(db_gasto)
+    db.commit()
+    db.refresh(db_gasto)
+    return db_gasto
+
+
 def get_gastos(db: Session, skip: int = 0, limit: int = 100):
     """
     Returns all elements from the database table gastos
@@ -356,17 +367,6 @@ def get_gasto(db: Session, gasto_id: int):
     Returns a specific element from the database table gastos
     """
     return db.query(Gasto).filter(Gasto.id == gasto_id).first()
-
-
-def create_gasto(db: Session, gasto: GastoCreate):
-    """
-    Creates a new element in the database table gastos
-    """
-    db_gasto = Gasto(**gasto.model_dump())
-    db.add(db_gasto)
-    db.commit()
-    db.refresh(db_gasto)
-    return db_gasto
 
 
 def update_gasto(db: Session, gasto_id: int, gasto: GastoUpdate):
@@ -406,6 +406,17 @@ def delete_gasto(db: Session, gasto_id: int):
     return db_gasto
 
 
+def create_proprietario(db: Session, proprietario: ProprietarioCreate):
+    """
+    Creates a new element in the database table proprietarios
+    """
+    db_proprietario = Proprietario(**proprietario.model_dump())
+    db.add(db_proprietario)
+    db.commit()
+    db.refresh(db_proprietario)
+    return db_proprietario
+
+
 def get_proprietarios(db: Session, skip: int = 0, limit: int = 100):
     """
     Returns all elements from the database table proprietarios
@@ -418,17 +429,6 @@ def get_proprietario(db: Session, proprietario_id: int):
     Returns a specific element from the database table proprietarios
     """
     return db.query(Proprietario).filter(Proprietario.id == proprietario_id).first()
-
-
-def create_proprietario(db: Session, proprietario: ProprietarioCreate):
-    """
-    Creates a new element in the database table proprietarios
-    """
-    db_proprietario = Proprietario(**proprietario.model_dump())
-    db.add(db_proprietario)
-    db.commit()
-    db.refresh(db_proprietario)
-    return db_proprietario
 
 
 def update_proprietario(db: Session, proprietario_id: int, proprietario: ProprietarioUpdate):
