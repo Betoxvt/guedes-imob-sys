@@ -4,6 +4,7 @@ from typing import Optional
 
 
 # Base schemas
+
 class AluguelBase(BaseModel):
     apartamento_id: PositiveInt
     checkin: date
@@ -74,7 +75,83 @@ class ProprietarioBase(BaseModel):
     email: Optional[EmailStr]
 
 
+class InquilinoBase(BaseModel):
+    apartamento: str
+    nome: str
+    tipo_residencia: str
+    cidade: str
+    cep: PositiveInt
+    estado: str
+    pais: str
+    telefone: PositiveInt
+    estado_civil: str
+    profissao: str
+    rg: PositiveInt
+    cpf: PositiveInt
+    mae: str
+    automovel: str
+    modelo_auto: str
+    placa_auto: str
+    cor_auto: str
+    checkin: date
+    checkout: date
+    observacoes: Optional[str]
+    proprietario: Optional[str]
+    imob_fone: PositiveInt
+    acomp_01_nome: Optional[str]
+    acomp_01_rg: Optional[PositiveInt]
+    acomp_01_cpf: Optional[PositiveInt]
+    acomp_01_idade: Optional[int]
+    acomp_01_parentesco: Optional[str]
+    acomp_02_nome: Optional[str]
+    acomp_02_rg: Optional[PositiveInt]
+    acomp_02_cpf: Optional[PositiveInt]
+    acomp_02_idade: Optional[int]
+    acomp_02_parentesco: Optional[str]
+    acomp_03_nome: Optional[str]
+    acomp_03_rg: Optional[PositiveInt]
+    acomp_03_cpf: Optional[PositiveInt]
+    acomp_03_idade: Optional[int]
+    acomp_03_parentesco: Optional[str]
+    acomp_04_nome: Optional[str]
+    acomp_04_rg: Optional[PositiveInt]
+    acomp_04_cpf: Optional[PositiveInt]
+    acomp_04_idade: Optional[int]
+    acomp_04_parentesco: Optional[str]
+    acomp_05_nome: Optional[str]
+    acomp_05_rg: Optional[PositiveInt]
+    acomp_05_cpf: Optional[PositiveInt]
+    acomp_05_idade: Optional[int]
+    acomp_05_parentesco: Optional[str]
+    acomp_06_nome: Optional[str]
+    acomp_06_rg: Optional[PositiveInt]
+    acomp_06_cpf: Optional[PositiveInt]
+    acomp_06_idade: Optional[int]
+    acomp_06_parentesco: Optional[str]
+    acomp_07_nome: Optional[str]    
+    acomp_07_rg: Optional[PositiveInt]
+    acomp_07_cpf: Optional[PositiveInt]
+    acomp_07_idade: Optional[int]
+    acomp_07_parentesco: Optional[str]
+    acomp_08_nome: Optional[str]
+    acomp_08_rg: Optional[PositiveInt]
+    acomp_08_cpf: Optional[PositiveInt]
+    acomp_08_idade: Optional[int]
+    acomp_08_parentesco: Optional[str]
+    acomp_09_nome: Optional[str]
+    acomp_09_rg: Optional[PositiveInt]
+    acomp_09_cpf: Optional[PositiveInt]
+    acomp_09_idade: Optional[int]
+    acomp_09_parentesco: Optional[str]
+    acomp_10_nome: Optional[str]
+    acomp_10_rg: Optional[PositiveInt]
+    acomp_10_cpf: Optional[PositiveInt]
+    acomp_10_idade: Optional[int]
+    acomp_10_parentesco: Optional[str]
+    
+
 # Create schemas
+
 class AluguelCreate(AluguelBase):
     pass
 
@@ -103,7 +180,11 @@ class ProprietarioCreate(ProprietarioBase):
     pass
 
 
+class InquilinoCreate(InquilinoBase):
+    pass
+
 # Response schemas
+
 class AluguelResponse(AluguelBase):
     id: PositiveInt
     criado_em: date
@@ -168,6 +249,16 @@ class ProprietarioResponse(ProprietarioBase):
     criado_em: date
     modificado_em: date
     
+
+    class Config:
+        from_attributes = True
+
+
+class InquilinoResponse(InquilinoBase):
+    id: PositiveInt
+    criado_em: date
+    modificado_em: date
+
 
     class Config:
         from_attributes = True
@@ -244,3 +335,78 @@ class ProprietarioUpdate(BaseModel):
     cpf: Optional[int]
     telefone: Optional[int]
     email: Optional[EmailStr]
+
+
+class InquilinoUpdate(BaseModel):
+    apartamento: Optional[str]
+    nome: Optional[str]
+    tipo_residencia: Optional[str]
+    cidade: Optional[str]
+    cep: Optional[PositiveInt]
+    estado: Optional[str]
+    pais: Optional[str]
+    telefone: Optional[PositiveInt]
+    estado_civil: Optional[str]
+    profissao: Optional[str]
+    rg: Optional[PositiveInt]
+    cpf: Optional[PositiveInt]
+    mae: Optional[str]
+    automovel: Optional[str]
+    modelo_auto: Optional[str]
+    placa_auto: Optional[str]
+    cor_auto: Optional[str]
+    checkin: Optional[date]
+    checkout: Optional[date]
+    observacoes: Optional[str]
+    proprietario: Optional[str]
+    imob_fone: Optional[PositiveInt]
+    acomp_01_nome: Optional[str]
+    acomp_01_rg: Optional[PositiveInt]
+    acomp_01_cpf: Optional[PositiveInt]
+    acomp_01_idade: Optional[int]
+    acomp_01_parentesco: Optional[str]
+    acomp_02_nome: Optional[str]
+    acomp_02_rg: Optional[PositiveInt]
+    acomp_02_cpf: Optional[PositiveInt]
+    acomp_02_idade: Optional[int]
+    acomp_02_parentesco: Optional[str]
+    acomp_03_nome: Optional[str]
+    acomp_03_rg: Optional[PositiveInt]
+    acomp_03_cpf: Optional[PositiveInt]
+    acomp_03_idade: Optional[int]
+    acomp_03_parentesco: Optional[str]
+    acomp_04_nome: Optional[str]
+    acomp_04_rg: Optional[PositiveInt]
+    acomp_04_cpf: Optional[PositiveInt]
+    acomp_04_idade: Optional[int]
+    acomp_04_parentesco: Optional[str]
+    acomp_05_nome: Optional[str]
+    acomp_05_rg: Optional[PositiveInt]
+    acomp_05_cpf: Optional[PositiveInt]
+    acomp_05_idade: Optional[int]
+    acomp_05_parentesco: Optional[str]
+    acomp_06_nome: Optional[str]
+    acomp_06_rg: Optional[PositiveInt]
+    acomp_06_cpf: Optional[PositiveInt]
+    acomp_06_idade: Optional[int]
+    acomp_06_parentesco: Optional[str]
+    acomp_07_nome: Optional[str]
+    acomp_07_rg: Optional[PositiveInt]
+    acomp_07_cpf: Optional[PositiveInt]
+    acomp_07_idade: Optional[int]
+    acomp_07_parentesco: Optional[str]
+    acomp_08_nome: Optional[str]
+    acomp_08_rg: Optional[PositiveInt]
+    acomp_08_cpf: Optional[PositiveInt]
+    acomp_08_idade: Optional[int]
+    acomp_08_parentesco: Optional[str]
+    acomp_09_nome: Optional[str]
+    acomp_09_rg: Optional[PositiveInt]
+    acomp_09_cpf: Optional[PositiveInt]
+    acomp_09_idade: Optional[int]
+    acomp_09_parentesco: Optional[str]
+    acomp_10_nome: Optional[str]
+    acomp_10_rg: Optional[PositiveInt]
+    acomp_10_cpf: Optional[PositiveInt]
+    acomp_10_idade: Optional[int]
+    acomp_10_parentesco: Optional[str]

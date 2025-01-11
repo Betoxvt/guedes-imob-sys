@@ -163,7 +163,7 @@ class Inquilino(Base):
     checkin = Column(Date(), nullable=False)
     checkout = Column(Date(), nullable=False)
     observacoes = Column(Text)
-    proprietario = Column(Text, nullable=False)
+    proprietario = Column(Text)
     imob_fone = Column(BigInteger, nullable=False)
     acomp_01_nome = Column(Text)
     acomp_01_rg = Column(BigInteger)
