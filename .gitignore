@@ -15,3 +15,6 @@ wheels/
 # Banco de dados
 *.sqlite
 *.db
+
+# Pasta de arquivos
+files/
