@@ -5,6 +5,7 @@ from sqlalchemy import (
 )
 from database import Base
 
+
 class Aluguel(Base):
     __tablename__ = 'alugueis'
 
@@ -13,7 +14,7 @@ class Aluguel(Base):
     checkin = Column(Date(), nullable=False)
     checkout = Column(Date(), nullable=False)
     diarias = Column(Integer, nullable=False)
-    valor_diaria = Column(Numeric(10, 2), nullable=False)
+    valor_diaria = Column(Numeric(10, 2))
     taxa_adm = Column(Numeric(5, 2), nullable=False)
     valor_total = Column(Numeric(10, 2), nullable=False)
     valor_imob = Column(Numeric(10, 2), nullable=False)
@@ -93,7 +94,7 @@ class Garagem(Base):
     checkin = Column(Date(), nullable=False)
     checkout = Column(Date(), nullable=False)
     diarias = Column(Integer, nullable=False)
-    valor_diaria = Column(Numeric(10, 2), nullable=False)
+    valor_diaria = Column(Numeric(10, 2))
     taxa_adm = Column(Numeric(5, 2), nullable=False)
     valor_total = Column(Numeric(10, 2), nullable=False)
     valor_imob = Column(Numeric(10, 2), nullable=False)
@@ -115,7 +116,7 @@ class Gasto(Base):
     data_pagamento = Column(Date(), server_default=func.now(), nullable=False)
     valor_material = Column(Numeric(10, 2))
     valor_mo = Column(Numeric(10, 2))
-    valor_total = Column(Numeric(10, 2))
+    valor_total = Column(Numeric(10, 2), nullable=False)
     descricao = Column(Text, nullable=False)
     criado_em = Column(Date(), server_default=func.now(), nullable=False)
     modificado_em = Column(Date(), server_default=func.now(), onupdate=func.now(), nullable=False)

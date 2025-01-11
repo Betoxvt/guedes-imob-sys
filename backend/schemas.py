@@ -9,7 +9,7 @@ class AluguelBase(BaseModel):
     checkin: date
     checkout: date
     diarias: PositiveInt
-    valor_diaria: PositiveFloat
+    valor_diaria: Optional[PositiveFloat]
     taxa_adm: PositiveFloat
     valor_total: PositiveFloat
     valor_imob: PositiveFloat
@@ -51,7 +51,7 @@ class GaragemBase(BaseModel):
     checkin: date
     checkout: date
     diarias: PositiveInt
-    valor_diaria: PositiveFloat
+    valor_diaria: Optional[PositiveFloat]
     taxa_adm: PositiveFloat
     valor_total: PositiveFloat
     valor_imob: PositiveFloat

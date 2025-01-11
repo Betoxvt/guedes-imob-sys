@@ -1,13 +1,15 @@
 # Protótipo - Backend
 
 ## Tasks:
-1. [x] Adicionar colunas para data de criação e data de modificação.
-2. [ ] Criar valores default em `models.py` para agilizar e facilitar o trabalho.
+1. [v] Adicionar colunas para data de criação e data de modificação.
+2. [x] Criar valores default em `models.py` para agilizar e facilitar o trabalho.
 3. [ ] Rever aqui no `README.md` a descrição, a estrutura e a descrição dos módulos.
 4. [ ] Criar e melhorar as docstrings, comentários e documentação. (De preferência em inglês, exceto o banco de dados que deve se manter em português).
 5. [ ] Criar um módulo que permita preencher e exportar em PDF a 'ficha de controle de inquilino' requisitada pelo condomínio. E assim associar estes dados ao seu respectivo aluguel. Acredito que uma nova tabela seja necessária, seriam os dados do inquilino, acompanhantes, veículo, etc.
-6. [x] Verificar se realmente há necessidade do offset e limit nas funções de `read_<all>` em `crud.py` ou se fica melhor diretamente no **frontend**.
-7. [x] Renomear routes para router e checar os schemas de response.
+6. [v] Verificar se realmente há necessidade do offset e limit nas funções de `read_<all>` em `crud.py` ou se fica melhor diretamente no **frontend**.
+7. [v] Renomear routes para router e checar os schemas de response.
+8. [ ] Adicionar tratamento de erros
+9. [ ] Adicionar logs
 
 
 # Banco de Dados - Sistema de Reservas Imobiliárias
