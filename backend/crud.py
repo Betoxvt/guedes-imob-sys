@@ -50,6 +50,8 @@ def update_aluguel(db: Session, aluguel_id: int, aluguel: AluguelUpdate):
     
     if aluguel.apartamento_id is not None:
         db_aluguel.apartamento_id = aluguel.apartamento_id
+    if aluguel.inquilino_id is not None:
+        db_aluguel.inquilino_id = aluguel.inquilino_id
     if aluguel.checkin is not None:
         db_aluguel.checkin = aluguel.checkin
     if aluguel.checkout is not None:

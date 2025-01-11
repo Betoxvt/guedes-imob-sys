@@ -11,6 +11,7 @@ class Aluguel(Base):
 
     id = Column(Integer, primary_key=True)
     apartamento_id = Column(Integer, ForeignKey('apartamentos.id'), nullable=False)
+    inquilino_id = Column(Integer, ForeignKey('inquilinos.id'))
     checkin = Column(Date(), nullable=False)
     checkout = Column(Date(), nullable=False)
     diarias = Column(Integer, nullable=False)

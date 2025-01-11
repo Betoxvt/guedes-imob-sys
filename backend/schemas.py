@@ -7,6 +7,7 @@ from typing import Optional
 
 class AluguelBase(BaseModel):
     apartamento_id: PositiveInt
+    inquilino_id: Optional[PositiveInt]
     checkin: date
     checkout: date
     diarias: PositiveInt
@@ -268,6 +269,7 @@ class InquilinoResponse(InquilinoBase):
 
 class AluguelUpdate(BaseModel):
     apartamento_id: Optional[PositiveInt]
+    inquilino_id: Optional[PositiveInt]
     checkin: Optional[date]
     checkout: Optional[date]
     diarias: Optional[PositiveInt]
