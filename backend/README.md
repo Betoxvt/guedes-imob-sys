@@ -1,6 +1,7 @@
 # Protótipo - Backend
 
-## Tasks:
+## Tasks
+
 1. [v] Adicionar colunas para data de criação e data de modificação.
 2. [x] Criar valores default em `models.py` para agilizar e facilitar o trabalho.
 3. [ ] Rever aqui no `README.md` a descrição, a estrutura e a descrição dos módulos.
@@ -11,7 +12,6 @@
 8. [ ] Adicionar tratamento de erros
 9. [ ] Adicionar logs
 
-
 # Banco de Dados - Sistema de Reservas Imobiliárias
 
 Este documento apresenta a especificação técnica do modelo de banco de dados utilizado no sistema de reservas imobiliárias. O objetivo do sistema é gerenciar informações relacionadas a aluguéis temporários, apartamentos, despesas recorrentes, edifícios, alugueis de vagas de garagem, gastos variáveis e proprietários.
@@ -21,6 +21,7 @@ Este documento apresenta a especificação técnica do modelo de banco de dados 
 ## Estrutura do Banco de Dados (`imob.db`)
 
 ### 1. **Tabela Aluguéis (`alugueis`)**
+
 Registra as informações pertinentes aos aluguéis realizados nos apartamentos.
 
 - **id** *(INTEGER, PK)*: Identificação única do aluguel.
@@ -35,16 +36,19 @@ Registra as informações pertinentes aos aluguéis realizados nos apartamentos.
 - **apartamento_id** *(INTEGER, FK)*: Referência ao apartamento alugado.
 
 **Constraints**:
+
 - `ck_taxa_adm_range`: `taxa_adm` deve estar no intervalo de 0 a 100.
 - `ck_valor_diaria_nonnegative`: `valor_diaria ≥ 0`.
 - `ck_valor_total_nonnegative`: `valor_total ≥ 0`.
 
 **Relacionamentos**:
+
 - **Apartamento**: N:1 (*muitos-para-um*).
 
 ---
 
 ### 2. **Tabela Apartamentos (`apartamentos`)**
+
 Gerencia os dados cadastrais dos apartamentos.
 
 - **id** *(INTEGER, PK)*: Identificação única do apartamento.
@@ -59,9 +63,11 @@ Gerencia os dados cadastrais dos apartamentos.
 - **proprietario_id** *(INTEGER, FK)*: Referência ao proprietário do apartamento.
 
 **Constraints**:
+
 - `uq_apartamento_edificio`: Combinação única de `apartamento` e `edificio_id`.
 
 **Relacionamentos**:
+
 - **Alugueis**: 1:N (*um-para-muitos*).
 - **Edificio**: N:1 (*muitos-para-um*).
 - **Proprietário**: N:1 (*muitos-para-um*).
@@ -72,6 +78,7 @@ Gerencia os dados cadastrais dos apartamentos.
 ---
 
 ### 3. **Tabela Despesas Fixas (`despesas`)**
+
 Registra despesas fixas associadas aos apartamentos.
 
 - **id** *(INTEGER, PK)*: Identificação única da despesa.
@@ -81,11 +88,13 @@ Registra despesas fixas associadas aos apartamentos.
 - **apartamento_id** *(INTEGER, FK)*: Referência ao apartamento correspondente.
 
 **Relacionamentos**:
+
 - **Apartamento**: N:1 (*muitos-para-um*).
 
 ---
 
 ### 4. **Tabela Edifícios (`edificios`)**
+
 Registra as informações dos edifícios.
 
 - **id** *(INTEGER, PK)*: Identificação única do edifício.
@@ -98,14 +107,17 @@ Registra as informações dos edifícios.
 - **cep** *(INTEGER)*: Código postal do edifício.
 
 **Constraints**:
+
 - `ck_estado_length`: O campo `estado` deve conter exatamente dois caracteres.
 
 **Relacionamentos**:
+
 - **Apartamentos**: 1:N (*um-para-muitos*).
 
 ---
 
 ### 5. **Tabela Garagens (`garagens`)**
+
 Registra aluguéis de vagas de garagem entre apartamentos.
 
 - **id** *(INTEGER, PK)*: Identificação única do aluguel de garagem.
@@ -121,12 +133,14 @@ Registra aluguéis de vagas de garagem entre apartamentos.
 - **apto_origem_id** *(INTEGER, FK)*: Referência ao apartamento proprietário da vaga.
 
 **Relacionamentos**:
+
 - **Apartamento (Destino)**: N:1 (*muitos-para-um*).
 - **Apartamento (Origem)**: N:1 (*muitos-para-um*).
 
 ---
 
 ### 6. **Tabela Gastos Variáveis (`gastos`)**
+
 Registra despesas eventuais associadas aos apartamentos.
 
 - **id** *(INTEGER, PK)*: Identificação única do gasto.
@@ -138,11 +152,13 @@ Registra despesas eventuais associadas aos apartamentos.
 - **apartamento_id** *(INTEGER, FK)*: Referência ao apartamento correspondente.
 
 **Relacionamentos**:
+
 - **Apartamento**: N:1 (*muitos-para-um*).
 
 ---
 
 ### 7. **Tabela Proprietários (`proprietarios`)**
+
 Armazena informações dos proprietários dos apartamentos.
 
 - **id** *(INTEGER, PK)*: Identificação única do proprietário.
@@ -152,6 +168,7 @@ Armazena informações dos proprietários dos apartamentos.
 - **email** *(TEXT)*: Endereço de e-mail do proprietário (único).
 
 **Relacionamentos**:
+
 - **Apartamentos**: 1:N (*um-para-muitos*).
 
 ---
