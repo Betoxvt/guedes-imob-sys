@@ -87,13 +87,13 @@ class InquilinoBase(BaseModel):
     telefone: PositiveInt
     estado_civil: str
     profissao: str
-    rg: PositiveInt
+    rg: Optional[PositiveInt]
     cpf: PositiveInt
     mae: str
-    automovel: str
-    modelo_auto: str
-    placa_auto: str
-    cor_auto: str
+    automovel: Optional[str]
+    modelo_auto: Optional[str]
+    placa_auto: Optional[str]
+    cor_auto: Optional[str]
     checkin: date
     checkout: date
     observacoes: Optional[str]
