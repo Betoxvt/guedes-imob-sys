@@ -168,6 +168,6 @@ Armazena informações dos proprietários dos apartamentos.
 
 # Módulo crud
 
-# Módulo routes
+# Módulo router
 
 # Módulo main

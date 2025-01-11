@@ -9,7 +9,8 @@ from schemas import (
     EdificioCreate, EdificioResponse, EdificioUpdate,
     GaragemCreate, GaragemResponse, GaragemUpdate,
     GastoCreate, GastoResponse, GastoUpdate,
-    ProprietarioCreate, ProprietarioResponse, ProprietarioUpdate
+    ProprietarioCreate, ProprietarioResponse, ProprietarioUpdate,
+    InquilinoCreate, InquilinoResponse, InquilinoUpdate
 )
 from crud import (
     create_aluguel, read_alugueis, read_aluguel, update_aluguel, delete_aluguel,
@@ -18,7 +19,8 @@ from crud import (
     create_edificio, read_edificio, read_edificios, update_edificio, delete_edificio,
     create_garagem, read_garagem, read_garagens, update_garagem, delete_garagem,
     create_gasto, read_gasto, read_gastos, update_gasto, delete_gasto,
-    create_proprietario, read_proprietario, read_proprietarios, update_proprietario, delete_proprietario
+    create_proprietario, read_proprietario, read_proprietarios, update_proprietario, delete_proprietario,
+    create_inquilino, read_inquilino, read_inquilinos, update_inquilino, delete_inquilino
 )
 
 router = APIRouter()
@@ -266,3 +268,38 @@ def delete_proprietario_route(proprietario_id: int, db: Session = Depends(get_db
     if db_proprietario is None:
         raise HTTPException(status_code=404, detail="Proprietario not found")
     return db_proprietario
+
+
+@router.post("/inquilinos", response_model=InquilinoResponse)
+def create_inquilino_route(inquilino: InquilinoCreate, db: Session = Depends(get_db)):
+    return create_inquilino(db=db, inquilino=inquilino)
+
+
+@router.get("/inquilinos", response_model=List[InquilinoResponse])
+def read_inquilinos_route(offset: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    inquilinos = read_inquilinos(db, offset=offset, limit=limit)
+    return inquilinos
+
+
+@router.get("/inquilinos/{inquilino_id}", response_model=InquilinoResponse)
+def read_inquilino_route(inquilino_id: int, db: Session = Depends(get_db)):
+    inquilino = read_inquilino(db, inquilino_id=inquilino_id)
+    if inquilino is None:
+        raise HTTPException(status_code=404, detail="Inquilino not found")
+    return inquilino
+
+
+@router.put("/inquilinos/{inquilino_id}", response_model=InquilinoResponse)
+def update_inquilino_route(inquilino_id: int, inquilino: InquilinoUpdate, db: Session = Depends(get_db)):
+    db_inquilino = update_inquilino(db=db, inquilino_id=inquilino_id, inquilino=inquilino)
+    if db_inquilino is None:
+        raise HTTPException(status_code=404, detail="Inquilino not found")
+    return db_inquilino
+
+
+@router.delete("/inquilinos/{inquilino_id}", response_model=InquilinoResponse)
+def delete_inquilino_route(inquilino_id: int, db: Session = Depends(get_db)):
+    db_inquilino = delete_inquilino(db, inquilino_id=inquilino_id)
+    if db_inquilino is None:
+        raise HTTPException(status_code=404, detail="Inquilino not found")
+    return db_inquilino
