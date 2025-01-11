@@ -2,12 +2,9 @@ import requests
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 
-# URL da API para obter o registro do inquilino
-API_URL = "http://localhost:8000/inquilinos/{inquilino_id}"
-
 # Função para obter os dados do inquilino via API
 def get_inquilino(inquilino_id):
-    response = requests.get(API_URL.format(inquilino_id=inquilino_id))
+    response = requests.get(f'http://backend:8000/inquilinos/{get_id}')
     if response.status_code == 200:
         return response.json()
     else:
@@ -32,11 +29,11 @@ def fill_pdf(inquilino_data, output_pdf_path):
     c.save()
 
 if __name__ == "__main__":
-    inquilino_id = 1  # Substitua pelo ID do inquilino desejado
-    output_pdf_path = "output_inquilino.pdf"
+    get_id = 1  # Substitua pelo ID do inquilino desejado
+    output_pdf_path = f'ficha_inquilino_{get_id}.pdf'
 
     try:
-        inquilino_data = get_inquilino(inquilino_id)
+        inquilino_data = get_inquilino(get_id)
         fill_pdf(inquilino_data, output_pdf_path)
         print(f"PDF gerado com sucesso: {output_pdf_path}")
     except Exception as e:
