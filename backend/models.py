@@ -221,5 +221,5 @@ class Inquilino(Base):
 
     # Constraints
     __table_args__ = (
-        CheckConstraint("char_length(uf) = 2", name="check_uf_length"),
+        CheckConstraint("char_length(estado) = 2", name="check_estado_length"),
     )
