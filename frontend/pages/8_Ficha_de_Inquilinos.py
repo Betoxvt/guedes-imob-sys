@@ -48,26 +48,31 @@ with tab1:
     with st.form('new_inquilino'):
         apartamento = st.text_input(
             label='Apartamento alugado',
-            value=None
+            value=None,
+            key=8001
         )
         nome = st.text_input(
             label='Nome completo',
-            value=None
+            value=None,
+            key=8002
         )
         tipo_residencia = st.radio(
             label='Tipo de residência',
             options=['Anual', 'Temporária'],
             index=1,
             horizontal=True,
+            key=8003
         )
         cidade = st.text_input(
             label='Naturalidade (cidade)',
-            value=None
+            value=None,
+            key=8004
         )
         cep_input = st.text_input(
             label='CEP',
             help='Somente números',
-            value=None
+            value=None,
+            key=8005
         )
         if cep_input:
                 cep = cep_input.replace('-', '')
@@ -78,16 +83,19 @@ with tab1:
         estado = st.text_input(
             label='Estado (UF)',
             max_chars=2,
-            value=None
+            value=None,
+            key=8006
         )
         pais = st.text_input(
             label='País',
-            value=None
+            value=None,
+            key=8007
         )
         telefone_input = st.text_input(
             label='Telefone',
             help='Somente números: +DDI (DDD) 0 0000-0000',
-            value=None
+            value=None,
+            key=8008
         )
         if telefone_input:
             telefone = telefone_input.replace('+', '').replace('-', '').replace(' ', '').replace('(', '').replace(')', '')
@@ -98,15 +106,18 @@ with tab1:
         estado_civil = st.selectbox(
             label='Estado civíl',
             options=['Solteiro', 'Casado', 'Separado', 'Divorciado', 'Viúvo'],
+            key=8009
         )
         profissao = st.text_input(
             label='Profissão',
-            value=None
+            value=None,
+            key=8010
         )
         rg_input = st.text_input(
             label='Identidade',
             help='Somente números no formato XXX.XXX.XXX-X',
-            value=None
+            value=None,
+            key=8011
         )
         if rg_input:
             rg = rg_input.replace('.', '').replace('-', '')
@@ -117,7 +128,8 @@ with tab1:
         cpf_input = st.text_input(
             label='CPF',
             help='Somente números',
-            value=None
+            value=None,
+            key=8012
         )
         if cpf_input:
             cpf = cpf_input.replace('.', '').replace('-', '')
@@ -127,267 +139,327 @@ with tab1:
                 st.error('O CPF deve conter exatamente 11 dígitos.')
         mae = st.text_input(
             label='Nome completo da mãe',
-            value=None
+            value=None,
+            key=8013
         )        
         automovel = st.text_input(
             label='Automóvel',
-            value=None
+            value=None,
+            key=8014
         )
         modelo_auto = st.text_input(
             label='Modelo',
-            value=None
+            value=None,
+            key=8015
         )
         placa_auto = st.text_input(
             label='Placa',
-            value=None
+            value=None,
+            key=8016
         )
         cor_auto = st.text_input(
             label='Cor',
-            value=None
+            value=None,
+            key=8017
         )
         checkin = st.date_input(
             label='Check-in',
             min_value=date(2022, 1, 1),
             max_value=date.today()+timedelta(days=300),
-            format='DD/MM/YYYY'
+            format='DD/MM/YYYY',
+            key=8018
         )
         checkout = st.date_input(
             label='Check-out',
             min_value=checkin+timedelta(days=1),
             max_value=date.today()+timedelta(days=300),
-            format='DD/MM/YYYY'
+            format='DD/MM/YYYY',
+            key=8019
         )
         observacoes = st.text_area(
             label='Observações',
-            value=None
+            value=None,
+            key=8020
         )
         proprietario = st.text_input(
             label='Proprietário',
-            value=None
+            value=None,
+            key=8021
         )
         imob_fone = st.text_input(
             label='Telefone Imobiliária',
             help='Somente números: +DDI (DDD) 0 0000-0000',
-            value=None
+            value=None,
+            key=8022
         )
         st.subheader('Acompanhante 01')
         acomp_01_nome = st.text_input(
             label='Nome',
-            value=None
+            value=None,
+            key=8023
         )
         acomp_01_rg = st.text_input(
             label='RG',
-            value=None
+            value=None,
+            key=8024
         )
         acomp_01_cpf = st.text_input(
             label='CPF',
-            value=None
+            value=None,
+            key=8025
         )
         acomp_01_idade = st.number_input(
             label='Idade',
-            value=None
+            value=None,
+            key=8026
         )
         acomp_01_parentesco = st.text_input(
             label='Parentesco',
-            value=None
+            value=None,
+            key=8027
         )
 
         st.subheader('Acompanhante 02')
         acomp_02_nome = st.text_input(
             label='Nome',
-            value=None
+            value=None,
+            key=8028
         )
         acomp_02_rg = st.text_input(
             label='RG',
-            value=None
+            value=None,
+            key=8029
         )
         acomp_02_cpf = st.text_input(
             label='CPF',
-            value=None
+            value=None,
+            key=8030
         )
         acomp_02_idade = st.number_input(
             label='Idade',
-            value=None
+            value=None,
+            key=8031
         )
         acomp_02_parentesco = st.text_input(
             label='Parentesco',
-            value=None
+            value=None,
+            key=8032
         )
 
         st.subheader('Acompanhante 03')
         acomp_03_nome = st.text_input(
             label='Nome',
-            value=None
+            value=None,
+            key=8033
         )
         acomp_03_rg = st.text_input(
             label='RG',
-            value=None
+            value=None,
+            key=8034
         )
         acomp_03_cpf = st.text_input(
             label='CPF',
-            value=None
+            value=None,
+            key=8035
         )
         acomp_03_idade = st.number_input(
             label='Idade',
-            value=None
+            value=None,
+            key=8036
         )
         acomp_03_parentesco = st.text_input(
             label='Parentesco',
-            value=None
+            value=None,
+            key=8037
         )
 
         st.subheader('Acompanhante 04')
         acomp_04_nome = st.text_input(
             label='Nome',
-            value=None
+            value=None,
+            key=8038
         )
         acomp_04_rg = st.text_input(
             label='RG',
-            value=None
+            value=None,
+            key=8039
         )
         acomp_04_cpf = st.text_input(
             label='CPF',
-            value=None
+            value=None,
+            key=8040
         )
         acomp_04_idade = st.number_input(
             label='Idade',
-            value=None
+            value=None,
+            key=8041
         )
         acomp_04_parentesco = st.text_input(
             label='Parentesco',
-            value=None
+            value=None,
+            key=8042
         )
 
         st.subheader('Acompanhante 05')
         acomp_05_nome = st.text_input(
             label='Nome',
-            value=None
+            value=None,
+            key=8043
         )
         acomp_05_rg = st.text_input(
             label='RG',
-            value=None
+            value=None,
+            key=8044
         )
         acomp_05_cpf = st.text_input(
             label='CPF',
-            value=None
+            value=None,
+            key=8045
         )
         acomp_05_idade = st.number_input(
             label='Idade',
-            value=None
+            value=None,
+            key=8046
         )
         acomp_05_parentesco = st.text_input(
             label='Parentesco',
-            value=None
+            value=None,
+            key=8047
         )
 
         st.subheader('Acompanhante 06')
         acomp_06_nome = st.text_input(
             label='Nome',
-            value=None
+            value=None,
+            key=8048
         )
         acomp_06_rg = st.text_input(
             label='RG',
-            value=None
+            value=None,
+            key=8049
         )
         acomp_06_cpf = st.text_input(
             label='CPF',
-            value=None
+            value=None,
+            key=8050
         )
         acomp_06_idade = st.number_input(
             label='Idade',
-            value=None
+            value=None,
+            key=8051
         )
         acomp_06_parentesco = st.text_input(
             label='Parentesco',
-            value=None
+            value=None,
+            key=8052
         )
 
         st.subheader('Acompanhante 07')
         acomp_07_nome = st.text_input(
             label='Nome',
-            value=None
+            value=None,
+            key=8053
         )
         acomp_07_rg = st.text_input(
             label='RG',
-            value=None
+            value=None,
+            key=8054
         )
         acomp_07_cpf = st.text_input(
             label='CPF',
-            value=None
+            value=None,
+            key=8055
         )
         acomp_07_idade = st.number_input(
             label='Idade',
-            value=None
+            value=None,
+            key=8056
         )
         acomp_07_parentesco = st.text_input(
             label='Parentesco',
-            value=None
+            value=None,
+            key=8057
         )
 
         st.subheader('Acompanhante 08')
         acomp_08_nome = st.text_input(
             label='Nome',
-            value=None
+            value=None,
+            key=8058
         )
         acomp_08_rg = st.text_input(
             label='RG',
-            value=None
+            value=None,
+            key=8059
         )
         acomp_08_cpf = st.text_input(
             label='CPF',
-            value=None
+            value=None,
+            key=8060
         )
         acomp_08_idade = st.number_input(
             label='Idade',
-            value=None
+            value=None,
+            key=8061
         )
         acomp_08_parentesco = st.text_input(
             label='Parentesco',
-            value=None
+            value=None,
+            key=8062
         )
 
         st.subheader('Acompanhante 09')
         acomp_09_nome = st.text_input(
             label='Nome',
-            value=None
+            value=None,
+            key=8063
         )
         acomp_09_rg = st.text_input(
             label='RG',
-            value=None
+            value=None,
+            key=8064
         )
         acomp_09_cpf = st.text_input(
             label='CPF',
-            value=None
+            value=None,
+            key=8065
         )
         acomp_09_idade = st.number_input(
             label='Idade',
-            value=None
+            value=None,
+            key=8066
         )
         acomp_09_parentesco = st.text_input(
             label='Parentesco',
-            value=None
+            value=None,
+            key=8067
         )
 
         st.subheader('Acompanhante 10')
         acomp_10_nome = st.text_input(
             label='Nome',
-            value=None
+            value=None,
+            key=8068
         )
         acomp_10_rg = st.text_input(
             label='RG',
-            value=None
+            value=None,
+            key=8069
         )
         acomp_10_cpf = st.text_input(
             label='CPF',
-            value=None
+            value=None,
+            key=8070
         )
         acomp_10_idade = st.number_input(
             label='Idade',
-            value=None
+            value=None,
+            key=8071
         )
         acomp_10_parentesco = st.text_input(
             label='Parentesco',
-            value=None
+            value=None,
+            key=8072
         )
 
         submit_button = st.form_submit_button('Registrar Ficha')
@@ -474,7 +546,12 @@ with tab1:
 
 with tab2:
     st.header('Consultar uma Ficha de Inquilino')
-    get_id = st.number_input('ID da Ficha de Inquilino', min_value=1, format='%d')
+    get_id = st.number_input(
+        'ID da Ficha de Inquilino',
+        min_value=1,
+        format='%d',
+        key=8150
+        )
     if st.button('Buscar Ficha de Inquilino'):
         response = requests.get(f'http://backend:8000/inquilinos/{get_id}')
         if response.status_code == 200:
@@ -516,7 +593,8 @@ with tab3:
     update_id = st.number_input(
         'ID da Ficha',
         min_value=1,
-        format='%d'
+        format='%d',
+        key=8151
     )
     if update_id:
         response = requests.get(f'http://backend:8000/inquilinos/{update_id}')
@@ -527,26 +605,31 @@ with tab3:
         with st.form('update_inquilino'):
             apartamento = st.text_input(
                 label='Apartamento alugado',
-                value=str(df.apartamento[0])
+                value=str(df.apartamento[0]),
+                key=8073
             )
             nome = st.text_input(
                 label='Nome completo',
-                value=str(df.nome[0])
+                value=str(df.nome[0]),
+                key=8074
             )
             tipo_residencia = st.radio(
                 label='Tipo de residência',
                 options=['Anual', 'Temporária'],
                 index=1,
                 horizontal=True,
+                key=8075
             )
             cidade = st.text_input(
                 label='Naturalidade (cidade)',
-                value=str(df.cidade[0])
+                value=str(df.cidade[0]),
+                key=8076
             )
             cep_input = st.text(
                 label='CEP',
                 value=f'{df.cep[0][:5]}-{df.cep[0][5:8]}',
-                help='Somente números'
+                help='Somente números',
+                key=8077
             )
             if cep_input:
                 cep = cep_input.replace('-', '')
@@ -557,16 +640,19 @@ with tab3:
             estado = st.text_input(
                 label='Estado (UF)',
                 max_chars=2,
-                value=str(df.estado[0])
+                value=str(df.estado[0]),
+                key=8078
             )
             pais = st.text_input(
                 label='País',
-                value=str(df.pais[0])
+                value=str(df.pais[0]),
+                key=8079
             )
             telefone_input = st.text_input(
                 label='Telefone',
                 value=f'+{df.telefone[0][:2]} ({df.telefone[0][2:4]}) {df.telefone[0][4]} {df.telefone[0][5:9]}-{df.telefone[0][9:]}',
-                help='Somente números: +DDI (DDD) 0 0000-0000'
+                help='Somente números: +DDI (DDD) 0 0000-0000',
+                key=8080
             )
             if telefone_input:
                 telefone = telefone_input.replace('+', '').replace('-', '').replace(' ', '').replace('(', '').replace(')', '')
@@ -577,16 +663,19 @@ with tab3:
             estado_civil = st.selectbox(
                 label='Estado civíl',
                 options=['Solteiro', 'Casado', 'Separado', 'Divorciado', 'Viúvo'],
-                placeholder=str(df.estado_civil[0])
+                placeholder=str(df.estado_civil[0]),
+                key=8081
             )
             profissao = st.text_input(
                 label='Profissão',
-                value=str(df.profissao[0])
+                value=str(df.profissao[0]),
+                key=8082
             )
             rg_input = st.text_input(
                 label='Identidade',
                 value=f"{df.rg[0][:3]}.{df.rg[0][3:6]}.{df.rg[0][6:9]}-{df.rg[0][9:]}",
                 help='Somente números no formato XXX.XXX.XXX-X',
+                key=8083
             )
             if rg_input:
                 rg = rg_input.replace('.', '').replace('-', '')
@@ -598,6 +687,7 @@ with tab3:
                 label='CPF',
                 value=f'{df.cpf[0][:3]}.{df.cpf[0][3:6]}.{df.cpf[0][6:9]}-{df.cpf[0][9:]}',
                 help='Somente números',
+                key=8084
             )
             if cpf_input:
                 cpf = cpf_input.replace('.', '').replace('-', '')
@@ -607,294 +697,358 @@ with tab3:
                     st.error('O CPF deve conter exatamente 11 dígitos.')
             mae = st.text_input(
                 label='Nome completo da mãe',
-                value=str(df.mae[0])
+                value=str(df.mae[0]),
+                key=8085
             )
             if pd.isna(df.loc[0, 'automovel']):
                 automovel = st.text_input(
                     label='Automóvel',
-                    value=None
+                    value=None,
+                    key=8086
                 )
             else:
                 automovel = st.text_input(
                     label='Automóvel',
-                    value=str(df.automovel[0])
+                    value=str(df.automovel[0]),
+                    key=8087
                 )
             if pd.isna(df.loc[0, 'modelo']):
                 modelo_auto = st.text_input(
                     label='Modelo',
-                    value=None
+                    value=None,
+                    key=8088
                 )
             else:
                 modelo_auto = st.text_input(
                     label='Modelo',
-                    value=str(df.modelo[0])
+                    value=str(df.modelo[0]),
+                    key=8089
                 )
             if pd.isna(df.loc[0, 'placa']):
                 placa_auto = st.text_input(
                     label='Placa',
-                    value=None
+                    value=None,
+                    key=8090
                 )
             else:
                 placa_auto = st.text_input(
                     label='Placa',
-                    value=str(df.placa[0])
+                    value=str(df.placa[0]),
+                    key=8091
                 )
             if pd.isna(df.loc[0, 'automovel']):
                 cor_auto = st.text_input(
                     label='Cor',
-                    value=None
+                    value=None,
+                    key=8092
                 )
             else:
                 cor_auto = st.text_input(
                     label='Cor',
-                    value=str(df.cor_auto[0])
+                    value=str(df.cor_auto[0]),
+                    key=8093
                 )
             checkin = st.date_input(
                 label='Check-in',
                 value=date(df.checkin[0]),
                 min_value=date(2022, 1, 1),
                 max_value=date.today()+timedelta(days=300),
-                format='DD/MM/YYYY'
+                format='DD/MM/YYYY',
+                key=8094
             )
             checkout = st.date_input(
                 label='Check-out',
                 value=date(df.checkout[0]),
                 min_value=checkin+timedelta(days=1),
                 max_value=date.today()+timedelta(days=300),
-                format='DD/MM/YYYY'
+                format='DD/MM/YYYY',
+                key=8095
             )
             observacoes = st.text_area(
                 label='Observações',
-                value=None if pd.isna(df.loc[0, 'observacoes']) else str(df.observacoes[0])
+                value=None if pd.isna(df.loc[0, 'observacoes']) else str(df.observacoes[0]),
+                key=8096
             )
             proprietario = st.text_input(
                 label='Proprietário',
-                value=str(df.proprietario[0])
+                value=str(df.proprietario[0]),
+                key=8097
             )
             imob_fone = st.text_input(
                 label='Telefone Imobiliária',
                 value=f'+{df.imob_fone[0][:2]} ({df.imob_fone[0][2:4]}) {df.imob_fone[0][4]} {df.imob_fone[0][5:9]}-{df.imob_fone[0][9:]}',
-                help='Somente números: +DDI (DDD) 0 0000-0000'
+                help='Somente números: +DDI (DDD) 0 0000-0000',
+                key=8098
             )
 
             st.subheader('Acompanhante 01')
             acomp_01_nome = st.text_input(
                 label='Nome',
-                value=str(df.acomp_01_nome[0])
+                value=str(df.acomp_01_nome[0]),
+                key=8099
             )
             acomp_01_rg = st.text_input(
                 label='RG',
-                value=str(df.acomp_01_rg[0])
+                value=str(df.acomp_01_rg[0]),
+                key=8100
             )
             acomp_01_cpf = st.text_input(
                 label='CPF',
-                value=str(df.acomp_01_cpf[0])
+                value=str(df.acomp_01_cpf[0]),
+                key=8101
             )
             acomp_01_idade = st.number_input(
                 label='Idade',
-                value=int(df.loc[0, 'acomp_01_idade'])
+                value=int(df.loc[0, 'acomp_01_idade']),
+                key=8102
             )
             acomp_01_parentesco = st.text_input(
                 label='Parentesco',
-                value=str(df.acomp_01_parentesco[0])
+                value=str(df.acomp_01_parentesco[0]),
+                key=8103
             )
 
             st.subheader('Acompanhante 02')
             acomp_02_nome = st.text_input(
                 label='Nome',
-                value=str(df.acomp_02_nome[0])
+                value=str(df.acomp_02_nome[0]),
+                key=8104
             )
             acomp_02_rg = st.text_input(
                 label='RG',
-                value=str(df.acomp_02_rg[0])
+                value=str(df.acomp_02_rg[0]),
+                key=8105
             )
             acomp_02_cpf = st.text_input(
                 label='CPF',
-                value=str(df.acomp_02_cpf[0])
+                value=str(df.acomp_02_cpf[0]),
+                key=8106
             )
             acomp_02_idade = st.number_input(
                 label='Idade',
-                value=int(df.loc[0, 'acomp_02_idade'])
+                value=int(df.loc[0, 'acomp_02_idade']),
+                key=8107
             )
             acomp_02_parentesco = st.text_input(
                 label='Parentesco',
-                value=str(df.acomp_02_parentesco[0])
+                value=str(df.acomp_02_parentesco[0]),
+                key=8108
             )
 
             st.subheader('Acompanhante 03')
             acomp_03_nome = st.text_input(
                 label='Nome',
-                value=str(df.acomp_03_nome[0])
+                value=str(df.acomp_03_nome[0]),
+                key=8109
             )
             acomp_03_rg = st.text_input(
                 label='RG',
-                value=str(df.acomp_03_rg[0])
+                value=str(df.acomp_03_rg[0]),
+                key=8110
             )
             acomp_03_cpf = st.text_input(
                 label='CPF',
-                value=str(df.acomp_03_cpf[0])
+                value=str(df.acomp_03_cpf[0]),
+                key=8111
             )
             acomp_03_idade = st.number_input(
                 label='Idade',
-                value=int(df.loc[0, 'acomp_03_idade'])
+                value=int(df.loc[0, 'acomp_03_idade']),
+                key=8112
             )
             acomp_03_parentesco = st.text_input(
                 label='Parentesco',
-                value=str(df.acomp_03_parentesco[0])
+                value=str(df.acomp_03_parentesco[0]),
+                key=8113
             )
 
             st.subheader('Acompanhante 04')
             acomp_04_nome = st.text_input(
                 label='Nome',
-                value=str(df.acomp_04_nome[0])
+                value=str(df.acomp_04_nome[0]),
+                key=8114
             )
             acomp_04_rg = st.text_input(
                 label='RG',
-                value=str(df.acomp_04_rg[0])
+                value=str(df.acomp_04_rg[0]),
+                key=8115
             )
             acomp_04_cpf = st.text_input(
                 label='CPF',
-                value=str(df.acomp_04_cpf[0])
+                value=str(df.acomp_04_cpf[0]),
+                key=8116
             )
             acomp_04_idade = st.number_input(
                 label='Idade',
-                value=int(df.loc[0, 'acomp_04_idade'])
+                value=int(df.loc[0, 'acomp_04_idade']),
+                key=8117
             )
             acomp_04_parentesco = st.text_input(
                 label='Parentesco',
-                value=str(df.acomp_04_parentesco[0])
+                value=str(df.acomp_04_parentesco[0]),
+                key=8118
             )
 
             st.subheader('Acompanhante 05')
             acomp_05_nome = st.text_input(
                 label='Nome',
-                value=str(df.acomp_05_nome[0])
+                value=str(df.acomp_05_nome[0]),
+                key=8119
             )
             acomp_05_rg = st.text_input(
                 label='RG',
-                value=str(df.acomp_05_rg[0])
+                value=str(df.acomp_05_rg[0]),
+                key=8120
             )
             acomp_05_cpf = st.text_input(
                 label='CPF',
-                value=str(df.acomp_05_cpf[0])
+                value=str(df.acomp_05_cpf[0]),
+                key=8121
             )
             acomp_05_idade = st.number_input(
                 label='Idade',
-                value=int(df.loc[0, 'acomp_05_idade'])
+                value=int(df.loc[0, 'acomp_05_idade']),
+                key=8122
             )
             acomp_05_parentesco = st.text_input(
                 label='Parentesco',
-                value=str(df.acomp_05_parentesco[0])
+                value=str(df.acomp_05_parentesco[0]),
+                key=8123
             )
 
             st.subheader('Acompanhante 06')
             acomp_06_nome = st.text_input(
                 label='Nome',
-                value=str(df.acomp_06_nome[0])
+                value=str(df.acomp_06_nome[0]),
+                key=8124
             )
             acomp_06_rg = st.text_input(
                 label='RG',
-                value=str(df.acomp_06_rg[0])
+                value=str(df.acomp_06_rg[0]),
+                key=8125
             )
             acomp_06_cpf = st.text_input(
                 label='CPF',
-                value=str(df.acomp_06_cpf[0])
+                value=str(df.acomp_06_cpf[0]),
+                key=8126
             )
             acomp_06_idade = st.number_input(
                 label='Idade',
-                value=int(df.loc[0, 'acomp_06_idade'])
+                value=int(df.loc[0, 'acomp_06_idade']),
+                key=8127
             )
             acomp_06_parentesco = st.text_input(
                 label='Parentesco',
-                value=str(df.acomp_06_parentesco[0])
+                value=str(df.acomp_06_parentesco[0]),
+                key=8128
             )
 
             st.subheader('Acompanhante 07')
             acomp_07_nome = st.text_input(
                 label='Nome',
-                value=str(df.acomp_07_nome[0])
+                value=str(df.acomp_07_nome[0]),
+                key=8129
             )
             acomp_07_rg = st.text_input(
                 label='RG',
-                value=str(df.acomp_07_rg[0])
+                value=str(df.acomp_07_rg[0]),
+                key=8130
             )
             acomp_07_cpf = st.text_input(
                 label='CPF',
-                value=str(df.acomp_07_cpf[0])
+                value=str(df.acomp_07_cpf[0]),
+                key=8131
             )
             acomp_07_idade = st.number_input(
                 label='Idade',
-                value=int(df.loc[0, 'acomp_07_idade'])
+                value=int(df.loc[0, 'acomp_07_idade']),
+                key=8132
             )
             acomp_07_parentesco = st.text_input(
                 label='Parentesco',
-                value=str(df.acomp_07_parentesco[0])
+                value=str(df.acomp_07_parentesco[0]),
+                key=8133
             )
 
             st.subheader('Acompanhante 08')
             acomp_08_nome = st.text_input(
                 label='Nome',
-                value=str(df.acomp_08_nome[0])
+                value=str(df.acomp_08_nome[0]),
+                key=8134
             )
             acomp_08_rg = st.text_input(
                 label='RG',
-                value=str(df.acomp_08_rg[0])
+                value=str(df.acomp_08_rg[0]),
+                key=8135
             )
             acomp_08_cpf = st.text_input(
                 label='CPF',
-                value=str(df.acomp_08_cpf[0])
+                value=str(df.acomp_08_cpf[0]),
+                key=8136
             )
             acomp_08_idade = st.number_input(
                 label='Idade',
-                value=int(df.loc[0, 'acomp_08_idade'])
+                value=int(df.loc[0, 'acomp_08_idade']),
+                key=8137
             )
             acomp_08_parentesco = st.text_input(
                 label='Parentesco',
-                value=str(df.acomp_08_parentesco[0])
+                value=str(df.acomp_08_parentesco[0]),
+                key=8138
             )
 
             st.subheader('Acompanhante 09')
             acomp_09_nome = st.text_input(
                 label='Nome',
-                value=str(df.acomp_09_nome[0])
+                value=str(df.acomp_09_nome[0]),
+                key=8139
             )
             acomp_09_rg = st.text_input(
                 label='RG',
-                value=str(df.acomp_09_rg[0])
+                value=str(df.acomp_09_rg[0]),
+                key=8140
             )
             acomp_09_cpf = st.text_input(
                 label='CPF',
-                value=str(df.acomp_09_cpf[0])
+                value=str(df.acomp_09_cpf[0]),
+                key=8141
             )
             acomp_09_idade = st.number_input(
                 label='Idade',
-                value=int(df.loc[0, 'acomp_09_idade'])
+                value=int(df.loc[0, 'acomp_09_idade']),
+                key=8142
             )
             acomp_09_parentesco = st.text_input(
                 label='Parentesco',
-                value=str(df.acomp_09_parentesco[0])
+                value=str(df.acomp_09_parentesco[0]),
+                key=8143
             )
 
             st.subheader('Acompanhante 10')
             acomp_10_nome = st.text_input(
                 label='Nome',
-                value=str(df.acomp_10_nome[0])
+                value=str(df.acomp_10_nome[0]),
+                key=8144
             )
             acomp_10_rg = st.text_input(
                 label='RG',
-                value=str(df.acomp_10_rg[0])
+                value=str(df.acomp_10_rg[0]),
+                key=8145
             )
             acomp_10_cpf = st.text_input(
                 label='CPF',
-                value=str(df.acomp_10_cpf[0])
+                value=str(df.acomp_10_cpf[0]),
+                key=8146
             )
             acomp_10_idade = st.number_input(
                 label='Idade',
-                value=int(df.loc[0, 'acomp_10_idade'])
+                value=int(df.loc[0, 'acomp_10_idade']),
+                key=8147
             )
             acomp_10_parentesco = st.text_input(
                 label='Parentesco',
-                value=str(df.acomp_10_parentesco[0])
+                value=str(df.acomp_10_parentesco[0]),
+                key=8148
             )
 
             update_button = st.form_submit_button('Atualizar Dados')
@@ -988,7 +1142,8 @@ with tab4:
     delete_id = st.number_input(
         label="ID da Ficha de Inquilino para Deletar",
         min_value=1,
-        format='%d'
+        format='%d',
+        key=8149
     )
     if delete_id:
         response = requests.get(f'http://backend:8000/inquilinos/{delete_id}')
