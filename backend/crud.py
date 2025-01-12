@@ -531,8 +531,6 @@ def update_inquilino(db: Session, inquilino_id: int, inquilino: InquilinoUpdate)
         db_inquilino.checkout = inquilino.checkout
     if inquilino.imob_fone is not None:
         db_inquilino.imob_fone = inquilino.imob_fone
-    if inquilino.qtd_acomp is not None:
-        db_inquilino.qtd_acomp = inquilino.qtd_acomp
 
     db.commit()
     db.refresh(db_inquilino)

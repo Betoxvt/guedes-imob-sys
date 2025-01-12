@@ -99,7 +99,6 @@ class InquilinoBase(BaseModel):
     observacoes: Optional[str]
     proprietario: Optional[str]
     imob_fone: str
-    qtd_acomp: Optional[int]
     acomp_01_nome: Optional[str]
     acomp_01_rg: Optional[str]
     acomp_01_cpf: Optional[str]
@@ -363,7 +362,6 @@ class InquilinoUpdate(BaseModel):
     observacoes: Optional[str]
     proprietario: Optional[str]
     imob_fone: Optional[str]
-    qtd_acomp: Optional[int]
     acomp_01_nome: Optional[str]
     acomp_01_rg: Optional[str]
     acomp_01_cpf: Optional[str]

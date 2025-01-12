@@ -166,7 +166,6 @@ class Inquilino(Base):
     observacoes = Column(Text)
     proprietario = Column(Text)
     imob_fone = Column(Text, nullable=False)
-    qtd_acomp = Column(Integer)
     acomp_01_nome = Column(Text)
     acomp_01_rg = Column(Text)
     acomp_01_cpf = Column(Text)
