@@ -14,31 +14,6 @@ def convert_empty_to_none():
             globals()[var_name] = None
 
 
-def key_to_var(dictionary) -> None:
-    """
-    Converts keys of a dictionary to variables in the local scope.
-
-    Args:
-        dictionary: The dictionary whose keys will be converted to variables.
-
-    Returns:
-        None
-    """
-    for k in dictionary:
-        exec('{KEY} = {VALUE}'.format(KEY=k, VALUE=repr(dictionary[k])))
-    return None
-
-
-def null_acomp(init: int, acomp_dict: dict) -> dict:
-    for i in range(init+1,11):
-        acomp_dict[f'acomp_{i:02d}_nome'] = None
-        acomp_dict[f'acomp_{i:02d}_rg'] = None
-        acomp_dict[f'acomp_{i:02d}_cpf'] = None
-        acomp_dict[f'acomp_{i:02d}_idade'] = None
-        acomp_dict[f'acomp_{i:02d}_parentesco'] = None
-
-    return acomp_dict
-
 def show_response_message(response) -> None:
     if response.status_code == 200:
         st.success('Operação realizada com sucesso!')
