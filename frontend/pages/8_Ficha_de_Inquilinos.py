@@ -983,7 +983,6 @@ with tab3:
     else:
         show_response_message(response)
 
-
 with tab4:
     st.header('Deletar uma Ficha de Inquilino')
     delete_id = st.number_input(
