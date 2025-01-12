@@ -121,7 +121,7 @@ with tab1:
         if cpf_input:
             cpf = cpf_input.replace('.', '').replace('-', '')
             if cpf.isdigit() and len(cpf) == 11:
-                st.sucess(f'CPF válido: {cpf_input}')
+                st.success(f'CPF válido: {cpf_input}')
             else:
                 st.error('O CPF deve conter exatamente 11 dígitos.')
         mae = st.text_input(
@@ -1178,8 +1178,7 @@ with tab1:
                     label='Parentesco',
                 )
 
-        submit_button = st.form_submit_button('Registrar Ficha de Inquilino')
-
+        submit_button = st.form_submit_button('Registrar Ficha')
         if submit_button:
             response = requests.post(
                 "http://backend:8000/inquilinos/",
@@ -1387,7 +1386,7 @@ with tab3:
             if cpf_input:
                 cpf = cpf_input.replace('.', '').replace('-', '')
                 if cpf.isdigit() and len(cpf) == 11:
-                    st.sucess(f'CPF válido: {cpf_input}')
+                    st.success(f'CPF válido: {cpf_input}')
                 else:
                     st.error('O CPF deve conter exatamente 11 dígitos.')
             mae = st.text_input(
@@ -2729,7 +2728,7 @@ with tab3:
                         value=(df.acomp_10_parentesco[0])
                     )
 
-            update_button = st.form_submit_button('Atualizar Ficha de Inquilino')
+            update_button = st.form_submit_button('Atualizar Dados')
     else:
         show_response_message(response)
 
