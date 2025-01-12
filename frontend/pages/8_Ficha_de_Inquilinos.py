@@ -76,7 +76,7 @@ with tab1:
         cidade = st.text_input(
             label='Naturalidade (cidade)',
         )
-        cep = st.text(
+        cep = st.text_input(
             label='CEP',
             help='Somente números',
         )
