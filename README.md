@@ -1,8 +1,24 @@
 # Sistema para imobiliária
 
+## Tasks
+
+1. [v] Adicionar colunas para data de criação e data de modificação.
+2. [x] Criar valores default em `models.py` para agilizar e facilitar o trabalho.
+3. [ ] Rever aqui no `README.md` a descrição, a estrutura e a descrição dos módulos.
+4. [ ] Criar e melhorar as docstrings, comentários e documentação. (De preferência em inglês, exceto o banco de dados que deve se manter em português).
+5. [ ] Criar um módulo que permita preencher e exportar em PDF a 'ficha de controle de inquilino' requisitada pelo condomínio. E assim associar estes dados ao seu respectivo aluguel. Acredito que uma nova tabela seja necessária, seriam os dados do inquilino, acompanhantes, veículo, etc.
+6. [v] Verificar se realmente há necessidade do offset e limit nas funções de `read_<all>` em `crud.py` ou se fica melhor diretamente no **frontend**.
+7. [v] Renomear routes para router e checar os schemas de response.
+8. [ ] Adicionar tratamento de erros
+9. [ ] Adicionar logs
+10. [ ] Validação de CEP, CPF, RG, Telefone...
+11. [ ] Formato de apresentação de CEP, CPF, RG, Telefone...
+12. [ ] Importar forms ou tipos de arquivo (csv/json) para ficha de inquilino
+
 ## Problema
 
 A imobiliária deseja um sistema que permita:
+
 - Cadastrar imóvel, o número do apartamento e edifício, incluir se possível o código da celesc, do gás, da internet, Wifi - ID e Senha, senha da fechadura
 - Cadastrar proprietário/responsável do imóvel, Nome, CPF, telefone (whatsapp) e e-mail
 - Registrar os gastos variáveis e despesas fixas, detalhados, com data e com a nota (se aplicável)
