@@ -14,6 +14,7 @@
 10. [ ] Validação de CEP, CPF, RG, Telefone...
 11. [ ] Formato de apresentação de CEP, CPF, RG, Telefone...
 12. [ ] Importar forms ou tipos de arquivo (csv/json) para ficha de inquilino
+13. [ ] Refazer os models/schemas: Fix nos tipos de dados que estão int para str (cep, cpf, telefone, rg...) e adicionar qtd_acomp: int em Inquilino, check_automovel: int em Inquilino.
 
 ## Problema
 
