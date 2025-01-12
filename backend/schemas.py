@@ -90,7 +90,6 @@ class InquilinoBase(BaseModel):
     rg: Optional[str]
     cpf: str
     mae: str
-    check_automovel: Optional[str]
     automovel: Optional[str]
     modelo_auto: Optional[str]
     placa_auto: Optional[str]
@@ -355,7 +354,6 @@ class InquilinoUpdate(BaseModel):
     rg: Optional[str]
     cpf: Optional[str]
     mae: Optional[str]
-    check_automovel: Optional[str]
     automovel: Optional[str]
     modelo_auto: Optional[str]
     placa_auto: Optional[str]

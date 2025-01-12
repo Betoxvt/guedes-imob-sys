@@ -525,8 +525,6 @@ def update_inquilino(db: Session, inquilino_id: int, inquilino: InquilinoUpdate)
         db_inquilino.cpf = inquilino.cpf
     if inquilino.mae is not None:
         db_inquilino.mae = inquilino.mae
-    if inquilino.check_automovel is not None:
-        db_inquilino.check_automovel = inquilino.check_automovel
     if inquilino.checkin is not None:
         db_inquilino.checkin = inquilino.checkin
     if inquilino.checkout is not None:
