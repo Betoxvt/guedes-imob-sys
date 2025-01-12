@@ -1393,13 +1393,14 @@ with tab3:
                 label='Nome completo da mãe',
                 value=str(df.mae[0])
             )
+            check_automovel_value = 0 if df.loc[0, 'check_automovel'] == 'Não' or pd.isna(df.loc[0, 'check_automovel']) else 1
             check_automovel = st.radio(
                 label='Com automóvel?',
                 options=['Não', 'Sim'],
-                index=int(df.loc[0, 'check_automovel'])
+                index=check_automovel_value
             )
 
-            if check_automovel == 1:
+            if check_automovel == 'Sim':
                 automovel = st.text_input(
                     label='Automóvel',
                     value=str(df.automovel[0])
