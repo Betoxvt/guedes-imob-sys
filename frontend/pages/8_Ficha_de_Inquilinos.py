@@ -16,6 +16,22 @@ def null_acomp(init: int, acomp_dict: dict) -> dict:
     return acomp_dict
 
 
+# Função de chaves para variáveis
+def key_to_var(dictionary):
+    """
+    Converts keys of a dictionary to variables in the local scope.
+
+    Args:
+        dictionary: The dictionary whose keys will be converted to variables.
+
+    Returns:
+        None
+    """
+    for k in dictionary:
+        exec('{KEY} = {VALUE}'.format(KEY=k, VALUE=repr(dictionary[k])))
+    return None
+
+
 # Função auxiliar para exibir mensagens de erro detalhadas
 def show_response_message(response):
     if response.status_code == 200:
@@ -148,56 +164,439 @@ with tab1:
 
                 acomp_dict = null_acomp(init=qtd_acomp, acomp_dict=acomp_dict)
 
+                key_to_var(acomp_dict)
+            
+            case 2:
 
-        acomp_02_nome
-        acomp_02_rg
-        acomp_02_cpf
-        acomp_02_idade
-        acomp_02_parentesco
-        acomp_03_nome
-        acomp_03_rg
-        acomp_03_cpf
-        acomp_03_idade
-        acomp_03_parentesco
-        acomp_04_nome
-        acomp_04_rg
-        acomp_04_cpf
-        acomp_04_idade
-        acomp_04_parentesco
-        acomp_05_nome
-        acomp_05_rg
-        acomp_05_cpf
-        acomp_05_idade
-        acomp_05_parentesco
-        acomp_06_nome
-        acomp_06_rg
-        acomp_06_cpf
-        acomp_06_idade
-        acomp_06_parentesco
-        acomp_07_nome    
-        acomp_07_rg
-        acomp_07_cpf
-        acomp_07_idade
-        acomp_07_parentesco
-        acomp_08_nome
-        acomp_08_rg
-        acomp_08_cpf
-        acomp_08_idade
-        acomp_08_parentesco
-        acomp_09_nome
-        acomp_09_rg
-        acomp_09_cpf
-        acomp_09_idade
-        acomp_09_parentesco
-        acomp_10_nome
-        acomp_10_rg
-        acomp_10_cpf
-        acomp_10_idade
-        acomp_10_parentesco
+                st.subheader('Acompanhante 01')
+                acomp_01_nome = st.text_input('Nome')
+                acomp_01_rg = st.number_input('RG')
+                acomp_01_cpf = st.number_input('CPF')
+                acomp_01_idade = st.number_input('Idade')
+                acomp_01_parentesco = st.number_input('Parentesco')
 
-        
+                st.subheader('Acompanhante 02')
+                acomp_02_nome = st.text_input('Nome')
+                acomp_02_rg = st.number_input('RG')
+                acomp_02_cpf = st.number_input('CPF')
+                acomp_02_idade = st.number_input('Idade')
+                acomp_02_parentesco = st.number_input('Parentesco')
 
-    
+                acomp_dict = null_acomp(init=qtd_acomp, acomp_dict=acomp_dict)
+
+                key_to_var(acomp_dict)
+
+            case 3:
+
+                st.subheader('Acompanhante 01')
+                acomp_01_nome = st.text_input('Nome')
+                acomp_01_rg = st.number_input('RG')
+                acomp_01_cpf = st.number_input('CPF')
+                acomp_01_idade = st.number_input('Idade')
+                acomp_01_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 02')
+                acomp_02_nome = st.text_input('Nome')
+                acomp_02_rg = st.number_input('RG')
+                acomp_02_cpf = st.number_input('CPF')
+                acomp_02_idade = st.number_input('Idade')
+                acomp_02_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 03')
+                acomp_03_nome = st.text_input('Nome')
+                acomp_03_rg = st.number_input('RG')
+                acomp_03_cpf = st.number_input('CPF')
+                acomp_03_idade = st.number_input('Idade')
+                acomp_03_parentesco = st.number_input('Parentesco')
+
+                acomp_dict = null_acomp(init=qtd_acomp, acomp_dict=acomp_dict)
+
+                key_to_var(acomp_dict)
+
+            case 4:
+
+                st.subheader('Acompanhante 01')
+                acomp_01_nome = st.text_input('Nome')
+                acomp_01_rg = st.number_input('RG')
+                acomp_01_cpf = st.number_input('CPF')
+                acomp_01_idade = st.number_input('Idade')
+                acomp_01_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 02')
+                acomp_02_nome = st.text_input('Nome')
+                acomp_02_rg = st.number_input('RG')
+                acomp_02_cpf = st.number_input('CPF')
+                acomp_02_idade = st.number_input('Idade')
+                acomp_02_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 03')
+                acomp_03_nome = st.text_input('Nome')
+                acomp_03_rg = st.number_input('RG')
+                acomp_03_cpf = st.number_input('CPF')
+                acomp_03_idade = st.number_input('Idade')
+                acomp_03_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 04')
+                acomp_04_nome = st.text_input('Nome')
+                acomp_04_rg = st.number_input('RG')
+                acomp_04_cpf = st.number_input('CPF')
+                acomp_04_idade = st.number_input('Idade')
+                acomp_04_parentesco = st.number_input('Parentesco')
+
+                acomp_dict = null_acomp(init=qtd_acomp, acomp_dict=acomp_dict)
+
+                key_to_var(acomp_dict)
+
+            case 5:
+
+                st.subheader('Acompanhante 01')
+                acomp_01_nome = st.text_input('Nome')
+                acomp_01_rg = st.number_input('RG')
+                acomp_01_cpf = st.number_input('CPF')
+                acomp_01_idade = st.number_input('Idade')
+                acomp_01_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 02')
+                acomp_02_nome = st.text_input('Nome')
+                acomp_02_rg = st.number_input('RG')
+                acomp_02_cpf = st.number_input('CPF')
+                acomp_02_idade = st.number_input('Idade')
+                acomp_02_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 03')
+                acomp_03_nome = st.text_input('Nome')
+                acomp_03_rg = st.number_input('RG')
+                acomp_03_cpf = st.number_input('CPF')
+                acomp_03_idade = st.number_input('Idade')
+                acomp_03_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 04')
+                acomp_04_nome = st.text_input('Nome')
+                acomp_04_rg = st.number_input('RG')
+                acomp_04_cpf = st.number_input('CPF')
+                acomp_04_idade = st.number_input('Idade')
+                acomp_04_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 05')
+                acomp_05_nome = st.text_input('Nome')
+                acomp_05_rg = st.number_input('RG')
+                acomp_05_cpf = st.number_input('CPF')
+                acomp_05_idade = st.number_input('Idade')
+                acomp_05_parentesco = st.number_input('Parentesco')
+
+                acomp_dict = null_acomp(init=qtd_acomp, acomp_dict=acomp_dict)
+
+                key_to_var(acomp_dict)
+
+            case 6:
+
+                st.subheader('Acompanhante 01')
+                acomp_01_nome = st.text_input('Nome')
+                acomp_01_rg = st.number_input('RG')
+                acomp_01_cpf = st.number_input('CPF')
+                acomp_01_idade = st.number_input('Idade')
+                acomp_01_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 02')
+                acomp_02_nome = st.text_input('Nome')
+                acomp_02_rg = st.number_input('RG')
+                acomp_02_cpf = st.number_input('CPF')
+                acomp_02_idade = st.number_input('Idade')
+                acomp_02_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 03')
+                acomp_03_nome = st.text_input('Nome')
+                acomp_03_rg = st.number_input('RG')
+                acomp_03_cpf = st.number_input('CPF')
+                acomp_03_idade = st.number_input('Idade')
+                acomp_03_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 04')
+                acomp_04_nome = st.text_input('Nome')
+                acomp_04_rg = st.number_input('RG')
+                acomp_04_cpf = st.number_input('CPF')
+                acomp_04_idade = st.number_input('Idade')
+                acomp_04_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 05')
+                acomp_05_nome = st.text_input('Nome')
+                acomp_05_rg = st.number_input('RG')
+                acomp_05_cpf = st.number_input('CPF')
+                acomp_05_idade = st.number_input('Idade')
+                acomp_05_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 06')
+                acomp_06_nome = st.text_input('Nome')
+                acomp_06_rg = st.number_input('RG')
+                acomp_06_cpf = st.number_input('CPF')
+                acomp_06_idade = st.number_input('Idade')
+                acomp_06_parentesco = st.number_input('Parentesco')
+
+                acomp_dict = null_acomp(init=qtd_acomp, acomp_dict=acomp_dict)
+
+                key_to_var(acomp_dict)
+
+            case 7:
+
+                
+                st.subheader('Acompanhante 01')
+                acomp_01_nome = st.text_input('Nome')
+                acomp_01_rg = st.number_input('RG')
+                acomp_01_cpf = st.number_input('CPF')
+                acomp_01_idade = st.number_input('Idade')
+                acomp_01_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 02')
+                acomp_02_nome = st.text_input('Nome')
+                acomp_02_rg = st.number_input('RG')
+                acomp_02_cpf = st.number_input('CPF')
+                acomp_02_idade = st.number_input('Idade')
+                acomp_02_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 03')
+                acomp_03_nome = st.text_input('Nome')
+                acomp_03_rg = st.number_input('RG')
+                acomp_03_cpf = st.number_input('CPF')
+                acomp_03_idade = st.number_input('Idade')
+                acomp_03_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 04')
+                acomp_04_nome = st.text_input('Nome')
+                acomp_04_rg = st.number_input('RG')
+                acomp_04_cpf = st.number_input('CPF')
+                acomp_04_idade = st.number_input('Idade')
+                acomp_04_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 05')
+                acomp_05_nome = st.text_input('Nome')
+                acomp_05_rg = st.number_input('RG')
+                acomp_05_cpf = st.number_input('CPF')
+                acomp_05_idade = st.number_input('Idade')
+                acomp_05_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 06')
+                acomp_06_nome = st.text_input('Nome')
+                acomp_06_rg = st.number_input('RG')
+                acomp_06_cpf = st.number_input('CPF')
+                acomp_06_idade = st.number_input('Idade')
+                acomp_06_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 07')
+                acomp_07_nome = st.text_input('Nome')
+                acomp_07_rg = st.number_input('RG')
+                acomp_07_cpf = st.number_input('CPF')
+                acomp_07_idade = st.number_input('Idade')
+                acomp_07_parentesco = st.number_input('Parentesco')
+
+                acomp_dict = null_acomp(init=qtd_acomp, acomp_dict=acomp_dict)
+
+                key_to_var(acomp_dict)
+
+            case 8:
+
+                st.subheader('Acompanhante 01')
+                acomp_01_nome = st.text_input('Nome')
+                acomp_01_rg = st.number_input('RG')
+                acomp_01_cpf = st.number_input('CPF')
+                acomp_01_idade = st.number_input('Idade')
+                acomp_01_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 02')
+                acomp_02_nome = st.text_input('Nome')
+                acomp_02_rg = st.number_input('RG')
+                acomp_02_cpf = st.number_input('CPF')
+                acomp_02_idade = st.number_input('Idade')
+                acomp_02_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 03')
+                acomp_03_nome = st.text_input('Nome')
+                acomp_03_rg = st.number_input('RG')
+                acomp_03_cpf = st.number_input('CPF')
+                acomp_03_idade = st.number_input('Idade')
+                acomp_03_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 04')
+                acomp_04_nome = st.text_input('Nome')
+                acomp_04_rg = st.number_input('RG')
+                acomp_04_cpf = st.number_input('CPF')
+                acomp_04_idade = st.number_input('Idade')
+                acomp_04_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 05')
+                acomp_05_nome = st.text_input('Nome')
+                acomp_05_rg = st.number_input('RG')
+                acomp_05_cpf = st.number_input('CPF')
+                acomp_05_idade = st.number_input('Idade')
+                acomp_05_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 06')
+                acomp_06_nome = st.text_input('Nome')
+                acomp_06_rg = st.number_input('RG')
+                acomp_06_cpf = st.number_input('CPF')
+                acomp_06_idade = st.number_input('Idade')
+                acomp_06_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 07')
+                acomp_07_nome = st.text_input('Nome')
+                acomp_07_rg = st.number_input('RG')
+                acomp_07_cpf = st.number_input('CPF')
+                acomp_07_idade = st.number_input('Idade')
+                acomp_07_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 08')
+                acomp_08_nome = st.text_input('Nome')
+                acomp_08_rg = st.number_input('RG')
+                acomp_08_cpf = st.number_input('CPF')
+                acomp_08_idade = st.number_input('Idade')
+                acomp_08_parentesco = st.number_input('Parentesco')
+
+                acomp_dict = null_acomp(init=qtd_acomp, acomp_dict=acomp_dict)
+
+                key_to_var(acomp_dict)
+
+            case 9:
+
+                st.subheader('Acompanhante 01')
+                acomp_01_nome = st.text_input('Nome')
+                acomp_01_rg = st.number_input('RG')
+                acomp_01_cpf = st.number_input('CPF')
+                acomp_01_idade = st.number_input('Idade')
+                acomp_01_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 02')
+                acomp_02_nome = st.text_input('Nome')
+                acomp_02_rg = st.number_input('RG')
+                acomp_02_cpf = st.number_input('CPF')
+                acomp_02_idade = st.number_input('Idade')
+                acomp_02_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 03')
+                acomp_03_nome = st.text_input('Nome')
+                acomp_03_rg = st.number_input('RG')
+                acomp_03_cpf = st.number_input('CPF')
+                acomp_03_idade = st.number_input('Idade')
+                acomp_03_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 04')
+                acomp_04_nome = st.text_input('Nome')
+                acomp_04_rg = st.number_input('RG')
+                acomp_04_cpf = st.number_input('CPF')
+                acomp_04_idade = st.number_input('Idade')
+                acomp_04_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 05')
+                acomp_05_nome = st.text_input('Nome')
+                acomp_05_rg = st.number_input('RG')
+                acomp_05_cpf = st.number_input('CPF')
+                acomp_05_idade = st.number_input('Idade')
+                acomp_05_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 06')
+                acomp_06_nome = st.text_input('Nome')
+                acomp_06_rg = st.number_input('RG')
+                acomp_06_cpf = st.number_input('CPF')
+                acomp_06_idade = st.number_input('Idade')
+                acomp_06_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 07')
+                acomp_07_nome = st.text_input('Nome')
+                acomp_07_rg = st.number_input('RG')
+                acomp_07_cpf = st.number_input('CPF')
+                acomp_07_idade = st.number_input('Idade')
+                acomp_07_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 08')
+                acomp_08_nome = st.text_input('Nome')
+                acomp_08_rg = st.number_input('RG')
+                acomp_08_cpf = st.number_input('CPF')
+                acomp_08_idade = st.number_input('Idade')
+                acomp_08_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 09')
+                acomp_09_nome = st.text_input('Nome')
+                acomp_09_rg = st.number_input('RG')
+                acomp_09_cpf = st.number_input('CPF')
+                acomp_09_idade = st.number_input('Idade')
+                acomp_09_parentesco = st.number_input('Parentesco')
+
+                acomp_dict = null_acomp(init=qtd_acomp, acomp_dict=acomp_dict)
+
+                key_to_var(acomp_dict)
+
+            case 10:
+
+                st.subheader('Acompanhante 01')
+                acomp_01_nome = st.text_input('Nome')
+                acomp_01_rg = st.number_input('RG')
+                acomp_01_cpf = st.number_input('CPF')
+                acomp_01_idade = st.number_input('Idade')
+                acomp_01_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 02')
+                acomp_02_nome = st.text_input('Nome')
+                acomp_02_rg = st.number_input('RG')
+                acomp_02_cpf = st.number_input('CPF')
+                acomp_02_idade = st.number_input('Idade')
+                acomp_02_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 03')
+                acomp_03_nome = st.text_input('Nome')
+                acomp_03_rg = st.number_input('RG')
+                acomp_03_cpf = st.number_input('CPF')
+                acomp_03_idade = st.number_input('Idade')
+                acomp_03_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 04')
+                acomp_04_nome = st.text_input('Nome')
+                acomp_04_rg = st.number_input('RG')
+                acomp_04_cpf = st.number_input('CPF')
+                acomp_04_idade = st.number_input('Idade')
+                acomp_04_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 05')
+                acomp_05_nome = st.text_input('Nome')
+                acomp_05_rg = st.number_input('RG')
+                acomp_05_cpf = st.number_input('CPF')
+                acomp_05_idade = st.number_input('Idade')
+                acomp_05_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 06')
+                acomp_06_nome = st.text_input('Nome')
+                acomp_06_rg = st.number_input('RG')
+                acomp_06_cpf = st.number_input('CPF')
+                acomp_06_idade = st.number_input('Idade')
+                acomp_06_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 07')
+                acomp_07_nome = st.text_input('Nome')
+                acomp_07_rg = st.number_input('RG')
+                acomp_07_cpf = st.number_input('CPF')
+                acomp_07_idade = st.number_input('Idade')
+                acomp_07_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 08')
+                acomp_08_nome = st.text_input('Nome')
+                acomp_08_rg = st.number_input('RG')
+                acomp_08_cpf = st.number_input('CPF')
+                acomp_08_idade = st.number_input('Idade')
+                acomp_08_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 09')
+                acomp_09_nome = st.text_input('Nome')
+                acomp_09_rg = st.number_input('RG')
+                acomp_09_cpf = st.number_input('CPF')
+                acomp_09_idade = st.number_input('Idade')
+                acomp_09_parentesco = st.number_input('Parentesco')
+
+                st.subheader('Acompanhante 10')
+                acomp_10_nome = st.text_input('Nome')
+                acomp_10_rg = st.number_input('RG')
+                acomp_10_cpf = st.number_input('CPF')
+                acomp_10_idade = st.number_input('Idade')
+                acomp_10_parentesco = st.number_input('Parentesco')
+
+                
+
 with tab2:
     st.header('Consultar')
     get_id = st.number_input('ID da Ficha de Inquilino', min_value=1, format='%d')
