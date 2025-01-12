@@ -28,12 +28,14 @@ A imobiliária deseja um sistema que permita:
 - Registrar saque dos valores de cada apto (com data, descrição e recibo)
 
 Bônus:
+
 - Integrar com AI para consultar datas disponíveis dos apartamentos, via chat com voz
 - Integrar com AI para marcar reservas, via chat com voz
 - Registrar as vagas de garagens, vinculadas ao número do apartamento
 - Registrar aluguel das vagas de garagem, com o preço por dia, e qual apto ocupará
 
 Mais informações:
+
 - Deve permitir a alteração dos dados, editar ou excluir
 - Deve ser possível cancelar reservas
 - Não devem haver custos adicionais
@@ -62,4 +64,3 @@ Mais informações:
 - Criar banco de dados vetorial para o funcionamento da IA (ChromeDB?)
 - Implementar IA (Groq?)
 - Integrar com whatsapp (EvolutionAPI?)
-
