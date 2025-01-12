@@ -157,7 +157,7 @@ class Inquilino(Base):
     rg = Column(Text, unique=True)
     cpf = Column(Text, unique=True, nullable=False)
     mae = Column(Text, nullable=False)
-    check_automovel = Column(Integer)
+    check_automovel = Column(Text)
     automovel = Column(Text)
     modelo_auto = Column(Text)
     placa_auto = Column(Text)

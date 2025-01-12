@@ -133,7 +133,7 @@ with tab1:
             index=0
         )
 
-        if check_automovel == 1:
+        if check_automovel == 'Sim':
             automovel = st.text_input(
                 label='Automóvel',
             )
