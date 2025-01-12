@@ -521,130 +521,20 @@ def update_inquilino(db: Session, inquilino_id: int, inquilino: InquilinoUpdate)
         db_inquilino.estado_civil = inquilino.estado_civil
     if inquilino.profissao is not None:
         db_inquilino.profissao = inquilino.profissao
-    if inquilino.rg is not None:
-        db_inquilino.rg = inquilino.rg
     if inquilino.cpf is not None:
         db_inquilino.cpf = inquilino.cpf
     if inquilino.mae is not None:
         db_inquilino.mae = inquilino.mae
-    if inquilino.automovel is not None:
-        db_inquilino.automovel = inquilino.automovel
-    if inquilino.modelo_auto is not None:
-        db_inquilino.modelo_auto = inquilino.modelo_auto
-    if inquilino.placa_auto is not None:
-        db_inquilino.placa_auto = inquilino.placa_auto
-    if inquilino.cor_auto is not None:
-        db_inquilino.cor_auto = inquilino.cor_auto
+    if inquilino.check_automovel is not None:
+        db_inquilino.check_automovel = inquilino.check_automovel
     if inquilino.checkin is not None:
         db_inquilino.checkin = inquilino.checkin
     if inquilino.checkout is not None:
         db_inquilino.checkout = inquilino.checkout
-    if inquilino.observacoes is not None:
-        db_inquilino.observacoes = inquilino.observacoes
-    if inquilino.proprietario is not None:
-        db_inquilino.proprietario = inquilino.proprietario
     if inquilino.imob_fone is not None:
         db_inquilino.imob_fone = inquilino.imob_fone
-    if inquilino.acomp_01_nome is not None:
-        db_inquilino.acomp_01_nome = inquilino.acomp_01_nome
-    if inquilino.acomp_01_rg is not None:
-        db_inquilino.acomp_01_rg = inquilino.acomp_01_rg
-    if inquilino.acomp_01_cpf is not None:
-        db_inquilino.acomp_01_cpf = inquilino.acomp_01_cpf
-    if inquilino.acomp_01_idade is not None:
-        db_inquilino.acomp_01_idade = inquilino.acomp_01_idade
-    if inquilino.acomp_01_parentesco is not None:
-        db_inquilino.acomp_01_parentesco = inquilino.acomp_01_parentesco
-    if inquilino.acomp_02_nome is not None:
-        db_inquilino.acomp_02_nome = inquilino.acomp_02_nome
-    if inquilino.acomp_02_rg is not None:
-        db_inquilino.acomp_02_rg = inquilino.acomp_02_rg
-    if inquilino.acomp_02_cpf is not None:
-        db_inquilino.acomp_02_cpf = inquilino.acomp_02_cpf
-    if inquilino.acomp_02_idade is not None:
-        db_inquilino.acomp_02_idade = inquilino.acomp_02_idade
-    if inquilino.acomp_02_parentesco is not None:
-        db_inquilino.acomp_02_parentesco = inquilino.acomp_02_parentesco
-    if inquilino.acomp_03_nome is not None:
-        db_inquilino.acomp_03_nome = inquilino.acomp_03_nome
-    if inquilino.acomp_03_rg is not None:
-        db_inquilino.acomp_03_rg = inquilino.acomp_03_rg
-    if inquilino.acomp_03_cpf is not None:
-        db_inquilino.acomp_03_cpf = inquilino.acomp_03_cpf
-    if inquilino.acomp_03_idade is not None:
-        db_inquilino.acomp_03_idade = inquilino.acomp_03_idade
-    if inquilino.acomp_03_parentesco is not None:
-        db_inquilino.acomp_03_parentesco = inquilino.acomp_03_parentesco
-    if inquilino.acomp_04_nome is not None:
-        db_inquilino.acomp_04_nome = inquilino.acomp_04_nome
-    if inquilino.acomp_04_rg is not None:
-        db_inquilino.acomp_04_rg = inquilino.acomp_04_rg
-    if inquilino.acomp_04_cpf is not None:
-        db_inquilino.acomp_04_cpf = inquilino.acomp_04_cpf
-    if inquilino.acomp_04_idade is not None:
-        db_inquilino.acomp_04_idade = inquilino.acomp_04_idade
-    if inquilino.acomp_04_parentesco is not None:
-        db_inquilino.acomp_04_parentesco = inquilino.acomp_04_parentesco
-    if inquilino.acomp_05_nome is not None:
-        db_inquilino.acomp_05_nome = inquilino.acomp_05_nome
-    if inquilino.acomp_05_rg is not None:
-        db_inquilino.acomp_05_rg = inquilino.acomp_05_rg
-    if inquilino.acomp_05_cpf is not None:
-        db_inquilino.acomp_05_cpf = inquilino.acomp_05_cpf
-    if inquilino.acomp_05_idade is not None:
-        db_inquilino.acomp_05_idade = inquilino.acomp_05_idade
-    if inquilino.acomp_05_parentesco is not None:
-        db_inquilino.acomp_05_parentesco = inquilino.acomp_05_parentesco
-    if inquilino.acomp_06_nome is not None:
-        db_inquilino.acomp_06_nome = inquilino.acomp_06_nome
-    if inquilino.acomp_06_rg is not None:
-        db_inquilino.acomp_06_rg = inquilino.acomp_06_rg
-    if inquilino.acomp_06_cpf is not None:
-        db_inquilino.acomp_06_cpf = inquilino.acomp_06_cpf
-    if inquilino.acomp_06_idade is not None:
-        db_inquilino.acomp_06_idade = inquilino.acomp_06_idade
-    if inquilino.acomp_06_parentesco is not None:
-        db_inquilino.acomp_06_parentesco = inquilino.acomp_06_parentesco
-    if inquilino.acomp_07_nome is not None:
-        db_inquilino.acomp_07_nome = inquilino.acomp_07_nome
-    if inquilino.acomp_07_rg is not None:
-        db_inquilino.acomp_07_rg = inquilino.acomp_07_rg
-    if inquilino.acomp_07_cpf is not None:
-        db_inquilino.acomp_07_cpf = inquilino.acomp_07_cpf
-    if inquilino.acomp_07_idade is not None:
-        db_inquilino.acomp_07_idade = inquilino.acomp_07_idade
-    if inquilino.acomp_07_parentesco is not None:
-        db_inquilino.acomp_07_parentesco = inquilino.acomp_07_parentesco
-    if inquilino.acomp_08_nome is not None:
-        db_inquilino.acomp_08_nome = inquilino.acomp_08_nome
-    if inquilino.acomp_08_rg is not None:
-        db_inquilino.acomp_08_rg = inquilino.acomp_08_rg
-    if inquilino.acomp_08_cpf is not None:
-        db_inquilino.acomp_08_cpf = inquilino.acomp_08_cpf
-    if inquilino.acomp_08_idade is not None:
-        db_inquilino.acomp_08_idade = inquilino.acomp_08_idade
-    if inquilino.acomp_08_parentesco is not None:
-        db_inquilino.acomp_08_parentesco = inquilino.acomp_08_parentesco
-    if inquilino.acomp_09_nome is not None:
-        db_inquilino.acomp_09_nome = inquilino.acomp_09_nome
-    if inquilino.acomp_09_rg is not None:
-        db_inquilino.acomp_09_rg = inquilino.acomp_09_rg
-    if inquilino.acomp_09_cpf is not None:
-        db_inquilino.acomp_09_cpf = inquilino.acomp_09_cpf
-    if inquilino.acomp_09_idade is not None:
-        db_inquilino.acomp_09_idade = inquilino.acomp_09_idade
-    if inquilino.acomp_09_parentesco is not None:
-        db_inquilino.acomp_09_parentesco = inquilino.acomp_09_parentesco
-    if inquilino.acomp_10_nome is not None:
-        db_inquilino.acomp_10_nome = inquilino.acomp_10_nome
-    if inquilino.acomp_10_rg is not None:
-        db_inquilino.acomp_10_rg = inquilino.acomp_10_rg
-    if inquilino.acomp_10_cpf is not None:
-        db_inquilino.acomp_10_cpf = inquilino.acomp_10_cpf
-    if inquilino.acomp_10_idade is not None:
-        db_inquilino.acomp_10_idade = inquilino.acomp_10_idade
-    if inquilino.acomp_10_parentesco is not None:
-        db_inquilino.acomp_10_parentesco = inquilino.acomp_10_parentesco
+    if inquilino.qtd_acomp is not None:
+        db_inquilino.qtd_acomp = inquilino.qtd_acomp
 
     db.commit()
     db.refresh(db_inquilino)
