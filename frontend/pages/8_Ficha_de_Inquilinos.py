@@ -1474,7 +1474,6 @@ with tab1:
                     "rg": rg,
                     "cpf": cpf,
                     "mae": mae,
-                    "check_automovel": check_automovel,
                     "automovel": automovel,
                     "modelo_auto": modelo_auto,
                     "placa_auto": placa_auto,
