@@ -1,4 +1,4 @@
-from pydantic import BaseModel, PositiveFloat, EmailStr, PositiveInt, NonNegativeInt, NonNegativeFloat
+from pydantic import BaseModel, EmailStr, PositiveInt, NonNegativeInt, NonNegativeFloat
 from datetime import date
 from typing import Any, Optional
 
