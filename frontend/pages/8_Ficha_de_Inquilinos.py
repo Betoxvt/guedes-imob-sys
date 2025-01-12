@@ -554,7 +554,6 @@ with tab1:
                 )
                 acomp_05_idade = st.number_input(
                     label='Idade',
-                    value=int(df.loc[0, 'acomp_05_idade'])
                 )
                 acomp_05_parentesco = st.text_input(
                     label='Parentesco',
