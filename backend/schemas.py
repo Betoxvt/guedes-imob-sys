@@ -1,7 +1,6 @@
-from pydantic import BaseModel, PositiveFloat, EmailStr, PositiveInt, model_validator, ValidationError
+from pydantic import BaseModel, PositiveFloat, EmailStr, PositiveInt
 from datetime import date
 from typing import Any, Optional
-
 
 # Base schemas
 
@@ -17,14 +16,6 @@ class AluguelBase(BaseModel):
     valor_imob: PositiveFloat
     valor_prop: PositiveFloat
 
-    @model_validator(mode='before')
-    def empty_to_none(cls, values: dict[str, Any]) -> dict[str, Any]:
-        # Itera sobre os campos e coloca None em campos vazios ou não informados
-        for field, value in values.items():
-            if value is None or (isinstance(value, str) and value.strip() == ""):
-                values[field] = None
-        return values
-
 
 class ApartamentoBase(BaseModel):
     apartamento: str
@@ -37,28 +28,12 @@ class ApartamentoBase(BaseModel):
     wifipass: Optional[str]
     lockpass: Optional[int]
 
-    @model_validator(mode='before')
-    def empty_to_none(cls, values: dict[str, Any]) -> dict[str, Any]:
-        # Itera sobre os campos e coloca None em campos vazios ou não informados
-        for field, value in values.items():
-            if value is None or (isinstance(value, str) and value.strip() == ""):
-                values[field] = None
-        return values
-
 
 class DespesaBase(BaseModel):
     apartamento_id: PositiveInt
     data_pagamento: date
     valor: PositiveFloat
     descricao: str
-
-    @model_validator(mode='before')
-    def empty_to_none(cls, values: dict[str, Any]) -> dict[str, Any]:
-        # Itera sobre os campos e coloca None em campos vazios ou não informados
-        for field, value in values.items():
-            if value is None or (isinstance(value, str) and value.strip() == ""):
-                values[field] = None
-        return values
 
 
 class EdificioBase(BaseModel):
@@ -71,13 +46,6 @@ class EdificioBase(BaseModel):
     pais: Optional[str]
     cep: Optional[int]
 
-    @model_validator(mode='before')
-    def empty_to_none(cls, values: dict[str, Any]) -> dict[str, Any]:
-        # Itera sobre os campos e coloca None em campos vazios ou não informados
-        for field, value in values.items():
-            if value is None or (isinstance(value, str) and value.strip() == ""):
-                values[field] = None
-        return values
 
 class GaragemBase(BaseModel):
     apto_origem_id: PositiveInt
@@ -91,14 +59,6 @@ class GaragemBase(BaseModel):
     valor_imob: PositiveFloat
     valor_prop: PositiveFloat
 
-    @model_validator(mode='before')
-    def empty_to_none(cls, values: dict[str, Any]) -> dict[str, Any]:
-        # Itera sobre os campos e coloca None em campos vazios ou não informados
-        for field, value in values.items():
-            if value is None or (isinstance(value, str) and value.strip() == ""):
-                values[field] = None
-        return values
-
 
 class GastoBase(BaseModel):
     apartamento_id: PositiveInt
@@ -108,28 +68,12 @@ class GastoBase(BaseModel):
     valor_total: PositiveFloat
     descricao: str
 
-    @model_validator(mode='before')
-    def empty_to_none(cls, values: dict[str, Any]) -> dict[str, Any]:
-        # Itera sobre os campos e coloca None em campos vazios ou não informados
-        for field, value in values.items():
-            if value is None or (isinstance(value, str) and value.strip() == ""):
-                values[field] = None
-        return values
-
 
 class ProprietarioBase(BaseModel):
     nome: str
     cpf: Optional[int]
     telefone: Optional[int]
     email: Optional[EmailStr]
-
-    @model_validator(mode='before')
-    def empty_to_none(cls, values: dict[str, Any]) -> dict[str, Any]:
-        # Itera sobre os campos e coloca None em campos vazios ou não informados
-        for field, value in values.items():
-            if value is None or (isinstance(value, str) and value.strip() == ""):
-                values[field] = None
-        return values
 
 
 class InquilinoBase(BaseModel):
@@ -205,14 +149,6 @@ class InquilinoBase(BaseModel):
     acomp_10_cpf: Optional[PositiveInt]
     acomp_10_idade: Optional[int]
     acomp_10_parentesco: Optional[str]
-
-    @model_validator(mode='before')
-    def empty_to_none(cls, values: dict[str, Any]) -> dict[str, Any]:
-        # Itera sobre os campos e coloca None em campos vazios ou não informados
-        for field, value in values.items():
-            if value is None or (isinstance(value, str) and value.strip() == ""):
-                values[field] = None
-        return values
 
 
 # Create schemas
