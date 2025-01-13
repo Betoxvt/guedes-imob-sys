@@ -3,9 +3,7 @@ import pandas as pd
 import requests
 import streamlit as st
 from datetime import date, timedelta
-import re
-from src.functions import clean_number, convert_empty_to_none, none_or_str, format_apto, show_response_message, string_to_date
-
+from src.functions import none_or_str, format_apto, show_response_message, string_to_date
 
 
 st.set_page_config(
@@ -20,6 +18,8 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(['Registrar', 'Consultar', 'Modificar', '
 # Em registrar deve ser possível fazer upload de um arquivo ou forms essas coisas que o inquilino pode já ter preenchido em casa e enviado para nós (google forms ou sei lá)
 
 # Em consultar, deve ser possível então exportar a ficha em pdf no modelo proposto pelo condomínio
+
+# Ajeitar a validação dos dados, formato de envio para o banco de dados e formato de exibição.
 
 with tab1:
     st.header('Registrar uma Ficha de Inquilino')

@@ -2,18 +2,69 @@
 import pandas as pd
 import re
 import streamlit as st
+from datetime import date
 
 
-def clean_number(input):
-    """Remove caracteres especiais de um texto.
-    Args:
-        texto: O texto a ser limpo.
-    Returns:
-        O texto com os caracteres especiais removidos.
+def format_input_for_db(input: str, output: str = 'str'):
     """
-    chars = r"[+\(\)\-\,\.\'\"\@\#\$\%\¨\&\*\!\?\;\:\<\>\~\^\]\[\{\}\=\_\ ]"
-    clean = re.sub(chars, '', input)
-    return clean
+    Formats an input string for database storage.
+
+    Args:
+        input_str: str
+            The input string from a form.
+        output: str, optional
+            The desired output type. 
+            Supported types: 
+                - 'str' (default): Returns the input string after basic cleaning.
+                - 'int': Attempts to convert the input to an integer.
+                - 'float': Attempts to convert the input to a float.
+                - 'date': Attempts to convert the input to a datetime.date object. 
+                - 'none': Returns None if the input is empty.
+
+    Returns:
+        str | int | float | date | None
+            The formatted value according to the specified output type.
+
+    Raises:
+        ValueError: If the input string cannot be converted to the specified output type.
+
+    Example:
+        format_input("123", "int")  # Returns 123
+        format_input("3.14", "float")  # Returns 3.14
+        format_input("2023-12-25", "date")  # Returns datetime.date(2023, 12, 25) 
+        format_input("", "str")  # Returns ""
+        format_input("", "none")  # Returns None
+    """
+
+    if input == None:
+        match output:
+            case 'none':
+                return None
+            case 'str':
+                return ' '
+            case 'int':
+                return 0
+            case 'float':
+                return 0.0
+            case 'date':
+                return date(2025, 1, 1)
+    else:
+        match output:
+            case 'none':
+                return None
+            case 'str':
+                return re.sub(r'\s+', ' ', input).strip()
+
+            
+
+
+    
+    
+    
+    
+    # chars = r"[+\(\)\-\,\.\'\"\@\#\$\%\¨\&\*\!\?\;\:\<\>\~\^\]\[\{\}\=\_\ ]"
+    # clean = re.sub(chars, '', input)
+    # return clean
 
 
 def convert_empty_to_none():
@@ -48,6 +99,7 @@ def format_apto(input: str) -> str:
         else:
             letter = c
     return f'{letter.upper()}-{numbers}'
+
 
 def show_response_message(response) -> None:
     if response.status_code == 200:
