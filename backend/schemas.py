@@ -1,79 +1,77 @@
-from pydantic import BaseModel, EmailStr, PositiveInt, NonNegativeInt, NonNegativeFloat
-from datetime import date
-from typing import Any, Optional
+from pydantic import BaseModel
 
 # Base schemas
 
 class AluguelBase(BaseModel):
-    apartamento_id: PositiveInt
-    inquilino_id: Optional[PositiveInt]
-    checkin: date
-    checkout: date
-    diarias: PositiveInt
-    valor_diaria: Optional[NonNegativeInt]
-    taxa_adm: NonNegativeFloat
-    valor_total: NonNegativeFloat
-    valor_imob: NonNegativeFloat
-    valor_prop: NonNegativeFloat
+    apartamento_id: int
+    inquilino_id: int | None = None
+    checkin: str
+    checkout: str
+    diarias: int
+    valor_diaria: int | None = None
+    taxa_adm: float
+    valor_total: float
+    valor_imob: float
+    valor_prop: float
 
 
 class ApartamentoBase(BaseModel):
     apartamento: str
-    edificio_id: PositiveInt
-    proprietario_id: PositiveInt
-    celesc: Optional[str]
-    supergasbras: Optional[str]
-    internet_provedor: Optional[str]
-    wifiid: Optional[str]
-    wifipass: Optional[str]
-    lockpass: Optional[str]
+    edificio_id: int
+    proprietario_id: int
+    celesc: str | None = None
+    supergasbras: str | None = None
+    internet_provedor: str | None = None
+    wifiid: str | None = None
+    wifipass: str | None = None
+    lockpass: str | None = None
 
 
 class DespesaBase(BaseModel):
-    apartamento_id: PositiveInt
-    data_pagamento: date
-    valor: NonNegativeFloat
+    apartamento_id: int
+    data_pagamento: str
+    valor: float
     descricao: str
 
 
 class EdificioBase(BaseModel):
     nome: str
-    logradouro: Optional[str]
-    numero: Optional[str]
-    bairro: Optional[str]
-    cidade: Optional[str]
-    uf: Optional[str]
-    pais: Optional[str]
-    cep: Optional[str]
+    logradouro: str | None = None
+    numero: str | None = None
+    bairro: str | None = None
+    cidade: str | None = None
+    uf: str | None = None
+    pais: str | None = None
+    cep: str | None = None
 
 
 class GaragemBase(BaseModel):
-    apto_origem_id: PositiveInt
-    apto_destino_id: PositiveInt
-    checkin: date
-    checkout: date
-    diarias: PositiveInt
-    valor_diaria: Optional[NonNegativeInt]
-    taxa_adm: NonNegativeFloat
-    valor_total: NonNegativeFloat
-    valor_imob: NonNegativeFloat
-    valor_prop: NonNegativeFloat
+    apto_origem_id: int
+    apto_destino_id: int
+    checkin: str
+    checkout: str
+    diarias: int
+    valor_diaria: int | None = None
+    taxa_adm: float
+    valor_total: float
+    valor_imob: float
+    valor_prop: float
 
 
 class GastoBase(BaseModel):
-    apartamento_id: PositiveInt
-    data_pagamento: date
-    valor_material: Optional[NonNegativeFloat]
-    valor_mo: Optional[NonNegativeFloat]
-    valor_total: NonNegativeFloat
+    apartamento_id: int
+    data_pagamento: str
+    valor_material: float | None = None
+    valor_mo: float | None = None
+    valor_total: float
     descricao: str
 
 
 class ProprietarioBase(BaseModel):
     nome: str
-    cpf: Optional[str]
-    telefone: Optional[str]
-    email: Optional[EmailStr]
+    cpf: str | None = None
+    telefone: str | None = None
+    email: str | None = None
 
 
 class InquilinoBase(BaseModel):
@@ -87,68 +85,68 @@ class InquilinoBase(BaseModel):
     telefone: str
     estado_civil: str
     profissao: str
-    rg: Optional[str]
+    rg: str | None = None
     cpf: str
     mae: str
-    automovel: Optional[str]
-    modelo_auto: Optional[str]
-    placa_auto: Optional[str]
-    cor_auto: Optional[str]
-    checkin: date
-    checkout: date
-    observacoes: Optional[str]
-    proprietario: Optional[str]
-    imob_fone: str
-    acomp_01_nome: Optional[str]
-    acomp_01_rg: Optional[str]
-    acomp_01_cpf: Optional[str]
-    acomp_01_idade: Optional[NonNegativeInt]
-    acomp_01_parentesco: Optional[str]
-    acomp_02_nome: Optional[str]
-    acomp_02_rg: Optional[str]
-    acomp_02_cpf: Optional[str]
-    acomp_02_idade: Optional[NonNegativeInt]
-    acomp_02_parentesco: Optional[str]
-    acomp_03_nome: Optional[str]
-    acomp_03_rg: Optional[str]
-    acomp_03_cpf: Optional[str]
-    acomp_03_idade: Optional[NonNegativeInt]
-    acomp_03_parentesco: Optional[str]
-    acomp_04_nome: Optional[str]
-    acomp_04_rg: Optional[str]
-    acomp_04_cpf: Optional[str]
-    acomp_04_idade: Optional[NonNegativeInt]
-    acomp_04_parentesco: Optional[str]
-    acomp_05_nome: Optional[str]
-    acomp_05_rg: Optional[str]
-    acomp_05_cpf: Optional[str]
-    acomp_05_idade: Optional[NonNegativeInt]
-    acomp_05_parentesco: Optional[str]
-    acomp_06_nome: Optional[str]
-    acomp_06_rg: Optional[str]
-    acomp_06_cpf: Optional[str]
-    acomp_06_idade: Optional[NonNegativeInt]
-    acomp_06_parentesco: Optional[str]
-    acomp_07_nome: Optional[str]    
-    acomp_07_rg: Optional[str]
-    acomp_07_cpf: Optional[str]
-    acomp_07_idade: Optional[NonNegativeInt]
-    acomp_07_parentesco: Optional[str]
-    acomp_08_nome: Optional[str]
-    acomp_08_rg: Optional[str]
-    acomp_08_cpf: Optional[str]
-    acomp_08_idade: Optional[NonNegativeInt]
-    acomp_08_parentesco: Optional[str]
-    acomp_09_nome: Optional[str]
-    acomp_09_rg: Optional[str]
-    acomp_09_cpf: Optional[str]
-    acomp_09_idade: Optional[NonNegativeInt]
-    acomp_09_parentesco: Optional[str]
-    acomp_10_nome: Optional[str]
-    acomp_10_rg: Optional[str]
-    acomp_10_cpf: Optional[str]
-    acomp_10_idade: Optional[NonNegativeInt]
-    acomp_10_parentesco: Optional[str]
+    automovel: str | None = None
+    modelo_auto: str | None = None
+    placa_auto: str | None = None
+    cor_auto: str | None = None
+    checkin: str
+    checkout: str
+    observacoes: str | None = None
+    proprietario: str | None = None
+    imob_fone: str | None = None
+    acomp_01_nome: str | None = None
+    acomp_01_rg: str | None = None
+    acomp_01_cpf: str | None = None
+    acomp_01_idade: int | None = None
+    acomp_01_parentesco: str | None = None
+    acomp_02_nome: str | None = None
+    acomp_02_rg: str | None = None
+    acomp_02_cpf: str | None = None
+    acomp_02_idade: int | None = None
+    acomp_02_parentesco: str | None = None
+    acomp_03_nome: str | None = None
+    acomp_03_rg: str | None = None
+    acomp_03_cpf: str | None = None
+    acomp_03_idade: int | None = None
+    acomp_03_parentesco: str | None = None
+    acomp_04_nome: str | None = None
+    acomp_04_rg: str | None = None
+    acomp_04_cpf: str | None = None
+    acomp_04_idade: int | None = None
+    acomp_04_parentesco: str | None = None
+    acomp_05_nome: str | None = None
+    acomp_05_rg: str | None = None
+    acomp_05_cpf: str | None = None
+    acomp_05_idade: int | None = None
+    acomp_05_parentesco: str | None = None
+    acomp_06_nome: str | None = None
+    acomp_06_rg: str | None = None
+    acomp_06_cpf: str | None = None
+    acomp_06_idade: int | None = None
+    acomp_06_parentesco: str | None = None
+    acomp_07_nome: str | None = None    
+    acomp_07_rg: str | None = None
+    acomp_07_cpf: str | None = None
+    acomp_07_idade: int | None = None
+    acomp_07_parentesco: str | None = None
+    acomp_08_nome: str | None = None
+    acomp_08_rg: str | None = None
+    acomp_08_cpf: str | None = None
+    acomp_08_idade: int | None = None
+    acomp_08_parentesco: str | None = None
+    acomp_09_nome: str | None = None
+    acomp_09_rg: str | None = None
+    acomp_09_cpf: str | None = None
+    acomp_09_idade: int | None = None
+    acomp_09_parentesco: str | None = None
+    acomp_10_nome: str | None = None
+    acomp_10_rg: str | None = None
+    acomp_10_cpf: str | None = None
+    acomp_10_idade: int | None = None
+    acomp_10_parentesco: str | None = None
 
 
 # Create schemas
@@ -187,18 +185,18 @@ class InquilinoCreate(InquilinoBase):
 # Response schemas
 
 class AluguelResponse(AluguelBase):
-    id: PositiveInt
-    criado_em: date
-    modificado_em: date
+    id: int
+    criado_em: str
+    modificado_em: str
 
     class Config:
         from_attributes = True
 
 
 class ApartamentoResponse(ApartamentoBase):
-    id: PositiveInt
-    criado_em: date
-    modificado_em: date
+    id: int
+    criado_em: str
+    modificado_em: str
 
 
     class Config:
@@ -206,9 +204,9 @@ class ApartamentoResponse(ApartamentoBase):
 
 
 class DespesaResponse(DespesaBase):
-    id: PositiveInt
-    criado_em: date
-    modificado_em: date
+    id: int
+    criado_em: str
+    modificado_em: str
 
 
     class Config:
@@ -216,9 +214,9 @@ class DespesaResponse(DespesaBase):
 
 
 class EdificioResponse(EdificioBase):
-    id: PositiveInt
-    criado_em: date
-    modificado_em: date
+    id: int
+    criado_em: str
+    modificado_em: str
 
 
     class Config:
@@ -226,9 +224,9 @@ class EdificioResponse(EdificioBase):
 
 
 class GaragemResponse(GaragemBase):
-    id: PositiveInt
-    criado_em: date
-    modificado_em: date
+    id: int
+    criado_em: str
+    modificado_em: str
 
 
     class Config:
@@ -236,9 +234,9 @@ class GaragemResponse(GaragemBase):
 
 
 class GastoResponse(GastoBase):
-    id: PositiveInt
-    criado_em: date
-    modificado_em: date
+    id: int
+    criado_em: str
+    modificado_em: str
 
 
     class Config:
@@ -246,9 +244,9 @@ class GastoResponse(GastoBase):
 
 
 class ProprietarioResponse(ProprietarioBase):
-    id: PositiveInt
-    criado_em: date
-    modificado_em: date
+    id: int
+    criado_em: str
+    modificado_em: str
     
 
     class Config:
@@ -256,9 +254,9 @@ class ProprietarioResponse(ProprietarioBase):
 
 
 class InquilinoResponse(InquilinoBase):
-    id: PositiveInt
-    criado_em: date
-    modificado_em: date
+    id: int
+    criado_em: str
+    modificado_em: str
 
 
     class Config:
@@ -268,147 +266,147 @@ class InquilinoResponse(InquilinoBase):
 # Update schemas
 
 class AluguelUpdate(BaseModel):
-    apartamento_id: Optional[PositiveInt]
-    inquilino_id: Optional[PositiveInt]
-    checkin: Optional[date]
-    checkout: Optional[date]
-    diarias: Optional[PositiveInt]
-    valor_diaria: Optional[NonNegativeInt]
-    taxa_adm: Optional[NonNegativeFloat]
-    valor_total: Optional[NonNegativeFloat]
-    valor_imob: Optional[NonNegativeFloat]
-    valor_prop: Optional[NonNegativeFloat]
+    apartamento_id: int | None = None
+    inquilino_id: int | None = None
+    checkin: str | None = None
+    checkout: str | None = None
+    diarias: int | None = None
+    valor_diaria: int | None = None
+    taxa_adm: float | None = None
+    valor_total: float | None = None
+    valor_imob: float | None = None
+    valor_prop: float | None = None
 
 
 class ApartamentoUpdate(BaseModel):
-    apartamento: Optional[str]
-    edificio_id: Optional[PositiveInt]
-    proprietario_id: Optional[PositiveInt]
-    celesc: Optional[str]
-    supergasbras: Optional[str]
-    internet_provedor: Optional[str]
-    wifiid: Optional[str]
-    wifipass: Optional[str]
-    lockpass: Optional[str]
+    apartamento: str | None = None
+    edificio_id: int | None = None
+    proprietario_id: int | None = None
+    celesc: str | None = None
+    supergasbras: str | None = None
+    internet_provedor: str | None = None
+    wifiid: str | None = None
+    wifipass: str | None = None
+    lockpass: str | None = None
 
 
 class DespesaUpdate(BaseModel):
-    apartamento_id: Optional[PositiveInt]
-    data_pagamento: Optional[date]
-    valor: Optional[NonNegativeFloat]
-    descricao: Optional[str]
+    apartamento_id: int | None = None
+    data_pagamento: str | None = None
+    valor: float | None = None
+    descricao: str | None = None
 
 
 class EdificioUpdate(BaseModel):
-    nome: Optional[str]
-    logradouro: Optional[str]
-    numero: Optional[str]
-    bairro: Optional[str]
-    cidade: Optional[str]
-    uf: Optional[str]
-    pais: Optional[str]
-    cep: Optional[str]
+    nome: str | None = None
+    logradouro: str | None = None
+    numero: str | None = None
+    bairro: str | None = None
+    cidade: str | None = None
+    uf: str | None = None
+    pais: str | None = None
+    cep: str | None = None
 
 
 class GaragemUpdate(BaseModel):
-    apto_origem_id: Optional[PositiveInt]
-    apto_destino_id: Optional[PositiveInt]
-    checkin: Optional[date]
-    checkout: Optional[date]
-    diarias: Optional[PositiveInt]
-    valor_diaria: Optional[NonNegativeInt]
-    taxa_adm: Optional[NonNegativeFloat]
-    valor_total: Optional[NonNegativeFloat]
-    valor_imob: Optional[NonNegativeFloat]
-    valor_prop: Optional[NonNegativeFloat]
+    apto_origem_id: int | None = None
+    apto_destino_id: int | None = None
+    checkin: str | None = None
+    checkout: str | None = None
+    diarias: int | None = None
+    valor_diaria: int | None = None
+    taxa_adm: float | None = None
+    valor_total: float | None = None
+    valor_imob: float | None = None
+    valor_prop: float | None = None
 
 
 class GastoUpdate(BaseModel):
-    apartamento_id: Optional[PositiveInt]
-    data_pagamento: Optional[date]
-    valor_material: Optional[NonNegativeFloat]
-    valor_mo: Optional[NonNegativeFloat]
-    valor_total: Optional[NonNegativeFloat]
-    descricao: Optional[str]
+    apartamento_id: int | None = None
+    data_pagamento: str | None = None
+    valor_material: float | None = None
+    valor_mo: float | None = None
+    valor_total: float | None = None
+    descricao: str | None = None
 
 
 class ProprietarioUpdate(BaseModel):
-    nome: Optional[str]
-    cpf: Optional[str]
-    telefone: Optional[str]
-    email: Optional[EmailStr]
+    nome: str | None = None
+    cpf: str | None = None
+    telefone: str | None = None
+    email: str | None = None
 
 
 class InquilinoUpdate(BaseModel):
-    apartamento: Optional[str]
-    nome: Optional[str]
-    tipo_residencia: Optional[str]
-    cidade: Optional[str]
-    cep: Optional[str]
-    estado: Optional[str]
-    pais: Optional[str]
-    telefone: Optional[str]
-    estado_civil: Optional[str]
-    profissao: Optional[str]
-    rg: Optional[str]
-    cpf: Optional[str]
-    mae: Optional[str]
-    automovel: Optional[str]
-    modelo_auto: Optional[str]
-    placa_auto: Optional[str]
-    cor_auto: Optional[str]
-    checkin: Optional[date]
-    checkout: Optional[date]
-    observacoes: Optional[str]
-    proprietario: Optional[str]
-    imob_fone: Optional[str]
-    acomp_01_nome: Optional[str]
-    acomp_01_rg: Optional[str]
-    acomp_01_cpf: Optional[str]
-    acomp_01_idade: Optional[NonNegativeInt]
-    acomp_01_parentesco: Optional[str]
-    acomp_02_nome: Optional[str]
-    acomp_02_rg: Optional[str]
-    acomp_02_cpf: Optional[str]
-    acomp_02_idade: Optional[NonNegativeInt]
-    acomp_02_parentesco: Optional[str]
-    acomp_03_nome: Optional[str]
-    acomp_03_rg: Optional[str]
-    acomp_03_cpf: Optional[str]
-    acomp_03_idade: Optional[NonNegativeInt]
-    acomp_03_parentesco: Optional[str]
-    acomp_04_nome: Optional[str]
-    acomp_04_rg: Optional[str]
-    acomp_04_cpf: Optional[str]
-    acomp_04_idade: Optional[NonNegativeInt]
-    acomp_04_parentesco: Optional[str]
-    acomp_05_nome: Optional[str]
-    acomp_05_rg: Optional[str]
-    acomp_05_cpf: Optional[str]
-    acomp_05_idade: Optional[NonNegativeInt]
-    acomp_05_parentesco: Optional[str]
-    acomp_06_nome: Optional[str]
-    acomp_06_rg: Optional[str]
-    acomp_06_cpf: Optional[str]
-    acomp_06_idade: Optional[NonNegativeInt]
-    acomp_06_parentesco: Optional[str]
-    acomp_07_nome: Optional[str]
-    acomp_07_rg: Optional[str]
-    acomp_07_cpf: Optional[str]
-    acomp_07_idade: Optional[NonNegativeInt]
-    acomp_07_parentesco: Optional[str]
-    acomp_08_nome: Optional[str]
-    acomp_08_rg: Optional[str]
-    acomp_08_cpf: Optional[str]
-    acomp_08_idade: Optional[NonNegativeInt]
-    acomp_08_parentesco: Optional[str]
-    acomp_09_nome: Optional[str]
-    acomp_09_rg: Optional[str]
-    acomp_09_cpf: Optional[str]
-    acomp_09_idade: Optional[NonNegativeInt]
-    acomp_09_parentesco: Optional[str]
-    acomp_10_nome: Optional[str]
-    acomp_10_rg: Optional[str]
-    acomp_10_cpf: Optional[str]
-    acomp_10_idade: Optional[NonNegativeInt]
-    acomp_10_parentesco: Optional[str]
+    apartamento: str | None = None
+    nome: str | None = None
+    tipo_residencia: str | None = None
+    cidade: str | None = None
+    cep: str | None = None
+    estado: str | None = None
+    pais: str | None = None
+    telefone: str | None = None
+    estado_civil: str | None = None
+    profissao: str | None = None
+    rg: str | None = None
+    cpf: str | None = None
+    mae: str | None = None
+    automovel: str | None = None
+    modelo_auto: str | None = None
+    placa_auto: str | None = None
+    cor_auto: str | None = None
+    checkin: str | None = None
+    checkout: str | None = None
+    observacoes: str | None = None
+    proprietario: str | None = None
+    imob_fone: str | None = None
+    acomp_01_nome: str | None = None
+    acomp_01_rg: str | None = None
+    acomp_01_cpf: str | None = None
+    acomp_01_idade: int | None = None
+    acomp_01_parentesco: str | None = None
+    acomp_02_nome: str | None = None
+    acomp_02_rg: str | None = None
+    acomp_02_cpf: str | None = None
+    acomp_02_idade: int | None = None
+    acomp_02_parentesco: str | None = None
+    acomp_03_nome: str | None = None
+    acomp_03_rg: str | None = None
+    acomp_03_cpf: str | None = None
+    acomp_03_idade: int | None = None
+    acomp_03_parentesco: str | None = None
+    acomp_04_nome: str | None = None
+    acomp_04_rg: str | None = None
+    acomp_04_cpf: str | None = None
+    acomp_04_idade: int | None = None
+    acomp_04_parentesco: str | None = None
+    acomp_05_nome: str | None = None
+    acomp_05_rg: str | None = None
+    acomp_05_cpf: str | None = None
+    acomp_05_idade: int | None = None
+    acomp_05_parentesco: str | None = None
+    acomp_06_nome: str | None = None
+    acomp_06_rg: str | None = None
+    acomp_06_cpf: str | None = None
+    acomp_06_idade: int | None = None
+    acomp_06_parentesco: str | None = None
+    acomp_07_nome: str | None = None
+    acomp_07_rg: str | None = None
+    acomp_07_cpf: str | None = None
+    acomp_07_idade: int | None = None
+    acomp_07_parentesco: str | None = None
+    acomp_08_nome: str | None = None
+    acomp_08_rg: str | None = None
+    acomp_08_cpf: str | None = None
+    acomp_08_idade: int | None = None
+    acomp_08_parentesco: str | None = None
+    acomp_09_nome: str | None = None
+    acomp_09_rg: str | None = None
+    acomp_09_cpf: str | None = None
+    acomp_09_idade: int | None = None
+    acomp_09_parentesco: str | None = None
+    acomp_10_nome: str | None = None
+    acomp_10_rg: str | None = None
+    acomp_10_cpf: str | None = None
+    acomp_10_idade: int | None = None
+    acomp_10_parentesco: str | None = None
