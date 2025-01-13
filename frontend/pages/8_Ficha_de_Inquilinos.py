@@ -11,7 +11,6 @@ st.set_page_config(
     layout='wide'
 )
 st.title('Ficha de Inquilinos')
-st.sidebar.markdown('# Inquilinos')
 
 tab1, tab2, tab3, tab4, tab5 = st.tabs(['Registrar', 'Consultar', 'Modificar', 'Deletar', 'Listar'])
 
@@ -23,7 +22,7 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(['Registrar', 'Consultar', 'Modificar', '
 
 with tab1:
     st.header('Registrar uma Ficha de Inquilino')
-    with st.form('new_inquilino'):
+    with st.form('new_ficha'):
         apt_in = st.text_input(
             label='Apartamento alugado',
             value=None,
@@ -504,7 +503,7 @@ with tab1:
                 "acomp_10_parentesco": acomp_10_parentesco,
             }
             registry_json = json.dumps(obj=registry, indent=1, separators=(',',':'))
-            response = requests.post("http://backend:8000/inquilinos/", registry_json)
+            response = requests.post("http://backend:8000/fichas/", registry_json)
             show_response_message(response)
 
 with tab2:
@@ -516,7 +515,7 @@ with tab2:
         key=8150
     )
     if st.button('Buscar Ficha de Inquilino'):
-        response = requests.get(f'http://backend:8000/inquilinos/{get_id}')
+        response = requests.get(f'http://backend:8000/fichas/{get_id}')
         if response.status_code == 200:
             ficha = response.json()
             ficha_filtered = {key: value for key, value in ficha.items() if value}
@@ -560,12 +559,12 @@ with tab3:
         key=8151
     )
     if update_id:
-        response = requests.get(f'http://backend:8000/inquilinos/{update_id}')
+        response = requests.get(f'http://backend:8000/fichas/{update_id}')
     if response.status_code == 200:
         ficha_viz = response.json()
         df = pd.DataFrame([ficha_viz])
         st.dataframe(df, hide_index=True)
-        with st.form('update_inquilino'):
+        with st.form('update_ficha'):
             apartamento = st.text_input(
                 label='Apartamento alugado',
                 value=str(df.apartamento[0]),
@@ -1099,7 +1098,7 @@ with tab3:
                     "acomp_10_parentesco": acomp_10_parentesco,
                 }
                 updated_json = json.dumps(obj=updated, indent=1, separators=(',',':'))
-                response = requests.put(f"http://backend:8000/inquilinos/{update_id}", updated_json)
+                response = requests.put(f"http://backend:8000/fichas/{update_id}", updated_json)
                 show_response_message(response)
 
     else:
@@ -1114,7 +1113,7 @@ with tab4:
         key=8149
     )
     if delete_id:
-        response = requests.get(f'http://backend:8000/inquilinos/{delete_id}')
+        response = requests.get(f'http://backend:8000/fichas/{delete_id}')
     if response.status_code == 200:
         ficha_viz = response.json()
         df = pd.DataFrame([ficha_viz])
@@ -1122,13 +1121,13 @@ with tab4:
     else:
         show_response_message(response)
     if st.button('Deletar Ficha'):
-        response = requests.delete(f'http://backend:8000/inquilinos/{delete_id}')
+        response = requests.delete(f'http://backend:8000/fichas/{delete_id}')
         show_response_message(response)
 
 with tab5:
     st.header('Listar todas as Fichas de Innquilino')
     if st.button("Mostrar"):
-        response = requests.get(f'http://backend:8000/inquilinos/')
+        response = requests.get(f'http://backend:8000/fichas/')
         if response.status_code == 200:
             fichas = response.json()
             df = pd.DataFrame(fichas)
