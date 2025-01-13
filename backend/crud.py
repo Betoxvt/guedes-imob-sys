@@ -18,7 +18,7 @@ def create_aluguel(db: Session, aluguel: AluguelCreate):
     """
     Creates a new element in the database table alugueis
     """
-    db_aluguel = Aluguel(**aluguel.model_dump())
+    db_aluguel = Aluguel(**aluguel.model_dump(mode='json'))
     db.add(db_aluguel)
     db.commit()
     db.refresh(db_aluguel)
@@ -88,7 +88,7 @@ def create_apartamento(db: Session, apartamento: ApartamentoCreate):
     """
     Creates a new element in the database table apartamentos
     """
-    db_apartamento = Apartamento(**apartamento.model_dump())
+    db_apartamento = Apartamento(**apartamento.model_dump(mode='json'))
     db.add(db_apartamento)
     db.commit()
     db.refresh(db_apartamento)
@@ -157,7 +157,7 @@ def create_despesa(db: Session, despesa: DespesaCreate):
     """
     Creates a new element in the database table despesas
     """
-    db_despesa = Despesa(**despesa.model_dump())
+    db_despesa = Despesa(**despesa.model_dump(mode='json'))
     db.add(db_despesa)
     db.commit()
     db.refresh(db_despesa)
@@ -215,7 +215,7 @@ def create_edificio(db: Session, edificio: EdificioCreate):
     """
     Creates a new element in the database table edificios
     """
-    db_edificio = Edificio(**edificio.model_dump())
+    db_edificio = Edificio(**edificio.model_dump(mode='json'))
     db.add(db_edificio)
     db.commit()
     db.refresh(db_edificio)
@@ -281,7 +281,7 @@ def create_garagem(db: Session, garagem: GaragemCreate):
     """
     Creates a new element in the database table garagens
     """
-    db_garagem = Garagem(**garagem.model_dump())
+    db_garagem = Garagem(**garagem.model_dump(mode='json'))
     db.add(db_garagem)
     db.commit()
     db.refresh(db_garagem)
@@ -351,7 +351,7 @@ def create_gasto(db: Session, gasto: GastoCreate):
     """
     Creates a new element in the database table gastos
     """
-    db_gasto = Gasto(**gasto.model_dump())
+    db_gasto = Gasto(**gasto.model_dump(mode='json'))
     db.add(db_gasto)
     db.commit()
     db.refresh(db_gasto)
@@ -413,7 +413,7 @@ def create_proprietario(db: Session, proprietario: ProprietarioCreate):
     """
     Creates a new element in the database table proprietarios
     """
-    db_proprietario = Proprietario(**proprietario.model_dump())
+    db_proprietario = Proprietario(**proprietario.model_dump(mode='json'))
     db.add(db_proprietario)
     db.commit()
     db.refresh(db_proprietario)
@@ -471,7 +471,7 @@ def create_inquilino(db: Session, inquilino: InquilinoCreate):
     """
     Creates a new element in the database table inquilinos
     """
-    db_inquilino = Inquilino(**inquilino.model_dump())
+    db_inquilino = Inquilino(**inquilino.model_dump(mode='json'))
     db.add(db_inquilino)
     db.commit()
     db.refresh(db_inquilino)
