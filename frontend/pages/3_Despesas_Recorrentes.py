@@ -55,22 +55,22 @@ with tab3:
     show_button = st.button('Mostrar')
     if show_button:
         response = requests.get(f'http://backend:8000/despesas/{update_id}')
-    if response.status_code == 200:
-        despesa_viz = response.json()
-        df = pd.DataFrame([despesa_viz])
-        st.dataframe(df, hide_index=True)
-        with st.form('update_despesa'):
-            update_inputs = ' '
-            update_button = st.form_submit_button('Modificar')
-            if update_button:
-                updated = {
-                    "update_inputs": update_inputs
-                }
-                updated_json = json.dumps(obj=updated, indent=1, separators=(',',':'))
-                response = requests.put(f"http://backend:8000/despesas/{update_id}", updated_json)
-                show_response_message(response)
-    else:
-        show_response_message(response)
+        if response.status_code == 200:
+            despesa_viz = response.json()
+            df = pd.DataFrame([despesa_viz])
+            st.dataframe(df, hide_index=True)
+            with st.form('update_despesa'):
+                update_inputs = ' '
+                update_button = st.form_submit_button('Modificar')
+                if update_button:
+                    updated = {
+                        "update_inputs": update_inputs
+                    }
+                    updated_json = json.dumps(obj=updated, indent=1, separators=(',',':'))
+                    response = requests.put(f"http://backend:8000/despesas/{update_id}", updated_json)
+                    show_response_message(response)
+        else:
+            show_response_message(response)
 
 with tab4:
     st.header('Deletar Despesa Recorrente')
