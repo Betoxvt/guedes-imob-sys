@@ -28,14 +28,17 @@ with tab1:
             show_response_message(response)
 
 with tab2:
-    st.header('Consultar Garagem')
+    st.header('Consultar Garagens')
     get_id = st.number_input(
         'ID Garagem',
         min_value=1,
         format='%d',
         key=5000
     )
-    if st.button('Consultar'):
+    if st.button(
+        'Consultar',
+        key=5003
+    ):
         response = requests.get(f'http://backend:8000/garagens/{get_id}')
         if response.status_code == 200:
             garagem = response.json()
@@ -47,13 +50,15 @@ with tab2:
 with tab3:
     st.header('Modificar Garagem')
     update_id = st.number_input(
-        'ID Garagem',
+        'ID do Garagem',
         min_value=1,
         format='%d',
         key=5001
     )
-    show_button = st.button('Mostrar')
-    if show_button:
+    if st.button(
+        'Mostrar',
+        key=5004
+    ):
         response = requests.get(f'http://backend:8000/garagens/{update_id}')
         if response.status_code == 200:
             garagem_viz = response.json()
@@ -80,8 +85,10 @@ with tab4:
         format='%d',
         key=5002
     )
-    show_button = st.button('Mostrar')
-    if show_button:
+    if st.button(
+        'Mostrar',
+        key=5005
+    ):
         response = requests.get(f'http://backend:8000/garagens/{delete_id}')
         if response.status_code == 200:
             garagem_viz = response.json()
@@ -89,13 +96,19 @@ with tab4:
             st.dataframe(df, hide_index=True)
         else:
             show_response_message(response)
-        if st.button('Deletar'):
+        if st.button(
+            'Deletar',
+            key=5006
+        ):
             response = requests.delete(f'http://backend:8000/garagens/{delete_id}')
             show_response_message(response)
 
 with tab5:
     st.header('Listar Garagens')
-    if st.button("Mostrar"):
+    if st.button(
+        "Mostrar",
+        key=5007
+    ):
         response = requests.get(f'http://backend:8000/garagens/')
         if response.status_code == 200:
             garagens = response.json()

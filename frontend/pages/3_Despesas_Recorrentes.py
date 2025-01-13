@@ -28,14 +28,17 @@ with tab1:
             show_response_message(response)
 
 with tab2:
-    st.header('Consultar Despesa Recorrente')
+    st.header('Consultar Despesas Recorrentes')
     get_id = st.number_input(
         'ID Despesa Recorrente',
         min_value=1,
         format='%d',
         key=3000
     )
-    if st.button('Consultar'):
+    if st.button(
+        'Consultar',
+        key=3003
+    ):
         response = requests.get(f'http://backend:8000/despesas/{get_id}')
         if response.status_code == 200:
             despesa = response.json()
@@ -47,13 +50,15 @@ with tab2:
 with tab3:
     st.header('Modificar Despesa Recorrente')
     update_id = st.number_input(
-        'ID Despesa Recorrente',
+        'ID do Despesa Recorrente',
         min_value=1,
         format='%d',
         key=3001
     )
-    show_button = st.button('Mostrar')
-    if show_button:
+    if st.button(
+        'Mostrar',
+        key=3004
+    ):
         response = requests.get(f'http://backend:8000/despesas/{update_id}')
         if response.status_code == 200:
             despesa_viz = response.json()
@@ -80,8 +85,10 @@ with tab4:
         format='%d',
         key=3002
     )
-    show_button = st.button('Mostrar')
-    if show_button:
+    if st.button(
+        'Mostrar',
+        key=3005
+    ):
         response = requests.get(f'http://backend:8000/despesas/{delete_id}')
         if response.status_code == 200:
             despesa_viz = response.json()
@@ -89,13 +96,19 @@ with tab4:
             st.dataframe(df, hide_index=True)
         else:
             show_response_message(response)
-        if st.button('Deletar'):
+        if st.button(
+            'Deletar',
+            key=3006
+        ):
             response = requests.delete(f'http://backend:8000/despesas/{delete_id}')
             show_response_message(response)
 
 with tab5:
     st.header('Listar Despesas Recorrentes')
-    if st.button("Mostrar"):
+    if st.button(
+        "Mostrar",
+        key=3007
+    ):
         response = requests.get(f'http://backend:8000/despesas/')
         if response.status_code == 200:
             despesas = response.json()

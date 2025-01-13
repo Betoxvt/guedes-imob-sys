@@ -28,14 +28,17 @@ with tab1:
             show_response_message(response)
 
 with tab2:
-    st.header('Consultar Proprietário')
+    st.header('Consultar Proprietários')
     get_id = st.number_input(
         'ID Proprietário',
         min_value=1,
         format='%d',
         key=7000
     )
-    if st.button('Consultar'):
+    if st.button(
+        'Consultar',
+        key=7003
+    ):
         response = requests.get(f'http://backend:8000/proprietarios/{get_id}')
         if response.status_code == 200:
             proprietario = response.json()
@@ -47,13 +50,15 @@ with tab2:
 with tab3:
     st.header('Modificar Proprietário')
     update_id = st.number_input(
-        'ID Proprietário',
+        'ID do Proprietário',
         min_value=1,
         format='%d',
         key=7001
     )
-    show_button = st.button('Mostrar')
-    if show_button:
+    if st.button(
+        'Mostrar',
+        key=7004
+    ):
         response = requests.get(f'http://backend:8000/proprietarios/{update_id}')
         if response.status_code == 200:
             proprietario_viz = response.json()
@@ -80,8 +85,10 @@ with tab4:
         format='%d',
         key=7002
     )
-    show_button = st.button('Mostrar')
-    if show_button:
+    if st.button(
+        'Mostrar',
+        key=7005
+    ):
         response = requests.get(f'http://backend:8000/proprietarios/{delete_id}')
         if response.status_code == 200:
             proprietario_viz = response.json()
@@ -89,13 +96,19 @@ with tab4:
             st.dataframe(df, hide_index=True)
         else:
             show_response_message(response)
-        if st.button('Deletar'):
+        if st.button(
+            'Deletar',
+            key=7006
+        ):
             response = requests.delete(f'http://backend:8000/proprietarios/{delete_id}')
             show_response_message(response)
 
 with tab5:
     st.header('Listar Proprietários')
-    if st.button("Mostrar"):
+    if st.button(
+        "Mostrar",
+        key=7007
+    ):
         response = requests.get(f'http://backend:8000/proprietarios/')
         if response.status_code == 200:
             proprietarios = response.json()

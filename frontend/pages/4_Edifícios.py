@@ -28,14 +28,17 @@ with tab1:
             show_response_message(response)
 
 with tab2:
-    st.header('Consultar Edifício')
+    st.header('Consultar Edifícios')
     get_id = st.number_input(
         'ID Edifício',
         min_value=1,
         format='%d',
         key=4000
     )
-    if st.button('Consultar'):
+    if st.button(
+        'Consultar',
+        key=4003
+    ):
         response = requests.get(f'http://backend:8000/edificios/{get_id}')
         if response.status_code == 200:
             edificio = response.json()
@@ -47,13 +50,15 @@ with tab2:
 with tab3:
     st.header('Modificar Edifício')
     update_id = st.number_input(
-        'ID Edifício',
+        'ID do Edifício',
         min_value=1,
         format='%d',
         key=4001
     )
-    show_button = st.button('Mostrar')
-    if show_button:
+    if st.button(
+        'Mostrar',
+        key=4004
+    ):
         response = requests.get(f'http://backend:8000/edificios/{update_id}')
         if response.status_code == 200:
             edificio_viz = response.json()
@@ -80,8 +85,10 @@ with tab4:
         format='%d',
         key=4002
     )
-    show_button = st.button('Mostrar')
-    if show_button:
+    if st.button(
+        'Mostrar',
+        key=4005
+    ):
         response = requests.get(f'http://backend:8000/edificios/{delete_id}')
         if response.status_code == 200:
             edificio_viz = response.json()
@@ -89,13 +96,19 @@ with tab4:
             st.dataframe(df, hide_index=True)
         else:
             show_response_message(response)
-        if st.button('Deletar'):
+        if st.button(
+            'Deletar',
+            key=4006
+        ):
             response = requests.delete(f'http://backend:8000/edificios/{delete_id}')
             show_response_message(response)
 
 with tab5:
     st.header('Listar Edifícios')
-    if st.button("Mostrar"):
+    if st.button(
+        "Mostrar",
+        key=4007
+    ):
         response = requests.get(f'http://backend:8000/edificios/')
         if response.status_code == 200:
             edificios = response.json()

@@ -28,14 +28,17 @@ with tab1:
             show_response_message(response)
 
 with tab2:
-    st.header('Consultar Gastos Variável')
+    st.header('Consultar Gastos Variáveis')
     get_id = st.number_input(
         'ID Gastos Variável',
         min_value=1,
         format='%d',
         key=6000
     )
-    if st.button('Consultar'):
+    if st.button(
+        'Consultar',
+        key=6003
+    ):
         response = requests.get(f'http://backend:8000/gastos/{get_id}')
         if response.status_code == 200:
             gasto = response.json()
@@ -47,13 +50,15 @@ with tab2:
 with tab3:
     st.header('Modificar Gastos Variável')
     update_id = st.number_input(
-        'ID Gastos Variável',
+        'ID do Gastos Variável',
         min_value=1,
         format='%d',
         key=6001
     )
-    show_button = st.button('Mostrar')
-    if show_button:
+    if st.button(
+        'Mostrar',
+        key=6004
+    ):
         response = requests.get(f'http://backend:8000/gastos/{update_id}')
         if response.status_code == 200:
             gasto_viz = response.json()
@@ -80,8 +85,10 @@ with tab4:
         format='%d',
         key=6002
     )
-    show_button = st.button('Mostrar')
-    if show_button:
+    if st.button(
+        'Mostrar',
+        key=6005
+    ):
         response = requests.get(f'http://backend:8000/gastos/{delete_id}')
         if response.status_code == 200:
             gasto_viz = response.json()
@@ -89,13 +96,19 @@ with tab4:
             st.dataframe(df, hide_index=True)
         else:
             show_response_message(response)
-        if st.button('Deletar'):
+        if st.button(
+            'Deletar',
+            key=6006
+        ):
             response = requests.delete(f'http://backend:8000/gastos/{delete_id}')
             show_response_message(response)
 
 with tab5:
     st.header('Listar Gastos Variáveis')
-    if st.button("Mostrar"):
+    if st.button(
+        "Mostrar",
+        key=6007
+    ):
         response = requests.get(f'http://backend:8000/gastos/')
         if response.status_code == 200:
             gastos = response.json()

@@ -35,7 +35,10 @@ with tab2:
         format='%d',
         key=1000
     )
-    if st.button('Consultar'):
+    if st.button(
+        'Consultar',
+        key=1003
+    ):
         response = requests.get(f'http://backend:8000/alugueis/{get_id}')
         if response.status_code == 200:
             aluguel = response.json()
@@ -52,8 +55,10 @@ with tab3:
         format='%d',
         key=1001
     )
-    show_button = st.button('Mostrar')
-    if show_button:
+    if st.button(
+        'Mostrar',
+        key=1004
+    ):
         response = requests.get(f'http://backend:8000/alugueis/{update_id}')
         if response.status_code == 200:
             aluguel_viz = response.json()
@@ -80,8 +85,10 @@ with tab4:
         format='%d',
         key=1002
     )
-    show_button = st.button('Mostrar')
-    if show_button:
+    if st.button(
+        'Mostrar',
+        key=1005
+    ):
         response = requests.get(f'http://backend:8000/alugueis/{delete_id}')
         if response.status_code == 200:
             aluguel_viz = response.json()
@@ -89,13 +96,19 @@ with tab4:
             st.dataframe(df, hide_index=True)
         else:
             show_response_message(response)
-        if st.button('Deletar'):
+        if st.button(
+            'Deletar',
+            key=1006
+        ):
             response = requests.delete(f'http://backend:8000/alugueis/{delete_id}')
             show_response_message(response)
 
 with tab5:
     st.header('Listar Aluguéis')
-    if st.button("Mostrar"):
+    if st.button(
+        "Mostrar",
+        key=1007
+    ):
         response = requests.get(f'http://backend:8000/alugueis/')
         if response.status_code == 200:
             alugueis = response.json()
