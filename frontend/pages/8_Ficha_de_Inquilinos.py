@@ -1099,7 +1099,7 @@ with tab3:
                     "acomp_10_parentesco": acomp_10_parentesco,
                 }
                 updated_json = json.dumps(obj=updated, indent=1, separators=(',',':'))
-                response = requests.post(                    "http://backend:8000/inquilinos/", updated_json)
+                response = requests.put("http://backend:8000/inquilinos/", updated_json)
                 show_response_message(response)
 
     else:
