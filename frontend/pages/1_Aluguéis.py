@@ -15,8 +15,26 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(['Registrar', 'Consultar', 'Modificar', '
 with tab1:
     st.header('Registrar Aluguel')
     with st.form('new_aluguel'):
-        inputs = '...'
-
+        apartamento_id: int = st.number_input(
+            label='ID Apartamento',
+            min_value=1,
+            step=1,
+            key=1008
+        )
+        inquilino_id: int | None = st.number_input(
+            label='ID Ficha',
+            min_value=1,
+            step=1,
+            key=1009
+        )
+        checkin: str
+        checkout: str
+        diarias: int
+        valor_diaria: int | None = None
+        taxa_adm: float
+        valor_total: float
+        valor_imob: float
+        valor_prop: float
 
         submit_button = st.form_submit_button('Registrar')
         if submit_button:

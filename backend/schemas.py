@@ -4,7 +4,7 @@ from pydantic import BaseModel
 
 class AluguelBase(BaseModel):
     apartamento_id: int
-    inquilino_id: int | None = None
+    ficha_id: int | None = None
     checkin: str
     checkout: str
     diarias: int
@@ -74,7 +74,7 @@ class ProprietarioBase(BaseModel):
     email: str | None = None
 
 
-class InquilinoBase(BaseModel):
+class FichaBase(BaseModel):
     apartamento: str
     nome: str
     tipo_residencia: str
@@ -179,7 +179,7 @@ class ProprietarioCreate(ProprietarioBase):
     pass
 
 
-class InquilinoCreate(InquilinoBase):
+class FichaCreate(FichaBase):
     pass
 
 # Response schemas
@@ -253,7 +253,7 @@ class ProprietarioResponse(ProprietarioBase):
         from_attributes = True
 
 
-class InquilinoResponse(InquilinoBase):
+class FichaResponse(FichaBase):
     id: int
     criado_em: str
     modificado_em: str
@@ -267,7 +267,7 @@ class InquilinoResponse(InquilinoBase):
 
 class AluguelUpdate(BaseModel):
     apartamento_id: int | None = None
-    inquilino_id: int | None = None
+    ficha_id: int | None = None
     checkin: str | None = None
     checkout: str | None = None
     diarias: int | None = None
@@ -337,7 +337,7 @@ class ProprietarioUpdate(BaseModel):
     email: str | None = None
 
 
-class InquilinoUpdate(BaseModel):
+class FichaUpdate(BaseModel):
     apartamento: str | None = None
     nome: str | None = None
     tipo_residencia: str | None = None

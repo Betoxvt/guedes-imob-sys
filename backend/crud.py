@@ -7,10 +7,10 @@ from schemas import (
     EdificioCreate, EdificioUpdate,
     GastoCreate, GastoUpdate,
     ProprietarioCreate, ProprietarioUpdate,
-    InquilinoCreate, InquilinoUpdate
+    FichaCreate, FichaUpdate
 )
 from models import (
-    Aluguel, Apartamento, Despesa, Edificio, Garagem, Gasto, Proprietario, Inquilino
+    Aluguel, Apartamento, Despesa, Edificio, Garagem, Gasto, Proprietario, Ficha
 )
 
 
@@ -50,8 +50,8 @@ def update_aluguel(db: Session, aluguel_id: int, aluguel: AluguelUpdate):
     
     if aluguel.apartamento_id is not None:
         db_aluguel.apartamento_id = aluguel.apartamento_id
-    if aluguel.inquilino_id is not None:
-        db_aluguel.inquilino_id = aluguel.inquilino_id
+    if aluguel.ficha_id is not None:
+        db_aluguel.ficha_id = aluguel.ficha_id
     if aluguel.checkin is not None:
         db_aluguel.checkin = aluguel.checkin
     if aluguel.checkout is not None:
@@ -467,81 +467,81 @@ def delete_proprietario(db: Session, proprietario_id: int):
     return db_proprietario
 
 
-def create_inquilino(db: Session, inquilino: InquilinoCreate):
+def create_ficha(db: Session, ficha: FichaCreate):
     """
-    Creates a new element in the database table inquilinos
+    Creates a new element in the database table fichas
     """
-    db_inquilino = Inquilino(**inquilino.model_dump(mode='json'))
-    db.add(db_inquilino)
+    db_ficha = Ficha(**ficha.model_dump(mode='json'))
+    db.add(db_ficha)
     db.commit()
-    db.refresh(db_inquilino)
-    return db_inquilino
+    db.refresh(db_ficha)
+    return db_ficha
 
 
-def read_inquilinos(db: Session, offset: int = 0, limit: int = 100):
+def read_fichas(db: Session, offset: int = 0, limit: int = 100):
     """
-    Returns all elements from the database table inquilinos
+    Returns all elements from the database table fichas
     """
-    return db.query(Inquilino).offset(offset).limit(limit).all()
+    return db.query(Ficha).offset(offset).limit(limit).all()
 
 
-def read_inquilino(db: Session, inquilino_id: int):
+def read_ficha(db: Session, ficha_id: int):
     """
-    Returns a specific element from the database table inquilinos
+    Returns a specific element from the database table fichas
     """
-    return db.query(Inquilino).filter(Inquilino.id == inquilino_id).first()
+    return db.query(Ficha).filter(Ficha.id == ficha_id).first()
 
 
-def update_inquilino(db: Session, inquilino_id: int, inquilino: InquilinoUpdate):
+def update_ficha(db: Session, ficha_id: int, ficha: FichaUpdate):
     """
-    Updates a specific element from the database table inquilinos
+    Updates a specific element from the database table fichas
     """
-    db_inquilino = db.query(Inquilino).filter(Inquilino.id == inquilino_id).first()
+    db_ficha = db.query(Ficha).filter(Ficha.id == ficha_id).first()
 
-    if db_inquilino is None:
+    if db_ficha is None:
         return None
     
-    if inquilino.apartamento is not None:
-        db_inquilino.apartamento = inquilino.apartamento
-    if inquilino.nome is not None:
-        db_inquilino.nome = inquilino.nome
-    if inquilino.tipo_residencia is not None:
-        db_inquilino.tipo_residencia = inquilino.tipo_residencia
-    if inquilino.cidade is not None:
-        db_inquilino.cidade = inquilino.cidade
-    if inquilino.cep is not None:
-        db_inquilino.cep = inquilino.cep
-    if inquilino.estado is not None:
-        db_inquilino.estado = inquilino.estado
-    if inquilino.pais is not None:
-        db_inquilino.pais = inquilino.pais
-    if inquilino.telefone is not None:
-        db_inquilino.telefone = inquilino.telefone
-    if inquilino.estado_civil is not None:
-        db_inquilino.estado_civil = inquilino.estado_civil
-    if inquilino.profissao is not None:
-        db_inquilino.profissao = inquilino.profissao
-    if inquilino.cpf is not None:
-        db_inquilino.cpf = inquilino.cpf
-    if inquilino.mae is not None:
-        db_inquilino.mae = inquilino.mae
-    if inquilino.checkin is not None:
-        db_inquilino.checkin = inquilino.checkin
-    if inquilino.checkout is not None:
-        db_inquilino.checkout = inquilino.checkout
-    if inquilino.imob_fone is not None:
-        db_inquilino.imob_fone = inquilino.imob_fone
+    if ficha.apartamento is not None:
+        db_ficha.apartamento = ficha.apartamento
+    if ficha.nome is not None:
+        db_ficha.nome = ficha.nome
+    if ficha.tipo_residencia is not None:
+        db_ficha.tipo_residencia = ficha.tipo_residencia
+    if ficha.cidade is not None:
+        db_ficha.cidade = ficha.cidade
+    if ficha.cep is not None:
+        db_ficha.cep = ficha.cep
+    if ficha.estado is not None:
+        db_ficha.estado = ficha.estado
+    if ficha.pais is not None:
+        db_ficha.pais = ficha.pais
+    if ficha.telefone is not None:
+        db_ficha.telefone = ficha.telefone
+    if ficha.estado_civil is not None:
+        db_ficha.estado_civil = ficha.estado_civil
+    if ficha.profissao is not None:
+        db_ficha.profissao = ficha.profissao
+    if ficha.cpf is not None:
+        db_ficha.cpf = ficha.cpf
+    if ficha.mae is not None:
+        db_ficha.mae = ficha.mae
+    if ficha.checkin is not None:
+        db_ficha.checkin = ficha.checkin
+    if ficha.checkout is not None:
+        db_ficha.checkout = ficha.checkout
+    if ficha.imob_fone is not None:
+        db_ficha.imob_fone = ficha.imob_fone
 
     db.commit()
-    db.refresh(db_inquilino)
-    return db_inquilino
+    db.refresh(db_ficha)
+    return db_ficha
 
 
-def delete_inquilino(db: Session, inquilino_id: int):
+def delete_ficha(db: Session, ficha_id: int):
     """
-    Deletes a specific element from the database table inquilinos
+    Deletes a specific element from the database table fichas
     """
-    db_inquilino = db.query(Inquilino).filter(Inquilino.id == inquilino_id).first()
-    db.delete(db_inquilino)
+    db_ficha = db.query(Ficha).filter(Ficha.id == ficha_id).first()
+    db.delete(db_ficha)
     db.commit()
-    return db_inquilino
+    return db_ficha

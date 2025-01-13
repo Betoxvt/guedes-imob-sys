@@ -11,7 +11,7 @@ class Aluguel(Base):
 
     id = Column(Integer, primary_key=True)
     apartamento_id = Column(Integer, ForeignKey('apartamentos.id'), nullable=False)
-    inquilino_id = Column(Integer, ForeignKey('inquilinos.id'))
+    ficha_id = Column(Integer, ForeignKey('fichas.id'))
     checkin = Column(Text, nullable=False)
     checkout = Column(Text, nullable=False)
     diarias = Column(Integer, nullable=False)
@@ -140,8 +140,8 @@ class Proprietario(Base):
     modificado_em = Column(Text, server_default=func.now(), onupdate=func.now(), nullable=False)
 
 
-class Inquilino(Base):
-    __tablename__ = 'inquilinos'
+class Ficha(Base):
+    __tablename__ = 'fichas'
 
     id = Column(Integer, primary_key=True)
     apartamento = Column(Text, nullable=False)
