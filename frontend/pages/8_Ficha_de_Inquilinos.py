@@ -514,7 +514,7 @@ with tab2:
         min_value=1,
         format='%d',
         key=8150
-        )
+    )
     if st.button('Buscar Ficha de Inquilino'):
         response = requests.get(f'http://backend:8000/inquilinos/{get_id}')
         if response.status_code == 200:
@@ -552,7 +552,7 @@ with tab2:
             show_response_message(response)
 
 with tab3:
-    st.header('Atualizar uma Ficha de Inquilino')
+    st.header('Modificar uma Ficha de Inquilino')
     update_id = st.number_input(
         'ID da Ficha',
         min_value=1,
@@ -1099,7 +1099,7 @@ with tab3:
                     "acomp_10_parentesco": acomp_10_parentesco,
                 }
                 updated_json = json.dumps(obj=updated, indent=1, separators=(',',':'))
-                response = requests.put("http://backend:8000/inquilinos/", updated_json)
+                response = requests.put(f"http://backend:8000/inquilinos/{update_id}", updated_json)
                 show_response_message(response)
 
     else:
@@ -1127,7 +1127,7 @@ with tab4:
 
 with tab5:
     st.header('Listar todas as Fichas de Innquilino')
-    if st.button("Exibir Todas as Fichas"):
+    if st.button("Mostrar"):
         response = requests.get(f'http://backend:8000/inquilinos/')
         if response.status_code == 200:
             fichas = response.json()
