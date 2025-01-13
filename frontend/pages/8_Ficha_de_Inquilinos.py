@@ -3,47 +3,9 @@ import pandas as pd
 import requests
 import streamlit as st
 from datetime import date, timedelta
+import re
+from src.functions import clean_number, convert_empty_to_none, none_or_str, format_apto, show_response_message, string_to_date
 
-
-def none_or_str(value: str | None) -> str | None:
-    if value == None:
-        return None
-    else:
-        return str(value)
-
-
-def convert_empty_to_none():
-    """Converts global empty strings to None."""
-    global_vars = globals().copy()
-    for var_name, var_value in global_vars.items():
-        if var_name.startswith("__") or callable(var_value) or isinstance(var_value, type(convert_empty_to_none)):
-            continue
-        if isinstance(var_value, str) and var_value == "":
-            globals()[var_name] = None
-
-
-def show_response_message(response) -> None:
-    if response.status_code == 200:
-        st.success('Operação realizada com sucesso!')
-    else:
-        try:
-            data = response.json()
-            if 'detail' in data:
-                if isinstance(data['detail'], list):
-                    errors = '\n'.join([error['msg'] for error in data['detail']])
-                    st.error(f'Erro: {errors}')
-                else:
-                    st.error(f'Erro: {data["detail"]}')
-        except ValueError:
-            st.error('Erro desconhecido. Não foi possível decodificar a resposta.')
-
-
-def string_to_date(str_date: str) -> date:
-    try:
-        date_date = pd.to_datetime(str_date).date()
-    except (ValueError, AttributeError):
-        date_date = None
-    return date_date
 
 
 st.set_page_config(
@@ -62,16 +24,18 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(['Registrar', 'Consultar', 'Modificar', '
 with tab1:
     st.header('Registrar uma Ficha de Inquilino')
     with st.form('new_inquilino'):
-        apartamento = st.text_input(
+        apt_in = st.text_input(
             label='Apartamento alugado',
             value=None,
             key=8001
         )
+        if apt_in:
+            apartamento = format_apto(apt_in)
         nome = st.text_input(
             label='Nome completo',
             value=None,
             key=8002
-        )
+        ).title()
         tipo_residencia = st.radio(
             label='Tipo de residência',
             options=['Anual', 'Temporária'],
@@ -83,48 +47,55 @@ with tab1:
             label='Naturalidade (cidade)',
             value=None,
             key=8004
-        )
-        cep = st.text_input(
+        ).title()
+        cep_in = st.text_input(
             label='CEP',
             help='Somente números',
             value=None,
+            max_chars=8,
             key=8005
         )
+        if cep_in:
+            cep = f'{cep_in[:5]}-{cep_in[5:]}'
         estado = st.text_input(
             label='Estado (UF)',
             max_chars=2,
             value=None,
             key=8006
-        )
+        ).upper()
         pais = st.text_input(
             label='País',
             value=None,
             key=8007
-        )
-        telefone = st.text_input(
+        ).title()
+        tel_in = st.text_input(
             label='Telefone',
-            help='Somente números: +DDI (DDD) 0 0000-0000',
+            help='Somente números: com DDI e DDD',
             value=None,
+            max_chars=13,
             key=8008
         )
+        if tel_in:
+            tel_in = tel_in.replace('+','').replace('(','').replace(')','').replace('-','').replace(' ','')
+            telefone = f'+{tel_in[:2]} ({tel_in[2:4]}) {tel_in[4]} {tel_in[5:9]}-{tel_in[9:]}'
         estado_civil = st.selectbox(
             label='Estado civíl',
-            index=None,
+            index=0,
             placeholder='Selecione uma opção',
-            options=['Solteiro', 'Casado', 'Separado', 'Divorciado', 'Viúvo'],
+            options=['Solteiro(a)', 'Casado(a)', 'Separado(a)', 'Divorciado(a)', 'Viúvo(a)'],
             key=8009
         )
         profissao = st.text_input(
             label='Profissão',
             value=None,
             key=8010
-        )
+        ).title()
         rg = st.text_input(
             label='Identidade',
-            help='Somente números no formato XXX.XXX.XXX-X',
+            help='Somente números',
             value=None,
             key=8011
-        )
+        ).strip()
         cpf = st.text_input(
             label='CPF',
             help='Somente números',
@@ -617,16 +588,16 @@ with tab3:
                 value=str(df.cidade[0]),
                 key=8076
             )
-            cep_input = st.text_input(
+            cep_in = st.text_input(
                 label='CEP',
                 value=f'{df.cep[0][:5]}-{df.cep[0][5:8]}',
                 help='Somente números',
                 key=8077
             )
-            if cep_input:
-                cep = cep_input.replace('-', '')
+            if cep_in:
+                cep = cep_in.replace('-', '')
                 if cep.isdigit() and len(cep) == 8:
-                    st.success(f'CEP válido: {cep_input}')
+                    st.success(f'CEP válido: {cep_in}')
                 else:
                     st.error('O CEP deve conter exatamente 8 dígitos')
             estado = st.text_input(
@@ -640,16 +611,16 @@ with tab3:
                 value=str(df.pais[0]),
                 key=8079
             )
-            telefone_input = st.text_input(
+            tel_in = st.text_input(
                 label='Telefone',
                 value=f'+{df.telefone[0][:2]} ({df.telefone[0][2:4]}) {df.telefone[0][4]} {df.telefone[0][5:9]}-{df.telefone[0][9:]}',
                 help='Somente números: +DDI (DDD) 0 0000-0000',
                 key=8080
             )
-            if telefone_input:
-                telefone = telefone_input.replace('+', '').replace('-', '').replace(' ', '').replace('(', '').replace(')', '')
+            if tel_in:
+                telefone = tel_in.replace('+', '').replace('-', '').replace(' ', '').replace('(', '').replace(')', '')
                 if telefone.isdigit() and len(telefone) == 13:
-                    st.success(f'Telefone válido: {telefone_input}')
+                    st.success(f'Telefone válido: {tel_in}')
                 else:
                     st.error('O telefone deve conter exatamente 9 dígitos.')
             estado_civil = st.selectbox(
