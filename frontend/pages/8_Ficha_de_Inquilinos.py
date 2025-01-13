@@ -453,7 +453,7 @@ with tab1:
                 "pais": pais,
                 "telefone": telefone,
                 "estado_civil": estado_civil,
-                "profissão": profissao,
+                "profissao": profissao,
                 "rg": rg,
                 "cpf": cpf,
                 "mae": mae,
@@ -517,7 +517,7 @@ with tab1:
                 "acomp_10_idade": acomp_10_idade,
                 "acomp_10_parentesco": acomp_10_parentesco,
             }
-            registro_json = json.dumps(registro)
+            registro_json = json.dumps(obj=registro, indent=1, separators=(',',':'))
             response = requests.post("http://backend:8000/inquilinos/", registro_json)
             show_response_message(response)
 
@@ -546,7 +546,7 @@ with tab2:
                 "pais",
                 "telefone",
                 "estado_civil",
-                "profissão",
+                "profissao",
                 "rg",
                 "cpf",
                 "mae",
@@ -1044,7 +1044,7 @@ with tab3:
                             "pais": pais,
                             "telefone": telefone,
                             "estado_civil": estado_civil,
-                            "profissão": profissao,
+                            "profissao": profissao,
                             "rg": rg,
                             "cpf": cpf,
                             "mae": mae,
