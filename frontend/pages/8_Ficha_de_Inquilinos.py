@@ -602,7 +602,7 @@ with tab3:
                 value=str(df.cidade[0]),
                 key=8076
             )
-            cep_input = st.text(
+            cep_input = st.text_input(
                 label='CEP',
                 value=f'{df.cep[0][:5]}-{df.cep[0][5:8]}',
                 help='Somente números',
@@ -689,7 +689,7 @@ with tab3:
                     value=str(df.automovel[0]),
                     key=8087
                 )
-            if pd.isna(df.loc[0, 'modelo']):
+            if pd.isna(df.loc[0, 'modelo_auto']):
                 modelo_auto = st.text_input(
                     label='Modelo',
                     value=None,
@@ -698,10 +698,10 @@ with tab3:
             else:
                 modelo_auto = st.text_input(
                     label='Modelo',
-                    value=str(df.modelo[0]),
+                    value=str(df.modelo_auto[0]),
                     key=8089
                 )
-            if pd.isna(df.loc[0, 'placa']):
+            if pd.isna(df.loc[0, 'placa_auto']):
                 placa_auto = st.text_input(
                     label='Placa',
                     value=None,
@@ -710,10 +710,10 @@ with tab3:
             else:
                 placa_auto = st.text_input(
                     label='Placa',
-                    value=str(df.placa[0]),
+                    value=str(df.placa_auto[0]),
                     key=8091
                 )
-            if pd.isna(df.loc[0, 'automovel']):
+            if pd.isna(df.loc[0, 'cor_auto']):
                 cor_auto = st.text_input(
                     label='Cor',
                     value=None,
