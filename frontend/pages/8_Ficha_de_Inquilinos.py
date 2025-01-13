@@ -59,7 +59,7 @@ with tab1:
         tipo_residencia = st.radio(
             label='Tipo de residência',
             options=['Anual', 'Temporária'],
-            index=1,
+            index=None,
             horizontal=True,
             key=8003
         )
@@ -105,6 +105,8 @@ with tab1:
                 st.error('O telefone deve conter exatamente 9 dígitos.')
         estado_civil = st.selectbox(
             label='Estado civíl',
+            index=None,
+            placeholder='Selecione uma opção',
             options=['Solteiro', 'Casado', 'Separado', 'Divorciado', 'Viúvo'],
             key=8009
         )
@@ -464,7 +466,6 @@ with tab1:
 
         submit_button = st.form_submit_button('Registrar Ficha')
         if submit_button:
-            convert_empty_to_none()
             response = requests.post(
                 "http://backend:8000/inquilinos/",
                 json={
