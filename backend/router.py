@@ -25,12 +25,12 @@ from crud import (
 
 router = APIRouter()
 
-@router.post("/alugueis", response_model=AluguelResponse)
+@router.post("/alugueis/", response_model=AluguelResponse)
 def create_aluguel_route(aluguel: AluguelCreate, db: Session = Depends(get_db)):
     return create_aluguel(db=db, aluguel=aluguel)
 
 
-@router.get("/alugueis", response_model=List[AluguelResponse])
+@router.get("/alugueis/", response_model=List[AluguelResponse])
 def read_alugueis_route(offset: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     alugueis = read_alugueis(db, offset=offset, limit=limit)
     return alugueis
@@ -60,12 +60,12 @@ def delete_aluguel_route(aluguel_id: int, db: Session = Depends(get_db)):
     return db_aluguel
 
 
-@router.post("/apartamentos", response_model=ApartamentoResponse)
+@router.post("/apartamentos/", response_model=ApartamentoResponse)
 def create_apartamento_route(apartamento: ApartamentoCreate, db: Session = Depends(get_db)):
     return create_apartamento(db=db, apartamento=apartamento)
 
 
-@router.get("/apartamentos", response_model=List[ApartamentoResponse])
+@router.get("/apartamentos/", response_model=List[ApartamentoResponse])
 def read_apartamentos_route(offset: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     apartamentos = read_apartamentos(db, offset=offset, limit=limit)
     return apartamentos
@@ -95,12 +95,12 @@ def delete_apartamento_route(apartamento_id: int, db: Session = Depends(get_db))
     return db_apartamento
 
 
-@router.post("/despesas", response_model=DespesaResponse)
+@router.post("/despesas/", response_model=DespesaResponse)
 def create_despesa_route(despesa: DespesaCreate, db: Session = Depends(get_db)):
     return create_despesa(db=db, despesa=despesa)
 
 
-@router.get("/despesas", response_model=List[DespesaResponse])
+@router.get("/despesas/", response_model=List[DespesaResponse])
 def read_despesas_route(offset: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     despesas = read_despesas(db, offset=offset, limit=limit)
     return despesas
@@ -130,12 +130,12 @@ def delete_despesa_route(despesa_id: int, db: Session = Depends(get_db)):
     return db_despesa
 
 
-@router.post("/edificios", response_model=EdificioResponse)
+@router.post("/edificios/", response_model=EdificioResponse)
 def create_edificio_route(edificio: EdificioCreate, db: Session = Depends(get_db)):
     return create_edificio(db=db, edificio=edificio)
 
 
-@router.get("/edificios", response_model=List[EdificioResponse])
+@router.get("/edificios/", response_model=List[EdificioResponse])
 def read_edificios_route(offset: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     edificios = read_edificios(db, offset=offset, limit=limit)
     return edificios
@@ -165,12 +165,12 @@ def delete_edificio_route(edificio_id: int, db: Session = Depends(get_db)):
     return db_edificio
 
 
-@router.post("/garagens", response_model=GaragemResponse)
+@router.post("/garagens/", response_model=GaragemResponse)
 def create_garagem_route(garagem: GaragemCreate, db: Session = Depends(get_db)):
     return create_garagem(db=db, garagem=garagem)
 
 
-@router.get("/garagens", response_model=List[GaragemResponse])
+@router.get("/garagens/", response_model=List[GaragemResponse])
 def read_garagens_route(offset: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     garagens = read_garagens(db, offset=offset, limit=limit)
     return garagens
@@ -200,12 +200,12 @@ def delete_garagem_route(garagem_id: int, db: Session = Depends(get_db)):
     return db_garagem
 
 
-@router.post("/gastos", response_model=GastoResponse)
+@router.post("/gastos/", response_model=GastoResponse)
 def create_gasto_route(gasto: GastoCreate, db: Session = Depends(get_db)):
     return create_gasto(db=db, gasto=gasto)
 
 
-@router.get("/gastos", response_model=List[GastoResponse])
+@router.get("/gastos/", response_model=List[GastoResponse])
 def read_gastos_route(offset: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     gastos = read_gastos(db, offset=offset, limit=limit)
     return gastos
@@ -235,7 +235,7 @@ def delete_gasto_route(gasto_id: int, db: Session = Depends(get_db)):
     return db_gasto
 
 
-@router.post("/proprietarios", response_model=ProprietarioResponse)
+@router.post("/proprietarios/", response_model=ProprietarioResponse)
 def create_proprietario_route(proprietario: ProprietarioCreate, db: Session = Depends(get_db)):
     return create_proprietario(db=db, proprietario=proprietario)
 
@@ -270,12 +270,12 @@ def delete_proprietario_route(proprietario_id: int, db: Session = Depends(get_db
     return db_proprietario
 
 
-@router.post("/inquilinos", response_model=InquilinoResponse)
+@router.post("/inquilinos/", response_model=InquilinoResponse)
 def create_inquilino_route(inquilino: InquilinoCreate, db: Session = Depends(get_db)):
     return create_inquilino(db=db, inquilino=inquilino)
 
 
-@router.get("/inquilinos", response_model=List[InquilinoResponse])
+@router.get("/inquilinos/", response_model=List[InquilinoResponse])
 def read_inquilinos_route(offset: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     inquilinos = read_inquilinos(db, offset=offset, limit=limit)
     return inquilinos

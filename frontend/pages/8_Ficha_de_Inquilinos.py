@@ -60,7 +60,7 @@ with tab1:
         tipo_residencia = st.radio(
             label='Tipo de residência',
             options=['Anual', 'Temporária'],
-            index=None,
+            index=1,
             horizontal=True,
             key=8003
         )
@@ -69,18 +69,12 @@ with tab1:
             value=None,
             key=8004
         )
-        cep_input = st.text_input(
+        cep = st.text_input(
             label='CEP',
             help='Somente números',
             value=None,
             key=8005
         )
-        if cep_input:
-                cep = cep_input.replace('-', '')
-                if cep.isdigit() and len(cep) == 8:
-                    st.success(f'CEP válido: {cep_input}')
-                else:
-                    st.error('O CEP deve conter exatamente 8 dígitos')
         estado = st.text_input(
             label='Estado (UF)',
             max_chars=2,
@@ -92,18 +86,12 @@ with tab1:
             value=None,
             key=8007
         )
-        telefone_input = st.text_input(
+        telefone = st.text_input(
             label='Telefone',
             help='Somente números: +DDI (DDD) 0 0000-0000',
             value=None,
             key=8008
         )
-        if telefone_input:
-            telefone = telefone_input.replace('+', '').replace('-', '').replace(' ', '').replace('(', '').replace(')', '')
-            if telefone.isdigit() and len(telefone) == 13:
-                st.success(f'Telefone válido: {telefone_input}')
-            else:
-                st.error('O telefone deve conter exatamente 9 dígitos.')
         estado_civil = st.selectbox(
             label='Estado civíl',
             index=None,
@@ -116,30 +104,18 @@ with tab1:
             value=None,
             key=8010
         )
-        rg_input = st.text_input(
+        rg = st.text_input(
             label='Identidade',
             help='Somente números no formato XXX.XXX.XXX-X',
             value=None,
             key=8011
         )
-        if rg_input:
-            rg = rg_input.replace('.', '').replace('-', '')
-            if rg.isdigit() and (len(rg) >= 8 and len(rg) <= 10):
-                st.success(f'RG válido: {rg_input}')
-            else:
-                st.error('O RG deve conter entre 8 e 10 dígitos.')
-        cpf_input = st.text_input(
+        cpf = st.text_input(
             label='CPF',
             help='Somente números',
             value=None,
             key=8012
         )
-        if cpf_input:
-            cpf = cpf_input.replace('.', '').replace('-', '')
-            if cpf.isdigit() and len(cpf) == 11:
-                st.success(f'CPF válido: {cpf_input}')
-            else:
-                st.error('O CPF deve conter exatamente 11 dígitos.')
         mae = st.text_input(
             label='Nome completo da mãe',
             value=None,
@@ -211,7 +187,7 @@ with tab1:
             value=None,
             key=8025
         )
-        acomp_01_idade = st.number_input(
+        acomp_01_idade = st.text_input(
             label='Idade',
             value=None,
             key=8026
@@ -238,7 +214,7 @@ with tab1:
             value=None,
             key=8030
         )
-        acomp_02_idade = st.number_input(
+        acomp_02_idade = st.text_input(
             label='Idade',
             value=None,
             key=8031
@@ -265,7 +241,7 @@ with tab1:
             value=None,
             key=8035
         )
-        acomp_03_idade = st.number_input(
+        acomp_03_idade = st.text_input(
             label='Idade',
             value=None,
             key=8036
@@ -292,7 +268,7 @@ with tab1:
             value=None,
             key=8040
         )
-        acomp_04_idade = st.number_input(
+        acomp_04_idade = st.text_input(
             label='Idade',
             value=None,
             key=8041
@@ -319,7 +295,7 @@ with tab1:
             value=None,
             key=8045
         )
-        acomp_05_idade = st.number_input(
+        acomp_05_idade = st.text_input(
             label='Idade',
             value=None,
             key=8046
@@ -346,7 +322,7 @@ with tab1:
             value=None,
             key=8050
         )
-        acomp_06_idade = st.number_input(
+        acomp_06_idade = st.text_input(
             label='Idade',
             value=None,
             key=8051
@@ -373,7 +349,7 @@ with tab1:
             value=None,
             key=8055
         )
-        acomp_07_idade = st.number_input(
+        acomp_07_idade = st.text_input(
             label='Idade',
             value=None,
             key=8056
@@ -400,7 +376,7 @@ with tab1:
             value=None,
             key=8060
         )
-        acomp_08_idade = st.number_input(
+        acomp_08_idade = st.text_input(
             label='Idade',
             value=None,
             key=8061
@@ -427,7 +403,7 @@ with tab1:
             value=None,
             key=8065
         )
-        acomp_09_idade = st.number_input(
+        acomp_09_idade = st.text_input(
             label='Idade',
             value=None,
             key=8066
@@ -454,7 +430,7 @@ with tab1:
             value=None,
             key=8070
         )
-        acomp_10_idade = st.number_input(
+        acomp_10_idade = st.text_input(
             label='Idade',
             value=None,
             key=8071
@@ -542,7 +518,7 @@ with tab1:
                 "acomp_10_parentesco": acomp_10_parentesco,
             }
             registro_json = json.dumps(registro)
-            response = requests.post("http://backend:8000/inquilinos/", registro)
+            response = requests.post("http://backend:8000/inquilinos/", registro_json)
             show_response_message(response)
 
 with tab2:
@@ -798,7 +774,7 @@ with tab3:
                 value=str(df.acomp_01_cpf[0]),
                 key=8101
             )
-            acomp_01_idade = st.number_input(
+            acomp_01_idade = st.text_input(
                 label='Idade',
                 value=int(df.loc[0, 'acomp_01_idade']),
                 key=8102
@@ -825,7 +801,7 @@ with tab3:
                 value=str(df.acomp_02_cpf[0]),
                 key=8106
             )
-            acomp_02_idade = st.number_input(
+            acomp_02_idade = st.text_input(
                 label='Idade',
                 value=int(df.loc[0, 'acomp_02_idade']),
                 key=8107
@@ -852,7 +828,7 @@ with tab3:
                 value=str(df.acomp_03_cpf[0]),
                 key=8111
             )
-            acomp_03_idade = st.number_input(
+            acomp_03_idade = st.text_input(
                 label='Idade',
                 value=int(df.loc[0, 'acomp_03_idade']),
                 key=8112
@@ -879,7 +855,7 @@ with tab3:
                 value=str(df.acomp_04_cpf[0]),
                 key=8116
             )
-            acomp_04_idade = st.number_input(
+            acomp_04_idade = st.text_input(
                 label='Idade',
                 value=int(df.loc[0, 'acomp_04_idade']),
                 key=8117
@@ -906,7 +882,7 @@ with tab3:
                 value=str(df.acomp_05_cpf[0]),
                 key=8121
             )
-            acomp_05_idade = st.number_input(
+            acomp_05_idade = st.text_input(
                 label='Idade',
                 value=int(df.loc[0, 'acomp_05_idade']),
                 key=8122
@@ -933,7 +909,7 @@ with tab3:
                 value=str(df.acomp_06_cpf[0]),
                 key=8126
             )
-            acomp_06_idade = st.number_input(
+            acomp_06_idade = st.text_input(
                 label='Idade',
                 value=int(df.loc[0, 'acomp_06_idade']),
                 key=8127
@@ -960,7 +936,7 @@ with tab3:
                 value=str(df.acomp_07_cpf[0]),
                 key=8131
             )
-            acomp_07_idade = st.number_input(
+            acomp_07_idade = st.text_input(
                 label='Idade',
                 value=int(df.loc[0, 'acomp_07_idade']),
                 key=8132
@@ -987,7 +963,7 @@ with tab3:
                 value=str(df.acomp_08_cpf[0]),
                 key=8136
             )
-            acomp_08_idade = st.number_input(
+            acomp_08_idade = st.text_input(
                 label='Idade',
                 value=int(df.loc[0, 'acomp_08_idade']),
                 key=8137
@@ -1014,7 +990,7 @@ with tab3:
                 value=str(df.acomp_09_cpf[0]),
                 key=8141
             )
-            acomp_09_idade = st.number_input(
+            acomp_09_idade = st.text_input(
                 label='Idade',
                 value=int(df.loc[0, 'acomp_09_idade']),
                 key=8142
@@ -1041,7 +1017,7 @@ with tab3:
                 value=str(df.acomp_10_cpf[0]),
                 key=8146
             )
-            acomp_10_idade = st.number_input(
+            acomp_10_idade = st.text_input(
                 label='Idade',
                 value=int(df.loc[0, 'acomp_10_idade']),
                 key=8147
