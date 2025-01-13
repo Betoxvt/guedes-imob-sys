@@ -31,6 +31,14 @@ def show_response_message(response) -> None:
             st.error('Erro desconhecido. Não foi possível decodificar a resposta.')
 
 
+def string_to_date(str_date: str) -> date:
+    try:
+        date_date = pd.to_datetime(str_date).date()
+    except (ValueError, AttributeError):
+        date_date = None
+    return date_date
+
+
 st.set_page_config(
     page_title='Ficha de Inquilinos',
     layout='wide'
@@ -727,7 +735,7 @@ with tab3:
                 )
             checkin = st.date_input(
                 label='Check-in',
-                value=date(df.checkin[0]),
+                value=string_to_date(df.checkin[0]),
                 min_value=date(2022, 1, 1),
                 max_value=date.today()+timedelta(days=300),
                 format='DD/MM/YYYY',
@@ -735,7 +743,7 @@ with tab3:
             )
             checkout = st.date_input(
                 label='Check-out',
-                value=date(df.checkout[0]),
+                value=string_to_date(df.checkout[0]),
                 min_value=checkin+timedelta(days=1),
                 max_value=date.today()+timedelta(days=300),
                 format='DD/MM/YYYY',
@@ -751,12 +759,20 @@ with tab3:
                 value=str(df.proprietario[0]),
                 key=8097
             )
-            imob_fone = st.text_input(
-                label='Telefone Imobiliária',
-                value=f'+{df.imob_fone[0][:2]} ({df.imob_fone[0][2:4]}) {df.imob_fone[0][4]} {df.imob_fone[0][5:9]}-{df.imob_fone[0][9:]}',
-                help='Somente números: +DDI (DDD) 0 0000-0000',
-                key=8098
-            )
+            if pd.isna(df.loc[0, 'imob_fone']):
+                imob_fone = st.text_input(
+                    label='Telefone Imobiliária',
+                    value=None,
+                    help='Somente números: +DDI (DDD) 0 0000-0000',
+                    key=8098
+                )
+            else:
+                imob_fone = st.text_input(
+                    label='Telefone Imobiliária',
+                    value=f'+{df.imob_fone[0][:2]} ({df.imob_fone[0][2:4]}) {df.imob_fone[0][4]} {df.imob_fone[0][5:9]}-{df.imob_fone[0][9:]}',
+                    help='Somente números: +DDI (DDD) 0 0000-0000',
+                    key=8098
+                )
 
             st.subheader('Acompanhante 01')
             acomp_01_nome = st.text_input(
@@ -776,7 +792,7 @@ with tab3:
             )
             acomp_01_idade = st.text_input(
                 label='Idade',
-                value=int(df.loc[0, 'acomp_01_idade']),
+                value=str(df.loc[0, 'acomp_01_idade']),
                 key=8102
             )
             acomp_01_parentesco = st.text_input(
@@ -803,7 +819,7 @@ with tab3:
             )
             acomp_02_idade = st.text_input(
                 label='Idade',
-                value=int(df.loc[0, 'acomp_02_idade']),
+                value=str(df.loc[0, 'acomp_02_idade']),
                 key=8107
             )
             acomp_02_parentesco = st.text_input(
@@ -830,7 +846,7 @@ with tab3:
             )
             acomp_03_idade = st.text_input(
                 label='Idade',
-                value=int(df.loc[0, 'acomp_03_idade']),
+                value=str(df.loc[0, 'acomp_03_idade']),
                 key=8112
             )
             acomp_03_parentesco = st.text_input(
@@ -857,7 +873,7 @@ with tab3:
             )
             acomp_04_idade = st.text_input(
                 label='Idade',
-                value=int(df.loc[0, 'acomp_04_idade']),
+                value=str(df.loc[0, 'acomp_04_idade']),
                 key=8117
             )
             acomp_04_parentesco = st.text_input(
@@ -884,7 +900,7 @@ with tab3:
             )
             acomp_05_idade = st.text_input(
                 label='Idade',
-                value=int(df.loc[0, 'acomp_05_idade']),
+                value=str(df.loc[0, 'acomp_05_idade']),
                 key=8122
             )
             acomp_05_parentesco = st.text_input(
@@ -911,7 +927,7 @@ with tab3:
             )
             acomp_06_idade = st.text_input(
                 label='Idade',
-                value=int(df.loc[0, 'acomp_06_idade']),
+                value=str(df.loc[0, 'acomp_06_idade']),
                 key=8127
             )
             acomp_06_parentesco = st.text_input(
@@ -938,7 +954,7 @@ with tab3:
             )
             acomp_07_idade = st.text_input(
                 label='Idade',
-                value=int(df.loc[0, 'acomp_07_idade']),
+                value=str(df.loc[0, 'acomp_07_idade']),
                 key=8132
             )
             acomp_07_parentesco = st.text_input(
@@ -965,7 +981,7 @@ with tab3:
             )
             acomp_08_idade = st.text_input(
                 label='Idade',
-                value=int(df.loc[0, 'acomp_08_idade']),
+                value=str(df.loc[0, 'acomp_08_idade']),
                 key=8137
             )
             acomp_08_parentesco = st.text_input(
@@ -992,7 +1008,7 @@ with tab3:
             )
             acomp_09_idade = st.text_input(
                 label='Idade',
-                value=int(df.loc[0, 'acomp_09_idade']),
+                value=str(df.loc[0, 'acomp_09_idade']),
                 key=8142
             )
             acomp_09_parentesco = st.text_input(
@@ -1019,7 +1035,7 @@ with tab3:
             )
             acomp_10_idade = st.text_input(
                 label='Idade',
-                value=int(df.loc[0, 'acomp_10_idade']),
+                value=str(df.loc[0, 'acomp_10_idade']),
                 key=8147
             )
             acomp_10_parentesco = st.text_input(
