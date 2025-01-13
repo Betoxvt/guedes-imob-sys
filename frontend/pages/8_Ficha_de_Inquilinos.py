@@ -35,7 +35,7 @@ with tab1:
             label='Nome completo',
             value=None,
             key=8002
-        ).title()
+        )
         tipo_residencia = st.radio(
             label='Tipo de residência',
             options=['Anual', 'Temporária'],
@@ -47,7 +47,7 @@ with tab1:
             label='Naturalidade (cidade)',
             value=None,
             key=8004
-        ).title()
+        )
         cep_in = st.text_input(
             label='CEP',
             help='Somente números',
@@ -62,12 +62,12 @@ with tab1:
             max_chars=2,
             value=None,
             key=8006
-        ).upper()
+        )
         pais = st.text_input(
             label='País',
             value=None,
             key=8007
-        ).title()
+        )
         tel_in = st.text_input(
             label='Telefone',
             help='Somente números: com DDI e DDD',
@@ -89,13 +89,13 @@ with tab1:
             label='Profissão',
             value=None,
             key=8010
-        ).title()
+        )
         rg = st.text_input(
             label='Identidade',
             help='Somente números',
             value=None,
             key=8011
-        ).strip()
+        )
         cpf = st.text_input(
             label='CPF',
             help='Somente números',
