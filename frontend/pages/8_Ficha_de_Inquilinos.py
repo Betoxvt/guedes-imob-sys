@@ -5,6 +5,13 @@ import streamlit as st
 from datetime import date, timedelta
 
 
+def none_or_str(value: str | None) -> str | None:
+    if value == None:
+        return None
+    else:
+        return str(value)
+
+
 def convert_empty_to_none():
     """Converts global empty strings to None."""
     global_vars = globals().copy()
@@ -179,7 +186,7 @@ with tab1:
             value=None,
             key=8022
         )
-        st.subheader('Acompanhante 01')
+        st.markdown('**Acompanhante 01**')
         acomp_01_nome = st.text_input(
             label='Nome',
             value=None,
@@ -206,7 +213,7 @@ with tab1:
             key=8027
         )
 
-        st.subheader('Acompanhante 02')
+        st.markdown('**Acompanhante 02**')
         acomp_02_nome = st.text_input(
             label='Nome',
             value=None,
@@ -233,7 +240,7 @@ with tab1:
             key=8032
         )
 
-        st.subheader('Acompanhante 03')
+        st.markdown('**Acompanhante 03**')
         acomp_03_nome = st.text_input(
             label='Nome',
             value=None,
@@ -260,7 +267,7 @@ with tab1:
             key=8037
         )
 
-        st.subheader('Acompanhante 04')
+        st.markdown('**Acompanhante 04**')
         acomp_04_nome = st.text_input(
             label='Nome',
             value=None,
@@ -287,7 +294,7 @@ with tab1:
             key=8042
         )
 
-        st.subheader('Acompanhante 05')
+        st.markdown('**Acompanhante 05**')
         acomp_05_nome = st.text_input(
             label='Nome',
             value=None,
@@ -314,7 +321,7 @@ with tab1:
             key=8047
         )
 
-        st.subheader('Acompanhante 06')
+        st.markdown('**Acompanhante 06**')
         acomp_06_nome = st.text_input(
             label='Nome',
             value=None,
@@ -341,7 +348,7 @@ with tab1:
             key=8052
         )
 
-        st.subheader('Acompanhante 07')
+        st.markdown('**Acompanhante 07**')
         acomp_07_nome = st.text_input(
             label='Nome',
             value=None,
@@ -368,7 +375,7 @@ with tab1:
             key=8057
         )
 
-        st.subheader('Acompanhante 08')
+        st.markdown('**Acompanhante 08**')
         acomp_08_nome = st.text_input(
             label='Nome',
             value=None,
@@ -395,7 +402,7 @@ with tab1:
             key=8062
         )
 
-        st.subheader('Acompanhante 09')
+        st.markdown('**Acompanhante 09**')
         acomp_09_nome = st.text_input(
             label='Nome',
             value=None,
@@ -422,7 +429,7 @@ with tab1:
             key=8067
         )
 
-        st.subheader('Acompanhante 10')
+        st.markdown('**Acompanhante 10**')
         acomp_10_nome = st.text_input(
             label='Nome',
             value=None,
@@ -451,7 +458,7 @@ with tab1:
 
         submit_button = st.form_submit_button('Registrar Ficha')
         if submit_button:
-            registro = {
+            registry = {
                 "apartamento": apartamento,
                 "nome": nome,
                 "tipo_residencia": tipo_residencia,
@@ -525,8 +532,8 @@ with tab1:
                 "acomp_10_idade": acomp_10_idade,
                 "acomp_10_parentesco": acomp_10_parentesco,
             }
-            registro_json = json.dumps(obj=registro, indent=1, separators=(',',':'))
-            response = requests.post("http://backend:8000/inquilinos/", registro_json)
+            registry_json = json.dumps(obj=registry, indent=1, separators=(',',':'))
+            response = requests.post("http://backend:8000/inquilinos/", registry_json)
             show_response_message(response)
 
 with tab2:
@@ -774,273 +781,273 @@ with tab3:
                     key=8098
                 )
 
-            st.subheader('Acompanhante 01')
+            st.markdown('**Acompanhante 01**')
             acomp_01_nome = st.text_input(
                 label='Nome',
-                value=str(df.acomp_01_nome[0]),
+                value=none_or_str(df.acomp_01_nome[0]),
                 key=8099
             )
             acomp_01_rg = st.text_input(
                 label='RG',
-                value=str(df.acomp_01_rg[0]),
+                value=none_or_str(df.acomp_01_rg[0]),
                 key=8100
             )
             acomp_01_cpf = st.text_input(
                 label='CPF',
-                value=str(df.acomp_01_cpf[0]),
+                value=none_or_str(df.acomp_01_cpf[0]),
                 key=8101
             )
             acomp_01_idade = st.text_input(
                 label='Idade',
-                value=str(df.loc[0, 'acomp_01_idade']),
+                value=none_or_str(df.loc[0, 'acomp_01_idade']),
                 key=8102
             )
             acomp_01_parentesco = st.text_input(
                 label='Parentesco',
-                value=str(df.acomp_01_parentesco[0]),
+                value=none_or_str(df.acomp_01_parentesco[0]),
                 key=8103
             )
 
-            st.subheader('Acompanhante 02')
+            st.markdown('**Acompanhante 02**')
             acomp_02_nome = st.text_input(
                 label='Nome',
-                value=str(df.acomp_02_nome[0]),
+                value=none_or_str(df.acomp_02_nome[0]),
                 key=8104
             )
             acomp_02_rg = st.text_input(
                 label='RG',
-                value=str(df.acomp_02_rg[0]),
+                value=none_or_str(df.acomp_02_rg[0]),
                 key=8105
             )
             acomp_02_cpf = st.text_input(
                 label='CPF',
-                value=str(df.acomp_02_cpf[0]),
+                value=none_or_str(df.acomp_02_cpf[0]),
                 key=8106
             )
             acomp_02_idade = st.text_input(
                 label='Idade',
-                value=str(df.loc[0, 'acomp_02_idade']),
+                value=none_or_str(df.loc[0, 'acomp_02_idade']),
                 key=8107
             )
             acomp_02_parentesco = st.text_input(
                 label='Parentesco',
-                value=str(df.acomp_02_parentesco[0]),
+                value=none_or_str(df.acomp_02_parentesco[0]),
                 key=8108
             )
 
-            st.subheader('Acompanhante 03')
+            st.markdown('**Acompanhante 03**')
             acomp_03_nome = st.text_input(
                 label='Nome',
-                value=str(df.acomp_03_nome[0]),
+                value=none_or_str(df.acomp_03_nome[0]),
                 key=8109
             )
             acomp_03_rg = st.text_input(
                 label='RG',
-                value=str(df.acomp_03_rg[0]),
+                value=none_or_str(df.acomp_03_rg[0]),
                 key=8110
             )
             acomp_03_cpf = st.text_input(
                 label='CPF',
-                value=str(df.acomp_03_cpf[0]),
+                value=none_or_str(df.acomp_03_cpf[0]),
                 key=8111
             )
             acomp_03_idade = st.text_input(
                 label='Idade',
-                value=str(df.loc[0, 'acomp_03_idade']),
+                value=none_or_str(df.loc[0, 'acomp_03_idade']),
                 key=8112
             )
             acomp_03_parentesco = st.text_input(
                 label='Parentesco',
-                value=str(df.acomp_03_parentesco[0]),
+                value=none_or_str(df.acomp_03_parentesco[0]),
                 key=8113
             )
 
-            st.subheader('Acompanhante 04')
+            st.markdown('**Acompanhante 04**')
             acomp_04_nome = st.text_input(
                 label='Nome',
-                value=str(df.acomp_04_nome[0]),
+                value=none_or_str(df.acomp_04_nome[0]),
                 key=8114
             )
             acomp_04_rg = st.text_input(
                 label='RG',
-                value=str(df.acomp_04_rg[0]),
+                value=none_or_str(df.acomp_04_rg[0]),
                 key=8115
             )
             acomp_04_cpf = st.text_input(
                 label='CPF',
-                value=str(df.acomp_04_cpf[0]),
+                value=none_or_str(df.acomp_04_cpf[0]),
                 key=8116
             )
             acomp_04_idade = st.text_input(
                 label='Idade',
-                value=str(df.loc[0, 'acomp_04_idade']),
+                value=none_or_str(df.loc[0, 'acomp_04_idade']),
                 key=8117
             )
             acomp_04_parentesco = st.text_input(
                 label='Parentesco',
-                value=str(df.acomp_04_parentesco[0]),
+                value=none_or_str(df.acomp_04_parentesco[0]),
                 key=8118
             )
 
-            st.subheader('Acompanhante 05')
+            st.markdown('**Acompanhante 05**')
             acomp_05_nome = st.text_input(
                 label='Nome',
-                value=str(df.acomp_05_nome[0]),
+                value=none_or_str(df.acomp_05_nome[0]),
                 key=8119
             )
             acomp_05_rg = st.text_input(
                 label='RG',
-                value=str(df.acomp_05_rg[0]),
+                value=none_or_str(df.acomp_05_rg[0]),
                 key=8120
             )
             acomp_05_cpf = st.text_input(
                 label='CPF',
-                value=str(df.acomp_05_cpf[0]),
+                value=none_or_str(df.acomp_05_cpf[0]),
                 key=8121
             )
             acomp_05_idade = st.text_input(
                 label='Idade',
-                value=str(df.loc[0, 'acomp_05_idade']),
+                value=none_or_str(df.loc[0, 'acomp_05_idade']),
                 key=8122
             )
             acomp_05_parentesco = st.text_input(
                 label='Parentesco',
-                value=str(df.acomp_05_parentesco[0]),
+                value=none_or_str(df.acomp_05_parentesco[0]),
                 key=8123
             )
 
-            st.subheader('Acompanhante 06')
+            st.markdown('**Acompanhante 06**')
             acomp_06_nome = st.text_input(
                 label='Nome',
-                value=str(df.acomp_06_nome[0]),
+                value=none_or_str(df.acomp_06_nome[0]),
                 key=8124
             )
             acomp_06_rg = st.text_input(
                 label='RG',
-                value=str(df.acomp_06_rg[0]),
+                value=none_or_str(df.acomp_06_rg[0]),
                 key=8125
             )
             acomp_06_cpf = st.text_input(
                 label='CPF',
-                value=str(df.acomp_06_cpf[0]),
+                value=none_or_str(df.acomp_06_cpf[0]),
                 key=8126
             )
             acomp_06_idade = st.text_input(
                 label='Idade',
-                value=str(df.loc[0, 'acomp_06_idade']),
+                value=none_or_str(df.loc[0, 'acomp_06_idade']),
                 key=8127
             )
             acomp_06_parentesco = st.text_input(
                 label='Parentesco',
-                value=str(df.acomp_06_parentesco[0]),
+                value=none_or_str(df.acomp_06_parentesco[0]),
                 key=8128
             )
 
-            st.subheader('Acompanhante 07')
+            st.markdown('**Acompanhante 07**')
             acomp_07_nome = st.text_input(
                 label='Nome',
-                value=str(df.acomp_07_nome[0]),
+                value=none_or_str(df.acomp_07_nome[0]),
                 key=8129
             )
             acomp_07_rg = st.text_input(
                 label='RG',
-                value=str(df.acomp_07_rg[0]),
+                value=none_or_str(df.acomp_07_rg[0]),
                 key=8130
             )
             acomp_07_cpf = st.text_input(
                 label='CPF',
-                value=str(df.acomp_07_cpf[0]),
+                value=none_or_str(df.acomp_07_cpf[0]),
                 key=8131
             )
             acomp_07_idade = st.text_input(
                 label='Idade',
-                value=str(df.loc[0, 'acomp_07_idade']),
+                value=none_or_str(df.loc[0, 'acomp_07_idade']),
                 key=8132
             )
             acomp_07_parentesco = st.text_input(
                 label='Parentesco',
-                value=str(df.acomp_07_parentesco[0]),
+                value=none_or_str(df.acomp_07_parentesco[0]),
                 key=8133
             )
 
-            st.subheader('Acompanhante 08')
+            st.markdown('**Acompanhante 08**')
             acomp_08_nome = st.text_input(
                 label='Nome',
-                value=str(df.acomp_08_nome[0]),
+                value=none_or_str(df.acomp_08_nome[0]),
                 key=8134
             )
             acomp_08_rg = st.text_input(
                 label='RG',
-                value=str(df.acomp_08_rg[0]),
+                value=none_or_str(df.acomp_08_rg[0]),
                 key=8135
             )
             acomp_08_cpf = st.text_input(
                 label='CPF',
-                value=str(df.acomp_08_cpf[0]),
+                value=none_or_str(df.acomp_08_cpf[0]),
                 key=8136
             )
             acomp_08_idade = st.text_input(
                 label='Idade',
-                value=str(df.loc[0, 'acomp_08_idade']),
+                value=none_or_str(df.loc[0, 'acomp_08_idade']),
                 key=8137
             )
             acomp_08_parentesco = st.text_input(
                 label='Parentesco',
-                value=str(df.acomp_08_parentesco[0]),
+                value=none_or_str(df.acomp_08_parentesco[0]),
                 key=8138
             )
 
-            st.subheader('Acompanhante 09')
+            st.markdown('**Acompanhante 09**')
             acomp_09_nome = st.text_input(
                 label='Nome',
-                value=str(df.acomp_09_nome[0]),
+                value=none_or_str(df.acomp_09_nome[0]),
                 key=8139
             )
             acomp_09_rg = st.text_input(
                 label='RG',
-                value=str(df.acomp_09_rg[0]),
+                value=none_or_str(df.acomp_09_rg[0]),
                 key=8140
             )
             acomp_09_cpf = st.text_input(
                 label='CPF',
-                value=str(df.acomp_09_cpf[0]),
+                value=none_or_str(df.acomp_09_cpf[0]),
                 key=8141
             )
             acomp_09_idade = st.text_input(
                 label='Idade',
-                value=str(df.loc[0, 'acomp_09_idade']),
+                value=none_or_str(df.loc[0, 'acomp_09_idade']),
                 key=8142
             )
             acomp_09_parentesco = st.text_input(
                 label='Parentesco',
-                value=str(df.acomp_09_parentesco[0]),
+                value=none_or_str(df.acomp_09_parentesco[0]),
                 key=8143
             )
 
-            st.subheader('Acompanhante 10')
+            st.markdown('**Acompanhante 10**')
             acomp_10_nome = st.text_input(
                 label='Nome',
-                value=str(df.acomp_10_nome[0]),
+                value=none_or_str(df.acomp_10_nome[0]),
                 key=8144
             )
             acomp_10_rg = st.text_input(
                 label='RG',
-                value=str(df.acomp_10_rg[0]),
+                value=none_or_str(df.acomp_10_rg[0]),
                 key=8145
             )
             acomp_10_cpf = st.text_input(
                 label='CPF',
-                value=str(df.acomp_10_cpf[0]),
+                value=none_or_str(df.acomp_10_cpf[0]),
                 key=8146
             )
             acomp_10_idade = st.text_input(
                 label='Idade',
-                value=str(df.loc[0, 'acomp_10_idade']),
+                value=none_or_str(df.loc[0, 'acomp_10_idade']),
                 key=8147
             )
             acomp_10_parentesco = st.text_input(
                 label='Parentesco',
-                value=str(df.acomp_10_parentesco[0]),
+                value=none_or_str(df.acomp_10_parentesco[0]),
                 key=8148
             )
 
