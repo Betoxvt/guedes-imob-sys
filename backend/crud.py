@@ -1,3 +1,4 @@
+from fastapi.encoders import jsonable_encoder
 from models import Aluguel, Apartamento, Despesa, Garagem, Proprietario, Ficha
 from schemas import (
     AluguelCreate, AluguelUpdate,
@@ -554,8 +555,9 @@ def patch_proprietario(db: Session, proprietario_id: int, proprietario: Propriet
         db_proprietario = db.query(Proprietario).filter(Proprietario.id == proprietario_id).first()
         if db_proprietario is None:
             return None
-
-        for key, value in proprietario.model_dump(exclude_unset=True).items():
+        
+        proprietario_patch = proprietario.model_dump(exclude_unset=True)
+        for key, value in proprietario_patch.items():
             setattr(db_proprietario, key, value)
         db.commit()
         db.refresh(db_proprietario)
