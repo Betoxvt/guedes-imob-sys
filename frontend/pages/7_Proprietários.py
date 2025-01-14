@@ -15,13 +15,34 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(['Registrar', 'Consultar', 'Modificar', '
 with tab1:
     st.header('Registrar Proprietário')
     with st.form('new_proprietario'):
-        inputs = '...'
-
+        nome: str = st.text_input(
+            'Nome',
+            key=7008,
+            value=None
+        )
+        cpf: str = st.text_input(
+            'CPF',
+            key=7009,
+            value=None
+        )
+        tel: str = st.text_input(
+            'Telefone',
+            key=7010,
+            value=None
+        )
+        email: str = st.text_input(
+            'E-Mail',
+            key=7011,
+            value=None
+        )
 
         submit_button = st.form_submit_button('Registrar')
         if submit_button:
             registry = {
-                "inputs": inputs
+                "nome": nome,
+                "cpf": cpf,
+                "tel": tel,
+                "email": email
             }
             registry_json = json.dumps(obj=registry, indent=1, separators=(',',':'))
             response = requests.post("http://backend:8000/proprietarios/", registry_json)
@@ -96,12 +117,12 @@ with tab4:
             st.dataframe(df, hide_index=True)
         else:
             show_response_message(response)
-        if st.button(
-            'Deletar',
-            key=7006
-        ):
-            response = requests.delete(f'http://backend:8000/proprietarios/{delete_id}')
-            show_response_message(response)
+    if st.button(
+        'Deletar',
+        key=7006
+    ):
+        response = requests.delete(f'http://backend:8000/proprietarios/{delete_id}')
+        show_response_message(response)
 
 with tab5:
     st.header('Listar Proprietários')
