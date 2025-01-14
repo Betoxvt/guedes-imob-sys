@@ -6,9 +6,7 @@ from schemas import (
     AluguelCreate, AluguelResponse, AluguelUpdate,
     ApartamentoCreate, ApartamentoResponse, ApartamentoUpdate,
     DespesaCreate, DespesaResponse, DespesaUpdate,
-    EdificioCreate, EdificioResponse, EdificioUpdate,
     GaragemCreate, GaragemResponse, GaragemUpdate,
-    GastoCreate, GastoResponse, GastoUpdate,
     ProprietarioCreate, ProprietarioResponse, ProprietarioUpdate,
     FichaCreate, FichaResponse, FichaUpdate
 )
@@ -16,9 +14,7 @@ from crud import (
     create_aluguel, read_alugueis, read_aluguel, update_aluguel, delete_aluguel,
     create_apartamento, read_apartamentos, read_apartamento, update_apartamento, delete_apartamento,
     create_despesa, read_despesas, read_despesa, update_despesa, delete_despesa,
-    create_edificio, read_edificio, read_edificios, update_edificio, delete_edificio,
     create_garagem, read_garagem, read_garagens, update_garagem, delete_garagem,
-    create_gasto, read_gasto, read_gastos, update_gasto, delete_gasto,
     create_proprietario, read_proprietario, read_proprietarios, update_proprietario, delete_proprietario,
     create_ficha, read_ficha, read_fichas, update_ficha, delete_ficha
 )
@@ -130,41 +126,6 @@ def delete_despesa_route(despesa_id: int, db: Session = Depends(get_db)):
     return db_despesa
 
 
-@router.post("/edificios/", response_model=EdificioResponse)
-def create_edificio_route(edificio: EdificioCreate, db: Session = Depends(get_db)):
-    return create_edificio(db=db, edificio=edificio)
-
-
-@router.get("/edificios/", response_model=List[EdificioResponse])
-def read_edificios_route(offset: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    edificios = read_edificios(db, offset=offset, limit=limit)
-    return edificios
-
-
-@router.get("/edificios/{edificio_id}", response_model=EdificioResponse)
-def read_edificio_route(edificio_id: int, db: Session = Depends(get_db)):
-    edificio = read_edificio(db, edificio_id=edificio_id)
-    if edificio is None:
-        raise HTTPException(status_code=404, detail="Edificio not found")
-    return edificio
-
-
-@router.put("/edificios/{edificio_id}", response_model=EdificioResponse)
-def update_edificio_route(edificio_id: int, edificio: EdificioUpdate, db: Session = Depends(get_db)):
-    db_edificio = update_edificio(db=db, edificio_id=edificio_id, edificio=edificio)
-    if db_edificio is None:
-        raise HTTPException(status_code=404, detail="Edificio not found")
-    return db_edificio
-
-
-@router.delete("/edificios/{edificio_id}", response_model=EdificioResponse)
-def delete_edificio_route(edificio_id: int, db: Session = Depends(get_db)):
-    db_edificio = delete_edificio(db, edificio_id=edificio_id)
-    if db_edificio is None:
-        raise HTTPException(status_code=404, detail="Edificio not found")
-    return db_edificio
-
-
 @router.post("/garagens/", response_model=GaragemResponse)
 def create_garagem_route(garagem: GaragemCreate, db: Session = Depends(get_db)):
     return create_garagem(db=db, garagem=garagem)
@@ -198,41 +159,6 @@ def delete_garagem_route(garagem_id: int, db: Session = Depends(get_db)):
     if db_garagem is None:
         raise HTTPException(status_code=404, detail="Garagem not found")
     return db_garagem
-
-
-@router.post("/gastos/", response_model=GastoResponse)
-def create_gasto_route(gasto: GastoCreate, db: Session = Depends(get_db)):
-    return create_gasto(db=db, gasto=gasto)
-
-
-@router.get("/gastos/", response_model=List[GastoResponse])
-def read_gastos_route(offset: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    gastos = read_gastos(db, offset=offset, limit=limit)
-    return gastos
-
-
-@router.get("/gastos/{gasto_id}", response_model=GastoResponse)
-def read_gasto_route(gasto_id: int, db: Session = Depends(get_db)):
-    gasto = read_gasto(db, gasto_id=gasto_id)
-    if gasto is None:
-        raise HTTPException(status_code=404, detail="Gasto not found")
-    return gasto
-
-
-@router.put("/gastos/{gasto_id}", response_model=GastoResponse)
-def update_gasto_route(gasto_id: int, gasto: GastoUpdate, db: Session = Depends(get_db)):
-    db_gasto = update_gasto(db=db, gasto_id=gasto_id, gasto=gasto)
-    if db_gasto is None:
-        raise HTTPException(status_code=404, detail="Gasto not found")
-    return db_gasto
-
-
-@router.delete("/gastos/{gasto_id}", response_model=GastoResponse)
-def delete_gasto_route(gasto_id: int, db: Session = Depends(get_db)):
-    db_gasto = delete_gasto(db, gasto_id=gasto_id)
-    if db_gasto is None:
-        raise HTTPException(status_code=404, detail="Gasto not found")
-    return db_gasto
 
 
 @router.post("/proprietarios/", response_model=ProprietarioResponse)

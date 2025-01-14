@@ -1,155 +1,147 @@
-from pydantic import BaseModel
+from datetime import date
+from pydantic import BaseModel, EmailStr, field_validator, model_validator
+from typing import Optional
+from typing_extensions import Self
+
 
 # Base schemas
 
+
 class AluguelBase(BaseModel):
-    apartamento_id: int
-    ficha_id: int | None = None
-    checkin: str
-    checkout: str
-    diarias: int
-    valor_diaria: int | None = None
-    taxa_adm: float
+    apto_id: int
+    ficha_id: Optional[int]
+    checkout: date
+    checkout: date
+    diarias: float
+    valor_diaria: float
     valor_total: float
-    valor_imob: float
-    valor_prop: float
 
 
 class ApartamentoBase(BaseModel):
-    apartamento: str
-    edificio_id: int
+    apto: str
     proprietario_id: int
-    celesc: str | None = None
-    supergasbras: str | None = None
-    internet_provedor: str | None = None
-    wifiid: str | None = None
-    wifipass: str | None = None
-    lockpass: str | None = None
+    cod_celesc: Optional[str]
+    cod_gas: Optional[str]
+    prov_net: Optional[str]
+    wifi: Optional[str]
+    wifi_senha: Optional[str]
+    lock_senha: Optional[str]
 
 
 class DespesaBase(BaseModel):
-    apartamento_id: int
-    data_pagamento: str
+    apto_id: int
+    data_pagamento: date
     valor: float
     descricao: str
-
-
-class EdificioBase(BaseModel):
-    nome: str
-    logradouro: str | None = None
-    numero: str | None = None
-    bairro: str | None = None
-    cidade: str | None = None
-    uf: str | None = None
-    pais: str | None = None
-    cep: str | None = None
 
 
 class GaragemBase(BaseModel):
     apto_origem_id: int
     apto_destino_id: int
-    checkin: str
-    checkout: str
+    checkin: date
+    checkout: date
     diarias: int
-    valor_diaria: int | None = None
-    taxa_adm: float
+    valor_diaria: float
     valor_total: float
-    valor_imob: float
-    valor_prop: float
 
-
-class GastoBase(BaseModel):
-    apartamento_id: int
-    data_pagamento: str
-    valor_material: float | None = None
-    valor_mo: float | None = None
-    valor_total: float
-    descricao: str
+    @model_validator (mode='after')
+    def verify_equals(self) -> Self:
+        if self.apto_destino_id == self.apto_origem_id:
+            raise ValueError('As vagas de origem e destino são iguais, devem ser diferentes')
+        return self
 
 
 class ProprietarioBase(BaseModel):
     nome: str
-    cpf: str | None = None
-    telefone: str | None = None
-    email: str | None = None
+    cpf: Optional[str]
+    tel: Optional[str]
+    email: Optional[EmailStr]
 
 
 class FichaBase(BaseModel):
-    apartamento: str
+    apto: str
     nome: str
     tipo_residencia: str
     cidade: str
     cep: str
-    estado: str
+    uf: str
     pais: str
-    telefone: str
+    tel: str 
     estado_civil: str
     profissao: str
-    rg: str | None = None
+    rg: Optional[str]
     cpf: str
     mae: str
-    automovel: str | None = None
-    modelo_auto: str | None = None
-    placa_auto: str | None = None
-    cor_auto: str | None = None
-    checkin: str
-    checkout: str
-    observacoes: str | None = None
-    proprietario: str | None = None
-    imob_fone: str | None = None
-    acomp_01_nome: str | None = None
-    acomp_01_rg: str | None = None
-    acomp_01_cpf: str | None = None
-    acomp_01_idade: str | None = None
-    acomp_01_parentesco: str | None = None
-    acomp_02_nome: str | None = None
-    acomp_02_rg: str | None = None
-    acomp_02_cpf: str | None = None
-    acomp_02_idade: str | None = None
-    acomp_02_parentesco: str | None = None
-    acomp_03_nome: str | None = None
-    acomp_03_rg: str | None = None
-    acomp_03_cpf: str | None = None
-    acomp_03_idade: str | None = None
-    acomp_03_parentesco: str | None = None
-    acomp_04_nome: str | None = None
-    acomp_04_rg: str | None = None
-    acomp_04_cpf: str | None = None
-    acomp_04_idade: str | None = None
-    acomp_04_parentesco: str | None = None
-    acomp_05_nome: str | None = None
-    acomp_05_rg: str | None = None
-    acomp_05_cpf: str | None = None
-    acomp_05_idade: str | None = None
-    acomp_05_parentesco: str | None = None
-    acomp_06_nome: str | None = None
-    acomp_06_rg: str | None = None
-    acomp_06_cpf: str | None = None
-    acomp_06_idade: str | None = None
-    acomp_06_parentesco: str | None = None
-    acomp_07_nome: str | None = None    
-    acomp_07_rg: str | None = None
-    acomp_07_cpf: str | None = None
-    acomp_07_idade: str | None = None
-    acomp_07_parentesco: str | None = None
-    acomp_08_nome: str | None = None
-    acomp_08_rg: str | None = None
-    acomp_08_cpf: str | None = None
-    acomp_08_idade: str | None = None
-    acomp_08_parentesco: str | None = None
-    acomp_09_nome: str | None = None
-    acomp_09_rg: str | None = None
-    acomp_09_cpf: str | None = None
-    acomp_09_idade: str | None = None
-    acomp_09_parentesco: str | None = None
-    acomp_10_nome: str | None = None
-    acomp_10_rg: str | None = None
-    acomp_10_cpf: str | None = None
-    acomp_10_idade: str | None = None
-    acomp_10_parentesco: str | None = None
+    automovel: Optional[str]
+    modelo_auto: Optional[str]
+    placa_auto: Optional[str]
+    cor_auto: Optional[str]
+    checkin: date
+    checkout: date
+    observacoes: Optional[str]
+    proprietario: Optional[str]
+    imob_fone: Optional[str]
+    acomp_01_nome: Optional[str]
+    acomp_01_rg: Optional[str]
+    acomp_01_cpf: Optional[str]
+    acomp_01_idade: Optional[str]
+    acomp_01_parentesco: Optional[str]
+    acomp_02_nome: Optional[str]
+    acomp_02_rg: Optional[str]
+    acomp_02_cpf: Optional[str]
+    acomp_02_idade: Optional[str]
+    acomp_02_parentesco: Optional[str]
+    acomp_03_nome: Optional[str]
+    acomp_03_rg: Optional[str]
+    acomp_03_cpf: Optional[str]
+    acomp_03_idade: Optional[str]
+    acomp_03_parentesco: Optional[str]
+    acomp_04_nome: Optional[str]
+    acomp_04_rg: Optional[str]
+    acomp_04_cpf: Optional[str]
+    acomp_04_idade: Optional[str]
+    acomp_04_parentesco: Optional[str]
+    acomp_05_nome: Optional[str]
+    acomp_05_rg: Optional[str]
+    acomp_05_cpf: Optional[str]
+    acomp_05_idade: Optional[str]
+    acomp_05_parentesco: Optional[str]
+    acomp_06_nome: Optional[str]
+    acomp_06_rg: Optional[str]
+    acomp_06_cpf: Optional[str]
+    acomp_06_idade: Optional[str]
+    acomp_06_parentesco: Optional[str]
+    acomp_07_nome: Optional[str]
+    acomp_07_rg: Optional[str]
+    acomp_07_cpf: Optional[str]
+    acomp_07_idade: Optional[str]
+    acomp_07_parentesco: Optional[str]
+    acomp_08_nome: Optional[str]
+    acomp_08_rg: Optional[str]
+    acomp_08_cpf: Optional[str]
+    acomp_08_idade: Optional[str]
+    acomp_08_parentesco: Optional[str]
+    acomp_09_nome: Optional[str]
+    acomp_09_rg: Optional[str]
+    acomp_09_cpf: Optional[str]
+    acomp_09_idade: Optional[str]
+    acomp_09_parentesco: Optional[str]
+    acomp_10_nome: Optional[str]
+    acomp_10_rg: Optional[str]
+    acomp_10_cpf: Optional[str]
+    acomp_10_idade: Optional[str]
+    acomp_10_parentesco: Optional[str]
+
+    @field_validator('uf')
+    @classmethod
+    def validate_uf(cls, v):
+        if len(v) != 2:
+            raise ValueError('Estado deve ter 2 caracteres')
+        return v 
 
 
 # Create schemas
+
 
 class AluguelCreate(AluguelBase):
     pass
@@ -163,15 +155,7 @@ class DespesaCreate(DespesaBase):
     pass
 
 
-class EdificioCreate(EdificioBase):
-    pass
-
-
 class GaragemCreate(GaragemBase):
-    pass
-
-
-class GastoCreate(GastoBase):
     pass
 
 
@@ -182,12 +166,14 @@ class ProprietarioCreate(ProprietarioBase):
 class FichaCreate(FichaBase):
     pass
 
+
 # Response schemas
+
 
 class AluguelResponse(AluguelBase):
     id: int
-    criado_em: str
-    modificado_em: str
+    criado_em: date
+    modificado_em: date
 
     class Config:
         from_attributes = True
@@ -195,8 +181,8 @@ class AluguelResponse(AluguelBase):
 
 class ApartamentoResponse(ApartamentoBase):
     id: int
-    criado_em: str
-    modificado_em: str
+    criado_em: date
+    modificado_em: date
 
 
     class Config:
@@ -205,18 +191,8 @@ class ApartamentoResponse(ApartamentoBase):
 
 class DespesaResponse(DespesaBase):
     id: int
-    criado_em: str
-    modificado_em: str
-
-
-    class Config:
-        from_attributes = True
-
-
-class EdificioResponse(EdificioBase):
-    id: int
-    criado_em: str
-    modificado_em: str
+    criado_em: date
+    modificado_em: date
 
 
     class Config:
@@ -225,18 +201,8 @@ class EdificioResponse(EdificioBase):
 
 class GaragemResponse(GaragemBase):
     id: int
-    criado_em: str
-    modificado_em: str
-
-
-    class Config:
-        from_attributes = True
-
-
-class GastoResponse(GastoBase):
-    id: int
-    criado_em: str
-    modificado_em: str
+    criado_em: date
+    modificado_em: date
 
 
     class Config:
@@ -245,8 +211,8 @@ class GastoResponse(GastoBase):
 
 class ProprietarioResponse(ProprietarioBase):
     id: int
-    criado_em: str
-    modificado_em: str
+    criado_em: date
+    modificado_em: date
     
 
     class Config:
@@ -255,8 +221,8 @@ class ProprietarioResponse(ProprietarioBase):
 
 class FichaResponse(FichaBase):
     id: int
-    criado_em: str
-    modificado_em: str
+    criado_em: date
+    modificado_em: date
 
 
     class Config:
@@ -266,147 +232,133 @@ class FichaResponse(FichaBase):
 # Update schemas
 
 class AluguelUpdate(BaseModel):
-    apartamento_id: int | None = None
-    ficha_id: int | None = None
-    checkin: str | None = None
-    checkout: str | None = None
-    diarias: int | None = None
-    valor_diaria: int | None = None
-    taxa_adm: float | None = None
-    valor_total: float | None = None
-    valor_imob: float | None = None
-    valor_prop: float | None = None
+    apto_id: Optional[int]
+    ficha_id: Optional[int]
+    checkin: Optional[date]
+    checkout: Optional[date]
+    diarias: Optional[int]
+    valor_diaria: Optional[float]
+    valor_total: Optional[float]
 
 
 class ApartamentoUpdate(BaseModel):
-    apartamento: str | None = None
-    edificio_id: int | None = None
-    proprietario_id: int | None = None
-    celesc: str | None = None
-    supergasbras: str | None = None
-    internet_provedor: str | None = None
-    wifiid: str | None = None
-    wifipass: str | None = None
-    lockpass: str | None = None
+    apto: Optional[str]
+    proprietario_id: Optional[int]
+    cod_celesc: Optional[str]
+    cod_gas: Optional[str]
+    prov_net: Optional[str]
+    wifi: Optional[str]
+    wifi_senha: Optional[str]
+    lock_senha: Optional[str]
 
 
 class DespesaUpdate(BaseModel):
-    apartamento_id: int | None = None
-    data_pagamento: str | None = None
-    valor: float | None = None
-    descricao: str | None = None
-
-
-class EdificioUpdate(BaseModel):
-    nome: str | None = None
-    logradouro: str | None = None
-    numero: str | None = None
-    bairro: str | None = None
-    cidade: str | None = None
-    uf: str | None = None
-    pais: str | None = None
-    cep: str | None = None
+    apto_id: Optional[int]
+    data_pagamento: Optional[date]
+    valor: Optional[float]
+    descricao: Optional[str]
 
 
 class GaragemUpdate(BaseModel):
-    apto_origem_id: int | None = None
-    apto_destino_id: int | None = None
-    checkin: str | None = None
-    checkout: str | None = None
-    diarias: int | None = None
-    valor_diaria: int | None = None
-    taxa_adm: float | None = None
-    valor_total: float | None = None
-    valor_imob: float | None = None
-    valor_prop: float | None = None
+    apto_origem_id: Optional[int]
+    apto_destino_id: Optional[int]
+    checkin: Optional[date]
+    checkout: Optional[date]
+    diarias: Optional[int]
+    valor_diaria: Optional[int]
+    valor_total: Optional[float]
 
-
-class GastoUpdate(BaseModel):
-    apartamento_id: int | None = None
-    data_pagamento: str | None = None
-    valor_material: float | None = None
-    valor_mo: float | None = None
-    valor_total: float | None = None
-    descricao: str | None = None
-
+    @model_validator (mode='after')
+    def verify_equals(self) -> Self:
+        if self.apto_destino_id == self.apto_origem_id:
+            raise ValueError('As vagas de origem e destino são iguais, devem ser diferentes')
+        return self
+    
 
 class ProprietarioUpdate(BaseModel):
-    nome: str | None = None
-    cpf: str | None = None
-    telefone: str | None = None
-    email: str | None = None
+    nome: Optional[str]
+    cpf: Optional[str]
+    tel: Optional[str]
+    email: Optional[EmailStr]
 
 
 class FichaUpdate(BaseModel):
-    apartamento: str | None = None
-    nome: str | None = None
-    tipo_residencia: str | None = None
-    cidade: str | None = None
-    cep: str | None = None
-    estado: str | None = None
-    pais: str | None = None
-    telefone: str | None = None
-    estado_civil: str | None = None
-    profissao: str | None = None
-    rg: str | None = None
-    cpf: str | None = None
-    mae: str | None = None
-    automovel: str | None = None
-    modelo_auto: str | None = None
-    placa_auto: str | None = None
-    cor_auto: str | None = None
-    checkin: str | None = None
-    checkout: str | None = None
-    observacoes: str | None = None
-    proprietario: str | None = None
-    imob_fone: str | None = None
-    acomp_01_nome: str | None = None
-    acomp_01_rg: str | None = None
-    acomp_01_cpf: str | None = None
-    acomp_01_idade: str | None = None
-    acomp_01_parentesco: str | None = None
-    acomp_02_nome: str | None = None
-    acomp_02_rg: str | None = None
-    acomp_02_cpf: str | None = None
-    acomp_02_idade: str | None = None
-    acomp_02_parentesco: str | None = None
-    acomp_03_nome: str | None = None
-    acomp_03_rg: str | None = None
-    acomp_03_cpf: str | None = None
-    acomp_03_idade: str | None = None
-    acomp_03_parentesco: str | None = None
-    acomp_04_nome: str | None = None
-    acomp_04_rg: str | None = None
-    acomp_04_cpf: str | None = None
-    acomp_04_idade: str | None = None
-    acomp_04_parentesco: str | None = None
-    acomp_05_nome: str | None = None
-    acomp_05_rg: str | None = None
-    acomp_05_cpf: str | None = None
-    acomp_05_idade: str | None = None
-    acomp_05_parentesco: str | None = None
-    acomp_06_nome: str | None = None
-    acomp_06_rg: str | None = None
-    acomp_06_cpf: str | None = None
-    acomp_06_idade: str | None = None
-    acomp_06_parentesco: str | None = None
-    acomp_07_nome: str | None = None
-    acomp_07_rg: str | None = None
-    acomp_07_cpf: str | None = None
-    acomp_07_idade: str | None = None
-    acomp_07_parentesco: str | None = None
-    acomp_08_nome: str | None = None
-    acomp_08_rg: str | None = None
-    acomp_08_cpf: str | None = None
-    acomp_08_idade: str | None = None
-    acomp_08_parentesco: str | None = None
-    acomp_09_nome: str | None = None
-    acomp_09_rg: str | None = None
-    acomp_09_cpf: str | None = None
-    acomp_09_idade: str | None = None
-    acomp_09_parentesco: str | None = None
-    acomp_10_nome: str | None = None
-    acomp_10_rg: str | None = None
-    acomp_10_cpf: str | None = None
-    acomp_10_idade: str | None = None
-    acomp_10_parentesco: str | None = None
+    apto: Optional[str]
+    nome: Optional[str]
+    tipo_residencia: Optional[str]
+    cidade: Optional[str]
+    cep: Optional[str]
+    uf: Optional[str]
+    pais: Optional[str]
+    tel: Optional[str]
+    estado_civil: Optional[str]
+    profissao: Optional[str]
+    rg: Optional[str]
+    cpf: Optional[str]
+    mae: Optional[str]
+    automovel: Optional[str]
+    modelo_auto: Optional[str]
+    placa_auto: Optional[str]
+    cor_auto: Optional[str]
+    checkin: Optional[date]
+    checkout: Optional[date]
+    observacoes: Optional[str]
+    proprietario: Optional[str]
+    imob_fone: Optional[str]
+    acomp_01_nome: Optional[str]
+    acomp_01_rg: Optional[str]
+    acomp_01_cpf: Optional[str]
+    acomp_01_idade: Optional[str]
+    acomp_01_parentesco: Optional[str]
+    acomp_02_nome: Optional[str]
+    acomp_02_rg: Optional[str]
+    acomp_02_cpf: Optional[str]
+    acomp_02_idade: Optional[str]
+    acomp_02_parentesco: Optional[str]
+    acomp_03_nome: Optional[str]
+    acomp_03_rg: Optional[str]
+    acomp_03_cpf: Optional[str]
+    acomp_03_idade: Optional[str]
+    acomp_03_parentesco: Optional[str]
+    acomp_04_nome: Optional[str]
+    acomp_04_rg: Optional[str]
+    acomp_04_cpf: Optional[str]
+    acomp_04_idade: Optional[str]
+    acomp_04_parentesco: Optional[str]
+    acomp_05_nome: Optional[str]
+    acomp_05_rg: Optional[str]
+    acomp_05_cpf: Optional[str]
+    acomp_05_idade: Optional[str]
+    acomp_05_parentesco: Optional[str]
+    acomp_06_nome: Optional[str]
+    acomp_06_rg: Optional[str]
+    acomp_06_cpf: Optional[str]
+    acomp_06_idade: Optional[str]
+    acomp_06_parentesco: Optional[str]
+    acomp_07_nome: Optional[str]
+    acomp_07_rg: Optional[str]
+    acomp_07_cpf: Optional[str]
+    acomp_07_idade: Optional[str]
+    acomp_07_parentesco: Optional[str]
+    acomp_08_nome: Optional[str]
+    acomp_08_rg: Optional[str]
+    acomp_08_cpf: Optional[str]
+    acomp_08_idade: Optional[str]
+    acomp_08_parentesco: Optional[str]
+    acomp_09_nome: Optional[str]
+    acomp_09_rg: Optional[str]
+    acomp_09_cpf: Optional[str]
+    acomp_09_idade: Optional[str]
+    acomp_09_parentesco: Optional[str]
+    acomp_10_nome: Optional[str]
+    acomp_10_rg: Optional[str]
+    acomp_10_cpf: Optional[str]
+    acomp_10_idade: Optional[str]
+    acomp_10_parentesco: Optional[str]
+
+    @field_validator('uf')
+    @classmethod
+    def validate_uf(cls, v):
+        if len(v) != 2:
+            raise ValueError('Estado deve ter 2 caracteres')
+        return v
