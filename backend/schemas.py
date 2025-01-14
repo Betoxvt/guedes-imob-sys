@@ -4,6 +4,9 @@ from typing import Optional
 from typing_extensions import Self
 
 
+def convert_to_optional(schema):
+    return {k: Optional[v] for k, v in schema.__annotations__.items()}
+
 # Base schemas
 
 
@@ -231,42 +234,20 @@ class FichaResponse(FichaBase):
 
 # Update schemas
 
-class AluguelUpdate(BaseModel):
-    apto_id: Optional[int]
-    ficha_id: Optional[int]
-    checkin: Optional[date]
-    checkout: Optional[date]
-    diarias: Optional[int]
-    valor_diaria: Optional[float]
-    valor_total: Optional[float]
+class AluguelUpdate(AluguelCreate):
+    __annotations__ = convert_to_optional(AluguelCreate)
 
 
-class ApartamentoUpdate(BaseModel):
-    apto: Optional[str]
-    proprietario_id: Optional[int]
-    cod_celesc: Optional[str]
-    cod_gas: Optional[str]
-    prov_net: Optional[str]
-    wifi: Optional[str]
-    wifi_senha: Optional[str]
-    lock_senha: Optional[str]
+class ApartamentoUpdate(ApartamentoCreate):
+    __annotations__ = convert_to_optional(ApartamentoCreate)
 
 
-class DespesaUpdate(BaseModel):
-    apto_id: Optional[int]
-    data_pagamento: Optional[date]
-    valor: Optional[float]
-    descricao: Optional[str]
+class DespesaUpdate(DespesaCreate):
+    __annotations__ = convert_to_optional(DespesaCreate)
 
 
-class GaragemUpdate(BaseModel):
-    apto_origem_id: Optional[int]
-    apto_destino_id: Optional[int]
-    checkin: Optional[date]
-    checkout: Optional[date]
-    diarias: Optional[int]
-    valor_diaria: Optional[int]
-    valor_total: Optional[float]
+class GaragemUpdate(GaragemCreate):
+    __annotations__ = convert_to_optional(DespesaCreate)
 
     @model_validator (mode='after')
     def verify_equals(self) -> Self:
@@ -275,86 +256,12 @@ class GaragemUpdate(BaseModel):
         return self
     
 
-class ProprietarioUpdate(BaseModel):
-    nome: Optional[str]
-    cpf: Optional[str]
-    tel: Optional[str]
-    email: Optional[EmailStr]
+class ProprietarioUpdate(ProprietarioCreate):
+    __annotations__ = convert_to_optional(ProprietarioCreate)
 
 
-class FichaUpdate(BaseModel):
-    apto: Optional[str]
-    nome: Optional[str]
-    tipo_residencia: Optional[str]
-    cidade: Optional[str]
-    cep: Optional[str]
-    uf: Optional[str]
-    pais: Optional[str]
-    tel: Optional[str]
-    estado_civil: Optional[str]
-    profissao: Optional[str]
-    rg: Optional[str]
-    cpf: Optional[str]
-    mae: Optional[str]
-    automovel: Optional[str]
-    modelo_auto: Optional[str]
-    placa_auto: Optional[str]
-    cor_auto: Optional[str]
-    checkin: Optional[date]
-    checkout: Optional[date]
-    observacoes: Optional[str]
-    proprietario: Optional[str]
-    imob_fone: Optional[str]
-    acomp_01_nome: Optional[str]
-    acomp_01_rg: Optional[str]
-    acomp_01_cpf: Optional[str]
-    acomp_01_idade: Optional[str]
-    acomp_01_parentesco: Optional[str]
-    acomp_02_nome: Optional[str]
-    acomp_02_rg: Optional[str]
-    acomp_02_cpf: Optional[str]
-    acomp_02_idade: Optional[str]
-    acomp_02_parentesco: Optional[str]
-    acomp_03_nome: Optional[str]
-    acomp_03_rg: Optional[str]
-    acomp_03_cpf: Optional[str]
-    acomp_03_idade: Optional[str]
-    acomp_03_parentesco: Optional[str]
-    acomp_04_nome: Optional[str]
-    acomp_04_rg: Optional[str]
-    acomp_04_cpf: Optional[str]
-    acomp_04_idade: Optional[str]
-    acomp_04_parentesco: Optional[str]
-    acomp_05_nome: Optional[str]
-    acomp_05_rg: Optional[str]
-    acomp_05_cpf: Optional[str]
-    acomp_05_idade: Optional[str]
-    acomp_05_parentesco: Optional[str]
-    acomp_06_nome: Optional[str]
-    acomp_06_rg: Optional[str]
-    acomp_06_cpf: Optional[str]
-    acomp_06_idade: Optional[str]
-    acomp_06_parentesco: Optional[str]
-    acomp_07_nome: Optional[str]
-    acomp_07_rg: Optional[str]
-    acomp_07_cpf: Optional[str]
-    acomp_07_idade: Optional[str]
-    acomp_07_parentesco: Optional[str]
-    acomp_08_nome: Optional[str]
-    acomp_08_rg: Optional[str]
-    acomp_08_cpf: Optional[str]
-    acomp_08_idade: Optional[str]
-    acomp_08_parentesco: Optional[str]
-    acomp_09_nome: Optional[str]
-    acomp_09_rg: Optional[str]
-    acomp_09_cpf: Optional[str]
-    acomp_09_idade: Optional[str]
-    acomp_09_parentesco: Optional[str]
-    acomp_10_nome: Optional[str]
-    acomp_10_rg: Optional[str]
-    acomp_10_cpf: Optional[str]
-    acomp_10_idade: Optional[str]
-    acomp_10_parentesco: Optional[str]
+class FichaUpdate(FichaCreate):
+    __annotations__ = convert_to_optional(FichaCreate)
 
     @field_validator('uf')
     @classmethod
