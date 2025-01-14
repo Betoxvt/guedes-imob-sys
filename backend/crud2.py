@@ -211,7 +211,7 @@ def update_despesa(db: Session, despesa_id: int, despesa: DespesaUpdate) -> bool
         return False
 
 
-def delete_aluguel(db: Session, despesa_id: int):
+def delete_despesa(db: Session, despesa_id: int):
     """
     Deletes a specific element from database table despesas
     """
