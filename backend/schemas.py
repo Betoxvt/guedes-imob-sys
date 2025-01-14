@@ -10,7 +10,7 @@ from typing_extensions import Self
 class AluguelBase(BaseModel):
     apto_id: int
     ficha_id: Optional[int]
-    checkout: date
+    checkin: date
     checkout: date
     diarias: float
     valor_diaria: float
