@@ -155,3 +155,44 @@ def string_to_date(str_date: str) -> date:
     except (ValueError, AttributeError):
         date_date = None
     return date_date
+
+
+def date_to_brazil(year_first_date: str | date) -> str:
+    try:
+        br_date = pd.to_datetime(year_first_date).strftime("%d/%m/%Y")
+        return br_date
+    except Exception as e:
+        print(f"Erro ao converter a data: {e}")
+        return year_first_date
+        
+        
+def df_dates_to_br_dates(df: pd.DataFrame) -> pd.DataFrame:
+    """Converts DataFrame columns containing datetime.date objects to
+    Brazilian date format (DD/MM/YYYY).
+
+    Args:
+        df: The input DataFrame.
+
+    Returns:
+        A new DataFrame with converted date columns, or the original DataFrame
+        if no conversions were possible. Non-convertible columns are preserved.
+        Returns None if input is not a DataFrame.
+    """
+
+    if not isinstance(df, pd.DataFrame):
+        print("Input must be a Pandas DataFrame.")
+        return None
+
+    df_new = df.copy()
+
+    for col in df_new.select_dtypes(include=["object", "datetime64", "datetime"]):
+        try:
+            if isinstance(df_new[col].iloc[0], date):
+                df_new[col] = df_new[col].apply(lambda x: x.strftime("%d/%m/%Y") if isinstance(x, date) else x)
+            else:
+                df_new[col] = pd.to_datetime(df_new[col], errors='coerce').dt.strftime("%d/%m/%Y")
+        except (ValueError, TypeError) as e:
+            print(f"Warning: Column '{col}' could not be converted to date: {e}")
+            pass
+
+    return df_new

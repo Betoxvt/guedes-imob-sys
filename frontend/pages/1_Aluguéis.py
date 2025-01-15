@@ -1,3 +1,4 @@
+from datetime import date, timedelta
 import json
 import pandas as pd
 import requests
@@ -18,29 +19,104 @@ with tab1:
         apartamento_id: int = st.number_input(
             label='ID Apartamento',
             min_value=1,
+            format='%d',
             step=1,
             key=1008
         )
-        inquilino_id: int | None = st.number_input(
+        ficha_id: int | None = st.number_input(
             label='ID Ficha',
             min_value=1,
+            format='%d',
             step=1,
             key=1009
         )
-        checkin: str
-        checkout: str
-        diarias: int
-        valor_diaria: int | None = None
-        taxa_adm: float
-        valor_total: float
-        valor_imob: float
-        valor_prop: float
+        apto_id: int = st.number_input(
+            label='ID Apartamento',
+            min_value=1,
+            format='%d',
+            step=1,
+            key=1010
+        )
+        ficha_id: int = st.number_input(
+            label='ID Ficha',
+            min_value=1,
+            format='%d',
+            step=1,
+            key=1010
+        )
+        checkin: str | date = st.date_input(
+            label='Check-in',
+            min_value=date(2024, 1, 1),
+            max_value=date.today() + timedelta(days=300),
+            value=date.today(),
+            format='DD/MM/YYYY',
+            key=1011
+        )
+
+        if isinstance(checkin, date):
+            min_checkout = checkin + timedelta(days=1)
+        else:
+            min_checkout = None
+
+        checkout: str | date = st.date_input(
+            label='Check-out',
+            min_value=min_checkout,
+            max_value=date.today() + timedelta(days=365),
+            format='DD/MM/YYYY',
+            key=1012
+        )
+
+        diarias: int = 0
+        if isinstance(checkin, date) and isinstance(checkout, date):
+            diferenca = (checkout - checkin).days
+            if diferenca >= 1:
+                diarias = diferenca
+            else:
+                st.warning("A data de check-out deve ser posterior à data de check-in.")
+
+        st.number_input(
+            label='Diárias',
+            min_value=1,
+            max_value=365,
+            value=diarias,
+            format='%d',
+            step=1,
+            key=1013,
+            disabled=True
+        )
+        valor_diaria: float = st.number_input(
+            label='Valor da diária',
+            min_value=0.00,
+            max_value=3000.00,
+            value=0.00,
+            format='%0.2f',
+            step=10,
+            key=1014
+        )
+
+        valor_total: float = 0.00
+        if diarias > 0 and valor_diaria > 0:
+            valor_total = diarias * valor_diaria
+
+        st.number_input(
+        label='Valor total',
+        value=valor_total,
+        format='%0.2f',
+        disabled=True,
+        key=1015
+        )
 
         submit_button = st.form_submit_button('Registrar')
         if submit_button:
             registry = {
-                "inputs": inputs
-            }
+                    "apto_id": apto_id,
+                    "ficha_id": ficha_id,
+                    "checkin": checkin,
+                    "checkout": checkout,
+                    "diarias": diarias,
+                    "valor_diaria": valor_diaria,
+                    "valor_total": valor_total
+                }
             registry_json = json.dumps(obj=registry, indent=1, separators=(',',':'))
             response = requests.post("http://backend:8000/alugueis/", registry_json)
             show_response_message(response)

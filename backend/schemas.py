@@ -15,7 +15,7 @@ class AluguelBase(BaseModel):
     ficha_id: Optional[int]
     checkin: date
     checkout: date
-    diarias: float
+    diarias: int
     valor_diaria: float
     valor_total: float
 
