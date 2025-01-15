@@ -1,8 +1,8 @@
+from datetime import date, timedelta
 import json
 import pandas as pd
 import requests
 import streamlit as st
-from datetime import date, timedelta
 from src.functions import none_or_str, format_apto, show_response_message, string_to_date
 
 
@@ -21,7 +21,7 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(['Registrar', 'Consultar', 'Modificar', '
 # Ajeitar a validação dos dados, formato de envio para o banco de dados e formato de exibição.
 
 with tab1:
-    st.header('Registrar uma Ficha de Inquilino')
+    st.header('Registrar Ficha de Inquilino')
     with st.form('new_ficha'):
         apt_in = st.text_input(
             label='Apartamento alugado',
@@ -29,12 +29,14 @@ with tab1:
             key=8001
         )
         if apt_in:
-            apartamento = format_apto(apt_in)
-        nome = st.text_input(
+            apto = format_apto(apt_in)
+        nome_in = st.text_input(
             label='Nome completo',
             value=None,
             key=8002
         )
+        if nome_in:
+            nome = nome_in.strip().title()
         tipo_residencia = st.radio(
             label='Tipo de residência',
             options=['Anual', 'Temporária'],
@@ -42,11 +44,13 @@ with tab1:
             horizontal=True,
             key=8003
         )
-        cidade = st.text_input(
+        cidade_in = st.text_input(
             label='Naturalidade (cidade)',
             value=None,
             key=8004
         )
+        if cidade_in:
+            cidade = cidade_in.strip().title()
         cep_in = st.text_input(
             label='CEP',
             help='Somente números',
@@ -56,12 +60,14 @@ with tab1:
         )
         if cep_in:
             cep = f'{cep_in[:5]}-{cep_in[5:]}'
-        estado = st.text_input(
+        uf_in = st.text_input(
             label='Estado (UF)',
             max_chars=2,
             value=None,
             key=8006
         )
+        if uf_in:
+            uf = uf_in.upper()
         pais = st.text_input(
             label='País',
             value=None,
@@ -75,12 +81,12 @@ with tab1:
             key=8008
         )
         if tel_in:
-            tel_in = tel_in.replace('+','').replace('(','').replace(')','').replace('-','').replace(' ','')
+            tel = tel_in.replace('+','').replace('(','').replace(')','').replace('-','').replace(' ','')
             telefone = f'+{tel_in[:2]} ({tel_in[2:4]}) {tel_in[4]} {tel_in[5:9]}-{tel_in[9:]}'
         estado_civil = st.selectbox(
             label='Estado civíl',
             index=0,
-            placeholder='Selecione uma opção',
+            placeholder='Selecione opção',
             options=['Solteiro(a)', 'Casado(a)', 'Separado(a)', 'Divorciado(a)', 'Viúvo(a)'],
             key=8009
         )
@@ -426,15 +432,15 @@ with tab1:
             key=8072
         )
 
-        submit_button = st.form_submit_button('Registrar Ficha')
+        submit_button = st.form_submit_button('Registrar')
         if submit_button:
             registry = {
-                "apartamento": apartamento,
+                "apto": apto,
                 "nome": nome,
                 "tipo_residencia": tipo_residencia,
                 "cidade": cidade,
                 "cep": cep,
-                "estado": estado,
+                "uf": uf,
                 "pais": pais,
                 "telefone": telefone,
                 "estado_civil": estado_civil,
@@ -450,91 +456,43 @@ with tab1:
                 "checkout": checkout.isoformat(),
                 "observacoes": observacoes,
                 "proprietario": proprietario,
-                "imob_fone": imob_fone,
-                "acomp_01_nome": acomp_01_nome,
-                "acomp_01_rg": acomp_01_rg,
-                "acomp_01_cpf": acomp_01_cpf,
-                "acomp_01_idade": acomp_01_idade,
-                "acomp_01_parentesco": acomp_01_parentesco,
-                "acomp_02_nome": acomp_02_nome,
-                "acomp_02_rg": acomp_02_rg,
-                "acomp_02_cpf": acomp_02_cpf,
-                "acomp_02_idade": acomp_02_idade,
-                "acomp_02_parentesco": acomp_02_parentesco,
-                "acomp_03_nome": acomp_03_nome,
-                "acomp_03_rg": acomp_03_rg,
-                "acomp_03_cpf": acomp_03_cpf,
-                "acomp_03_idade": acomp_03_idade,
-                "acomp_03_parentesco": acomp_03_parentesco,
-                "acomp_04_nome": acomp_04_nome,
-                "acomp_04_rg": acomp_04_rg,
-                "acomp_04_cpf": acomp_04_cpf,
-                "acomp_04_idade": acomp_04_idade,
-                "acomp_04_parentesco": acomp_04_parentesco,
-                "acomp_05_nome": acomp_05_nome,
-                "acomp_05_rg": acomp_05_rg,
-                "acomp_05_cpf": acomp_05_cpf,
-                "acomp_05_idade": acomp_05_idade,
-                "acomp_05_parentesco": acomp_05_parentesco,
-                "acomp_06_nome": acomp_06_nome,
-                "acomp_06_rg": acomp_06_rg,
-                "acomp_06_cpf": acomp_06_cpf,
-                "acomp_06_idade": acomp_06_idade,
-                "acomp_06_parentesco": acomp_06_parentesco,
-                "acomp_07_nome": acomp_07_nome,
-                "acomp_07_rg": acomp_07_rg,
-                "acomp_07_cpf": acomp_07_cpf,
-                "acomp_07_idade": acomp_07_idade,
-                "acomp_07_parentesco": acomp_07_parentesco,
-                "acomp_08_nome": acomp_08_nome,
-                "acomp_08_rg": acomp_08_rg,
-                "acomp_08_cpf": acomp_08_cpf,
-                "acomp_08_idade": acomp_08_idade,
-                "acomp_08_parentesco": acomp_08_parentesco,
-                "acomp_09_nome": acomp_09_nome,
-                "acomp_09_rg": acomp_09_rg,
-                "acomp_09_cpf": acomp_09_cpf,
-                "acomp_09_idade": acomp_09_idade,
-                "acomp_09_parentesco": acomp_09_parentesco,
-                "acomp_10_nome": acomp_10_nome,
-                "acomp_10_rg": acomp_10_rg,
-                "acomp_10_cpf": acomp_10_cpf,
-                "acomp_10_idade": acomp_10_idade,
-                "acomp_10_parentesco": acomp_10_parentesco,
+                "imob_fone": imob_fone
             }
+            acomps = {}
+            for i in range(1, 11):
+                acomps[f"acomp_{i:02d}_nome"] = locals()[f"acomp_{i:02d}_nome"]
+                acomps[f"acomp_{i:02d}_rg"] = locals()[f"acomp_{i:02d}_rg"]
+                acomps[f"acomp_{i:02d}_cpf"] = locals()[f"acomp_{i:02d}_cpf"]
+                acomps[f"acomp_{i:02d}_idade"] = locals()[f"acomp_{i:02d}_idade"]
+                acomps[f"acomp_{i:02d}_parentesco"] = locals()[f"acomp_{i:02d}_parentesco"]
+            registry.update(acomps)
             registry_json = json.dumps(obj=registry, indent=1, separators=(',',':'))
             response = requests.post("http://backend:8000/fichas/", registry_json)
             show_response_message(response)
 
 with tab2:
-    st.header('Consultar uma Ficha de Inquilino')
+    st.header('Consultar Ficha de Inquilino')
     get_id = st.number_input(
         'ID da Ficha de Inquilino',
         min_value=1,
         format='%d',
         key=8150
     )
-    if st.button('Buscar Ficha de Inquilino'):
+    if st.button('Buscar'):
         response = requests.get(f'http://backend:8000/fichas/{get_id}')
         if response.status_code == 200:
             ficha = response.json()
-            ficha_filtered = {key: value for key, value in ficha.items() if value}
 
             columns = [
                 "id",
-                "apartamento",
+                "apto",
                 "nome",
-                "tipo_residencia",
                 "cidade",
-                "cep",
-                "estado",
+                "uf",
                 "pais",
                 "telefone",
-                "estado_civil",
-                "profissao",
                 "rg",
                 "cpf",
-                "mae",
                 "automovel",
                 "modelo_auto",
                 "placa_auto",
@@ -543,15 +501,18 @@ with tab2:
                 "checkout",
                 "observacoes",
             ]
+            
+            ficha_filtered = {key: value for key, value in ficha.items() if key in columns}
 
-            ficha_filtered = {key: ficha_filtered.get(key, "") for key in columns}
+            # ficha_filtered = {key: ficha_filtered.get(key, "") for key in columns}
+
             df = pd.DataFrame([ficha_filtered])
             st.dataframe(df, hide_index=True)
         else:
             show_response_message(response)
 
 with tab3:
-    st.header('Modificar uma Ficha de Inquilino')
+    st.header('Modificar Ficha de Inquilino')
     update_id = st.number_input(
         'ID da Ficha',
         min_value=1,
@@ -565,9 +526,9 @@ with tab3:
         df = pd.DataFrame([ficha_viz])
         st.dataframe(df, hide_index=True)
         with st.form('update_ficha'):
-            apartamento = st.text_input(
+            apto = st.text_input(
                 label='Apartamento alugado',
-                value=str(df.apartamento[0]),
+                value=str(df.apto[0]),
                 key=8073
             )
             nome = st.text_input(
@@ -599,10 +560,10 @@ with tab3:
                     st.success(f'CEP válido: {cep_in}')
                 else:
                     st.error('O CEP deve conter exatamente 8 dígitos')
-            estado = st.text_input(
+            uf = st.text_input(
                 label='Estado (UF)',
                 max_chars=2,
-                value=str(df.estado[0]),
+                value=str(df.uf[0]),
                 key=8078
             )
             pais = st.text_input(
@@ -1021,15 +982,15 @@ with tab3:
                 key=8148
             )
 
-            update_button = st.form_submit_button('Atualizar Dados')
+            update_button = st.form_submit_button('Modificar')
             if update_button:
                 updated = {
-                    "apartamento": apartamento,
+                    "apto": apto,
                     "nome": nome,
                     "tipo_residencia": tipo_residencia,
                     "cidade": cidade,
                     "cep": cep,
-                    "estado": estado,
+                    "uf": uf,
                     "pais": pais,
                     "telefone": telefone,
                     "estado_civil": estado_civil,
@@ -1045,58 +1006,16 @@ with tab3:
                     "checkout": checkout.isoformat(),
                     "observacoes": observacoes,
                     "proprietario": proprietario,
-                    "imob_fone": imob_fone,
-                    "acomp_01_nome": acomp_01_nome,
-                    "acomp_01_rg": acomp_01_rg,
-                    "acomp_01_cpf": acomp_01_cpf,
-                    "acomp_01_idade": acomp_01_idade,
-                    "acomp_01_parentesco": acomp_01_parentesco,
-                    "acomp_02_nome": acomp_02_nome,
-                    "acomp_02_rg": acomp_02_rg,
-                    "acomp_02_cpf": acomp_02_cpf,
-                    "acomp_02_idade": acomp_02_idade,
-                    "acomp_02_parentesco": acomp_02_parentesco,
-                    "acomp_03_nome": acomp_03_nome,
-                    "acomp_03_rg": acomp_03_rg,
-                    "acomp_03_cpf": acomp_03_cpf,
-                    "acomp_03_idade": acomp_03_idade,
-                    "acomp_03_parentesco": acomp_03_parentesco,
-                    "acomp_04_nome": acomp_04_nome,
-                    "acomp_04_rg": acomp_04_rg,
-                    "acomp_04_cpf": acomp_04_cpf,
-                    "acomp_04_idade": acomp_04_idade,
-                    "acomp_04_parentesco": acomp_04_parentesco,
-                    "acomp_05_nome": acomp_05_nome,
-                    "acomp_05_rg": acomp_05_rg,
-                    "acomp_05_cpf": acomp_05_cpf,
-                    "acomp_05_idade": acomp_05_idade,
-                    "acomp_05_parentesco": acomp_05_parentesco,
-                    "acomp_06_nome": acomp_06_nome,
-                    "acomp_06_rg": acomp_06_rg,
-                    "acomp_06_cpf": acomp_06_cpf,
-                    "acomp_06_idade": acomp_06_idade,
-                    "acomp_06_parentesco": acomp_06_parentesco,
-                    "acomp_07_nome": acomp_07_nome,
-                    "acomp_07_rg": acomp_07_rg,
-                    "acomp_07_cpf": acomp_07_cpf,
-                    "acomp_07_idade": acomp_07_idade,
-                    "acomp_07_parentesco": acomp_07_parentesco,
-                    "acomp_08_nome": acomp_08_nome,
-                    "acomp_08_rg": acomp_08_rg,
-                    "acomp_08_cpf": acomp_08_cpf,
-                    "acomp_08_idade": acomp_08_idade,
-                    "acomp_08_parentesco": acomp_08_parentesco,
-                    "acomp_09_nome": acomp_09_nome,
-                    "acomp_09_rg": acomp_09_rg,
-                    "acomp_09_cpf": acomp_09_cpf,
-                    "acomp_09_idade": acomp_09_idade,
-                    "acomp_09_parentesco": acomp_09_parentesco,
-                    "acomp_10_nome": acomp_10_nome,
-                    "acomp_10_rg": acomp_10_rg,
-                    "acomp_10_cpf": acomp_10_cpf,
-                    "acomp_10_idade": acomp_10_idade,
-                    "acomp_10_parentesco": acomp_10_parentesco,
+                    "imob_fone": imob_fone
                 }
+                acomps_up = {}
+                for i in range(1, 11):
+                    acomps_up[f"acomp_{i:02d}_nome"] = locals()[f"acomp_{i:02d}_nome"]
+                    acomps_up[f"acomp_{i:02d}_rg"] = locals()[f"acomp_{i:02d}_rg"]
+                    acomps_up[f"acomp_{i:02d}_cpf"] = locals()[f"acomp_{i:02d}_cpf"]
+                    acomps_up[f"acomp_{i:02d}_idade"] = locals()[f"acomp_{i:02d}_idade"]
+                    acomps_up[f"acomp_{i:02d}_parentesco"] = locals()[f"acomp_{i:02d}_parentesco"]
+                updated.update(acomps_up)
                 updated_json = json.dumps(obj=updated, indent=1, separators=(',',':'))
                 response = requests.put(f"http://backend:8000/fichas/{update_id}", updated_json)
                 show_response_message(response)
@@ -1105,11 +1024,12 @@ with tab3:
         show_response_message(response)
 
 with tab4:
-    st.header('Deletar uma Ficha de Inquilino')
+    st.header('Deletar')
     delete_id = st.number_input(
-        label="ID da Ficha de Inquilino para Deletar",
+        label="ID Ficha",
         min_value=1,
         format='%d',
+        step=1,
         key=8149
     )
     if delete_id:
@@ -1120,13 +1040,19 @@ with tab4:
         st.dataframe(df, hide_index=True)
     else:
         show_response_message(response)
-    if st.button('Deletar Ficha'):
+    if st.button(
+        'Deletar',
+        key=6400
+    ):
         response = requests.delete(f'http://backend:8000/fichas/{delete_id}')
         show_response_message(response)
 
 with tab5:
-    st.header('Listar todas as Fichas de Innquilino')
-    if st.button("Mostrar"):
+    st.header('Listar Fichas de Innquilino')
+    if st.button(
+        "Mostrar",
+        key=6500
+    ):
         response = requests.get(f'http://backend:8000/fichas/')
         if response.status_code == 200:
             fichas = response.json()
