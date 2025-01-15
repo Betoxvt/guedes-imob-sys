@@ -108,7 +108,19 @@ class Ficha(Base):
     observacoes = mapped_column(String(200), nullable=True)
     proprietario = mapped_column(String(50), nullable=True)
     imob_fone = mapped_column(String(20), nullable=True)
+    acomp_id = Mapped[int] = mapped_column(ForeignKey('aacompanhantes.id'), nullable=False)
+    criado_em: Mapped[date] = mapped_column(server_default=func.current_date(), nullable=False)
+    modificado_em: Mapped[date] = mapped_column(server_default=func.current_date(), onupdate=func.current_date(), nullable=False)
+    
+    # Constraints
+    __table_args__ = CheckConstraint("length(uf) = 2", name="ck_uf_length")
 
+
+class Acompanhante(Base):
+    __tablename__ = 'acompanhantes'
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    ficha_id = Mapped[int] = mapped_column(ForeignKey('fichas.id'), nullable=False)
     for i in range(1, 11):
         locals()[f"acomp_{i:02d}_nome"] = mapped_column(String(50), nullable=True)
         locals()[f"acomp_{i:02d}_rg"] = mapped_column(String(15), nullable=True)
@@ -117,8 +129,3 @@ class Ficha(Base):
         locals()[f"acomp_{i:02d}_parentesco"] = mapped_column(String(10), nullable=True)
     criado_em: Mapped[date] = mapped_column(server_default=func.current_date(), nullable=False)
     modificado_em: Mapped[date] = mapped_column(server_default=func.current_date(), onupdate=func.current_date(), nullable=False)
-
-    # Constraints
-    __table_args__ = (
-        CheckConstraint("length(uf) = 2", name="ck_uf_length"),
-    )
