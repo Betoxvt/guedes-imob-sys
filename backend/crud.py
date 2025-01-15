@@ -683,3 +683,171 @@ def delete_ficha(db: Session, ficha_id: int):
         db.rollback()
         raise e
 
+
+def create_acompanhantes(db: Session, acompanhantes: AcompanhantesCreate) -> Acompanhantes:
+    """
+    Creates a new acompanhantes record in the database.
+
+    This function takes an `AcompanhantesCreate` object containing the new acompanhantes data 
+    and persists it to the database.
+
+    Args:
+        db (Session): A SQLAlchemy session to interact with the database.
+        acompanhantes (AcompanhantesCreate): An object containing the new acompanhantes data.
+
+    Returns:
+        Acompanhantes: The newly created acompanhantes object.
+
+    Raises:
+        SQLAlchemyError: If an error occurs during the creation.
+    """
+    try:
+        db_acompanhantes = Acompanhantes(**acompanhantes.model_dump())
+        db.add(db_acompanhantes)
+        db.commit()
+        db.refresh(db_acompanhantes)
+        return db_acompanhantes
+    except SQLAlchemyError as e:
+        print(f'Erro ao registrar acompanhantes: {e}')
+        db.rollback()
+        raise e
+
+
+def read_acompanhantes(db: Session, offset: int = 0, limit: int = 100) -> List[Acompanhantes]:
+    """
+    Retrieves acompanhantes from the database with pagination.
+
+    This function queries the 'acompanhantes' table in the database and returns the records,
+    ordered by ID in descending order. It allows pagination of the results through
+    the `offset` and `limit` parameters.
+
+    Args:
+        db (Session): A SQLAlchemy session to interact with the database.
+        offset (int, optional): The starting index of the results. Defaults to 0.
+        limit (int, optional): The maximum number of results to be returned. Defaults to 100.
+
+    Returns:
+        List[Acompanhantes]: A list of `Acompanhantes` objects from the database.
+
+    Raises:
+        SQLAlchemyError: If an error occurs during the database query.
+    """
+    try:
+        return db.query(Acompanhantes).order_by(Acompanhantes.id.desc()).offset(offset).limit(limit).all()
+    except SQLAlchemyError as e:
+        print(f'Erro ao buscar acompanhantes: {e}')
+        raise e
+
+
+def read_acompanhantes(db: Session, acompanhantes_id: int) -> Acompanhantes:
+    """
+    Retrieves a specific acompanhantes from the database.
+
+    This function queries the database for a acompanhantes with the given ID.
+
+    Args:
+        db (Session): A SQLAlchemy session to interact with the database.
+        acompanhantes_id (int): The ID of the acompanhantes to retrieve.
+
+    Returns:
+        Acompanhantes: The acompanhantes object with the specified ID.
+
+    Raises:
+        SQLAlchemyError: If an error occurs during the query.
+    """
+    try:
+        return db.query(Acompanhantes).filter(Acompanhantes.id == acompanhantes_id).first()
+    except SQLAlchemyError as e:
+        print(f'Erro ao buscar acompanhantes: {e}')
+        raise e
+
+
+def update_acompanhantes(db: Session, acompanhantes_id: int, acompanhantes: AcompanhantesUpdate) -> Acompanhantes:
+    """
+    Updates an existing acompanhantes in the database.
+
+    This function takes the acompanhantes ID and an `AcompanhantesUpdate` object containing the new 
+    data, and updates the corresponding record in the database.
+
+    Args:
+        db (Session): A SQLAlchemy session to interact with the database.
+        acompanhantes_id (int): The ID of the acompanhantes to be updated.
+        acompanhantes (AcompanhantesUpdate): An object containing the updated acompanhantes data.
+
+    Returns:
+        Acompanhantes: The updated acompanhantes object.
+
+    Raises:
+        SQLAlchemyError: If an error occurs during the update.
+    """
+    try:
+        db_acompanhantes = db.query(Acompanhantes).filter(Acompanhantes.id == acompanhantes_id).first()
+        if db_acompanhantes is None:
+            return None
+    
+        db.query(Acompanhantes).filter(Acompanhantes.id == acompanhantes_id).update(acompanhantes.model_dump())
+        db.commit()
+        db.refresh(db_acompanhantes)
+        return db_acompanhantes
+    except SQLAlchemyError as e:
+        print(f'Erro ao atualizar acompanhantes: {e}')
+        db.rollback()
+        raise e
+
+
+def patch_acompanhantes(db: Session, acompanhantes_id: int, acompanhantes: AcompanhantesUpdate) -> Acompanhantes:
+    """
+    Updates specific elements from an existing acompanhantes in the database.
+
+    This function takes the acompanhantes ID and an `AcompanhantesUpdate` object containing the new 
+    data, and updates the corresponding record in the database.
+        
+    Args:
+        db (Session): SQLAlchemy database session.
+        acompanhantes_id (int): ID of the acompanhantes record to update.
+        acompanhantes (AcompanhantesUpdate): Data to update.
+    
+    Returns:
+        Acompanhantes: The updated acompanhantes record.
+    """
+    try:
+        db_acompanhantes = db.query(Acompanhantes).filter(Acompanhantes.id == acompanhantes_id).first()
+        if db_acompanhantes is None:
+            return None
+
+        for key, value in acompanhantes.model_dump(exclude_unset=True).items():
+            setattr(db_acompanhantes, key, value)
+        db.commit()
+        db.refresh(db_acompanhantes)
+        return db_acompanhantes
+    except SQLAlchemyError as e:
+        print(f'Erro ao atualizar acompanhantes: {e}')
+        db.rollback()
+        raise e
+
+
+def delete_acompanhantes(db: Session, acompanhantes_id: int) -> Acompanhantes:
+    """
+    Deletes a acompanhantes from the database.
+
+    This function deletes the acompanhantes with the given ID from the database.
+
+    Args:
+        db (Session): A SQLAlchemy session to interact with the database.
+        acompanhantes_id (int): The ID of the acompanhantes to be deleted.
+    
+    Returns:
+        Acompanhantes: The deleted acompanhantes record.
+
+    Raises:
+        SQLAlchemyError: If an error occurs during the deletion.
+    """
+    try:
+        db_acompanhantes = db.query(Acompanhantes).filter(Acompanhantes.id == acompanhantes_id).first()
+        db.delete(db_acompanhantes)
+        db.commit()
+        return db_acompanhantes
+    except SQLAlchemyError as e:
+        print(f'Erro ao deletar acompanhantes: {e}')
+        db.rollback()
+        raise e
