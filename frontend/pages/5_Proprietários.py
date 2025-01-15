@@ -18,7 +18,8 @@ with tab1:
         nome: str = st.text_input(
             'Nome',
             key=7008,
-            value=None
+            value=None,
+            placeholder='Obrigatório'
         )
         cpf: str = st.text_input(
             'CPF',
