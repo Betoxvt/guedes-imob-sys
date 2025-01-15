@@ -1,12 +1,13 @@
 from fastapi.encoders import jsonable_encoder
-from models import Aluguel, Apartamento, Despesa, Garagem, Proprietario, Ficha
+from models import Aluguel, Apartamento, Despesa, Garagem, Proprietario, Ficha, Acompanhantes
 from schemas import (
     AluguelCreate, AluguelUpdate,
     ApartamentoCreate, ApartamentoUpdate,
     DespesaCreate, DespesaUpdate,
     GaragemCreate, GaragemUpdate,
     ProprietarioCreate, ProprietarioUpdate,
-    FichaCreate, FichaUpdate
+    FichaCreate, FichaUpdate,
+    AcompanhantesCreate, AcompanhantesUpdate
 )
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session

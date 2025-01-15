@@ -116,7 +116,7 @@ class Ficha(Base):
     __table_args__ = CheckConstraint("length(uf) = 2", name="ck_uf_length")
 
 
-class Acompanhante(Base):
+class Acompanhantes(Base):
     __tablename__ = 'acompanhantes'
 
     id: Mapped[int] = mapped_column(primary_key=True)

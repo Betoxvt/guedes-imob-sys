@@ -85,7 +85,7 @@ class FichaBase(BaseModel):
     proprietario: Optional[str]
     imob_fone: Optional[str]
 
-class AcompanhanteBase(BaseModel):
+class AcompanhantesBase(BaseModel):
     acomp_01_nome: Optional[str]
     acomp_01_rg: Optional[str]
     acomp_01_cpf: Optional[str]
@@ -172,7 +172,7 @@ class FichaCreate(FichaBase):
     pass
 
 
-class AcompanhanteCreate(AcompanhanteBase):
+class AcompanhantesCreate(AcompanhantesBase):
     pass
 
 
@@ -233,7 +233,7 @@ class FichaResponse(FichaBase):
         from_attributes = True
 
 
-class AcompanhanteResponse(AcompanhanteBase):
+class AcompanhantesResponse(AcompanhantesBase):
     id: int
     criado_em: date
     modificado_em: date
@@ -281,5 +281,5 @@ class FichaUpdate(FichaCreate):
         return v
 
 
-class AcompanhanteUpdate(AcompanhanteCreate):
-    __annotations__ = convert_to_optional(AcompanhanteCreate)
+class AcompanhantesUpdate(AcompanhantesCreate):
+    __annotations__ = convert_to_optional(AcompanhantesCreate)
