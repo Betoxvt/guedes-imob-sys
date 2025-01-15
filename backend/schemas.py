@@ -47,12 +47,6 @@ class GaragemBase(BaseModel):
     valor_diaria: float
     valor_total: float
 
-    @model_validator (mode='after')
-    def verify_equals(self) -> Self:
-        if self.apto_destino_id == self.apto_origem_id:
-            raise ValueError(f"Os valores de apto_origem_id ({self.apto_origem_id}) e apto_destino_id ({self.apto_destino_id}) devem ser diferentes.")
-        return self
-
 
 class ProprietarioBase(BaseModel):
     nome: str
@@ -84,6 +78,7 @@ class FichaBase(BaseModel):
     observacoes: Optional[str]
     proprietario: Optional[str]
     imob_fone: Optional[str]
+
 
 class AcompanhantesBase(BaseModel):
     acomp_01_nome: Optional[str]
@@ -136,13 +131,6 @@ class AcompanhantesBase(BaseModel):
     acomp_10_cpf: Optional[str]
     acomp_10_idade: Optional[str]
     acomp_10_parentesco: Optional[str]
-
-    @field_validator('uf')
-    @classmethod
-    def validate_uf(cls, v):
-        if len(v) != 2:
-            raise ValueError('Estado deve ter 2 caracteres')
-        return v 
 
 
 # Create schemas
@@ -226,6 +214,7 @@ class ProprietarioResponse(ProprietarioBase):
 
 class FichaResponse(FichaBase):
     id: int
+    acomp_id: int
     criado_em: date
     modificado_em: date
 
@@ -258,12 +247,6 @@ class DespesaUpdate(DespesaCreate):
 
 class GaragemUpdate(GaragemCreate):
     __annotations__ = convert_to_optional(DespesaCreate)
-
-    @model_validator (mode='after')
-    def verify_equals(self) -> Self:
-        if self.apto_destino_id == self.apto_origem_id:
-            raise ValueError('As vagas de origem e destino são iguais, devem ser diferentes')
-        return self
     
 
 class ProprietarioUpdate(ProprietarioCreate):
@@ -272,14 +255,6 @@ class ProprietarioUpdate(ProprietarioCreate):
 
 class FichaUpdate(FichaCreate):
     __annotations__ = convert_to_optional(FichaCreate)
-
-    @field_validator('uf')
-    @classmethod
-    def validate_uf(cls, v):
-        if len(v) != 2:
-            raise ValueError('Estado deve ter 2 caracteres')
-        return v
-
 
 class AcompanhantesUpdate(AcompanhantesCreate):
     __annotations__ = convert_to_optional(AcompanhantesCreate)

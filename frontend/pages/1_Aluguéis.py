@@ -250,13 +250,13 @@ with tab4:
             aluguel_viz = response.json()
             df = pd.DataFrame([aluguel_viz])
             st.dataframe(df, hide_index=True)
+            if st.button(
+                'Deletar',
+                key=1006
+            ):
+                response = requests.delete(f'http://backend:8000/alugueis/{delete_id}')
+                show_response_message(response)
         else:
-            show_response_message(response)
-        if st.button(
-            'Deletar',
-            key=1006
-        ):
-            response = requests.delete(f'http://backend:8000/alugueis/{delete_id}')
             show_response_message(response)
 
 with tab5:

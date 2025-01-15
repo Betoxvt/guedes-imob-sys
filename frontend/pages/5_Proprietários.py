@@ -94,14 +94,14 @@ with tab4:
             proprietario_viz = response.json()
             df = pd.DataFrame([proprietario_viz])
             st.dataframe(df, hide_index=True)
+            if st.button(
+                'Deletar',
+                key=7006
+            ):
+                response = requests.delete(f'http://backend:8000/proprietarios/{delete_id}')
+                show_response_message(response)
         else:
             show_response_message(response)
-    if st.button(
-        'Deletar',
-        key=7006
-    ):
-        response = requests.delete(f'http://backend:8000/proprietarios/{delete_id}')
-        show_response_message(response)
 
 with tab5:
     st.header('Listar Proprietários')
