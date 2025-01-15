@@ -84,6 +84,8 @@ class FichaBase(BaseModel):
     observacoes: Optional[str]
     proprietario: Optional[str]
     imob_fone: Optional[str]
+
+class AcompanhanteBase(BaseModel):
     acomp_01_nome: Optional[str]
     acomp_01_rg: Optional[str]
     acomp_01_cpf: Optional[str]
@@ -170,6 +172,10 @@ class FichaCreate(FichaBase):
     pass
 
 
+class AcompanhanteCreate(AcompanhanteBase):
+    pass
+
+
 # Response schemas
 
 
@@ -187,7 +193,6 @@ class ApartamentoResponse(ApartamentoBase):
     criado_em: date
     modificado_em: date
 
-
     class Config:
         from_attributes = True
 
@@ -196,7 +201,6 @@ class DespesaResponse(DespesaBase):
     id: int
     criado_em: date
     modificado_em: date
-
 
     class Config:
         from_attributes = True
@@ -207,7 +211,6 @@ class GaragemResponse(GaragemBase):
     criado_em: date
     modificado_em: date
 
-
     class Config:
         from_attributes = True
 
@@ -217,7 +220,6 @@ class ProprietarioResponse(ProprietarioBase):
     criado_em: date
     modificado_em: date
     
-
     class Config:
         from_attributes = True
 
@@ -227,6 +229,14 @@ class FichaResponse(FichaBase):
     criado_em: date
     modificado_em: date
 
+    class Config:
+        from_attributes = True
+
+
+class AcompanhanteResponse(AcompanhanteBase):
+    id: int
+    criado_em: date
+    modificado_em: date
 
     class Config:
         from_attributes = True
@@ -269,3 +279,7 @@ class FichaUpdate(FichaCreate):
         if len(v) != 2:
             raise ValueError('Estado deve ter 2 caracteres')
         return v
+
+
+class AcompanhanteUpdate(AcompanhanteCreate):
+    __annotations__ = convert_to_optional(AcompanhanteCreate)
