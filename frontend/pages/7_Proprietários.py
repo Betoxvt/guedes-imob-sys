@@ -2,7 +2,7 @@ import json
 import pandas as pd
 import requests
 import streamlit as st
-from src.functions import show_response_message, none_or_str
+from src.functions import show_response_message, update_fields_creator
 
 st.set_page_config(
     page_title='Proprietários',
@@ -67,47 +67,6 @@ with tab2:
             st.dataframe(df, hide_index=True)
         else:
             show_response_message(response)
-### Criando a função para a tab de update
-def update(update_id):
-    response = requests.get(f'http://backend:8000/proprietarios/{update_id}')
-    if response.status_code == 200:
-        proprietario_viz = response.json()
-        df = pd.DataFrame([proprietario_viz])
-        st.dataframe(df, hide_index=True)
-    else:
-        show_response_message(response)
-    with st.form('update_proprietario'):
-        nome: str = st.text_input(
-            'Nome',
-            key=7012,
-            value=none_or_str(df.nome[0])
-        )
-        cpf: str = st.text_input(
-            'CPF',
-            key=7013,
-            value=none_or_str(df.cpf[0])
-        )
-        tel: str = st.text_input(
-            'Telefone',
-            key=7014,
-            value=none_or_str(df.tel[0])
-        )
-        email: str = st.text_input(
-            'E-Mail',
-            key=7015,
-            value=none_or_str(df.email[0])
-        )
-        update_button = st.form_submit_button('Modificar')
-        if update_button:
-            updated = {
-                "nome": nome,
-                "cpf": cpf,
-                "tel": tel,
-                "email": email
-            }
-            updated_json = json.dumps(obj=updated, indent=1, separators=(',',':'))
-            response = requests.put(f"http://backend:8000/proprietarios/{update_id}", updated_json)
-            show_response_message(response)
 
 with tab3:
     st.header('Modificar Proprietário')
@@ -116,14 +75,10 @@ with tab3:
         min_value=1,
         step=1,
         format='%d',
-        key=7001,
+        key=7300,
     )
-    update(update_id)
-    # st.button( #on_click=função de mostrar o registro e o formulário pré-preenchido e o botão form_submit
-    #     'Mostrar',
-    #     key=7004,
-    #     on_click=update(update_id)
-    # )
+    if update_id:
+        update_fields_creator(update_id=update_id, table='proprietarios', reg='proprietario', page_n=7)
 
 with tab4:
     st.header('Deletar Proprietário')

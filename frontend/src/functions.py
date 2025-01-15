@@ -1,8 +1,9 @@
-
+from datetime import date
+import json
 import pandas as pd
 import re
+import requests
 import streamlit as st
-from datetime import date
 
 
 def format_input_for_db(input: str, output: str = 'str'):
@@ -99,6 +100,38 @@ def format_apto(input: str) -> str:
         else:
             letter = c
     return f'{letter.upper()}-{numbers}'
+
+
+## Criando a função para a tab de update
+def update_fields_creator(update_id: int, table: str, reg: str, page_n: int):
+    response = requests.get(f'http://backend:8000/{table}/{update_id}')
+    if response.status_code == 200:
+        reg_viz = response.json()
+        df = pd.DataFrame([reg_viz])
+        st.dataframe(df, hide_index=True)
+    else:
+        show_response_message(response)
+        return
+    
+    ignored_columns = {'id', 'criado_em', 'modificado_em'}
+
+    with st.form(f'update_{reg}'):
+        updated = {}
+        for i, (k, v) in enumerate(df.iloc[0].items()):
+            if k in ignored_columns:
+                continue
+            unique_key = f"{page_n}_{k}_{i}"
+            v = st.text_input(
+                label=k,
+                key=unique_key,
+                value=v
+            )
+            updated[k] = v
+        update_button = st.form_submit_button('Modificar')
+        if update_button:
+            updated_json = json.dumps(obj=updated, indent=1, separators=(',',':'))
+            response = requests.put(f"http://backend:8000/{table}/{update_id}", data=updated_json)
+            show_response_message(response)
 
 
 def show_response_message(response) -> None:
