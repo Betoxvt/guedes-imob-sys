@@ -714,9 +714,9 @@ def create_acompanhantes(db: Session, acompanhantes: AcompanhantesCreate) -> Aco
         raise e
 
 
-def read_acompanhantes(db: Session, offset: int = 0, limit: int = 100) -> List[Acompanhantes]:
+def read_all_acompanhantes(db: Session, offset: int = 0, limit: int = 100) -> List[Acompanhantes]:
     """
-    Retrieves acompanhantes from the database with pagination.
+    Retrieves all acompanhantes from the database with pagination.
 
     This function queries the 'acompanhantes' table in the database and returns the records,
     ordered by ID in descending order. It allows pagination of the results through
@@ -736,7 +736,7 @@ def read_acompanhantes(db: Session, offset: int = 0, limit: int = 100) -> List[A
     try:
         return db.query(Acompanhantes).order_by(Acompanhantes.id.desc()).offset(offset).limit(limit).all()
     except SQLAlchemyError as e:
-        print(f'Erro ao buscar acompanhantes: {e}')
+        print(f'Erro ao buscar listas de acompanhantes: {e}')
         raise e
 
 
