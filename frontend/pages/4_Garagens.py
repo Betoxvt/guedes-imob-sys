@@ -72,10 +72,10 @@ with tab1:
         valor_diaria: float = st.number_input(
             label='Valor da diária',
             min_value=0.00,
-            max_value=3000.00,
+            max_value=900.00,
             value=0.00,
             format='%0.2f',
-            step=10,
+            step=10.00,
             key=4014
         )
 
@@ -95,9 +95,9 @@ with tab1:
         if submit_button:
             registry = {
                 "apto_origem_id": apto_origem_id,
-                "apto_destino_id": apto_origem_id,
-                "checkin": checkin,
-                "checkout": checkout,
+                "apto_destino_id": apto_destino_id,
+                "checkin": checkin.isoformat(),
+                "checkout": checkout.isoformat(),
                 "diarias": diarias,
                 "valor_diaria": valor_diaria,
                 "valor_total": valor_total
@@ -200,9 +200,9 @@ with tab3:
                     label='Valor da diária',
                     min_value=0.00,
                     max_value=3000.00,
-                    value=df.loc(0, 'valor_diaria'),
+                    value=df.loc[0, 'valor_diaria'],
                     format='%0.2f',
-                    step=10,
+                    step=10.00,
                     key=4314
                 )
 
@@ -221,9 +221,9 @@ with tab3:
                 if update_button:
                     updated = {
                         "apto_origem_id": apto_origem_id,
-                        "apto_destino_id": apto_origem_id,
-                        "checkin": checkin,
-                        "checkout": checkout,
+                        "apto_destino_id": apto_destino_id,
+                        "checkin": checkin.isoformat(),
+                        "checkout": checkout.isoformat(),
                         "diarias": diarias,
                         "valor_diaria": valor_diaria,
                         "valor_total": valor_total

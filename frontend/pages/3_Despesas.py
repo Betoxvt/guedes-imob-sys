@@ -51,7 +51,7 @@ with tab1:
         if submit_button:
             registry = {
                 "apto_id": apto_id,
-                "data_pagamento": data_pagamento,
+                "data_pagamento": data_pagamento.isoformat(),
                 "valor": valor,
                 "descricao": descricao,
             }
@@ -127,7 +127,7 @@ with tab3:
                 if update_button:
                     updated = {
                         "apto_id": apto_id,
-                        "data_pagamento": data_pagamento,
+                        "data_pagamento": data_pagamento.isoformat(),
                         "valor": valor,
                         "descricao": descricao,
                     }

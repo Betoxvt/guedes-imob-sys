@@ -76,7 +76,7 @@ with tab1:
             max_value=3000.00,
             value=0.00,
             format='%0.2f',
-            step=10,
+            step=10.00,
             key=1014
         )
 
@@ -97,8 +97,8 @@ with tab1:
             registry = {
                     "apto_id": apto_id,
                     "ficha_id": ficha_id,
-                    "checkin": checkin,
-                    "checkout": checkout,
+                    "checkin": checkin.isoformat(),
+                    "checkout": checkout.isoformat(),
                     "diarias": diarias,
                     "valor_diaria": valor_diaria,
                     "valor_total": valor_total
@@ -201,9 +201,9 @@ with tab3:
                     label='Valor da diária',
                     min_value=0.00,
                     max_value=3000.00,
-                    value=df.loc(0, 'valor_diaria'),
+                    value=df.loc[0, 'valor_diaria'],
                     format='%0.2f',
-                    step=10,
+                    step=10.00,
                     key=1314
                 )
 
@@ -223,8 +223,8 @@ with tab3:
                     updated = {
                         "apto_id": apto_id,
                         "ficha_id": ficha_id,
-                        "checkin": checkin,
-                        "checkout": checkout,
+                        "checkin": checkin.isoformat(),
+                        "checkout": checkout.isoformat(),
                         "diarias": diarias,
                         "valor_diaria": valor_diaria,
                         "valor_total": valor_total

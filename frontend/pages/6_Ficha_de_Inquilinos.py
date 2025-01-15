@@ -23,20 +23,16 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(['Registrar', 'Consultar', 'Modificar', '
 with tab1:
     st.header('Registrar Ficha de Inquilino')
     with st.form('new_ficha'):
-        apt_in = st.text_input(
+        apto = st.text_input(
             label='Apartamento alugado',
             value=None,
             key=8001
         )
-        if apt_in:
-            apto = format_apto(apt_in)
-        nome_in = st.text_input(
+        nome = st.text_input(
             label='Nome completo',
             value=None,
             key=8002
         )
-        if nome_in:
-            nome = nome_in.strip().title()
         tipo_residencia = st.radio(
             label='Tipo de residência',
             options=['Anual', 'Temporária'],
@@ -44,45 +40,31 @@ with tab1:
             horizontal=True,
             key=8003
         )
-        cidade_in = st.text_input(
+        cidade = st.text_input(
             label='Naturalidade (cidade)',
             value=None,
             key=8004
         )
-        if cidade_in:
-            cidade = cidade_in.strip().title()
-        cep_in = st.text_input(
+        cep = st.text_input(
             label='CEP',
-            help='Somente números',
             value=None,
-            max_chars=8,
             key=8005
         )
-        if cep_in:
-            cep = f'{cep_in[:5]}-{cep_in[5:]}'
-        uf_in = st.text_input(
+        uf = st.text_input(
             label='Estado (UF)',
-            max_chars=2,
             value=None,
             key=8006
         )
-        if uf_in:
-            uf = uf_in.upper()
         pais = st.text_input(
             label='País',
             value=None,
             key=8007
         )
-        tel_in = st.text_input(
+        tel = st.text_input(
             label='Telefone',
-            help='Somente números: com DDI e DDD',
             value=None,
-            max_chars=13,
             key=8008
         )
-        if tel_in:
-            tel = tel_in.replace('+','').replace('(','').replace(')','').replace('-','').replace(' ','')
-            telefone = f'+{tel_in[:2]} ({tel_in[2:4]}) {tel_in[4]} {tel_in[5:9]}-{tel_in[9:]}'
         estado_civil = st.selectbox(
             label='Estado civíl',
             index=0,
@@ -97,13 +79,11 @@ with tab1:
         )
         rg = st.text_input(
             label='Identidade',
-            help='Somente números',
             value=None,
             key=8011
         )
         cpf = st.text_input(
             label='CPF',
-            help='Somente números',
             value=None,
             key=8012
         )
@@ -134,15 +114,11 @@ with tab1:
         )
         checkin = st.date_input(
             label='Check-in',
-            min_value=date(2022, 1, 1),
-            max_value=date.today()+timedelta(days=300),
             format='DD/MM/YYYY',
             key=8018
         )
         checkout = st.date_input(
             label='Check-out',
-            min_value=checkin+timedelta(days=1),
-            max_value=date.today()+timedelta(days=300),
             format='DD/MM/YYYY',
             key=8019
         )
@@ -158,7 +134,6 @@ with tab1:
         )
         imob_fone = st.text_input(
             label='Telefone Imobiliária',
-            help='Somente números: +DDI (DDD) 0 0000-0000',
             value=None,
             key=8022
         )
@@ -442,7 +417,7 @@ with tab1:
                 "cep": cep,
                 "uf": uf,
                 "pais": pais,
-                "telefone": telefone,
+                "tel": tel,
                 "estado_civil": estado_civil,
                 "profissao": profissao,
                 "rg": rg,
@@ -548,21 +523,13 @@ with tab3:
                 value=str(df.cidade[0]),
                 key=8076
             )
-            cep_in = st.text_input(
+            cep = st.text_input(
                 label='CEP',
                 value=f'{df.cep[0][:5]}-{df.cep[0][5:8]}',
-                help='Somente números',
                 key=8077
             )
-            if cep_in:
-                cep = cep_in.replace('-', '')
-                if cep.isdigit() and len(cep) == 8:
-                    st.success(f'CEP válido: {cep_in}')
-                else:
-                    st.error('O CEP deve conter exatamente 8 dígitos')
             uf = st.text_input(
                 label='Estado (UF)',
-                max_chars=2,
                 value=str(df.uf[0]),
                 key=8078
             )
@@ -571,18 +538,11 @@ with tab3:
                 value=str(df.pais[0]),
                 key=8079
             )
-            tel_in = st.text_input(
+            tel = st.text_input(
                 label='Telefone',
-                value=f'+{df.telefone[0][:2]} ({df.telefone[0][2:4]}) {df.telefone[0][4]} {df.telefone[0][5:9]}-{df.telefone[0][9:]}',
-                help='Somente números: +DDI (DDD) 0 0000-0000',
+                value=str(df.tel[0]),
                 key=8080
             )
-            if tel_in:
-                telefone = tel_in.replace('+', '').replace('-', '').replace(' ', '').replace('(', '').replace(')', '')
-                if telefone.isdigit() and len(telefone) == 13:
-                    st.success(f'Telefone válido: {tel_in}')
-                else:
-                    st.error('O telefone deve conter exatamente 9 dígitos.')
             estado_civil = st.selectbox(
                 label='Estado civíl',
                 options=['Solteiro', 'Casado', 'Separado', 'Divorciado', 'Viúvo'],
@@ -594,83 +554,42 @@ with tab3:
                 value=str(df.profissao[0]),
                 key=8082
             )
-            rg_input = st.text_input(
+            rg = st.text_input(
                 label='Identidade',
-                value=f"{df.rg[0][:3]}.{df.rg[0][3:6]}.{df.rg[0][6:9]}-{df.rg[0][9:]}",
-                help='Somente números no formato XXX.XXX.XXX-X',
+                value=none_or_str(df.rg[0]),
                 key=8083
             )
-            if rg_input:
-                rg = rg_input.replace('.', '').replace('-', '')
-                if rg.isdigit() and (len(rg) >= 8 and len(rg) <= 10):
-                    st.success(f'RG válido: {rg_input}')
-                else:
-                    st.error('O RG deve conter entre 8 e 10 dígitos.')
-            cpf_input = st.text_input(
+            cpf = st.text_input(
                 label='CPF',
-                value=f'{df.cpf[0][:3]}.{df.cpf[0][3:6]}.{df.cpf[0][6:9]}-{df.cpf[0][9:]}',
+                value=str(df.cpf[0]),
                 help='Somente números',
                 key=8084
             )
-            if cpf_input:
-                cpf = cpf_input.replace('.', '').replace('-', '')
-                if cpf.isdigit() and len(cpf) == 11:
-                    st.success(f'CPF válido: {cpf_input}')
-                else:
-                    st.error('O CPF deve conter exatamente 11 dígitos.')
             mae = st.text_input(
                 label='Nome completo da mãe',
                 value=str(df.mae[0]),
                 key=8085
             )
-            if pd.isna(df.loc[0, 'automovel']):
-                automovel = st.text_input(
-                    label='Automóvel',
-                    value=None,
-                    key=8086
-                )
-            else:
-                automovel = st.text_input(
-                    label='Automóvel',
-                    value=str(df.automovel[0]),
-                    key=8087
-                )
-            if pd.isna(df.loc[0, 'modelo_auto']):
-                modelo_auto = st.text_input(
-                    label='Modelo',
-                    value=None,
-                    key=8088
-                )
-            else:
-                modelo_auto = st.text_input(
-                    label='Modelo',
-                    value=str(df.modelo_auto[0]),
-                    key=8089
-                )
-            if pd.isna(df.loc[0, 'placa_auto']):
-                placa_auto = st.text_input(
-                    label='Placa',
-                    value=None,
-                    key=8090
-                )
-            else:
-                placa_auto = st.text_input(
-                    label='Placa',
-                    value=str(df.placa_auto[0]),
-                    key=8091
-                )
-            if pd.isna(df.loc[0, 'cor_auto']):
-                cor_auto = st.text_input(
-                    label='Cor',
-                    value=None,
-                    key=8092
-                )
-            else:
-                cor_auto = st.text_input(
-                    label='Cor',
-                    value=str(df.cor_auto[0]),
-                    key=8093
-                )
+            automovel = st.text_input(
+                label='Automóvel',
+                value=none_or_str(df.automovel[0]),
+                key=8087
+            )
+            modelo_auto = st.text_input(
+                label='Modelo',
+                value=none_or_str(df.modelo_auto[0]),
+                key=8089
+            )
+            placa_auto = st.text_input(
+                label='Placa',
+                value=none_or_str(df.placa_auto[0]),
+                key=8091
+            )
+            cor_auto = st.text_input(
+                label='Cor',
+                value=none_or_str(df.cor_auto[0]),
+                key=8093
+            )
             checkin = st.date_input(
                 label='Check-in',
                 value=string_to_date(df.checkin[0]),
@@ -689,28 +608,19 @@ with tab3:
             )
             observacoes = st.text_area(
                 label='Observações',
-                value=None if pd.isna(df.loc[0, 'observacoes']) else str(df.observacoes[0]),
+                value=none_or_str(df.loc[0, 'observacoes']),
                 key=8096
             )
             proprietario = st.text_input(
                 label='Proprietário',
-                value=str(df.proprietario[0]),
+                value=none_or_str(df.proprietario[0]),
                 key=8097
             )
-            if pd.isna(df.loc[0, 'imob_fone']):
-                imob_fone = st.text_input(
-                    label='Telefone Imobiliária',
-                    value=None,
-                    help='Somente números: +DDI (DDD) 0 0000-0000',
-                    key=8098
-                )
-            else:
-                imob_fone = st.text_input(
-                    label='Telefone Imobiliária',
-                    value=f'+{df.imob_fone[0][:2]} ({df.imob_fone[0][2:4]}) {df.imob_fone[0][4]} {df.imob_fone[0][5:9]}-{df.imob_fone[0][9:]}',
-                    help='Somente números: +DDI (DDD) 0 0000-0000',
-                    key=8098
-                )
+            imob_fone = st.text_input(
+                label='Telefone Imobiliária',
+                value=none_or_str(df.imob_fone[0]),
+                key=8098
+            )
 
             st.markdown('**Acompanhante 01**')
             acomp_01_nome = st.text_input(
@@ -992,7 +902,7 @@ with tab3:
                     "cep": cep,
                     "uf": uf,
                     "pais": pais,
-                    "telefone": telefone,
+                    "tel": tel,
                     "estado_civil": estado_civil,
                     "profissao": profissao,
                     "rg": rg,
@@ -1024,7 +934,7 @@ with tab3:
         show_response_message(response)
 
 with tab4:
-    st.header('Deletar')
+    st.header('Deletar Ficha de Inquilino')
     delete_id = st.number_input(
         label="ID Ficha",
         min_value=1,
