@@ -2,7 +2,7 @@ import json
 import pandas as pd
 import requests
 import streamlit as st
-from src.functions import show_response_message, update_fields_creator
+from src.functions import show_response_message, update_fields_generator
 
 st.set_page_config(
     page_title='Proprietários',
@@ -54,12 +54,10 @@ with tab2:
         'ID Proprietário',
         min_value=1,
         format='%d',
+        step=1,
         key=7000
     )
-    if st.button(
-        'Consultar',
-        key=7003
-    ):
+    if get_id:
         response = requests.get(f'http://backend:8000/proprietarios/{get_id}')
         if response.status_code == 200:
             proprietario = response.json()
@@ -78,7 +76,7 @@ with tab3:
         key=7300,
     )
     if update_id:
-        update_fields_creator(update_id=update_id, table='proprietarios', reg='proprietario', page_n=7)
+        update_fields_generator(id=update_id, table='proprietarios', reg='proprietario', page_n=7)
 
 with tab4:
     st.header('Deletar Proprietário')
@@ -86,12 +84,10 @@ with tab4:
         label="ID Proprietário",
         min_value=1,
         format='%d',
+        step=1,
         key=7002
     )
-    if st.button(
-        'Mostrar',
-        key=7005
-    ):
+    if delete_id:
         response = requests.get(f'http://backend:8000/proprietarios/{delete_id}')
         if response.status_code == 200:
             proprietario_viz = response.json()

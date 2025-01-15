@@ -100,11 +100,10 @@ def format_apto(input: str) -> str:
         else:
             letter = c
     return f'{letter.upper()}-{numbers}'
+  
 
-
-## Criando a função para a tab de update
-def update_fields_creator(update_id: int, table: str, reg: str, page_n: int):
-    response = requests.get(f'http://backend:8000/{table}/{update_id}')
+def update_fields_generator(id: int, table: str, reg: str, page_n: int):
+    response = requests.get(f'http://backend:8000/{table}/{id}')
     if response.status_code == 200:
         reg_viz = response.json()
         df = pd.DataFrame([reg_viz])
@@ -120,7 +119,7 @@ def update_fields_creator(update_id: int, table: str, reg: str, page_n: int):
         for i, (k, v) in enumerate(df.iloc[0].items()):
             if k in ignored_columns:
                 continue
-            unique_key = f"{page_n}_{k}_{i}"
+            unique_key = f"{page_n}_{k}_{i}_up"
             v = st.text_input(
                 label=k,
                 key=unique_key,
@@ -130,7 +129,7 @@ def update_fields_creator(update_id: int, table: str, reg: str, page_n: int):
         update_button = st.form_submit_button('Modificar')
         if update_button:
             updated_json = json.dumps(obj=updated, indent=1, separators=(',',':'))
-            response = requests.put(f"http://backend:8000/{table}/{update_id}", data=updated_json)
+            response = requests.put(f"http://backend:8000/{table}/{id}", data=updated_json)
             show_response_message(response)
 
 
