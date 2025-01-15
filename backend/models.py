@@ -1,5 +1,5 @@
 from datetime import date
-from sqlalchemy import ForeignKey, func, Numeric, orm, String
+from sqlalchemy import ForeignKey, func, Numeric, String
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 
@@ -26,7 +26,7 @@ class Apartamento(Base):
     __tablename__ = 'apartamentos'
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    apto: Mapped[str] = mapped_column(String, nullable=False, unique=True)
+    apto: Mapped[str] = mapped_column(String, nullable=True, unique=True)
     proprietario_id: Mapped[int] = mapped_column(ForeignKey('proprietarios.id'), nullable=True)
     cod_celesc: Mapped[str] = mapped_column(String, nullable=True)
     cod_gas: Mapped[str] = mapped_column(String, nullable=True)
@@ -77,20 +77,6 @@ class Proprietario(Base):
     modificado_em: Mapped[date] = mapped_column(server_default=func.current_date(), onupdate=func.current_date(), nullable=False)
 
 
-class Acompanhantes(Base):
-    __tablename__ = 'acompanhantes'
-
-    id: Mapped[int] =  mapped_column(ForeignKey('fichas.id'), primary_key=True)
-    for i in range(1, 11):
-        locals()[f"acomp_{i:02d}_nome"] = mapped_column(String, nullable=True)
-        locals()[f"acomp_{i:02d}_rg"] = mapped_column(String, nullable=True)
-        locals()[f"acomp_{i:02d}_cpf"] = mapped_column(String, nullable=True)
-        locals()[f"acomp_{i:02d}_idade"] = mapped_column(String, nullable=True)
-        locals()[f"acomp_{i:02d}_parentesco"] = mapped_column(String, nullable=True)
-    criado_em: Mapped[date] = mapped_column(server_default=func.current_date(), nullable=False)
-    modificado_em: Mapped[date] = mapped_column(server_default=func.current_date(), onupdate=func.current_date(), nullable=False)
-
-
 class Ficha(Base):
     __tablename__ = 'fichas'
 
@@ -105,7 +91,7 @@ class Ficha(Base):
     tel: Mapped[str] = mapped_column(String, nullable=False)
     estado_civil: Mapped[str] = mapped_column(String, nullable=False)
     profissao: Mapped[str] = mapped_column(String, nullable=False)
-    rg: Mapped[str] = mapped_column(String, nullable=True)
+    rg: Mapped[str] = mapped_column(String, nullable=False)
     cpf: Mapped[str] = mapped_column(String, nullable=False)
     mae: Mapped[str] = mapped_column(String, nullable=False)
     automovel: Mapped[str] = mapped_column(String, nullable=True)
@@ -117,6 +103,11 @@ class Ficha(Base):
     observacoes: Mapped[str] = mapped_column(String, nullable=True)
     proprietario: Mapped[str] = mapped_column(String, nullable=True)
     imob_fone: Mapped[str] = mapped_column(String, nullable=True)
-    acomp_id: Mapped[Acompanhantes] = orm.relationship("Acompanhantes", uselist=False, backref="ficha")
+    for i in range(1, 11):
+        locals()[f"acomp_{i:02d}_nome"] = mapped_column(String, nullable=True)
+        locals()[f"acomp_{i:02d}_rg"] = mapped_column(String, nullable=True)
+        locals()[f"acomp_{i:02d}_cpf"] = mapped_column(String, nullable=True)
+        locals()[f"acomp_{i:02d}_idade"] = mapped_column(String, nullable=True)
+        locals()[f"acomp_{i:02d}_parentesco"] = mapped_column(String, nullable=True)
     criado_em: Mapped[date] = mapped_column(server_default=func.current_date(), nullable=False)
     modificado_em: Mapped[date] = mapped_column(server_default=func.current_date(), onupdate=func.current_date(), nullable=False)

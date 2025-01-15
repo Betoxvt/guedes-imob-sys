@@ -1,15 +1,14 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-from database import get_db, SessionLocal
+from database import get_db
 from schemas import (
     AluguelCreate, AluguelResponse, AluguelUpdate,
     ApartamentoCreate, ApartamentoResponse, ApartamentoUpdate,
     DespesaCreate, DespesaResponse, DespesaUpdate,
     GaragemCreate, GaragemResponse, GaragemUpdate,
     ProprietarioCreate, ProprietarioResponse, ProprietarioUpdate,
-    FichaCreate, FichaResponse, FichaUpdate,
-    AcompanhantesCreate, AcompanhantesResponse, AcompanhantesUpdate
+    FichaCreate, FichaResponse, FichaUpdate
 )
 from crud import (
     create_aluguel, read_alugueis, read_aluguel, update_aluguel, patch_aluguel, delete_aluguel,
@@ -17,8 +16,7 @@ from crud import (
     create_despesa, read_despesas, read_despesa, update_despesa, patch_despesa, delete_despesa, 
     create_garagem, read_garagem, read_garagens, update_garagem, patch_garagem, delete_garagem,
     create_proprietario, read_proprietario, read_proprietarios, update_proprietario, patch_proprietario, delete_proprietario,
-    create_ficha, read_ficha, read_fichas, update_ficha, patch_ficha, delete_ficha,
-    create_acompanhantes, read_acompanhantes, read_all_acompanhantes, update_acompanhantes, patch_acompanhantes, delete_acompanhantes
+    create_ficha, read_ficha, read_fichas, update_ficha, patch_ficha, delete_ficha
 )
 
 router = APIRouter()
@@ -279,46 +277,3 @@ def delete_ficha_route(ficha_id: int, db: Session = Depends(get_db)):
     if db_ficha is None:
         raise HTTPException(status_code=404, detail="Ficha not found")
     return db_ficha
-
-
-@router.post("/acompanhantes/", response_model=AcompanhantesResponse)
-def create_acompanhantes_route(acompanhantes: AcompanhantesCreate, db: Session = Depends(get_db)):
-    return create_acompanhantes(db=db, acompanhantes=acompanhantes)
-
-
-@router.get("/acompanhantes/", response_model=List[AcompanhantesResponse])
-def read_all_acompanhantes_route(offset: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    acompanhantes = read_all_acompanhantes(db, offset=offset, limit=limit)
-    return acompanhantes
-
-
-@router.get("/acompanhantes/{acompanhantes_id}", response_model=AcompanhantesResponse)
-def read_acompanhantes_route(acompanhantes_id: int, db: Session = Depends(get_db)):
-    acompanhantes = read_acompanhantes(db, acompanhantes_id=acompanhantes_id)
-    if acompanhantes is None:
-        raise HTTPException(status_code=404, detail="Acompanhantes not found")
-    return acompanhantes
-
-
-@router.put("/acompanhantes/{acompanhantes_id}", response_model=AcompanhantesResponse)
-def update_acompanhantes_route(acompanhantes_id: int, acompanhantes: AcompanhantesUpdate, db: Session = Depends(get_db)):
-    db_acompanhantes = update_acompanhantes(db=db, acompanhantes_id=acompanhantes_id, acompanhantes=acompanhantes)
-    if db_acompanhantes is None:
-        raise HTTPException(status_code=404, detail="Acompanhantes not found")
-    return db_acompanhantes
-
-
-@router.patch("/acompanhantes/{acompanhantes_id}", response_model=AcompanhantesResponse)
-def patch_acompanhantes_route(acompanhantes_id: int, acompanhantes: AcompanhantesUpdate, db: Session = Depends(get_db)):
-    db_acompanhantes = patch_acompanhantes(db=db, acompanhantes_id=acompanhantes_id, acompanhantes=acompanhantes)
-    if db_acompanhantes is None:
-        raise HTTPException(status_code=404, detail="Acompanhantes not found")
-    return db_acompanhantes
-
-
-@router.delete("/acompanhantes/{acompanhantes_id}", response_model=AcompanhantesResponse)
-def delete_acompanhantes_route(acompanhantes_id: int, db: Session = Depends(get_db)):
-    db_acompanhantes = delete_acompanhantes(db, acompanhantes_id=acompanhantes_id)
-    if db_acompanhantes is None:
-        raise HTTPException(status_code=404, detail="Acompanhantes not found")
-    return db_acompanhantes

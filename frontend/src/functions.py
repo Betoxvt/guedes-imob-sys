@@ -6,6 +6,22 @@ import requests
 import streamlit as st
 
 
+def merge_dictionaries(dict1_data, dict2_data):
+  """
+  Merges two dictionaries into a single dictionary.
+
+  Args:
+    dic1_data: Dictionary containing data.
+    dict2_data: Dictionary containing data.
+
+  Returns:
+    A dictionary with merged data.
+  """
+
+  merged_data = {**dict1_data, **dict2_data} 
+  return merged_data
+
+
 def format_input_for_db(input: str, output: str = 'str'):
     """
     Formats an input string for database storage.

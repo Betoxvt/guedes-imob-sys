@@ -1,7 +1,6 @@
 from datetime import date
-from pydantic import BaseModel, EmailStr, field_validator, model_validator
+from pydantic import BaseModel
 from typing import Optional
-from typing_extensions import Self
 
 
 def convert_to_optional(schema):
@@ -22,7 +21,7 @@ class AluguelBase(BaseModel):
 
 class ApartamentoBase(BaseModel):
     apto: str
-    proprietario_id: int
+    proprietario_id: Optional[int]
     cod_celesc: Optional[str]
     cod_gas: Optional[str]
     prov_net: Optional[str]
@@ -32,7 +31,7 @@ class ApartamentoBase(BaseModel):
 
 
 class DespesaBase(BaseModel):
-    apto_id: int
+    apto_id: Optional[int]
     data_pagamento: date
     valor: float
     descricao: str
@@ -52,7 +51,7 @@ class ProprietarioBase(BaseModel):
     nome: str
     cpf: Optional[str]
     tel: Optional[str]
-    email: Optional[EmailStr]
+    email: Optional[str]
 
 
 class FichaBase(BaseModel):
@@ -66,7 +65,7 @@ class FichaBase(BaseModel):
     tel: str 
     estado_civil: str
     profissao: str
-    rg: Optional[str]
+    rg: str
     cpf: str
     mae: str
     automovel: Optional[str]
@@ -78,9 +77,6 @@ class FichaBase(BaseModel):
     observacoes: Optional[str]
     proprietario: Optional[str]
     imob_fone: Optional[str]
-
-
-class AcompanhantesBase(BaseModel):
     acomp_01_nome: Optional[str]
     acomp_01_rg: Optional[str]
     acomp_01_cpf: Optional[str]
@@ -160,10 +156,6 @@ class FichaCreate(FichaBase):
     pass
 
 
-class AcompanhantesCreate(AcompanhantesBase):
-    pass
-
-
 # Response schemas
 
 
@@ -214,16 +206,6 @@ class ProprietarioResponse(ProprietarioBase):
 
 class FichaResponse(FichaBase):
     id: int
-    acomp_id: int
-    criado_em: date
-    modificado_em: date
-
-    class Config:
-        from_attributes = True
-
-
-class AcompanhantesResponse(AcompanhantesBase):
-    id: int
     criado_em: date
     modificado_em: date
 
@@ -255,6 +237,3 @@ class ProprietarioUpdate(ProprietarioCreate):
 
 class FichaUpdate(FichaCreate):
     __annotations__ = convert_to_optional(FichaCreate)
-
-class AcompanhantesUpdate(AcompanhantesCreate):
-    __annotations__ = convert_to_optional(AcompanhantesCreate)
