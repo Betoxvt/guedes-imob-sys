@@ -198,7 +198,7 @@ def create_proprietario_route(proprietario: ProprietarioCreate, db: Session = De
     return create_proprietario(db=db, proprietario=proprietario)
 
 
-@router.get("/proprietarios", response_model=List[ProprietarioResponse])
+@router.get("/proprietarios/", response_model=List[ProprietarioResponse])
 def read_proprietarios_route(offset: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     proprietarios = read_proprietarios(db, offset=offset, limit=limit)
     return proprietarios

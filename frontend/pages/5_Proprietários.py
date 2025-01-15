@@ -2,7 +2,7 @@ import json
 import pandas as pd
 import requests
 import streamlit as st
-from src.functions import show_response_message
+from src.functions import show_response_message, update_fields_generator
 
 st.set_page_config(
     page_title='Proprietários',
@@ -15,13 +15,35 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(['Registrar', 'Consultar', 'Modificar', '
 with tab1:
     st.header('Registrar Proprietário')
     with st.form('new_proprietario'):
-        inputs = '...'
-
+        nome: str = st.text_input(
+            'Nome',
+            key=7008,
+            value=None,
+            placeholder='Obrigatório'
+        )
+        cpf: str = st.text_input(
+            'CPF',
+            key=7009,
+            value=None
+        )
+        tel: str = st.text_input(
+            'Telefone',
+            key=7010,
+            value=None
+        )
+        email: str = st.text_input(
+            'E-Mail',
+            key=7011,
+            value=None
+        )
 
         submit_button = st.form_submit_button('Registrar')
         if submit_button:
             registry = {
-                "inputs": inputs
+                "nome": nome,
+                "cpf": cpf,
+                "tel": tel,
+                "email": email
             }
             registry_json = json.dumps(obj=registry, indent=1, separators=(',',':'))
             response = requests.post("http://backend:8000/proprietarios/", registry_json)
@@ -33,12 +55,10 @@ with tab2:
         'ID Proprietário',
         min_value=1,
         format='%d',
+        step=1,
         key=7000
     )
-    if st.button(
-        'Consultar',
-        key=7003
-    ):
+    if get_id:
         response = requests.get(f'http://backend:8000/proprietarios/{get_id}')
         if response.status_code == 200:
             proprietario = response.json()
@@ -52,30 +72,12 @@ with tab3:
     update_id = st.number_input(
         'ID do Proprietário',
         min_value=1,
+        step=1,
         format='%d',
-        key=7001
+        key=7300,
     )
-    if st.button(
-        'Mostrar',
-        key=7004
-    ):
-        response = requests.get(f'http://backend:8000/proprietarios/{update_id}')
-        if response.status_code == 200:
-            proprietario_viz = response.json()
-            df = pd.DataFrame([proprietario_viz])
-            st.dataframe(df, hide_index=True)
-            with st.form('update_proprietario'):
-                update_inputs = ' '
-                update_button = st.form_submit_button('Modificar')
-                if update_button:
-                    updated = {
-                        "update_inputs": update_inputs
-                    }
-                    updated_json = json.dumps(obj=updated, indent=1, separators=(',',':'))
-                    response = requests.put(f"http://backend:8000/proprietarios/{update_id}", updated_json)
-                    show_response_message(response)
-        else:
-            show_response_message(response)
+    if update_id:
+        update_fields_generator(id=update_id, table='proprietarios', reg='proprietario', page_n=7)
 
 with tab4:
     st.header('Deletar Proprietário')
@@ -83,12 +85,10 @@ with tab4:
         label="ID Proprietário",
         min_value=1,
         format='%d',
+        step=1,
         key=7002
     )
-    if st.button(
-        'Mostrar',
-        key=7005
-    ):
+    if delete_id:
         response = requests.get(f'http://backend:8000/proprietarios/{delete_id}')
         if response.status_code == 200:
             proprietario_viz = response.json()
@@ -96,12 +96,12 @@ with tab4:
             st.dataframe(df, hide_index=True)
         else:
             show_response_message(response)
-        if st.button(
-            'Deletar',
-            key=7006
-        ):
-            response = requests.delete(f'http://backend:8000/proprietarios/{delete_id}')
-            show_response_message(response)
+    if st.button(
+        'Deletar',
+        key=7006
+    ):
+        response = requests.delete(f'http://backend:8000/proprietarios/{delete_id}')
+        show_response_message(response)
 
 with tab5:
     st.header('Listar Proprietários')

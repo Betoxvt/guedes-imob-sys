@@ -6,29 +6,29 @@ import streamlit as st
 from src.functions import show_response_message, string_to_date
 
 st.set_page_config(
-    page_title='Aluguéis',
+    page_title='Garagens',
     layout='wide'
 )
-st.title('Aluguéis')
+st.title('Garagens')
 
 tab1, tab2, tab3, tab4, tab5 = st.tabs(['Registrar', 'Consultar', 'Modificar', 'Deletar', 'Listar'])
 
 with tab1:
-    st.header('Registrar Aluguel')
-    with st.form('new_aluguel'):
-        apto_id: int = st.number_input(
-            label='ID Apartamento',
+    st.header('Registrar Garagem')
+    with st.form('new_garagem'):
+        apto_origem_id: int = st.number_input(
+            label='ID Apartamento de origem',
             min_value=1,
             format='%d',
             step=1,
-            key=1009
+            key=4009
         )
-        ficha_id: int = st.number_input(
-            label='ID Ficha',
+        apto_destino_id: int = st.number_input(
+            label='ID Apartamento de destino',
             min_value=1,
             format='%d',
             step=1,
-            key=1010
+            key=4010
         )
         checkin: str | date = st.date_input(
             label='Check-in',
@@ -36,7 +36,7 @@ with tab1:
             max_value=date.today() + timedelta(days=360),
             value=date.today(),
             format='DD/MM/YYYY',
-            key=1011
+            key=4011
         )
 
         if isinstance(checkin, date):
@@ -49,9 +49,8 @@ with tab1:
             min_value=min_checkout,
             max_value=date.today() + timedelta(days=360),
             format='DD/MM/YYYY',
-            key=1012
+            key=4012
         )
-
         diarias: int = 0
         if isinstance(checkin, date) and isinstance(checkout, date):
             diferenca = (checkout - checkin).days
@@ -67,17 +66,17 @@ with tab1:
             value=diarias,
             format='%d',
             step=1,
-            key=1013,
+            key=4013,
             disabled=True
         )
         valor_diaria: float = st.number_input(
             label='Valor da diária',
             min_value=0.00,
-            max_value=3000.00,
+            max_value=900.00,
             value=0.00,
             format='%0.2f',
             step=10.00,
-            key=1014
+            key=4014
         )
 
         valor_total: float = 0.00
@@ -89,72 +88,73 @@ with tab1:
         value=valor_total,
         format='%0.2f',
         disabled=True,
-        key=1015
+        key=4015
         )
 
         submit_button = st.form_submit_button('Registrar')
         if submit_button:
             registry = {
-                    "apto_id": apto_id,
-                    "ficha_id": ficha_id,
-                    "checkin": checkin.isoformat(),
-                    "checkout": checkout.isoformat(),
-                    "diarias": diarias,
-                    "valor_diaria": valor_diaria,
-                    "valor_total": valor_total
-                }
+                "apto_origem_id": apto_origem_id,
+                "apto_destino_id": apto_destino_id,
+                "checkin": checkin.isoformat(),
+                "checkout": checkout.isoformat(),
+                "diarias": diarias,
+                "valor_diaria": valor_diaria,
+                "valor_total": valor_total
+            }
             registry_json = json.dumps(obj=registry, indent=1, separators=(',',':'))
-            response = requests.post("http://backend:8000/alugueis/", registry_json)
+            response = requests.post("http://backend:8000/garagens/", registry_json)
             show_response_message(response)
 
 with tab2:
-    st.header('Consultar Aluguéis')
+    st.header('Consultar Garagens')
     get_id = st.number_input(
-        'ID Aluguel',
+        'ID Garagem',
         min_value=1,
         format='%d',
         step=1,
-        key=1000
+        key=4000
     )
     if get_id:
-        response = requests.get(f'http://backend:8000/alugueis/{get_id}')
+        response = requests.get(f'http://backend:8000/garagens/{get_id}')
         if response.status_code == 200:
-            aluguel = response.json()
-            df = pd.DataFrame([aluguel])
+            garagem = response.json()
+            df = pd.DataFrame([garagem])
             st.dataframe(df, hide_index=True)
         else:
             show_response_message(response)
 
 with tab3:
-    st.header('Modificar Aluguel')
+    st.header('Modificar Garagem')
     update_id = st.number_input(
-        'ID do Aluguel',
+        'ID do Garagem',
         min_value=1,
         format='%d',
-        key=1001
+        step=1,
+        key=4001
     )
     if update_id:
-        response = requests.get(f'http://backend:8000/alugueis/{update_id}')
+        response = requests.get(f'http://backend:8000/garagens/{update_id}')
         if response.status_code == 200:
-            aluguel_viz = response.json()
-            df = pd.DataFrame([aluguel_viz])
+            garagem_viz = response.json()
+            df = pd.DataFrame([garagem_viz])
             st.dataframe(df, hide_index=True)
-            with st.form('update_aluguel'):
-                apto_id: int = st.number_input(
-                    label='ID Apartamento',
+            with st.form('update_garagem'):
+                apto_origem_id: int = st.number_input(
+                    label='ID Apartamento de origem',
                     min_value=1,
                     format='%d',
                     step=1,
-                    key=1309,
-                    value=df.loc[0, 'apto_id']
+                    key=4309,
+                    value=df.loc[0, 'apto_origem_id']
                 )
-                ficha_id: int = st.number_input(
-                    label='ID Ficha',
+                apto_destino_id: int = st.number_input(
+                    label='ID Apartamento de destino',
                     min_value=1,
                     format='%d',
                     step=1,
-                    key=1310,
-                    value=df.loc[0, 'ficha_id']
+                    key=4310,
+                    value=df.loc[0, 'apto_destino_id']
                 )
                 checkin: str | date = st.date_input(
                     label='Check-in',
@@ -162,7 +162,7 @@ with tab3:
                     max_value=date.today() + timedelta(days=360),
                     value=string_to_date(df.checkin[0]),
                     format='DD/MM/YYYY',
-                    key=1311
+                    key=4311
                 )
 
                 if isinstance(checkin, date):
@@ -176,9 +176,8 @@ with tab3:
                     max_value=date.today() + timedelta(days=360),
                     value=string_to_date(df.checkout[0]),
                     format='DD/MM/YYYY',
-                    key=1312
+                    key=4312
                 )
-
                 diarias: int = 0
                 if isinstance(checkin, date) and isinstance(checkout, date):
                     diferenca = (checkout - checkin).days
@@ -194,7 +193,7 @@ with tab3:
                     value=diarias,
                     format='%d',
                     step=1,
-                    key=1313,
+                    key=4313,
                     disabled=True
                 )
                 valor_diaria: float = st.number_input(
@@ -204,7 +203,7 @@ with tab3:
                     value=df.loc[0, 'valor_diaria'],
                     format='%0.2f',
                     step=10.00,
-                    key=1314
+                    key=4314
                 )
 
                 valor_total: float = 0.00
@@ -216,13 +215,13 @@ with tab3:
                 value=valor_total,
                 format='%0.2f',
                 disabled=True,
-                key=1315
+                key=4315
                 )
                 update_button = st.form_submit_button('Modificar')
                 if update_button:
                     updated = {
-                        "apto_id": apto_id,
-                        "ficha_id": ficha_id,
+                        "apto_origem_id": apto_origem_id,
+                        "apto_destino_id": apto_destino_id,
                         "checkin": checkin.isoformat(),
                         "checkout": checkout.isoformat(),
                         "diarias": diarias,
@@ -230,45 +229,44 @@ with tab3:
                         "valor_total": valor_total
                     }
                     updated_json = json.dumps(obj=updated, indent=1, separators=(',',':'))
-                    response = requests.put(f"http://backend:8000/alugueis/{update_id}", updated_json)
+                    response = requests.put(f"http://backend:8000/garagens/{update_id}", updated_json)
                     show_response_message(response)
         else:
             show_response_message(response)
 
 with tab4:
-    st.header('Deletar Aluguel')
+    st.header('Deletar Garagem')
     delete_id = st.number_input(
-        label="ID Aluguel",
+        label="ID Garagem",
         min_value=1,
-        step=1,
         format='%d',
-        key=1402
+        key=5002
     )
     if delete_id:
-        response = requests.get(f'http://backend:8000/alugueis/{delete_id}')
+        response = requests.get(f'http://backend:8000/garagens/{delete_id}')
         if response.status_code == 200:
-            aluguel_viz = response.json()
-            df = pd.DataFrame([aluguel_viz])
+            garagem_viz = response.json()
+            df = pd.DataFrame([garagem_viz])
             st.dataframe(df, hide_index=True)
         else:
             show_response_message(response)
         if st.button(
             'Deletar',
-            key=1006
+            key=4406
         ):
-            response = requests.delete(f'http://backend:8000/alugueis/{delete_id}')
+            response = requests.delete(f'http://backend:8000/garagens/{delete_id}')
             show_response_message(response)
 
 with tab5:
-    st.header('Listar Aluguéis')
+    st.header('Listar Garagens')
     if st.button(
         "Mostrar",
-        key=1007
+        key=4507
     ):
-        response = requests.get(f'http://backend:8000/alugueis/')
+        response = requests.get(f'http://backend:8000/garagens/')
         if response.status_code == 200:
-            alugueis = response.json()
-            df = pd.DataFrame(alugueis)
+            garagens = response.json()
+            df = pd.DataFrame(garagens)
             st.dataframe(df, hide_index=True)
         else:
             show_response_message(response)

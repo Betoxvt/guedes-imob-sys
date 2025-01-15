@@ -15,7 +15,7 @@ class AluguelBase(BaseModel):
     ficha_id: Optional[int]
     checkin: date
     checkout: date
-    diarias: float
+    diarias: int
     valor_diaria: float
     valor_total: float
 
@@ -50,7 +50,7 @@ class GaragemBase(BaseModel):
     @model_validator (mode='after')
     def verify_equals(self) -> Self:
         if self.apto_destino_id == self.apto_origem_id:
-            raise ValueError('As vagas de origem e destino são iguais, devem ser diferentes')
+            raise ValueError(f"Os valores de apto_origem_id ({self.apto_origem_id}) e apto_destino_id ({self.apto_destino_id}) devem ser diferentes.")
         return self
 
 
