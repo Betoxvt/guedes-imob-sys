@@ -3,7 +3,8 @@ import json
 import pandas as pd
 import requests
 import streamlit as st
-from src.functions import merge_dictionaries, none_or_str, show_response_message, string_to_date
+from src.fdate import str_to_date
+from src.functions import merge_dictionaries, none_or_str, show_response_message
 
 
 st.set_page_config(
@@ -115,13 +116,22 @@ with tab1:
         checkin = st.date_input(
             label='Check-in',
             format='DD/MM/YYYY',
-            key=8018
+            key=8018,
+            value=date.today()
         )
         checkout = st.date_input(
             label='Check-out',
             format='DD/MM/YYYY',
-            key=8019
+            key=8019,
+            value=checkin + timedelta(days=1)
         )
+        diarias: int = 0
+        if isinstance(checkin, date) and isinstance(checkout, date):
+            diferenca = (checkout - checkin).days
+            if diferenca >= 1:
+                diarias = diferenca
+            else:
+                st.warning("A data de check-out deve ser posterior à data de check-in.")
         observacoes = st.text_area(
             label='Observações',
             value=None,
@@ -571,16 +581,23 @@ with tab3:
             )
             checkin = st.date_input(
                 label='Check-in',
-                value=string_to_date(df_up.checkin[0]),
+                value=str_to_date(df_up.checkin[0]),
                 format='DD/MM/YYYY',
                 key=8094
             )
             checkout = st.date_input(
                 label='Check-out',
-                value=string_to_date(df_up.checkout[0]),
+                value=str_to_date(df_up.checkout[0]),
                 format='DD/MM/YYYY',
                 key=8095
             )
+            diarias: int = 0
+            if isinstance(checkin, date) and isinstance(checkout, date):
+                diferenca = (checkout - checkin).days
+                if diferenca >= 1:
+                    diarias = diferenca
+                else:
+                    st.warning("A data de check-out deve ser posterior à data de check-in.")
             observacoes = st.text_area(
                 label='Observações',
                 value=none_or_str(df_up.loc[0, 'observacoes']),

@@ -1,9 +1,10 @@
-from datetime import date
+from datetime import date, timedelta
 import json
 import pandas as pd
 import requests
 import streamlit as st
-from src.functions import show_response_message, string_to_date
+from src.fdate import str_to_date
+from src.functions import show_response_message
 
 st.set_page_config(
     page_title='Garagens',
@@ -33,12 +34,15 @@ with tab1:
         checkin: date = st.date_input(
             label='Check-in',
             format='DD/MM/YYYY',
-            key=4102
+            key=4102,
+            value=date.today()
+
         )
         checkout: date = st.date_input(
             label='Check-out',
             format='DD/MM/YYYY',
-            key=4103
+            key=4103,
+            value=checkin + timedelta(days=1)
         )
         diarias: int = 0
         if isinstance(checkin, date) and isinstance(checkout, date):
@@ -144,13 +148,13 @@ with tab3:
                 )
                 checkin: date = st.date_input(
                     label='Check-in',
-                    value=string_to_date(df_up.checkin[0]),
+                    value=str_to_date(df_up.checkin[0]),
                     format='DD/MM/YYYY',
                     key=4303
                 )
                 checkout: date = st.date_input(
                     label='Check-out',
-                    value=string_to_date(df_up.checkout[0]),
+                    value=str_to_date(df_up.checkout[0]),
                     format='DD/MM/YYYY',
                     key=4304
                 )

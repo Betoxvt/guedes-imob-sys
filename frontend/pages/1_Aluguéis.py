@@ -1,9 +1,10 @@
-from datetime import date
+from datetime import date, timedelta
 import json
 import pandas as pd
 import requests
 import streamlit as st
-from src.functions import show_response_message, string_to_date
+from src.fdate import calculate_diarias, str_to_date
+from src.functions import show_response_message
 
 st.set_page_config(
     page_title='Aluguéis',
@@ -33,30 +34,17 @@ with tab1:
         checkin: date = st.date_input(
             label='Check-in',
             format='DD/MM/YYYY',
-            key=1102
+            key=1102,
+            value=date.today(),
         )
         checkout: date = st.date_input(
             label='Check-out',
             format='DD/MM/YYYY',
-            key=1103
+            key=1103,
+            value=checkin + timedelta(days=1)
         )
-        diarias: int = 0
-        if isinstance(checkin, date) and isinstance(checkout, date):
-            diferenca = (checkout - checkin).days
-            if diferenca >= 1:
-                diarias = diferenca
-            else:
-                st.warning("A data de check-out deve ser posterior à data de check-in.")
-        st.number_input(
-            label='Diárias',
-            min_value=1,
-            max_value=360,
-            value=diarias,
-            format='%d',
-            step=1,
-            key=1104,
-            disabled=True
-        )
+        diarias: int = calculate_diarias(checkin, checkout)
+        st.write(f'Diárias: {diarias} dias')
         valor_diaria: float = st.number_input(
             label='Valor da diária',
             min_value=0.00,
@@ -142,13 +130,13 @@ with tab3:
                 )
                 checkin: date = st.date_input(
                     label='Check-in',
-                    value=string_to_date(df_up.checkin[0]),
+                    value=str_to_date(df_up.checkin[0]),
                     format='DD/MM/YYYY',
                     key=1303
                 )
                 checkout: date = st.date_input(
                     label='Check-out',
-                    value=string_to_date(df_up.checkout[0]),
+                    value=str_to_date(df_up.checkout[0]),
                     format='DD/MM/YYYY',
                     key=1304
                 )

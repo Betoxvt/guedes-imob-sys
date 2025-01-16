@@ -3,7 +3,8 @@ import json
 import pandas as pd
 import requests
 import streamlit as st
-from src.functions import show_response_message, string_to_date
+from src.fdate import str_to_date
+from src.functions import show_response_message
 
 st.set_page_config(
     page_title='Despesas',
@@ -26,7 +27,8 @@ with tab1:
         data_pagamento: date = st.date_input(
         label='Data de pagamento',
         format='DD/MM/YYYY',
-        key=3102
+        key=3102,
+        value=date.today()
         )
         valor: float = st.number_input(
         label='Valor da despesa',
@@ -98,7 +100,7 @@ with tab3:
                 )
                 data_pagamento: date = st.date_input(
                     label='Data de pagamento',
-                    value=string_to_date(df_up.data_pagamento[0]),
+                    value=str_to_date(df_up.data_pagamento[0]),
                     format='DD/MM/YYYY',
                     key=3302
                 )

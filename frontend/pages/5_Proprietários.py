@@ -98,11 +98,23 @@ with tab3:
                     value=str(df_up.tel[0])
                 )
                 email: str = st.text_input(
-                    labell='E-Mail',
+                    label='E-Mail',
                     key=5304,
                     value=str(df_up.email[0])
                 )
-
+                update_button = st.form_submit_button('Modificar')
+                if update_button:
+                    prop_up_data = {
+                        "nome": nome,
+                        "cpf": cpf,
+                        "tel": tel,
+                        "email": email,
+                    }
+                    update_data = json.dumps(obj=prop_up_data, separators=(',',':'))
+                    put_response = requests.put(f"http://backend:8000/proprietarios/{update_id}", update_data)
+                    show_response_message(put_response)
+        else:
+            show_response_message(update_response)
 with tab4:
     st.header('Deletar Proprietário')
     delete_id = st.number_input(

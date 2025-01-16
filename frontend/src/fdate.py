@@ -1,6 +1,28 @@
-# Date related custom functions
 from datetime import date
 import pandas as pd
+import streamlit as st
+
+
+def calculate_diarias(checkin, checkout):
+    """Calculates in days the difference between checkout and checkin.
+
+    Args:
+        checkin: date
+        checkout: date
+
+    Returns:
+        An integer number equals the difference.
+        `0` in case inputs are not `date` types or `difference < 1`, it also shows a warning.
+    """
+    if isinstance(checkin, date) and isinstance(checkout, date):
+        difference = (checkout - checkin).days
+        if difference >= 1:
+            return difference
+        else:
+            st.warning("A data de check-out deve ser posterior à data de check-in.")
+    else:
+        st.warning(f"As entradas não são do tipo `date`")
+    return 0
 
 
 def brazil_datestr(year_first_date: str | date) -> str:
@@ -10,8 +32,8 @@ def brazil_datestr(year_first_date: str | date) -> str:
         year_first_date: The input of a date like object, normally starts with Year
 
     Returns:
-        If success a new Brazilian date like string.
-        If fails returns the same input
+        A new Brazilian date like string.
+        If fails, returns the same input.
     """
     try:
         br_date = pd.to_datetime(year_first_date).strftime("%d/%m/%Y")
@@ -20,7 +42,7 @@ def brazil_datestr(year_first_date: str | date) -> str:
         print(f"Error trying to convert: {e}")
         return year_first_date
 
-  
+
 def showbr_dfdate(df: pd.DataFrame) -> pd.DataFrame:
     """Converts specific DataFrame columns containing datetime.date objects to
     Brazilian date format (DD/MM/YYYY).
@@ -48,8 +70,6 @@ def showbr_dfdate(df: pd.DataFrame) -> pd.DataFrame:
             except (ValueError, TypeError) as e:
                 print(f"Warning: Column '{col}' could not be converted to date: {e}")
                 pass
-
-    
     return df_new
 
 
