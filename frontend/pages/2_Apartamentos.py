@@ -120,7 +120,7 @@ with tab3:
                 min_value=1,
                 format='%d',
                 step=1,
-                value=df_up.loc(0, 'proprietario_id'),
+                value=df_up.loc[0, 'proprietario_id'],
                 key=2302
             )
             cod_celesc = st.text_input(
