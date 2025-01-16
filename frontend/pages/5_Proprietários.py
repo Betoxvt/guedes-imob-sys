@@ -2,7 +2,7 @@ import json
 import pandas as pd
 import requests
 import streamlit as st
-from src.functions import show_response_message, update_fields_generator
+from src.functions import show_response_message
 
 st.set_page_config(
     page_title='Proprietários',
@@ -16,38 +16,37 @@ with tab1:
     st.header('Registrar Proprietário')
     with st.form('new_proprietario'):
         nome: str = st.text_input(
-            'Nome',
-            key=7008,
-            value=None,
-            placeholder='Obrigatório'
+            label='Nome',
+            key=5000,
+            value=None
         )
         cpf: str = st.text_input(
-            'CPF',
-            key=7009,
+            label='CPF',
+            key=5101,
             value=None
         )
         tel: str = st.text_input(
-            'Telefone',
-            key=7010,
+            label='Telefone',
+            key=5102,
             value=None
         )
         email: str = st.text_input(
-            'E-Mail',
-            key=7011,
+            labell='E-Mail',
+            key=5103,
             value=None
         )
 
         submit_button = st.form_submit_button('Registrar')
         if submit_button:
-            registry = {
+            prop_data = {
                 "nome": nome,
                 "cpf": cpf,
                 "tel": tel,
                 "email": email
             }
-            registry_json = json.dumps(obj=registry, indent=1, separators=(',',':'))
-            response = requests.post("http://backend:8000/proprietarios/", registry_json)
-            show_response_message(response)
+            submit_data = json.dumps(obj=prop_data, separators=(',',':'))
+            post_response = requests.post("http://backend:8000/proprietarios/", submit_data)
+            show_response_message(post_response)
 
 with tab2:
     st.header('Consultar Proprietários')
@@ -56,16 +55,16 @@ with tab2:
         min_value=1,
         format='%d',
         step=1,
-        key=7000
+        key=5200
     )
     if get_id:
-        response = requests.get(f'http://backend:8000/proprietarios/{get_id}')
-        if response.status_code == 200:
-            proprietario = response.json()
-            df = pd.DataFrame([proprietario])
-            st.dataframe(df, hide_index=True)
+        get_response = requests.get(f'http://backend:8000/proprietarios/{get_id}')
+        if get_response.status_code == 200:
+            proprietario = get_response.json()
+            df_get = pd.DataFrame([proprietario])
+            st.dataframe(df_get, hide_index=True)
         else:
-            show_response_message(response)
+            show_response_message(get_response)
 
 with tab3:
     st.header('Modificar Proprietário')
@@ -74,10 +73,35 @@ with tab3:
         min_value=1,
         step=1,
         format='%d',
-        key=7300,
+        key=5300,
     )
     if update_id:
-        update_fields_generator(id=update_id, table='proprietarios', reg='proprietario', page_n=7)
+        update_response = requests.get(f'http://backend:8000/proprietarios/{update_id}')
+        if update_response.status_code == 200:
+            prop_up = update_response.json()
+            df_up = pd.DataFrame([prop_up])
+            st.dataframe(df_up, hide_index=True)
+            with st.form('update_proprietario'):
+                nome: str = st.text_input(
+                    label='Nome',
+                    key=5301,
+                    value=str(df_up.nome[0])
+                )
+                cpf: str = st.text_input(
+                    label='CPF',
+                    key=5302,
+                    value=str(df_up.cpf[0])
+                )
+                tel: str = st.text_input(
+                    label='Telefone',
+                    key=5303,
+                    value=str(df_up.tel[0])
+                )
+                email: str = st.text_input(
+                    labell='E-Mail',
+                    key=5304,
+                    value=str(df_up.email[0])
+                )
 
 with tab4:
     st.header('Deletar Proprietário')
@@ -86,33 +110,33 @@ with tab4:
         min_value=1,
         format='%d',
         step=1,
-        key=7002
+        key=5400
     )
     if delete_id:
-        response = requests.get(f'http://backend:8000/proprietarios/{delete_id}')
-        if response.status_code == 200:
-            proprietario_viz = response.json()
-            df = pd.DataFrame([proprietario_viz])
-            st.dataframe(df, hide_index=True)
+        show_delete_response = requests.get(f'http://backend:8000/proprietarios/{delete_id}')
+        if show_delete_response.status_code == 200:
+            despesa_delete = show_delete_response.json()
+            df_delete = pd.DataFrame([despesa_delete])
+            st.dataframe(df_delete, hide_index=True)
             if st.button(
                 'Deletar',
-                key=7006
+                key=5401
             ):
-                response = requests.delete(f'http://backend:8000/proprietarios/{delete_id}')
-                show_response_message(response)
+                show_delete_response = requests.delete(f'http://backend:8000/proprietarios/{delete_id}')
+                show_response_message(show_delete_response)
         else:
-            show_response_message(response)
+            show_response_message(show_delete_response)
 
 with tab5:
     st.header('Listar Proprietários')
     if st.button(
         "Mostrar",
-        key=7007
+        key=5500
     ):
-        response = requests.get(f'http://backend:8000/proprietarios/')
-        if response.status_code == 200:
-            proprietarios = response.json()
-            df = pd.DataFrame(proprietarios)
-            st.dataframe(df, hide_index=True)
+        get_list_response = requests.get(f'http://backend:8000/proprietarios/')
+        if get_list_response.status_code == 200:
+            proprietarios = get_list_response.json()
+            df_list = pd.DataFrame(proprietarios)
+            st.dataframe(df_list, hide_index=True)
         else:
-            show_response_message(response)
+            show_response_message(get_list_response)
