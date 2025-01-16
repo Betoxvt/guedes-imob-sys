@@ -21,15 +21,12 @@ with tab1:
         min_value=1,
         format='%d',
         step=1,
-        key=3009
+        key=3100
         )
         data_pagamento: date = st.date_input(
         label='Data de pagamento',
-        min_value=date(2024, 1, 1),
-        max_value=date.today() + timedelta(days=360),
-        value=date.today(),
         format='DD/MM/YYYY',
-        key=3011
+        key=3102
         )
         valor: float = st.number_input(
         label='Valor da despesa',
@@ -38,26 +35,25 @@ with tab1:
         value=0.00,
         format='%0.2f',
         step=0.01,
-        key=3014
+        key=3103
         )
         descricao: str = st.text_area(
             label='Descrição',
             value=None,
-            key=3015,
-            placeholder='Obrigatório'
+            key=3104
         )
 
         submit_button = st.form_submit_button('Registrar')
         if submit_button:
-            registry = {
+            despesa_data = {
                 "apto_id": apto_id,
                 "data_pagamento": data_pagamento.isoformat(),
                 "valor": valor,
                 "descricao": descricao,
             }
-            registry_json = json.dumps(obj=registry, indent=1, separators=(',',':'))
-            response = requests.post("http://backend:8000/despesas/", registry_json)
-            show_response_message(response)
+            submit_data = json.dumps(obj=despesa_data, separators=(',',':'))
+            post_response = requests.post("http://backend:8000/despesas/", submit_data)
+            show_response_message(post_response)
 
 with tab2:
     st.header('Consultar Despesas')
@@ -66,16 +62,16 @@ with tab2:
         min_value=1,
         format='%d',
         step=1,
-        key=3000
+        key=3200
     )
     if get_id:
-        response = requests.get(f'http://backend:8000/despesas/{get_id}')
-        if response.status_code == 200:
-            despesa = response.json()
-            df = pd.DataFrame([despesa])
-            st.dataframe(df, hide_index=True)
+        get_response = requests.get(f'http://backend:8000/despesas/{get_id}')
+        if get_response.status_code == 200:
+            despesa = get_response.json()
+            df_get = pd.DataFrame([despesa])
+            st.dataframe(df_get, hide_index=True)
         else:
-            show_response_message(response)
+            show_response_message(get_response)
 
 with tab3:
     st.header('Modificar Despesa')
@@ -83,59 +79,56 @@ with tab3:
         'ID do Despesa',
         min_value=1,
         format='%d',
-        key=3001
+        key=3300
     )
     if update_id:
-        response = requests.get(f'http://backend:8000/despesas/{update_id}')
-        if response.status_code == 200:
-            despesa_viz = response.json()
-            df = pd.DataFrame([despesa_viz])
-            st.dataframe(df, hide_index=True)
+        update_response = requests.get(f'http://backend:8000/despesas/{update_id}')
+        if update_response.status_code == 200:
+            despesa_up = update_response.json()
+            df_up = pd.DataFrame([despesa_up])
+            st.dataframe(df_up, hide_index=True)
             with st.form('update_despesa'):
                 apto_id: int = st.number_input(
                     label='ID Apartamento',
                     min_value=1,
                     format='%d',
                     step=1,
-                    key=3309,
-                    value=df.loc[0, 'apto_id']
+                    key=3301,
+                    value=df_up.loc[0, 'apto_id']
                 )
                 data_pagamento: date = st.date_input(
                     label='Data de pagamento',
-                    min_value=date(2024, 1, 1),
-                    max_value=date.today() + timedelta(days=360),
-                    value=string_to_date(df.data_pagamento[0]),
+                    value=string_to_date(df_up.data_pagamento[0]),
                     format='DD/MM/YYYY',
-                    key=3311
+                    key=3302
                 )
                 valor: float = st.number_input(
                     label='Valor da despesa',
                     min_value=0.00,
                     max_value=None,
-                    value=df.loc[0, 'valor'],
+                    value=df_up.loc[0, 'valor'],
                     format='%0.2f',
                     step=0.01,
-                    key=3314
+                    key=3303
                 )
                 descricao: str = st.text_area(
                     label='Descrição',
-                    value=str(df.descricao[0]),
-                    key=3315,
-                    placeholder='Obrigatório'
+                    value=str(df_up.descricao[0]),
+                    key=3304
                 )
                 update_button = st.form_submit_button('Modificar')
                 if update_button:
-                    updated = {
+                    despesa_up_data = {
                         "apto_id": apto_id,
                         "data_pagamento": data_pagamento.isoformat(),
                         "valor": valor,
                         "descricao": descricao,
                     }
-                    updated_json = json.dumps(obj=updated, indent=1, separators=(',',':'))
-                    response = requests.put(f"http://backend:8000/despesas/{update_id}", updated_json)
-                    show_response_message(response)
+                    update_data = json.dumps(obj=despesa_up_data, separators=(',',':'))
+                    put_response = requests.put(f"http://backend:8000/despesas/{update_id}", update_data)
+                    show_response_message(put_response)
         else:
-            show_response_message(response)
+            show_response_message(update_response)
 
 with tab4:
     st.header('Deletar Despesa')
@@ -146,30 +139,30 @@ with tab4:
         key=3002
     )
     if delete_id:
-        response = requests.get(f'http://backend:8000/despesas/{delete_id}')
-        if response.status_code == 200:
-            despesa_viz = response.json()
-            df = pd.DataFrame([despesa_viz])
-            st.dataframe(df, hide_index=True)
+        show_delete_response = requests.get(f'http://backend:8000/despesas/{delete_id}')
+        if show_delete_response.status_code == 200:
+            despesa_delete = show_delete_response.json()
+            df_delete = pd.DataFrame([despesa_delete])
+            st.dataframe(df_delete, hide_index=True)
         else:
-            show_response_message(response)
+            show_response_message(show_delete_response)
         if st.button(
             'Deletar',
-            key=3006
+            key=3400
         ):
-            response = requests.delete(f'http://backend:8000/despesas/{delete_id}')
-            show_response_message(response)
+            delete_response = requests.delete(f'http://backend:8000/despesas/{delete_id}')
+            show_response_message(delete_response)
 
 with tab5:
     st.header('Listar Despesas')
     if st.button(
         "Mostrar",
-        key=3007
+        key=3500
     ):
-        response = requests.get(f'http://backend:8000/despesas/')
-        if response.status_code == 200:
-            despesas = response.json()
-            df = pd.DataFrame(despesas)
-            st.dataframe(df, hide_index=True)
+        get_list_response = requests.get(f'http://backend:8000/despesas/')
+        if get_list_response.status_code == 200:
+            despesas = get_list_response.json()
+            df_list = pd.DataFrame(despesas)
+            st.dataframe(df_list, hide_index=True)
         else:
-            show_response_message(response)
+            show_response_message(get_list_response)
