@@ -23,6 +23,8 @@
 19. [ ] Definir Placeholders nos formulários do frontend páginas 1 a 6.
 20. [ ] Inserir botão de 'refresh' para recalcular diárias e valor_total.
 
+## Pensar melhor nos atributos para a tabela despesas. Talvez mes_referencia, categoria (Contas Recorrentes, Manutenção, ou mais detalhado como IPTU, Luz, Net, Gas, Eletrodoméstico, Mobília...) e com o campo descrição opcional poderia ser mais detalhado
+
 ## Problema
 
 A imobiliária deseja um sistema que permita:
