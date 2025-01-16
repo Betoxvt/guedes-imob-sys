@@ -2,7 +2,7 @@ import json
 import pandas as pd
 import requests
 import streamlit as st
-from src.functions import show_response_message, show_data_output
+from src.functions import empty_none_dict, show_data_output, show_response_message
 
 st.set_page_config(
     page_title='Proprietários',
@@ -38,12 +38,12 @@ with tab1:
 
         submit_button = st.form_submit_button('Registrar')
         if submit_button:
-            prop_data = {
+            prop_data = empty_none_dict({
                 "nome": nome,
                 "cpf": cpf,
                 "tel": tel,
                 "email": email
-            }
+            })
             submit_data = json.dumps(obj=prop_data, separators=(',',':'))
             try:
                 post_response = requests.post("http://backend:8000/proprietarios/", submit_data)
@@ -112,12 +112,12 @@ with tab3:
                 )
                 update_button = st.form_submit_button('Modificar')
                 if update_button:
-                    prop_up_data = {
+                    prop_up_data = empty_none_dict({
                         "nome": nome,
                         "cpf": cpf,
                         "tel": tel,
                         "email": email,
-                    }
+                    })
                     update_data = json.dumps(obj=prop_up_data, separators=(',',':'))
                     try:
                         put_response = requests.put(f"http://backend:8000/proprietarios/{update_id}", update_data)

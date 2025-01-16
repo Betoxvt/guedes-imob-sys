@@ -4,7 +4,7 @@ import pandas as pd
 import requests
 import streamlit as st
 from src.fdate import str_to_date
-from src.functions import show_response_message, show_data_output
+from src.functions import empty_none_dict, show_data_output, show_response_message
 
 st.set_page_config(
     page_title='Despesas',
@@ -47,12 +47,12 @@ with tab1:
 
         submit_button = st.form_submit_button('Registrar')
         if submit_button:
-            despesa_data = {
+            despesa_data = empty_none_dict({
                 "apto_id": apto_id,
                 "data_pagamento": data_pagamento.isoformat(),
                 "valor": valor,
                 "descricao": descricao,
-            }
+            })
             submit_data = json.dumps(obj=despesa_data, separators=(',',':'))
             try:
                 post_response = requests.post("http://backend:8000/despesas/", submit_data)
@@ -128,12 +128,12 @@ with tab3:
                 )
                 update_button = st.form_submit_button('Modificar')
                 if update_button:
-                    despesa_up_data = {
+                    despesa_up_data = empty_none_dict({
                         "apto_id": apto_id,
                         "data_pagamento": data_pagamento.isoformat(),
                         "valor": valor,
                         "descricao": descricao,
-                    }
+                    })
                     update_data = json.dumps(obj=despesa_up_data, separators=(',',':'))
                     try:
                         put_response = requests.put(f"http://backend:8000/despesas/{update_id}", update_data)

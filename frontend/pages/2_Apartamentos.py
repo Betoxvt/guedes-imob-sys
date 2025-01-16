@@ -2,7 +2,7 @@ import json
 import pandas as pd
 import requests
 import streamlit as st
-from src.functions import show_response_message, show_data_output
+from src.functions import empty_none_dict, show_data_output, show_response_message
 
 # Seria ótimo que quando fosse registrar a foreign key (ID Proprietário) mostrasse o nome conforme o registro em sua tabela
 
@@ -62,7 +62,7 @@ with tab1:
 
         submit_button = st.form_submit_button('Registrar')
         if submit_button:
-            apto_data = {
+            apto_data = empty_none_dict({
                 "apto": apto,
                 "proprietario_id": proprietario_id,
                 "cod_celesc": cod_celesc,
@@ -71,7 +71,7 @@ with tab1:
                 "wifi": wifi,
                 "wifi_senha": wifi_senha,
                 "lock_senha": lock_senha
-            }
+            })
             submit_data = json.dumps(obj=apto_data, separators=(',',':'))
             try:
                 post_response = requests.post("http://backend:8000/apartamentos/", submit_data)
@@ -163,7 +163,7 @@ with tab3:
                 )
                 update_button = st.form_submit_button('Modificar')
                 if update_button:
-                    apto_up_data = {
+                    apto_up_data = empty_none_dict({
                         "apto": apto,
                         "proprietario_id": proprietario_id,
                         "cod_celesc": cod_celesc,
@@ -172,7 +172,7 @@ with tab3:
                         "wifi": wifi,
                         "wifi_senha": wifi_senha,
                         "lock_senha": lock_senha
-                    }
+                    })
                     update_data = json.dumps(obj=apto_up_data, separators=(',',':'))
                     try:
                         put_response = requests.put(f"http://backend:8000/apartamentos/{update_id}", update_data)

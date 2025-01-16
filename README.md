@@ -23,6 +23,9 @@
 19. [ ] Definir Placeholders nos formulários do frontend páginas 1 a 6.
 20. [ ] Tentar recriar as páginas que fazem cálculos para exibição instantânea do resultado, aprendi que não pode ser dentro de um `st.form()`, OU, inserir botão de 'refresh' para recalcular diárias e valor_total, mas também não sei como.
 21. [ ] Ver quais funções deveriam ser `async`com `asyncio` estudar e aplicar.
+22. [ ] Pegar o subtitulo dos dados ao ter erro como unprocessable content e mostrar os dados que não foram inseridos com o titulo correto
+23. [ ] Melhor aquele esquema do if update_id... etc
+24. [ ]
 
 ## Provavelmente todos os valores monetários eu devesse usar str e depois passar para float no front, aceitando como separador decimal tanto ',' quanto '.'
 

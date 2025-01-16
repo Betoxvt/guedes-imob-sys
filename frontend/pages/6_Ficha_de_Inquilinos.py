@@ -3,8 +3,8 @@ import json
 import pandas as pd
 import requests
 import streamlit as st
-from src.fdate import str_to_date, calculate_diarias
-from src.functions import merge_dictionaries, none_or_str, show_response_message, show_data_output
+from src.fdate import calculate_diarias, str_to_date
+from src.functions import empty_none_dict, merge_dictionaries, none_or_str, show_data_output, show_response_message
 
 
 st.set_page_config(
@@ -444,7 +444,7 @@ with tab1:
                 acomps_data[f"acomp_{i:02d}_cpf"] = locals()[f"acomp_{i:02d}_cpf"]
                 acomps_data[f"acomp_{i:02d}_idade"] = locals()[f"acomp_{i:02d}_idade"]
                 acomps_data[f"acomp_{i:02d}_parentesco"] = locals()[f"acomp_{i:02d}_parentesco"]
-            submit_data = json.dumps(obj=merge_dictionaries(ficha_data, acomps_data), separators=(',',':'))
+            submit_data = json.dumps(obj=empty_none_dict(merge_dictionaries(ficha_data, acomps_data)), separators=(',',':'))
 
             try:
                 post_response = requests.post("http://backend:8000/fichas/", submit_data)
@@ -912,7 +912,7 @@ with tab3:
                         acomps_up_data[f"acomp_{i:02d}_idade"] = locals()[f"acomp_{i:02d}_idade"]
                         acomps_up_data[f"acomp_{i:02d}_parentesco"] = locals()[f"acomp_{i:02d}_parentesco"]
 
-                    update_data = json.dumps(obj=merge_dictionaries(ficha_up_data, acomps_up_data), separators=(',',':'))
+                    update_data = json.dumps(obj=empty_none_dict(merge_dictionaries(ficha_up_data, acomps_up_data)), separators=(',',':'))
 
                     try:
                         put_response = requests.put(f"http://backend:8000/fichas/{update_id}", update_data)
@@ -967,6 +967,5 @@ with tab5:
             list_fichas = get_list_response.json()
             df_list = pd.DataFrame(list_fichas)
             st.dataframe(df_list, hide_index=True)
-            st.write(df_list.isna())
         else:
             show_response_message(get_list_response)

@@ -4,7 +4,7 @@ import pandas as pd
 import requests
 import streamlit as st
 from src.fdate import calculate_diarias, str_to_date
-from src.functions import show_response_message, calculate_valortotal, show_data_output, empty_none
+from src.functions import calculate_valortotal, empty_none_dict, show_data_output, show_response_message
 
 st.set_page_config(
     page_title='Aluguéis',
@@ -57,7 +57,7 @@ with tab1:
         valor_total: float = calculate_valortotal(diarias, valor_diaria)
         submit_button = st.form_submit_button('Registrar')
         if submit_button:
-            aluguel_data = {
+            aluguel_data = empty_none_dict({
                     "apto_id": apto_id,
                     "ficha_id": ficha_id,
                     "checkin": checkin.isoformat(),
@@ -65,7 +65,7 @@ with tab1:
                     "diarias": diarias,
                     "valor_diaria": valor_diaria,
                     "valor_total": valor_total
-                }
+                })
             submit_data = json.dumps(obj=aluguel_data, separators=(',',':'))
             try:
                 post_response = requests.post("http://backend:8000/alugueis/", submit_data)
@@ -152,7 +152,7 @@ with tab3:
                 valor_total: float = calculate_valortotal(diarias, valor_diaria)
                 update_button = st.form_submit_button('Modificar')
                 if update_button:
-                    aluguel_up_data = {
+                    aluguel_up_data = empty_none_dict({
                         "apto_id": apto_id,
                         "ficha_id": ficha_id,
                         "checkin": checkin.isoformat(),
@@ -160,7 +160,7 @@ with tab3:
                         "diarias": diarias,
                         "valor_diaria": valor_diaria,
                         "valor_total": valor_total
-                    }
+                    })
                     update_data = json.dumps(obj=aluguel_up_data, separators=(',',':'))
                     try:
                         put_response = requests.put(f"http://backend:8000/alugueis/{update_id}", update_data)

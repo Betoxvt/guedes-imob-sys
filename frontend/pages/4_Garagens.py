@@ -4,7 +4,7 @@ import pandas as pd
 import requests
 import streamlit as st
 from src.fdate import str_to_date, calculate_diarias
-from src.functions import show_response_message, calculate_valortotal, show_data_output
+from src.functions import calculate_valortotal, empty_none_dict, show_data_output, show_response_message
 
 st.set_page_config(
     page_title='Garagens',
@@ -56,7 +56,7 @@ with tab1:
         valor_total: float = calculate_valortotal(diarias, valor_diaria)
         submit_button = st.form_submit_button('Registrar')
         if submit_button:
-            garagem_data = {
+            garagem_data = empty_none_dict({
                 "apto_origem_id": apto_origem_id,
                 "apto_destino_id": apto_destino_id,
                 "checkin": checkin.isoformat(),
@@ -64,7 +64,7 @@ with tab1:
                 "diarias": diarias,
                 "valor_diaria": valor_diaria,
                 "valor_total": valor_total
-            }
+            })
             submit_data = json.dumps(obj=garagem_data, separators=(',',':'))
             try:
                 post_response = requests.post("http://backend:8000/garagens/", submit_data)

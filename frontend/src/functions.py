@@ -7,26 +7,17 @@ import streamlit as st
 
 
 # Colocar nos campos str obrigatórios
-def empty_none(var: str | None) -> str | None:
-    if var is None:
-        return None
-    if  type(var) is str:
-        if var.strip() == '':
-            return None
-    return var
-
-
-def n_treat(var: int | str | None):
-    if type(var) is int or float:
-        if var < 0.1:
-            st.warning(f"Verifique o número inserido: {var}")
-    if type(var) is str:
-        if var.strip() == '':
-            st.warning(f"Campo tipo `str` vazio, retornando 0")
-            return 0
-    if var is None:
-        return 0
-    return var
+def empty_none_dict(obj: dict) -> dict:
+    if type(obj) == dict:
+        for k, v in obj.items():
+            if v is None:
+                obj[k] = None
+            elif isinstance(v, str):
+                if (v.strip() == '' or 
+                    v.strip() == 'None' or 
+                    v.strip() == 'null'):
+                    obj[k] = None
+    return obj
 
 
 def show_data_output(data: dict):
@@ -63,78 +54,6 @@ def merge_dictionaries(dict1_data, dict2_data):
 
   merged_data = {**dict1_data, **dict2_data} 
   return merged_data
-
-
-def format_input_for_db(input: str, output: str = 'str'):
-    """
-    Formats an input string for database storage.
-
-    Args:
-        input_str: str
-            The input string from a form.
-        output: str, optional
-            The desired output type. 
-            Supported types: 
-                - 'str' (default): Returns the input string after basic cleaning.
-                - 'int': Attempts to convert the input to an integer.
-                - 'float': Attempts to convert the input to a float.
-                - 'date': Attempts to convert the input to a datetime.date object. 
-                - 'none': Returns None if the input is empty.
-
-    Returns:
-        str | int | float | date | None
-            The formatted value according to the specified output type.
-
-    Raises:
-        ValueError: If the input string cannot be converted to the specified output type.
-
-    Example:
-        format_input("123", "int")  # Returns 123
-        format_input("3.14", "float")  # Returns 3.14
-        format_input("2023-12-25", "date")  # Returns datetime.date(2023, 12, 25) 
-        format_input("", "str")  # Returns ""
-        format_input("", "none")  # Returns None
-    """
-
-    if input == None:
-        match output:
-            case 'none':
-                return None
-            case 'str':
-                return ' '
-            case 'int':
-                return 0
-            case 'float':
-                return 0.0
-            case 'date':
-                return date(2025, 1, 1)
-    else:
-        match output:
-            case 'none':
-                return None
-            case 'str':
-                return re.sub(r'\s+', ' ', input).strip()
-
-            
-
-
-    
-    
-    
-    
-    # chars = r"[+\(\)\-\,\.\'\"\@\#\$\%\¨\&\*\!\?\;\:\<\>\~\^\]\[\{\}\=\_\ ]"
-    # clean = re.sub(chars, '', input)
-    # return clean
-
-
-def convert_empty_to_none():
-    """Converts global empty strings to None."""
-    global_vars = globals().copy()
-    for var_name, var_value in global_vars.items():
-        if var_name.startswith("__") or callable(var_value) or isinstance(var_value, type(convert_empty_to_none)):
-            continue
-        if isinstance(var_value, str) and var_value == "":
-            globals()[var_name] = None
 
 
 def none_or_str(value: str | None) -> str | None:
