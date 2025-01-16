@@ -2,9 +2,60 @@
 from datetime import date
 import pandas as pd
 
-def string_to_date(str_date: str) -> date:
+
+def brazil_datestr(year_first_date: str | date) -> str:
+    """Converts a date like object to Brazilian date format (DD/MM/YYY)
+    
+    Args:
+        year_first_date: The input of a date like object, normally starts with Year
+
+    Returns:
+        If success a new Brazilian date like string.
+        If fails returns the same input
+    """
     try:
-        date_date = pd.to_datetime(str_date).date()
+        br_date = pd.to_datetime(year_first_date).strftime("%d/%m/%Y")
+        return br_date
+    except Exception as e:
+        print(f"Error trying to convert: {e}")
+        return year_first_date
+
+  
+def showbr_dfdate(df: pd.DataFrame) -> pd.DataFrame:
+    """Converts specific DataFrame columns containing datetime.date objects to
+    Brazilian date format (DD/MM/YYYY).
+
+    Args:
+        df: The input DataFrame.
+
+    Returns:
+        A new DataFrame with converted date columns, or the original DataFrame
+        if no conversions were possible. Only columns specified for this project are converted.
+        Returns None if input is not a DataFrame.
+    """
+    if not isinstance(df, pd.DataFrame):
+        print("Input must be a Pandas DataFrame.")
+        return None
+    df_new = df.copy()
+    date_columns = ['checkin', 'checkout', 'criado_em', 'modificado_em', 'data_pagamento']
+    for col in df_new.columns:
+        if col in date_columns:
+            try:
+                if isinstance(df_new[col].iloc[0], date):
+                    df_new[col] = df_new[col].apply(lambda x: x.strftime('%d/%m/%Y') if isinstance(x, date) else x)
+                else:
+                    df_new[col] = pd.to_datetime(df_new[col], errors='coerce').dt.strftime('%d/%m/%Y')
+            except (ValueError, TypeError) as e:
+                print(f"Warning: Column '{col}' could not be converted to date: {e}")
+                pass
+
+    
+    return df_new
+
+
+def str_to_date(str_date: str) -> date:
+    try:
+        date_date = pd.to_datetime(arg=str_date, yearfirst=True).date()
     except (ValueError, AttributeError):
         date_date = None
         return str_date
