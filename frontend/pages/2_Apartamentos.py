@@ -2,7 +2,7 @@ import json
 import pandas as pd
 import requests
 import streamlit as st
-from src.functions import show_response_message, update_fields_generator
+from src.functions import show_response_message
 
 # Seria ótimo que quando fosse registrar a foreign key (ID Proprietário) mostrasse o nome conforme o registro em sua tabela
 
