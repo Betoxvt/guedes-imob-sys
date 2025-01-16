@@ -30,12 +30,12 @@ with tab1:
             step=1,
             key=1101
         )
-        checkin: str | date = st.date_input(
+        checkin: date = st.date_input(
             label='Check-in',
             format='DD/MM/YYYY',
             key=1102
         )
-        checkout: str | date = st.date_input(
+        checkout: date = st.date_input(
             label='Check-out',
             format='DD/MM/YYYY',
             key=1103
@@ -140,13 +140,13 @@ with tab3:
                     key=1302,
                     value=df_up.loc[0, 'ficha_id']
                 )
-                checkin: str | date = st.date_input(
+                checkin: date = st.date_input(
                     label='Check-in',
                     value=string_to_date(df_up.checkin[0]),
                     format='DD/MM/YYYY',
                     key=1303
                 )
-                checkout: str | date = st.date_input(
+                checkout: date = st.date_input(
                     label='Check-out',
                     value=string_to_date(df_up.checkout[0]),
                     format='DD/MM/YYYY',
