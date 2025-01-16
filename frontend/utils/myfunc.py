@@ -1,43 +1,13 @@
-from datetime import date
 import json
 import pandas as pd
-import re
 import requests
 import streamlit as st
-
-
-# Colocar nos campos str obrigatórios
-def empty_none_dict(obj: dict) -> dict:
-    if type(obj) == dict:
-        for k, v in obj.items():
-            if v is None:
-                obj[k] = None
-            elif isinstance(v, str):
-                if (v.strip() == '' or 
-                    v.strip() == 'None' or 
-                    v.strip() == 'null'):
-                    obj[k] = None
-    return obj
 
 
 def show_data_output(data: dict):
     if isinstance(data, dict):
         df = pd.DataFrame([data])
         st.dataframe(df, hide_index=True)
-
-
-def calculate_valortotal(diarias, valor_diaria):
-    if diarias is None or valor_diaria is None:
-        return None
-    if not isinstance(diarias, (int, float)) or not isinstance(valor_diaria, (int, float)):
-        st.warning("As diárias e o valor da diária devem ser números.")
-        return 0
-    if diarias <= 0:
-        st.warning("O mínimo de diárias é 1.")
-    if valor_diaria <= 0:
-        st.warning("O valor da diária deve ser positivo.")
-    valor_total = diarias * valor_diaria
-    return valor_total
 
 
 def merge_dictionaries(dict1_data, dict2_data):
@@ -51,33 +21,8 @@ def merge_dictionaries(dict1_data, dict2_data):
   Returns:
     A dictionary with merged data.
   """
-
   merged_data = {**dict1_data, **dict2_data} 
   return merged_data
-
-
-def none_or_str(value: str | None) -> str | None:
-    if value == None:
-        return None
-    else:
-        return str(value)
-
-
-def format_apto(input: str) -> str:
-    """Formats a string to 'letter-number'.
-    Args:
-        input: string to be formated.
-    Returns:
-        Desired format string.
-    """
-    numbers = ""
-    letter = ""
-    for c in input:
-        if c.isdigit():
-            numbers += c
-        else:
-            letter = c
-    return f'{letter.upper()}-{numbers}'
   
 
 def update_fields_generator(id: int, table: str, reg: str, page_n: int):
@@ -89,9 +34,7 @@ def update_fields_generator(id: int, table: str, reg: str, page_n: int):
     else:
         show_response_message(response)
         return
-    
     ignored_columns = {'id', 'criado_em', 'modificado_em'}
-
     with st.form(f'update_{reg}'):
         updated = {}
         for i, (k, v) in enumerate(df.iloc[0].items()):

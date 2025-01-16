@@ -3,9 +3,9 @@ import json
 import pandas as pd
 import requests
 import streamlit as st
-from src.fdate import calculate_diarias, str_to_date
-from src.functions import empty_none_dict, merge_dictionaries, none_or_str, show_data_output, show_response_message
-
+from utils.mydate import calculate_diarias, str_to_date
+from utils.myfunc import merge_dictionaries, show_data_output, show_response_message
+from utils.mystr import empty_none_dict, none_or_str
 
 st.set_page_config(
     page_title='Ficha de Inquilinos',

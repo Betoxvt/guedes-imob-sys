@@ -2,6 +2,23 @@ from datetime import date
 import pandas as pd
 import streamlit as st
 
+def brazil_datestr(year_first_date: str | date) -> str:
+    """Converts a date like object to Brazilian date format (DD/MM/YYY)
+    
+    Args:
+        year_first_date: The input of a date like object, normally starts with Year
+
+    Returns:
+        A new Brazilian date like string.
+        If fails, returns the same input.
+    """
+    try:
+        br_date = pd.to_datetime(year_first_date).strftime("%d/%m/%Y")
+        return br_date
+    except Exception as e:
+        print(f"Error trying to convert: {e}")
+        return year_first_date
+    
 
 def calculate_diarias(checkin, checkout):
     """Calculates in days the difference between checkout and checkin.
@@ -25,25 +42,6 @@ def calculate_diarias(checkin, checkout):
     else:
         st.warning(f"As entradas não são do tipo `date`")
         return 0
-
-
-
-def brazil_datestr(year_first_date: str | date) -> str:
-    """Converts a date like object to Brazilian date format (DD/MM/YYY)
-    
-    Args:
-        year_first_date: The input of a date like object, normally starts with Year
-
-    Returns:
-        A new Brazilian date like string.
-        If fails, returns the same input.
-    """
-    try:
-        br_date = pd.to_datetime(year_first_date).strftime("%d/%m/%Y")
-        return br_date
-    except Exception as e:
-        print(f"Error trying to convert: {e}")
-        return year_first_date
 
 
 def showbr_dfdate(df: pd.DataFrame) -> pd.DataFrame:
