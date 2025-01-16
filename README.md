@@ -58,10 +58,12 @@ Mais informações:
 - Validar dados com Pydantic
 - Backend com FastAPI (inserir, editar, apagar)
 - Frontend com Streamlit. Integração com as funções do fastAPI e dataviz
+- Gerador de PDF com os dados preenchidos para impressão de fichas dos inquilinos, no mesmo modelo que o exigido pelo condomínio
+- Importar dados de forms (ainda não decidi qual, mas creio que do google)
 
 ### Primeira versão
 
-- Criar banco de dados MongoDB para armazenar imagens ou PDFs de recibos, notas, contratos e serviços
+- Criar banco de dados MongoDB para testar
 - Configurar backup automático dos bancos de dados
 - Implantar em contêineres utilizando Docker
 - Documentar e orquestrar SQL com o DBT-core
