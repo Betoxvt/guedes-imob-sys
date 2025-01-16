@@ -21,35 +21,24 @@ with tab1:
             min_value=1,
             format='%d',
             step=1,
-            key=4009
+            key=4100
         )
         apto_destino_id: int = st.number_input(
             label='ID Apartamento de destino',
             min_value=1,
             format='%d',
             step=1,
-            key=4010
+            key=4101
         )
-        checkin: str | date = st.date_input(
+        checkin: date = st.date_input(
             label='Check-in',
-            min_value=date(2024, 1, 1),
-            max_value=date.today() + timedelta(days=360),
-            value=date.today(),
             format='DD/MM/YYYY',
-            key=4011
+            key=4102
         )
-
-        if isinstance(checkin, date):
-            min_checkout = checkin + timedelta(days=1)
-        else:
-            min_checkout = None
-
-        checkout: str | date = st.date_input(
+        checkout: date = st.date_input(
             label='Check-out',
-            min_value=min_checkout,
-            max_value=date.today() + timedelta(days=360),
             format='DD/MM/YYYY',
-            key=4012
+            key=4103
         )
         diarias: int = 0
         if isinstance(checkin, date) and isinstance(checkout, date):
@@ -58,15 +47,14 @@ with tab1:
                 diarias = diferenca
             else:
                 st.warning("A data de check-out deve ser posterior à data de check-in.")
-
         st.number_input(
             label='Diárias',
             min_value=1,
-            max_value=365,
+            max_value=360,
             value=diarias,
             format='%d',
             step=1,
-            key=4013,
+            key=4104,
             disabled=True
         )
         valor_diaria: float = st.number_input(
@@ -76,24 +64,22 @@ with tab1:
             value=0.00,
             format='%0.2f',
             step=10.00,
-            key=4014
+            key=4105
         )
-
         valor_total: float = 0.00
         if diarias > 0 and valor_diaria > 0:
             valor_total = diarias * valor_diaria
-
         st.number_input(
         label='Valor total',
         value=valor_total,
         format='%0.2f',
         disabled=True,
-        key=4015
+        key=4106
         )
 
         submit_button = st.form_submit_button('Registrar')
         if submit_button:
-            registry = {
+            garagem_data = {
                 "apto_origem_id": apto_origem_id,
                 "apto_destino_id": apto_destino_id,
                 "checkin": checkin.isoformat(),
@@ -102,9 +88,9 @@ with tab1:
                 "valor_diaria": valor_diaria,
                 "valor_total": valor_total
             }
-            registry_json = json.dumps(obj=registry, indent=1, separators=(',',':'))
-            response = requests.post("http://backend:8000/garagens/", registry_json)
-            show_response_message(response)
+            submit_data = json.dumps(obj=garagem_data, separators=(',',':'))
+            post_response = requests.post("http://backend:8000/garagens/", submit_data)
+            show_response_message(post_response)
 
 with tab2:
     st.header('Consultar Garagens')
@@ -113,16 +99,16 @@ with tab2:
         min_value=1,
         format='%d',
         step=1,
-        key=4000
+        key=4200
     )
     if get_id:
-        response = requests.get(f'http://backend:8000/garagens/{get_id}')
-        if response.status_code == 200:
-            garagem = response.json()
-            df = pd.DataFrame([garagem])
-            st.dataframe(df, hide_index=True)
+        get_response = requests.get(f'http://backend:8000/garagens/{get_id}')
+        if get_response.status_code == 200:
+            garagem = get_response.json()
+            df_get = pd.DataFrame([garagem])
+            st.dataframe(df_get, hide_index=True)
         else:
-            show_response_message(response)
+            show_response_message(get_response)
 
 with tab3:
     st.header('Modificar Garagem')
@@ -131,52 +117,42 @@ with tab3:
         min_value=1,
         format='%d',
         step=1,
-        key=4001
+        key=4300
     )
     if update_id:
-        response = requests.get(f'http://backend:8000/garagens/{update_id}')
-        if response.status_code == 200:
-            garagem_viz = response.json()
-            df = pd.DataFrame([garagem_viz])
-            st.dataframe(df, hide_index=True)
+        update_response = requests.get(f'http://backend:8000/garagens/{update_id}')
+        if update_response.status_code == 200:
+            garagem_up = update_response.json()
+            df_up = pd.DataFrame([garagem_up])
+            st.dataframe(df_up, hide_index=True)
             with st.form('update_garagem'):
                 apto_origem_id: int = st.number_input(
                     label='ID Apartamento de origem',
                     min_value=1,
                     format='%d',
                     step=1,
-                    key=4309,
-                    value=df.loc[0, 'apto_origem_id']
+                    key=4301,
+                    value=df_up.loc[0, 'apto_origem_id']
                 )
                 apto_destino_id: int = st.number_input(
                     label='ID Apartamento de destino',
                     min_value=1,
                     format='%d',
                     step=1,
-                    key=4310,
-                    value=df.loc[0, 'apto_destino_id']
+                    key=4302,
+                    value=df_up.loc[0, 'apto_destino_id']
                 )
-                checkin: str | date = st.date_input(
+                checkin: date = st.date_input(
                     label='Check-in',
-                    min_value=date(2024, 1, 1),
-                    max_value=date.today() + timedelta(days=360),
-                    value=string_to_date(df.checkin[0]),
+                    value=string_to_date(df_up.checkin[0]),
                     format='DD/MM/YYYY',
-                    key=4311
+                    key=4303
                 )
-
-                if isinstance(checkin, date):
-                    min_checkout = checkin + timedelta(days=1)
-                else:
-                    min_checkout = None
-
-                checkout: str | date = st.date_input(
+                checkout: date = st.date_input(
                     label='Check-out',
-                    min_value=min_checkout,
-                    max_value=date.today() + timedelta(days=360),
-                    value=string_to_date(df.checkout[0]),
+                    value=string_to_date(df_up.checkout[0]),
                     format='DD/MM/YYYY',
-                    key=4312
+                    key=4304
                 )
                 diarias: int = 0
                 if isinstance(checkin, date) and isinstance(checkout, date):
@@ -185,41 +161,38 @@ with tab3:
                         diarias = diferenca
                     else:
                         st.warning("A data de check-out deve ser posterior à data de check-in.")
-
                 st.number_input(
                     label='Diárias',
                     min_value=1,
-                    max_value=365,
+                    max_value=360,
                     value=diarias,
                     format='%d',
                     step=1,
-                    key=4313,
+                    key=4305,
                     disabled=True
                 )
                 valor_diaria: float = st.number_input(
                     label='Valor da diária',
                     min_value=0.00,
                     max_value=3000.00,
-                    value=df.loc[0, 'valor_diaria'],
+                    value=df_up.loc[0, 'valor_diaria'],
                     format='%0.2f',
                     step=10.00,
-                    key=4314
+                    key=4306
                 )
-
                 valor_total: float = 0.00
                 if diarias > 0 and valor_diaria > 0:
                     valor_total = diarias * valor_diaria
-
                 st.number_input(
                 label='Valor total',
                 value=valor_total,
                 format='%0.2f',
                 disabled=True,
-                key=4315
+                key=4307
                 )
                 update_button = st.form_submit_button('Modificar')
                 if update_button:
-                    updated = {
+                    garagem_up_data = {
                         "apto_origem_id": apto_origem_id,
                         "apto_destino_id": apto_destino_id,
                         "checkin": checkin.isoformat(),
@@ -228,11 +201,11 @@ with tab3:
                         "valor_diaria": valor_diaria,
                         "valor_total": valor_total
                     }
-                    updated_json = json.dumps(obj=updated, indent=1, separators=(',',':'))
-                    response = requests.put(f"http://backend:8000/garagens/{update_id}", updated_json)
-                    show_response_message(response)
+                    update_data = json.dumps(obj=garagem_up_data, separators=(',',':'))
+                    put_response = requests.put(f"http://backend:8000/garagens/{update_id}", update_data)
+                    show_response_message(put_response)
         else:
-            show_response_message(response)
+            show_response_message(update_response)
 
 with tab4:
     st.header('Deletar Garagem')
@@ -240,33 +213,33 @@ with tab4:
         label="ID Garagem",
         min_value=1,
         format='%d',
-        key=5002
+        key=4400
     )
     if delete_id:
-        response = requests.get(f'http://backend:8000/garagens/{delete_id}')
-        if response.status_code == 200:
-            garagem_viz = response.json()
-            df = pd.DataFrame([garagem_viz])
-            st.dataframe(df, hide_index=True)
+        show_delete_response = requests.get(f'http://backend:8000/garagens/{delete_id}')
+        if show_delete_response.status_code == 200:
+            garagem_delete = show_delete_response.json()
+            df_delete = pd.DataFrame([garagem_delete])
+            st.dataframe(df_delete, hide_index=True)
         else:
-            show_response_message(response)
+            show_response_message(show_delete_response)
         if st.button(
             'Deletar',
-            key=4406
+            key=4401
         ):
-            response = requests.delete(f'http://backend:8000/garagens/{delete_id}')
-            show_response_message(response)
+            delete_response = requests.delete(f'http://backend:8000/garagens/{delete_id}')
+            show_response_message(delete_response)
 
 with tab5:
     st.header('Listar Garagens')
     if st.button(
         "Mostrar",
-        key=4507
+        key=4500
     ):
-        response = requests.get(f'http://backend:8000/garagens/')
-        if response.status_code == 200:
-            garagens = response.json()
-            df = pd.DataFrame(garagens)
-            st.dataframe(df, hide_index=True)
+        get_list_response = requests.get(f'http://backend:8000/garagens/')
+        if get_list_response.status_code == 200:
+            garagens = get_list_response.json()
+            df_list = pd.DataFrame(garagens)
+            st.dataframe(df_list, hide_index=True)
         else:
-            show_response_message(response)
+            show_response_message(get_list_response)
