@@ -9,15 +9,18 @@ wheels/
 # Virtual environments
 .venv
 
-# Variáveis de ambiente
+# Environment variables
 .env
 
 # Banco de dados
 *.sqlite
 *.db
 
-# Pasta de arquivos
+# Files
 files/
 
 # Test
 test.py
+
+# Visual Studio Code
+.vscode/
