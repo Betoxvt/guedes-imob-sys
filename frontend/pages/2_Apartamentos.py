@@ -4,7 +4,7 @@ import requests
 import streamlit as st
 from src.functions import show_response_message, update_fields_generator
 
-# Seria ótimo que quando fosse registrar as foreign keys (ID Edifício e ID Proprietário) mostrasse os nomes conforme os registros em suas respectivas tabelas
+# Seria ótimo que quando fosse registrar a foreign key (ID Proprietário) mostrasse o nome conforme o registro em sua tabela
 
 st.set_page_config(
     page_title='Apartamentos',
@@ -20,49 +20,49 @@ with tab1:
         apto = st.text_input(
             label='Apartamento',
             value=None,
-            key=2008
+            key=2100
         )
         proprietario_id = st.number_input(
             label='ID Proprietário',
             min_value=1,
             format='%d',
             step=1,
-            key=2010
+            key=2101
         )
         cod_celesc = st.text_input(
             label='Unidade Consumidora Celesc',
             value=None,
-            key=2011
+            key=2102
         )
         cod_gas = st.text_input(
             label='Código Supergasbras',
             value=None,
-            key=2012
+            key=2103
         )
         prov_net = st.text_input(
             label='Provedor de Internet',
             value=None,
-            key=2013
+            key=2104
         )
         wifi = st.text_input(
             label='Nome da Rede WiFi',
             value=None,
-            key=2014
+            key=2105
         )
         wifi_senha = st.text_input(
             label='Senha da Rede Wifi',
             value=None,
-            key=2015
+            key=2106
         )
         lock_senha = st.text_input(
             label='Senha da Fechadura',
             value=None,
-            key=2016
+            key=2107
         )
 
         submit_button = st.form_submit_button('Registrar')
         if submit_button:
-            registry = {
+            apto_data = {
                 "apto": apto,
                 "proprietario_id": proprietario_id,
                 "cod_celesc": cod_celesc,
@@ -72,9 +72,9 @@ with tab1:
                 "wifi_senha": wifi_senha,
                 "lock_senha": lock_senha
             }
-            registry_json = json.dumps(obj=registry, indent=1, separators=(',',':'))
-            response = requests.post("http://backend:8000/apartamentos/", registry_json)
-            show_response_message(response)
+            submit_data = json.dumps(obj=apto_data, separators=(',',':'))
+            post_response = requests.post("http://backend:8000/apartamentos/", submit_data)
+            show_response_message(post_response)
 
 with tab2:
     st.header('Consultar Apartamentos')
@@ -83,16 +83,16 @@ with tab2:
         min_value=1,
         format='%d',
         step=1,
-        key=2000
+        key=2200
     )
     if get_id:
-        response = requests.get(f'http://backend:8000/apartamentos/{get_id}')
-        if response.status_code == 200:
-            apto = response.json()
-            df = pd.DataFrame([apto])
-            st.dataframe(df, hide_index=True)
+        get_response = requests.get(f'http://backend:8000/apartamentos/{get_id}')
+        if get_response.status_code == 200:
+            apto = get_response.json()
+            df_get = pd.DataFrame([apto])
+            st.dataframe(df_get, hide_index=True)
         else:
-            show_response_message(response)
+            show_response_message(get_response)
 
 with tab3:
     st.header('Modificar Apartamento')
@@ -101,10 +101,58 @@ with tab3:
         min_value=1,
         format='%d',
         step=1,
-        key=2001
+        key=2300
     )
     if update_id:
-        update_fields_generator(id=update_id, table='apartamentos', reg='proprietario', page_n=2)
+        update_response = requests.get(f'http://backend:8000/apartamentos/{update_id}')
+        if update_response.status_code == 200:
+            apto_up = update_response.json()
+            df_up = pd.DataFrame([apto_up])
+            st.dataframe(df_up, hide_index=True)
+            with st.form('update_apartamento'):
+                apto = st.text_input(
+                label='Apartamento',
+                value=str(df_up.apto[0]),
+                key=2301
+            )
+            proprietario_id = st.number_input(
+                label='ID Proprietário',
+                min_value=1,
+                format='%d',
+                step=1,
+                value=df_up.loc(0, 'proprietario_id'),
+                key=2302
+            )
+            cod_celesc = st.text_input(
+                label='Unidade Consumidora Celesc',
+                value=str(df_up.cod_celes[0]),
+                key=2304
+            )
+            cod_gas = st.text_input(
+                label='Código Supergasbras',
+                value=str(df_up.cod_gas[0]),
+                key=2305
+            )
+            prov_net = st.text_input(
+                label='Provedor de Internet',
+                value=str(df_up.prov_net[0]),
+                key=2306
+            )
+            wifi = st.text_input(
+                label='Nome da Rede WiFi',
+                value=str(df_up.wifi[0]),
+                key=2307
+            )
+            wifi_senha = st.text_input(
+                label='Senha da Rede Wifi',
+                value=str(df_up.wifi_senha[0]),
+                key=2308
+            )
+            lock_senha = st.text_input(
+                label='Senha da Fechadura',
+                value=str(df_up.lock_senha[0]),
+                key=2309
+            )
 
 with tab4:
     st.header('Deletar Apartamento')
@@ -113,22 +161,22 @@ with tab4:
         min_value=1,
         format='%d',
         step=1,
-        key=2002
+        key=2400
     )
     if delete_id:
-        response = requests.get(f'http://backend:8000/apartamentos/{delete_id}')
-        if response.status_code == 200:
-            apartamento_viz = response.json()
-            df = pd.DataFrame([apartamento_viz])
-            st.dataframe(df, hide_index=True)
+        show_delete_response = requests.get(f'http://backend:8000/apartamentos/{delete_id}')
+        if show_delete_response.status_code == 200:
+            apto_delete = show_delete_response.json()
+            df_delete = pd.DataFrame([apto_delete])
+            st.dataframe(df_delete, hide_index=True)
         else:
-            show_response_message(response)
+            show_response_message(show_delete_response)
         if st.button(
             'Deletar',
-            key=2006
+            key=2401
         ):
-            response = requests.delete(f'http://backend:8000/apartamentos/{delete_id}')
-            show_response_message(response)
+            delete_response = requests.delete(f'http://backend:8000/apartamentos/{delete_id}')
+            show_response_message(delete_response)
 
 with tab5:
     st.header('Listar Apartamentos')
@@ -136,10 +184,10 @@ with tab5:
         "Mostrar",
         key=2007
     ):
-        response = requests.get(f'http://backend:8000/apartamentos/')
-        if response.status_code == 200:
-            apartamentos = response.json()
-            df = pd.DataFrame(apartamentos)
-            st.dataframe(df, hide_index=True)
+        get_list_response = requests.get(f'http://backend:8000/apartamentos/')
+        if get_list_response.status_code == 200:
+            apartamentos = get_list_response.json()
+            df_list = pd.DataFrame(apartamentos)
+            st.dataframe(df_list, hide_index=True)
         else:
-            show_response_message(response)
+            show_response_message(get_list_response)
