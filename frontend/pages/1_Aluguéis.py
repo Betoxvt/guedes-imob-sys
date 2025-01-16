@@ -4,7 +4,7 @@ import pandas as pd
 import requests
 import streamlit as st
 from src.fdate import calculate_diarias, str_to_date
-from src.functions import show_response_message, calculate_valortotal, show_data_output
+from src.functions import show_response_message, calculate_valortotal, show_data_output, empty_none
 
 st.set_page_config(
     page_title='Aluguéis',
@@ -26,7 +26,7 @@ with tab1:
         )
         ficha_id: int = st.number_input(
             label='ID Ficha',
-            min_value=1,
+            min_value=0,
             format='%d',
             step=1,
             key=1101

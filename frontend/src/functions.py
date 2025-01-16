@@ -6,20 +6,26 @@ import requests
 import streamlit as st
 
 
-class StringHelper:
-    def empty_none(self) -> str | None:
-        if self is None:
-            return None
-        if self.strip() == '':
-            return None
-        return self
-
-
+# Colocar nos campos str obrigatórios
 def empty_none(var: str | None) -> str | None:
     if var is None:
         return None
-    if var.strip() == '':
-        return None
+    if  type(var) is str:
+        if var.strip() == '':
+            return None
+    return var
+
+
+def n_treat(var: int | str | None):
+    if type(var) is int or float:
+        if var < 0.1:
+            st.warning(f"Verifique o número inserido: {var}")
+    if type(var) is str:
+        if var.strip() == '':
+            st.warning(f"Campo tipo `str` vazio, retornando 0")
+            return 0
+    if var is None:
+        return 0
     return var
 
 
