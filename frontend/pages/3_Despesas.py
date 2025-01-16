@@ -136,7 +136,7 @@ with tab4:
         label="ID Despesa",
         min_value=1,
         format='%d',
-        key=3000
+        key=3400
     )
     if delete_id:
         show_delete_response = requests.get(f'http://backend:8000/despesas/{delete_id}')
@@ -148,7 +148,7 @@ with tab4:
             show_response_message(show_delete_response)
         if st.button(
             'Deletar',
-            key=3400
+            key=3401
         ):
             delete_response = requests.delete(f'http://backend:8000/despesas/{delete_id}')
             show_response_message(delete_response)
