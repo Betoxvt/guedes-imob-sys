@@ -19,8 +19,9 @@
 15. [ ] Valores default e autocomplete para create.
 16. [ ] offset e limit das querys.
 17. [ ] Fazer o login direito.
-18. [ ] Revisar os dfs, dicts, responses, keys e importações no frontend, paginas 1 a 6.
+18. [x] Revisar os dfs, dicts, responses, keys e importações no frontend, paginas 1 a 6.
 19. [ ] Definir Placeholders nos formulários do frontend páginas 1 a 6.
+20. [ ] Inserir botão de 'refresh' para recalcular diárias e valor_total.
 
 ## Problema
 
