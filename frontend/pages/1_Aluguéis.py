@@ -4,7 +4,7 @@ import pandas as pd
 import requests
 import streamlit as st
 from src.fdate import calculate_diarias, str_to_date
-from src.functions import show_response_message
+from src.functions import show_response_message, calculate_valortotal, show_data_output
 
 st.set_page_config(
     page_title='Aluguéis',
@@ -54,16 +54,7 @@ with tab1:
             step=10.00,
             key=1105
         )
-        valor_total: float = 0.00
-        if diarias > 0 and valor_diaria > 0:
-            valor_total = diarias * valor_diaria
-        st.number_input(
-        label='Valor total',
-        value=valor_total,
-        format='%0.2f',
-        disabled=True,
-        key=1106
-        )
+        valor_total: float = calculate_valortotal(diarias, valor_diaria)
         submit_button = st.form_submit_button('Registrar')
         if submit_button:
             aluguel_data = {
@@ -76,8 +67,16 @@ with tab1:
                     "valor_total": valor_total
                 }
             submit_data = json.dumps(obj=aluguel_data, separators=(',',':'))
-            post_response = requests.post("http://backend:8000/alugueis/", submit_data)
-            show_response_message(post_response)
+            try:
+                post_response = requests.post("http://backend:8000/alugueis/", submit_data)
+                show_response_message(post_response)
+                st.subheader('Dados inseridos:')
+                show_data_output(aluguel_data)
+            except Exception as e:
+                show_response_message(post_response)
+                st.subheader('Dados NÃO inseridos:')
+                show_data_output(aluguel_data)
+                print(e)
 
 with tab2:
     st.header('Consultar Aluguéis')
@@ -140,24 +139,7 @@ with tab3:
                     format='DD/MM/YYYY',
                     key=1304
                 )
-                diarias: int = 0
-                if isinstance(checkin, date) and isinstance(checkout, date):
-                    diferenca = (checkout - checkin).days
-                    if diferenca >= 1:
-                        diarias = diferenca
-                    else:
-                        st.warning("A data de check-out deve ser posterior à data de check-in.")
-
-                st.number_input(
-                    label='Diárias',
-                    min_value=1,
-                    max_value=360,
-                    value=diarias,
-                    format='%d',
-                    step=1,
-                    key=1305,
-                    disabled=True
-                )
+                diarias: int = calculate_diarias(checkin, checkout)
                 valor_diaria: float = st.number_input(
                     label='Valor da diária',
                     min_value=0.00,
@@ -167,16 +149,7 @@ with tab3:
                     step=10.00,
                     key=1306
                 )
-                valor_total: float = 0.00
-                if diarias > 0 and valor_diaria > 0:
-                    valor_total = diarias * valor_diaria
-                st.number_input(
-                label='Valor total',
-                value=valor_total,
-                format='%0.2f',
-                disabled=True,
-                key=1307
-                )
+                valor_total: float = calculate_valortotal(diarias, valor_diaria)
                 update_button = st.form_submit_button('Modificar')
                 if update_button:
                     aluguel_up_data = {
@@ -189,8 +162,16 @@ with tab3:
                         "valor_total": valor_total
                     }
                     update_data = json.dumps(obj=aluguel_up_data, separators=(',',':'))
-                    put_response = requests.put(f"http://backend:8000/alugueis/{update_id}", update_data)
-                    show_response_message(put_response)
+                    try:
+                        put_response = requests.put(f"http://backend:8000/alugueis/{update_id}", update_data)
+                        show_response_message(put_response)
+                        st.subheader('Dados inseridos:')
+                        show_data_output(aluguel_up_data)
+                    except Exception as e:
+                        show_response_message(put_response)
+                        st.subheader('Dados NÃO inseridos:')
+                        show_data_output(aluguel_up_data)
+                        print(e)         
         else:
             show_response_message(update_response)
 

@@ -3,8 +3,8 @@ import json
 import pandas as pd
 import requests
 import streamlit as st
-from src.fdate import str_to_date
-from src.functions import show_response_message
+from src.fdate import str_to_date, calculate_diarias
+from src.functions import show_response_message, calculate_valortotal, show_data_output
 
 st.set_page_config(
     page_title='Garagens',
@@ -36,7 +36,6 @@ with tab1:
             format='DD/MM/YYYY',
             key=4102,
             value=date.today()
-
         )
         checkout: date = st.date_input(
             label='Check-out',
@@ -44,43 +43,17 @@ with tab1:
             key=4103,
             value=checkin + timedelta(days=1)
         )
-        diarias: int = 0
-        if isinstance(checkin, date) and isinstance(checkout, date):
-            diferenca = (checkout - checkin).days
-            if diferenca >= 1:
-                diarias = diferenca
-            else:
-                st.warning("A data de check-out deve ser posterior à data de check-in.")
-        st.number_input(
-            label='Diárias',
-            min_value=1,
-            max_value=360,
-            value=diarias,
-            format='%d',
-            step=1,
-            key=4104,
-            disabled=True
-        )
+        diarias: int = calculate_diarias(checkin, checkout)
         valor_diaria: float = st.number_input(
             label='Valor da diária',
             min_value=0.00,
             max_value=900.00,
-            value=0.00,
+            value=None,
             format='%0.2f',
             step=10.00,
             key=4105
         )
-        valor_total: float = 0.00
-        if diarias > 0 and valor_diaria > 0:
-            valor_total = diarias * valor_diaria
-        st.number_input(
-        label='Valor total',
-        value=valor_total,
-        format='%0.2f',
-        disabled=True,
-        key=4106
-        )
-
+        valor_total: float = calculate_valortotal(diarias, valor_diaria)
         submit_button = st.form_submit_button('Registrar')
         if submit_button:
             garagem_data = {
@@ -93,8 +66,16 @@ with tab1:
                 "valor_total": valor_total
             }
             submit_data = json.dumps(obj=garagem_data, separators=(',',':'))
-            post_response = requests.post("http://backend:8000/garagens/", submit_data)
-            show_response_message(post_response)
+            try:
+                post_response = requests.post("http://backend:8000/garagens/", submit_data)
+                show_response_message(post_response)
+                st.subheader('Dados inseridos:')
+                show_data_output(garagem_data)
+            except Exception as e:
+                show_response_message(post_response)
+                st.subheader('Dados NÃO inseridos:')
+                show_data_output(garagem_data)
+                print(e)
 
 with tab2:
     st.header('Consultar Garagens')
@@ -158,23 +139,7 @@ with tab3:
                     format='DD/MM/YYYY',
                     key=4304
                 )
-                diarias: int = 0
-                if isinstance(checkin, date) and isinstance(checkout, date):
-                    diferenca = (checkout - checkin).days
-                    if diferenca >= 1:
-                        diarias = diferenca
-                    else:
-                        st.warning("A data de check-out deve ser posterior à data de check-in.")
-                st.number_input(
-                    label='Diárias',
-                    min_value=1,
-                    max_value=360,
-                    value=diarias,
-                    format='%d',
-                    step=1,
-                    key=4305,
-                    disabled=True
-                )
+                diarias: int = calculate_diarias(checkin, checkout)
                 valor_diaria: float = st.number_input(
                     label='Valor da diária',
                     min_value=0.00,
@@ -184,16 +149,7 @@ with tab3:
                     step=10.00,
                     key=4306
                 )
-                valor_total: float = 0.00
-                if diarias > 0 and valor_diaria > 0:
-                    valor_total = diarias * valor_diaria
-                st.number_input(
-                label='Valor total',
-                value=valor_total,
-                format='%0.2f',
-                disabled=True,
-                key=4307
-                )
+                valor_total: float = calculate_valortotal(diarias, valor_diaria)
                 update_button = st.form_submit_button('Modificar')
                 if update_button:
                     garagem_up_data = {
@@ -206,8 +162,16 @@ with tab3:
                         "valor_total": valor_total
                     }
                     update_data = json.dumps(obj=garagem_up_data, separators=(',',':'))
-                    put_response = requests.put(f"http://backend:8000/garagens/{update_id}", update_data)
-                    show_response_message(put_response)
+                    try:
+                        put_response = requests.put(f"http://backend:8000/garagens/{update_id}", update_data)
+                        show_response_message(put_response)
+                        st.subheader('Dados inseridos:')
+                        show_data_output(garagem_up_data)
+                    except Exception as e:
+                        show_response_message(put_response)
+                        st.subheader('Dados NÃO inseridos:')
+                        show_data_output(garagem_up_data)
+                        print(e) 
         else:
             show_response_message(update_response)
 

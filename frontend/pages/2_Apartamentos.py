@@ -2,7 +2,7 @@ import json
 import pandas as pd
 import requests
 import streamlit as st
-from src.functions import show_response_message
+from src.functions import show_response_message, show_data_output
 
 # Seria ótimo que quando fosse registrar a foreign key (ID Proprietário) mostrasse o nome conforme o registro em sua tabela
 
@@ -73,8 +73,16 @@ with tab1:
                 "lock_senha": lock_senha
             }
             submit_data = json.dumps(obj=apto_data, separators=(',',':'))
-            post_response = requests.post("http://backend:8000/apartamentos/", submit_data)
-            show_response_message(post_response)
+            try:
+                post_response = requests.post("http://backend:8000/apartamentos/", submit_data)
+                show_response_message(post_response)
+                st.subheader('Dados inseridos:')
+                show_data_output(apto_data)
+            except Exception as e:
+                show_response_message(post_response)
+                st.subheader('Dados NÃO inseridos:')
+                show_data_output(apto_data)
+                print(e)
 
 with tab2:
     st.header('Consultar Apartamentos')
@@ -111,48 +119,73 @@ with tab3:
             st.dataframe(df_up, hide_index=True)
             with st.form('update_apartamento'):
                 apto = st.text_input(
-                label='Apartamento',
-                value=str(df_up.apto[0]),
-                key=2301
-            )
-            proprietario_id = st.number_input(
-                label='ID Proprietário',
-                min_value=1,
-                format='%d',
-                step=1,
-                value=df_up.loc[0, 'proprietario_id'],
-                key=2302
-            )
-            cod_celesc = st.text_input(
-                label='Unidade Consumidora Celesc',
-                value=str(df_up.cod_celes[0]),
-                key=2304
-            )
-            cod_gas = st.text_input(
-                label='Código Supergasbras',
-                value=str(df_up.cod_gas[0]),
-                key=2305
-            )
-            prov_net = st.text_input(
-                label='Provedor de Internet',
-                value=str(df_up.prov_net[0]),
-                key=2306
-            )
-            wifi = st.text_input(
-                label='Nome da Rede WiFi',
-                value=str(df_up.wifi[0]),
-                key=2307
-            )
-            wifi_senha = st.text_input(
-                label='Senha da Rede Wifi',
-                value=str(df_up.wifi_senha[0]),
-                key=2308
-            )
-            lock_senha = st.text_input(
-                label='Senha da Fechadura',
-                value=str(df_up.lock_senha[0]),
-                key=2309
-            )
+                    label='Apartamento',
+                    value=str(df_up.apto[0]),
+                    key=2301
+                )
+                proprietario_id = st.number_input(
+                    label='ID Proprietário',
+                    min_value=1,
+                    format='%d',
+                    step=1,
+                    value=df_up.loc[0, 'proprietario_id'],
+                    key=2302
+                )
+                cod_celesc = st.text_input(
+                    label='Unidade Consumidora Celesc',
+                    value=str(df_up.cod_celesc[0]),
+                    key=2304
+                )
+                cod_gas = st.text_input(
+                    label='Código Supergasbras',
+                    value=str(df_up.cod_gas[0]),
+                    key=2305
+                )
+                prov_net = st.text_input(
+                    label='Provedor de Internet',
+                    value=str(df_up.prov_net[0]),
+                    key=2306
+                )
+                wifi = st.text_input(
+                    label='Nome da Rede WiFi',
+                    value=str(df_up.wifi[0]),
+                    key=2307
+                )
+                wifi_senha = st.text_input(
+                    label='Senha da Rede Wifi',
+                    value=str(df_up.wifi_senha[0]),
+                    key=2308
+                )
+                lock_senha = st.text_input(
+                    label='Senha da Fechadura',
+                    value=str(df_up.lock_senha[0]),
+                    key=2309
+                )
+                update_button = st.form_submit_button('Modificar')
+                if update_button:
+                    apto_up_data = {
+                        "apto": apto,
+                        "proprietario_id": proprietario_id,
+                        "cod_celesc": cod_celesc,
+                        "cod_gas": cod_gas,
+                        "prov_net": prov_net,
+                        "wifi": wifi,
+                        "wifi_senha": wifi_senha,
+                        "lock_senha": lock_senha
+                    }
+                    update_data = json.dumps(obj=apto_up_data, separators=(',',':'))
+                    try:
+                        put_response = requests.put(f"http://backend:8000/apartamentos/{update_id}", update_data)
+                        show_response_message(put_response)
+                        st.subheader('Dados inseridos:')
+                        show_data_output(apto_up_data)
+                    except Exception as e:
+                        show_response_message(put_response)
+                        st.subheader('Dados NÃO inseridos:')
+                        show_data_output(apto_up_data)
+                        print(e) 
+        else:
+            show_response_message(update_response)
 
 with tab4:
     st.header('Deletar Apartamento')

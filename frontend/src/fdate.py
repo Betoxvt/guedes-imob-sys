@@ -12,7 +12,8 @@ def calculate_diarias(checkin, checkout):
 
     Returns:
         An integer number equals the difference.
-        `0` in case inputs are not `date` types or `difference < 1`, it also shows a warning.
+        `0` if inputs are not `date` types.
+        `0` if `difference < 1`.
     """
     if isinstance(checkin, date) and isinstance(checkout, date):
         difference = (checkout - checkin).days
@@ -20,9 +21,11 @@ def calculate_diarias(checkin, checkout):
             return difference
         else:
             st.warning("A data de check-out deve ser posterior à data de check-in.")
+            return 0
     else:
         st.warning(f"As entradas não são do tipo `date`")
-    return 0
+        return 0
+
 
 
 def brazil_datestr(year_first_date: str | date) -> str:

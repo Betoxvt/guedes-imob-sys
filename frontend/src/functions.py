@@ -6,6 +6,43 @@ import requests
 import streamlit as st
 
 
+class StringHelper:
+    def empty_none(self) -> str | None:
+        if self is None:
+            return None
+        if self.strip() == '':
+            return None
+        return self
+
+
+def empty_none(var: str | None) -> str | None:
+    if var is None:
+        return None
+    if var.strip() == '':
+        return None
+    return var
+
+
+def show_data_output(data: dict):
+    if isinstance(data, dict):
+        df = pd.DataFrame([data])
+        st.dataframe(df, hide_index=True)
+
+
+def calculate_valortotal(diarias, valor_diaria):
+    if diarias is None or valor_diaria is None:
+        return None
+    if not isinstance(diarias, (int, float)) or not isinstance(valor_diaria, (int, float)):
+        st.warning("As diárias e o valor da diária devem ser números.")
+        return 0
+    if diarias <= 0:
+        st.warning("O mínimo de diárias é 1.")
+    if valor_diaria <= 0:
+        st.warning("O valor da diária deve ser positivo.")
+    valor_total = diarias * valor_diaria
+    return valor_total
+
+
 def merge_dictionaries(dict1_data, dict2_data):
   """
   Merges two dictionaries into a single dictionary.

@@ -4,7 +4,7 @@ import pandas as pd
 import requests
 import streamlit as st
 from src.fdate import str_to_date
-from src.functions import show_response_message
+from src.functions import show_response_message, show_data_output
 
 st.set_page_config(
     page_title='Despesas',
@@ -54,8 +54,16 @@ with tab1:
                 "descricao": descricao,
             }
             submit_data = json.dumps(obj=despesa_data, separators=(',',':'))
-            post_response = requests.post("http://backend:8000/despesas/", submit_data)
-            show_response_message(post_response)
+            try:
+                post_response = requests.post("http://backend:8000/despesas/", submit_data)
+                show_response_message(post_response)
+                st.subheader('Dados inseridos:')
+                show_data_output(despesa_data)
+            except Exception as e:
+                show_response_message(post_response)
+                st.subheader('Dados NÃO inseridos:')
+                show_data_output(despesa_data)
+                print(e)
 
 with tab2:
     st.header('Consultar Despesas')
@@ -127,8 +135,16 @@ with tab3:
                         "descricao": descricao,
                     }
                     update_data = json.dumps(obj=despesa_up_data, separators=(',',':'))
-                    put_response = requests.put(f"http://backend:8000/despesas/{update_id}", update_data)
-                    show_response_message(put_response)
+                    try:
+                        put_response = requests.put(f"http://backend:8000/despesas/{update_id}", update_data)
+                        show_response_message(put_response)
+                        st.subheader('Dados inseridos:')
+                        show_data_output(update_data)
+                    except Exception as e:
+                        show_response_message(despesa_up_data)
+                        st.subheader('Dados NÃO inseridos:')
+                        show_data_output(despesa_up_data)
+                        print(e) 
         else:
             show_response_message(update_response)
 

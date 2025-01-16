@@ -3,7 +3,7 @@
 ## Tasks
 
 1. [v] Adicionar colunas para data de criação e data de modificação.
-2. [x] Criar valores default em `models.py` para agilizar e facilitar o trabalho.
+2. [ ] Criar checks e validations em `models.py`.
 3. [ ] Criar um `README.md` top.
 4. [ ] Criar e melhorar as docstrings, comentários e documentação. (De preferência em inglês, exceto o banco de dados que deve se manter em português).
 5. [ ] Criar um módulo que permita preencher e exportar em PDF a 'ficha de controle de inquilino' requisitada pelo condomínio. E assim associar estes dados ao seu respectivo aluguel. Acredito que uma nova tabela seja necessária, seriam os dados do inquilino, acompanhantes, veículo, etc.
@@ -14,14 +14,17 @@
 10. [ ] Validação de CEP, CPF, RG, Telefone...
 11. [ ] Formato de apresentação de CEP, CPF, RG, Telefone...
 12. [ ] Importar forms ou tipos de arquivo (csv/json) para ficha de inquilino.
-13. [v] Refazer os models/schemas/crud: Fix nos tipos de dados que estão int para str (cep, cpf, telefone, rg...) e adicionar qtd_acomp: int em Inquilino, check_automovel: int em Inquilino.
+13. [v] Refazer os models/schemas/crud: Fix nos tipos de dados que estão int para str (cep, cpf, telefone, rg...)
 14. [ ] Criar todas as páginas.
 15. [ ] Valores default e autocomplete para create.
 16. [ ] offset e limit das querys.
 17. [ ] Fazer o login direito.
-18. [x] Revisar os dfs, dicts, responses, keys e importações no frontend, paginas 1 a 6.
+18. [v] Revisar os dfs, dicts, responses, keys e importações no frontend, paginas 1 a 6.
 19. [ ] Definir Placeholders nos formulários do frontend páginas 1 a 6.
-20. [ ] Inserir botão de 'refresh' para recalcular diárias e valor_total.
+20. [ ] Tentar recriar as páginas que fazem cálculos para exibição instantânea do resultado, aprendi que não pode ser dentro de um `st.form()`, OU, inserir botão de 'refresh' para recalcular diárias e valor_total, mas também não sei como.
+21. [ ] Ver quais funções deveriam ser `async`com `asyncio` estudar e aplicar.
+
+## Provavelmente todos os valores monetários eu devesse usar str e depois passar para float no front, aceitando como separador decimal tanto ',' quanto '.'
 
 ## Pensar melhor nos atributos para a tabela despesas. Talvez mes_referencia, categoria (Contas Recorrentes, Manutenção, ou mais detalhado como IPTU, Luz, Net, Gas, Eletrodoméstico, Mobília...) e com o campo descrição opcional poderia ser mais detalhado
 

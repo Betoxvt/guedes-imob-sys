@@ -2,7 +2,7 @@ import json
 import pandas as pd
 import requests
 import streamlit as st
-from src.functions import show_response_message
+from src.functions import show_response_message, show_data_output
 
 st.set_page_config(
     page_title='Proprietários',
@@ -45,8 +45,16 @@ with tab1:
                 "email": email
             }
             submit_data = json.dumps(obj=prop_data, separators=(',',':'))
-            post_response = requests.post("http://backend:8000/proprietarios/", submit_data)
-            show_response_message(post_response)
+            try:
+                post_response = requests.post("http://backend:8000/proprietarios/", submit_data)
+                show_response_message(post_response)
+                st.subheader('Dados inseridos:')
+                show_data_output(prop_data)
+            except Exception as e:
+                show_response_message(post_response)
+                st.subheader('Dados NÃO inseridos:')
+                show_data_output(prop_data)
+                print(e)
 
 with tab2:
     st.header('Consultar Proprietários')
@@ -111,8 +119,16 @@ with tab3:
                         "email": email,
                     }
                     update_data = json.dumps(obj=prop_up_data, separators=(',',':'))
-                    put_response = requests.put(f"http://backend:8000/proprietarios/{update_id}", update_data)
-                    show_response_message(put_response)
+                    try:
+                        put_response = requests.put(f"http://backend:8000/proprietarios/{update_id}", update_data)
+                        show_response_message(put_response)
+                        st.subheader('Dados inseridos:')
+                        show_data_output(prop_up_data)
+                    except Exception as e:
+                        show_response_message(put_response)
+                        st.subheader('Dados NÃO inseridos:')
+                        show_data_output(prop_up_data)
+                        print(e) 
         else:
             show_response_message(update_response)
 with tab4:
