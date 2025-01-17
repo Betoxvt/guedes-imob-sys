@@ -1,5 +1,5 @@
 from datetime import date
-from sqlalchemy import ForeignKey, func, Numeric, String
+from sqlalchemy import ForeignKey, func, Numeric, String, JSON
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 
@@ -103,11 +103,21 @@ class Ficha(Base):
     observacoes: Mapped[str] = mapped_column(String, nullable=True)
     proprietario: Mapped[str] = mapped_column(String, nullable=True)
     imob_fone: Mapped[str] = mapped_column(String, nullable=True)
-    for i in range(1, 11):
-        locals()[f"acomp_{i:02d}_nome"] = mapped_column(String, nullable=True)
-        locals()[f"acomp_{i:02d}_rg"] = mapped_column(String, nullable=True)
-        locals()[f"acomp_{i:02d}_cpf"] = mapped_column(String, nullable=True)
-        locals()[f"acomp_{i:02d}_idade"] = mapped_column(String, nullable=True)
-        locals()[f"acomp_{i:02d}_parentesco"] = mapped_column(String, nullable=True)
+    a0: Mapped[dict] = mapped_column(JSON, nullable=True)
+    a1: Mapped[dict] = mapped_column(JSON, nullable=True)
+    a2: Mapped[dict] = mapped_column(JSON, nullable=True)
+    a3: Mapped[dict] = mapped_column(JSON, nullable=True)
+    a4: Mapped[dict] = mapped_column(JSON, nullable=True)
+    a5: Mapped[dict] = mapped_column(JSON, nullable=True)
+    a6: Mapped[dict] = mapped_column(JSON, nullable=True)
+    a7: Mapped[dict] = mapped_column(JSON, nullable=True)
+    a8: Mapped[dict] = mapped_column(JSON, nullable=True)
+    a9: Mapped[dict] = mapped_column(JSON, nullable=True)
+    # for i in range(1, 11):
+    #     locals()[f"acomp_{i:02d}_nome"] = mapped_column(String, nullable=True)
+    #     locals()[f"acomp_{i:02d}_rg"] = mapped_column(String, nullable=True)
+    #     locals()[f"acomp_{i:02d}_cpf"] = mapped_column(String, nullable=True)
+    #     locals()[f"acomp_{i:02d}_idade"] = mapped_column(String, nullable=True)
+    #     locals()[f"acomp_{i:02d}_parentesco"] = mapped_column(String, nullable=True)
     criado_em: Mapped[date] = mapped_column(server_default=func.current_date(), nullable=False)
     modificado_em: Mapped[date] = mapped_column(server_default=func.current_date(), onupdate=func.current_date(), nullable=False)
