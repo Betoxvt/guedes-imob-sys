@@ -142,270 +142,220 @@ with tab1:
             key=8022
         )
         st.markdown('**Acompanhante 01**')
-        acomp_01_nome = st.text_input(
+        a0_nome = st.text_input(
             label='Nome',
             value=None,
             key=8023
         )
-        acomp_01_rg = st.text_input(
-            label='RG',
+        a0_doc = st.text_input(
+            label='Documento (RG/CPF)',
             value=None,
             key=8024
         )
-        acomp_01_cpf = st.text_input(
-            label='CPF',
-            value=None,
-            key=8025
-        )
-        acomp_01_idade = st.text_input(
+        a0_idade = st.text_input(
             label='Idade',
             value=None,
             key=8026
         )
-        acomp_01_parentesco = st.text_input(
+        a0_parentesco = st.text_input(
             label='Parentesco',
             value=None,
             key=8027
         )
 
         st.markdown('**Acompanhante 02**')
-        acomp_02_nome = st.text_input(
+        a1_nome = st.text_input(
             label='Nome',
             value=None,
             key=8028
         )
-        acomp_02_rg = st.text_input(
-            label='RG',
+        a1_doc = st.text_input(
+            label='Documento (RG/CPF)',
             value=None,
             key=8029
         )
-        acomp_02_cpf = st.text_input(
-            label='CPF',
-            value=None,
-            key=8030
-        )
-        acomp_02_idade = st.text_input(
+        a1_idade = st.text_input(
             label='Idade',
             value=None,
             key=8031
         )
-        acomp_02_parentesco = st.text_input(
+        a1_parentesco = st.text_input(
             label='Parentesco',
             value=None,
             key=8032
         )
 
         st.markdown('**Acompanhante 03**')
-        acomp_03_nome = st.text_input(
+        a2_nome = st.text_input(
             label='Nome',
             value=None,
             key=8033
         )
-        acomp_03_rg = st.text_input(
-            label='RG',
+        a2_doc = st.text_input(
+            label='Documento (RG/CPF)',
             value=None,
             key=8034
         )
-        acomp_03_cpf = st.text_input(
-            label='CPF',
-            value=None,
-            key=8035
-        )
-        acomp_03_idade = st.text_input(
+        a2_idade = st.text_input(
             label='Idade',
             value=None,
             key=8036
         )
-        acomp_03_parentesco = st.text_input(
+        a2_parentesco = st.text_input(
             label='Parentesco',
             value=None,
             key=8037
         )
 
         st.markdown('**Acompanhante 04**')
-        acomp_04_nome = st.text_input(
+        a3_nome = st.text_input(
             label='Nome',
             value=None,
             key=8038
         )
-        acomp_04_rg = st.text_input(
-            label='RG',
+        a3_doc = st.text_input(
+            label='Documento (RG/CPF)',
             value=None,
             key=8039
         )
-        acomp_04_cpf = st.text_input(
-            label='CPF',
-            value=None,
-            key=8040
-        )
-        acomp_04_idade = st.text_input(
+        a3_idade = st.text_input(
             label='Idade',
             value=None,
             key=8041
         )
-        acomp_04_parentesco = st.text_input(
+        a3_parentesco = st.text_input(
             label='Parentesco',
             value=None,
             key=8042
         )
 
         st.markdown('**Acompanhante 05**')
-        acomp_05_nome = st.text_input(
+        a4_nome = st.text_input(
             label='Nome',
             value=None,
             key=8043
         )
-        acomp_05_rg = st.text_input(
-            label='RG',
+        a4_doc = st.text_input(
+            label='Documento (RG/CPF)',
             value=None,
             key=8044
         )
-        acomp_05_cpf = st.text_input(
-            label='CPF',
-            value=None,
-            key=8045
-        )
-        acomp_05_idade = st.text_input(
+        a4_idade = st.text_input(
             label='Idade',
             value=None,
             key=8046
         )
-        acomp_05_parentesco = st.text_input(
+        a4_parentesco = st.text_input(
             label='Parentesco',
             value=None,
             key=8047
         )
 
         st.markdown('**Acompanhante 06**')
-        acomp_06_nome = st.text_input(
+        a5_nome = st.text_input(
             label='Nome',
             value=None,
             key=8048
         )
-        acomp_06_rg = st.text_input(
-            label='RG',
+        a5_doc = st.text_input(
+            label='Documento (RG/CPF)',
             value=None,
             key=8049
         )
-        acomp_06_cpf = st.text_input(
-            label='CPF',
-            value=None,
-            key=8050
-        )
-        acomp_06_idade = st.text_input(
+        a5_idade = st.text_input(
             label='Idade',
             value=None,
             key=8051
         )
-        acomp_06_parentesco = st.text_input(
+        a5_parentesco = st.text_input(
             label='Parentesco',
             value=None,
             key=8052
         )
 
         st.markdown('**Acompanhante 07**')
-        acomp_07_nome = st.text_input(
+        a6_nome = st.text_input(
             label='Nome',
             value=None,
             key=8053
         )
-        acomp_07_rg = st.text_input(
-            label='RG',
+        a6_doc = st.text_input(
+            label='Documento (RG/CPF)',
             value=None,
             key=8054
         )
-        acomp_07_cpf = st.text_input(
-            label='CPF',
-            value=None,
-            key=8055
-        )
-        acomp_07_idade = st.text_input(
+        a6_idade = st.text_input(
             label='Idade',
             value=None,
             key=8056
         )
-        acomp_07_parentesco = st.text_input(
+        a6_parentesco = st.text_input(
             label='Parentesco',
             value=None,
             key=8057
         )
 
         st.markdown('**Acompanhante 08**')
-        acomp_08_nome = st.text_input(
+        a7_nome = st.text_input(
             label='Nome',
             value=None,
             key=8058
         )
-        acomp_08_rg = st.text_input(
-            label='RG',
+        a7_doc = st.text_input(
+            label='Documento (RG/CPF)',
             value=None,
             key=8059
         )
-        acomp_08_cpf = st.text_input(
-            label='CPF',
-            value=None,
-            key=8060
-        )
-        acomp_08_idade = st.text_input(
+        a7_idade = st.text_input(
             label='Idade',
             value=None,
             key=8061
         )
-        acomp_08_parentesco = st.text_input(
+        a7_parentesco = st.text_input(
             label='Parentesco',
             value=None,
             key=8062
         )
 
         st.markdown('**Acompanhante 09**')
-        acomp_09_nome = st.text_input(
+        a8_nome = st.text_input(
             label='Nome',
             value=None,
             key=8063
         )
-        acomp_09_rg = st.text_input(
-            label='RG',
+        a8_doc = st.text_input(
+            label='Documento (RG/CPF)',
             value=None,
             key=8064
         )
-        acomp_09_cpf = st.text_input(
-            label='CPF',
-            value=None,
-            key=8065
-        )
-        acomp_09_idade = st.text_input(
+        a8_idade = st.text_input(
             label='Idade',
             value=None,
             key=8066
         )
-        acomp_09_parentesco = st.text_input(
+        a8_parentesco = st.text_input(
             label='Parentesco',
             value=None,
             key=8067
         )
 
         st.markdown('**Acompanhante 10**')
-        acomp_10_nome = st.text_input(
+        a9_nome = st.text_input(
             label='Nome',
             value=None,
             key=8068
         )
-        acomp_10_rg = st.text_input(
-            label='RG',
+        a9_doc = st.text_input(
+            label='Documento (RG/CPF)',
             value=None,
             key=8069
         )
-        acomp_10_cpf = st.text_input(
-            label='CPF',
-            value=None,
-            key=8070
-        )
-        acomp_10_idade = st.text_input(
+        a9_idade = st.text_input(
             label='Idade',
             value=None,
             key=8071
         )
-        acomp_10_parentesco = st.text_input(
+        a9_parentesco = st.text_input(
             label='Parentesco',
             value=None,
             key=8072
@@ -435,26 +385,29 @@ with tab1:
                 "checkout": checkout.isoformat(),
                 "observacoes": observacoes,
                 "proprietario": proprietario,
-                "imob_fone": imob_fone
+                "imob_fone": imob_fone,
+                "a0": {'nome': a0_nome, 'doc': a0_doc, 'idade': a0_idade, 'parentesco': a0_parentesco},
+                "a1": {'nome': a1_nome, 'doc': a1_doc, 'idade': a1_idade, 'parentesco': a1_parentesco},
+                "a2": {'nome': a2_nome, 'doc': a2_doc, 'idade': a2_idade, 'parentesco': a2_parentesco},
+                "a3": {'nome': a3_nome, 'doc': a3_doc, 'idade': a3_idade, 'parentesco': a3_parentesco},
+                "a4": {'nome': a4_nome, 'doc': a4_doc, 'idade': a4_idade, 'parentesco': a4_parentesco},
+                "a5": {'nome': a5_nome, 'doc': a5_doc, 'idade': a5_idade, 'parentesco': a5_parentesco},
+                "a6": {'nome': a6_nome, 'doc': a6_doc, 'idade': a6_idade, 'parentesco': a6_parentesco},
+                "a7": {'nome': a7_nome, 'doc': a7_doc, 'idade': a7_idade, 'parentesco': a7_parentesco},
+                "a8": {'nome': a8_nome, 'doc': a8_doc, 'idade': a8_idade, 'parentesco': a8_parentesco},
+                "a9": {'nome': a9_nome, 'doc': a9_doc, 'idade': a9_idade, 'parentesco': a9_parentesco}
             }
-            acomps_data = {}
-            for i in range(1, 11):
-                acomps_data[f"acomp_{i:02d}_nome"] = locals()[f"acomp_{i:02d}_nome"]
-                acomps_data[f"acomp_{i:02d}_rg"] = locals()[f"acomp_{i:02d}_rg"]
-                acomps_data[f"acomp_{i:02d}_cpf"] = locals()[f"acomp_{i:02d}_cpf"]
-                acomps_data[f"acomp_{i:02d}_idade"] = locals()[f"acomp_{i:02d}_idade"]
-                acomps_data[f"acomp_{i:02d}_parentesco"] = locals()[f"acomp_{i:02d}_parentesco"]
-            submit_data = json.dumps(obj=empty_none_dict(merge_dictionaries(ficha_data, acomps_data)), separators=(',',':'))
+            submit_data = json.dumps(obj=empty_none_dict(ficha_data), separators=(',',':'))
 
             try:
                 post_response = requests.post("http://backend:8000/fichas/", submit_data)
                 show_response_message(post_response)
                 st.subheader('Dados inseridos:')
-                show_data_output(merge_dictionaries(ficha_data, acomps_data))
+                show_data_output(ficha_data)
             except Exception as e:
                 show_response_message(post_response)
                 st.subheader('Dados NÃO inseridos:')
-                show_data_output(merge_dictionaries(ficha_data, acomps_data))
+                show_data_output(ficha_data)
                 print(e)
 
 with tab2:
@@ -609,272 +562,222 @@ with tab3:
                 )
 
                 st.markdown('**Acompanhante 01**')
-                acomp_01_nome = st.text_input(
+                a0_nome = st.text_input(
                     label='Nome',
-                    value=none_or_str(df_up.acomp_01_nome[0]),
+                    value=none_or_str(df_up.a0_nome[0]),
                     key=8099
                 )
-                acomp_01_rg = st.text_input(
-                    label='RG',
-                    value=none_or_str(df_up.acomp_01_rg[0]),
+                a0_doc = st.text_input(
+                    label='Documento (RG/CPF)',
+                    value=none_or_str(df_up.a0_doc[0]),
                     key=8100
                 )
-                acomp_01_cpf = st.text_input(
-                    label='CPF',
-                    value=none_or_str(df_up.acomp_01_cpf[0]),
-                    key=8101
-                )
-                acomp_01_idade = st.text_input(
+                a0_idade = st.text_input(
                     label='Idade',
-                    value=none_or_str(df_up.loc[0, 'acomp_01_idade']),
+                    value=none_or_str(df_up.loc[0, 'a0_idade']),
                     key=8102
                 )
-                acomp_01_parentesco = st.text_input(
+                a0_parentesco = st.text_input(
                     label='Parentesco',
-                    value=none_or_str(df_up.acomp_01_parentesco[0]),
+                    value=none_or_str(df_up.a0_parentesco[0]),
                     key=8103
                 )
 
                 st.markdown('**Acompanhante 02**')
-                acomp_02_nome = st.text_input(
+                a1_nome = st.text_input(
                     label='Nome',
-                    value=none_or_str(df_up.acomp_02_nome[0]),
+                    value=none_or_str(df_up.a1_nome[0]),
                     key=8104
                 )
-                acomp_02_rg = st.text_input(
-                    label='RG',
-                    value=none_or_str(df_up.acomp_02_rg[0]),
+                a1_doc = st.text_input(
+                    label='Documento (RG/CPF)',
+                    value=none_or_str(df_up.a1_doc[0]),
                     key=8105
                 )
-                acomp_02_cpf = st.text_input(
-                    label='CPF',
-                    value=none_or_str(df_up.acomp_02_cpf[0]),
-                    key=8106
-                )
-                acomp_02_idade = st.text_input(
+                a1_idade = st.text_input(
                     label='Idade',
-                    value=none_or_str(df_up.loc[0, 'acomp_02_idade']),
+                    value=none_or_str(df_up.loc[0, 'a1_idade']),
                     key=8107
                 )
-                acomp_02_parentesco = st.text_input(
+                a1_parentesco = st.text_input(
                     label='Parentesco',
-                    value=none_or_str(df_up.acomp_02_parentesco[0]),
+                    value=none_or_str(df_up.a1_parentesco[0]),
                     key=8108
                 )
 
                 st.markdown('**Acompanhante 03**')
-                acomp_03_nome = st.text_input(
+                a2_nome = st.text_input(
                     label='Nome',
-                    value=none_or_str(df_up.acomp_03_nome[0]),
+                    value=none_or_str(df_up.a2_nome[0]),
                     key=8109
                 )
-                acomp_03_rg = st.text_input(
-                    label='RG',
-                    value=none_or_str(df_up.acomp_03_rg[0]),
+                a2_doc = st.text_input(
+                    label='Documento (RG/CPF)',
+                    value=none_or_str(df_up.a2_doc[0]),
                     key=8110
                 )
-                acomp_03_cpf = st.text_input(
-                    label='CPF',
-                    value=none_or_str(df_up.acomp_03_cpf[0]),
-                    key=8111
-                )
-                acomp_03_idade = st.text_input(
+                a2_idade = st.text_input(
                     label='Idade',
-                    value=none_or_str(df_up.loc[0, 'acomp_03_idade']),
+                    value=none_or_str(df_up.loc[0, 'a2_idade']),
                     key=8112
                 )
-                acomp_03_parentesco = st.text_input(
+                a2_parentesco = st.text_input(
                     label='Parentesco',
-                    value=none_or_str(df_up.acomp_03_parentesco[0]),
+                    value=none_or_str(df_up.a2_parentesco[0]),
                     key=8113
                 )
 
                 st.markdown('**Acompanhante 04**')
-                acomp_04_nome = st.text_input(
+                a3_nome = st.text_input(
                     label='Nome',
-                    value=none_or_str(df_up.acomp_04_nome[0]),
+                    value=none_or_str(df_up.a3_nome[0]),
                     key=8114
                 )
-                acomp_04_rg = st.text_input(
-                    label='RG',
-                    value=none_or_str(df_up.acomp_04_rg[0]),
+                a3_doc = st.text_input(
+                    label='Documento (RG/CPF)',
+                    value=none_or_str(df_up.a3_doc[0]),
                     key=8115
                 )
-                acomp_04_cpf = st.text_input(
-                    label='CPF',
-                    value=none_or_str(df_up.acomp_04_cpf[0]),
-                    key=8116
-                )
-                acomp_04_idade = st.text_input(
+                a3_idade = st.text_input(
                     label='Idade',
-                    value=none_or_str(df_up.loc[0, 'acomp_04_idade']),
+                    value=none_or_str(df_up.loc[0, 'a3_idade']),
                     key=8117
                 )
-                acomp_04_parentesco = st.text_input(
+                a3_parentesco = st.text_input(
                     label='Parentesco',
-                    value=none_or_str(df_up.acomp_04_parentesco[0]),
+                    value=none_or_str(df_up.a3_parentesco[0]),
                     key=8118
                 )
 
                 st.markdown('**Acompanhante 05**')
-                acomp_05_nome = st.text_input(
+                a4_nome = st.text_input(
                     label='Nome',
-                    value=none_or_str(df_up.acomp_05_nome[0]),
+                    value=none_or_str(df_up.a4_nome[0]),
                     key=8119
                 )
-                acomp_05_rg = st.text_input(
-                    label='RG',
-                    value=none_or_str(df_up.acomp_05_rg[0]),
+                a4_doc = st.text_input(
+                    label='Documento (RG/CPF)',
+                    value=none_or_str(df_up.a4_doc[0]),
                     key=8120
                 )
-                acomp_05_cpf = st.text_input(
-                    label='CPF',
-                    value=none_or_str(df_up.acomp_05_cpf[0]),
-                    key=8121
-                )
-                acomp_05_idade = st.text_input(
+                a4_idade = st.text_input(
                     label='Idade',
-                    value=none_or_str(df_up.loc[0, 'acomp_05_idade']),
+                    value=none_or_str(df_up.loc[0, 'a4_idade']),
                     key=8122
                 )
-                acomp_05_parentesco = st.text_input(
+                a4_parentesco = st.text_input(
                     label='Parentesco',
-                    value=none_or_str(df_up.acomp_05_parentesco[0]),
+                    value=none_or_str(df_up.a4_parentesco[0]),
                     key=8123
                 )
 
                 st.markdown('**Acompanhante 06**')
-                acomp_06_nome = st.text_input(
+                a5_nome = st.text_input(
                     label='Nome',
-                    value=none_or_str(df_up.acomp_06_nome[0]),
+                    value=none_or_str(df_up.a5_nome[0]),
                     key=8124
                 )
-                acomp_06_rg = st.text_input(
-                    label='RG',
-                    value=none_or_str(df_up.acomp_06_rg[0]),
+                a5_doc = st.text_input(
+                    label='Documento (RG/CPF)',
+                    value=none_or_str(df_up.a5_doc[0]),
                     key=8125
                 )
-                acomp_06_cpf = st.text_input(
-                    label='CPF',
-                    value=none_or_str(df_up.acomp_06_cpf[0]),
-                    key=8126
-                )
-                acomp_06_idade = st.text_input(
+                a5_idade = st.text_input(
                     label='Idade',
-                    value=none_or_str(df_up.loc[0, 'acomp_06_idade']),
+                    value=none_or_str(df_up.loc[0, 'a5_idade']),
                     key=8127
                 )
-                acomp_06_parentesco = st.text_input(
+                a5_parentesco = st.text_input(
                     label='Parentesco',
-                    value=none_or_str(df_up.acomp_06_parentesco[0]),
+                    value=none_or_str(df_up.a5_parentesco[0]),
                     key=8128
                 )
 
                 st.markdown('**Acompanhante 07**')
-                acomp_07_nome = st.text_input(
+                a6_nome = st.text_input(
                     label='Nome',
-                    value=none_or_str(df_up.acomp_07_nome[0]),
+                    value=none_or_str(df_up.a6_nome[0]),
                     key=8129
                 )
-                acomp_07_rg = st.text_input(
-                    label='RG',
-                    value=none_or_str(df_up.acomp_07_rg[0]),
+                a6_doc = st.text_input(
+                    label='Documento (RG/CPF)',
+                    value=none_or_str(df_up.a6_doc[0]),
                     key=8130
                 )
-                acomp_07_cpf = st.text_input(
-                    label='CPF',
-                    value=none_or_str(df_up.acomp_07_cpf[0]),
-                    key=8131
-                )
-                acomp_07_idade = st.text_input(
+                a6_idade = st.text_input(
                     label='Idade',
-                    value=none_or_str(df_up.loc[0, 'acomp_07_idade']),
+                    value=none_or_str(df_up.loc[0, 'a6_idade']),
                     key=8132
                 )
-                acomp_07_parentesco = st.text_input(
+                a6_parentesco = st.text_input(
                     label='Parentesco',
-                    value=none_or_str(df_up.acomp_07_parentesco[0]),
+                    value=none_or_str(df_up.a6_parentesco[0]),
                     key=8133
                 )
 
                 st.markdown('**Acompanhante 08**')
-                acomp_08_nome = st.text_input(
+                a7_nome = st.text_input(
                     label='Nome',
-                    value=none_or_str(df_up.acomp_08_nome[0]),
+                    value=none_or_str(df_up.a7_nome[0]),
                     key=8134
                 )
-                acomp_08_rg = st.text_input(
-                    label='RG',
-                    value=none_or_str(df_up.acomp_08_rg[0]),
+                a7_doc = st.text_input(
+                    label='Documento (RG/CPF)',
+                    value=none_or_str(df_up.a7_doc[0]),
                     key=8135
                 )
-                acomp_08_cpf = st.text_input(
-                    label='CPF',
-                    value=none_or_str(df_up.acomp_08_cpf[0]),
-                    key=8136
-                )
-                acomp_08_idade = st.text_input(
+                a7_idade = st.text_input(
                     label='Idade',
-                    value=none_or_str(df_up.loc[0, 'acomp_08_idade']),
+                    value=none_or_str(df_up.loc[0, 'a7_idade']),
                     key=8137
                 )
-                acomp_08_parentesco = st.text_input(
+                a7_parentesco = st.text_input(
                     label='Parentesco',
-                    value=none_or_str(df_up.acomp_08_parentesco[0]),
+                    value=none_or_str(df_up.a7_parentesco[0]),
                     key=8138
                 )
 
                 st.markdown('**Acompanhante 09**')
-                acomp_09_nome = st.text_input(
+                a8_nome = st.text_input(
                     label='Nome',
-                    value=none_or_str(df_up.acomp_09_nome[0]),
+                    value=none_or_str(df_up.a8_nome[0]),
                     key=8139
                 )
-                acomp_09_rg = st.text_input(
-                    label='RG',
-                    value=none_or_str(df_up.acomp_09_rg[0]),
+                a8_doc = st.text_input(
+                    label='Documento (RG/CPF)',
+                    value=none_or_str(df_up.a8_doc[0]),
                     key=8140
                 )
-                acomp_09_cpf = st.text_input(
-                    label='CPF',
-                    value=none_or_str(df_up.acomp_09_cpf[0]),
-                    key=8141
-                )
-                acomp_09_idade = st.text_input(
+                a8_idade = st.text_input(
                     label='Idade',
-                    value=none_or_str(df_up.loc[0, 'acomp_09_idade']),
+                    value=none_or_str(df_up.loc[0, 'a8_idade']),
                     key=8142
                 )
-                acomp_09_parentesco = st.text_input(
+                a8_parentesco = st.text_input(
                     label='Parentesco',
-                    value=none_or_str(df_up.acomp_09_parentesco[0]),
+                    value=none_or_str(df_up.a8_parentesco[0]),
                     key=8143
                 )
 
                 st.markdown('**Acompanhante 10**')
-                acomp_10_nome = st.text_input(
+                a9_nome = st.text_input(
                     label='Nome',
-                    value=none_or_str(df_up.acomp_10_nome[0]),
+                    value=none_or_str(df_up.a9_nome[0]),
                     key=8144
                 )
-                acomp_10_rg = st.text_input(
-                    label='RG',
-                    value=none_or_str(df_up.acomp_10_rg[0]),
+                a9_doc = st.text_input(
+                    label='Documento (RG/CPF)',
+                    value=none_or_str(df_up.a9_doc[0]),
                     key=8145
                 )
-                acomp_10_cpf = st.text_input(
-                    label='CPF',
-                    value=none_or_str(df_up.acomp_10_cpf[0]),
-                    key=8146
-                )
-                acomp_10_idade = st.text_input(
+                a9_idade = st.text_input(
                     label='Idade',
-                    value=none_or_str(df_up.loc[0, 'acomp_10_idade']),
+                    value=none_or_str(df_up.loc[0, 'a9_idade']),
                     key=8147
                 )
-                acomp_10_parentesco = st.text_input(
+                a9_parentesco = st.text_input(
                     label='Parentesco',
-                    value=none_or_str(df_up.acomp_10_parentesco[0]),
+                    value=none_or_str(df_up.a9_parentesco[0]),
                     key=8148
                 )
 
@@ -902,27 +805,29 @@ with tab3:
                         "checkout": checkout.isoformat(),
                         "observacoes": observacoes,
                         "proprietario": proprietario,
-                        "imob_fone": imob_fone
+                        "imob_fone": imob_fone,
+                        "a0": {'nome': a0_nome, 'doc': a0_doc, 'idade': a0_idade, 'parentesco': a0_parentesco},
+                        "a1": {'nome': a1_nome, 'doc': a1_doc, 'idade': a1_idade, 'parentesco': a1_parentesco},
+                        "a2": {'nome': a2_nome, 'doc': a2_doc, 'idade': a2_idade, 'parentesco': a2_parentesco},
+                        "a3": {'nome': a3_nome, 'doc': a3_doc, 'idade': a3_idade, 'parentesco': a3_parentesco},
+                        "a4": {'nome': a4_nome, 'doc': a4_doc, 'idade': a4_idade, 'parentesco': a4_parentesco},
+                        "a5": {'nome': a5_nome, 'doc': a5_doc, 'idade': a5_idade, 'parentesco': a5_parentesco},
+                        "a6": {'nome': a6_nome, 'doc': a6_doc, 'idade': a6_idade, 'parentesco': a6_parentesco},
+                        "a7": {'nome': a7_nome, 'doc': a7_doc, 'idade': a7_idade, 'parentesco': a7_parentesco},
+                        "a8": {'nome': a8_nome, 'doc': a8_doc, 'idade': a8_idade, 'parentesco': a8_parentesco},
+                        "a9": {'nome': a9_nome, 'doc': a9_doc, 'idade': a9_idade, 'parentesco': a9_parentesco}
                     }
-                    acomps_up_data = {}
-                    for i in range(1, 11):
-                        acomps_up_data[f"acomp_{i:02d}_nome"] = locals()[f"acomp_{i:02d}_nome"]
-                        acomps_up_data[f"acomp_{i:02d}_rg"] = locals()[f"acomp_{i:02d}_rg"]
-                        acomps_up_data[f"acomp_{i:02d}_cpf"] = locals()[f"acomp_{i:02d}_cpf"]
-                        acomps_up_data[f"acomp_{i:02d}_idade"] = locals()[f"acomp_{i:02d}_idade"]
-                        acomps_up_data[f"acomp_{i:02d}_parentesco"] = locals()[f"acomp_{i:02d}_parentesco"]
-
-                    update_data = json.dumps(obj=empty_none_dict(merge_dictionaries(ficha_up_data, acomps_up_data)), separators=(',',':'))
+                    update_data = json.dumps(obj=empty_none_dict(ficha_up_data), separators=(',',':'))
 
                     try:
                         put_response = requests.put(f"http://backend:8000/fichas/{update_id}", update_data)
                         show_response_message(put_response)
                         st.subheader('Dados inseridos:')
-                        show_data_output(merge_dictionaries(ficha_up_data, acomps_up_data))
+                        show_data_output(ficha_up_data)
                     except Exception as e:
                         show_response_message(put_response)
                         st.subheader('Dados NÃO inseridos:')
-                        show_data_output(merge_dictionaries(ficha_up_data, acomps_up_data))
+                        show_data_output(ficha_up_data)
                         print(e) 
 
         else:
