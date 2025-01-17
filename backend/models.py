@@ -113,11 +113,5 @@ class Ficha(Base):
     a7: Mapped[dict] = mapped_column(JSON, nullable=True)
     a8: Mapped[dict] = mapped_column(JSON, nullable=True)
     a9: Mapped[dict] = mapped_column(JSON, nullable=True)
-    # for i in range(1, 11):
-    #     locals()[f"acomp_{i:02d}_nome"] = mapped_column(String, nullable=True)
-    #     locals()[f"acomp_{i:02d}_rg"] = mapped_column(String, nullable=True)
-    #     locals()[f"acomp_{i:02d}_cpf"] = mapped_column(String, nullable=True)
-    #     locals()[f"acomp_{i:02d}_idade"] = mapped_column(String, nullable=True)
-    #     locals()[f"acomp_{i:02d}_parentesco"] = mapped_column(String, nullable=True)
     criado_em: Mapped[date] = mapped_column(server_default=func.current_date(), nullable=False)
     modificado_em: Mapped[date] = mapped_column(server_default=func.current_date(), onupdate=func.current_date(), nullable=False)
