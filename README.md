@@ -25,7 +25,7 @@
 21. [ ] Ver quais funções deveriam ser `async`com `asyncio` estudar e aplicar.
 22. [ ] Pegar o subtitulo dos dados ao ter erro como unprocessable content e mostrar os dados que não foram inseridos com o titulo correto
 23. [ ] Melhor aquele esquema do if update_id... etc
-24. [ ]
+24. [ ] A tabela fichas tera um campo para RG ou CPF em vez de dois campos para cada acompanhante.
 
 ## Na aba consultar, acho que deveriam ter botões para deletar e editar, talvez fique melhor, e na aba da ficha o botão para imprimir
 
