@@ -28,6 +28,7 @@
 24. [ ] A tabela fichas tera um campo para RG ou CPF em vez de dois campos para cada acompanhante.
 25. [ ] Colocar valores que se repetem diretamente no pdf e remover do banco de dados (na verdade deixa assim, quando estiver em produção talvez).
 26. [ ] Na visualização de DataFrames, colocar a coluna id na primeira posição.
+27. [ ] Reescrever o modo como os 'acompanhantes' são armazenados, array ou json (dict).
 
 **Na aba consultar, acho que deveriam ter botões para deletar e editar, talvez fique melhor, e na aba da ficha o botão para imprimir.**
 
