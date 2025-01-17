@@ -27,11 +27,11 @@
 23. [ ] Melhor aquele esquema do if update_id... etc
 24. [ ] A tabela fichas tera um campo para RG ou CPF em vez de dois campos para cada acompanhante.
 
-## Na aba consultar, acho que deveriam ter botões para deletar e editar, talvez fique melhor, e na aba da ficha o botão para imprimir
+**Na aba consultar, acho que deveriam ter botões para deletar e editar, talvez fique melhor, e na aba da ficha o botão para imprimir.**
 
-## Provavelmente todos os valores monetários eu devesse usar str e depois passar para float no front, aceitando como separador decimal tanto ',' quanto '.'
+**Provavelmente todos os valores monetários eu devesse usar str e depois passar para float no front, aceitando como separador decimal tanto ',' quanto '.'.**
 
-## Pensar melhor nos atributos para a tabela despesas. Talvez mes_referencia, categoria (Contas Recorrentes, Manutenção, ou mais detalhado como IPTU, Luz, Net, Gas, Eletrodoméstico, Mobília...) e com o campo descrição opcional poderia ser mais detalhado
+**Pensar melhor nos atributos para a tabela despesas. Talvez mes_referencia, categoria (Contas Recorrentes, Manutenção, ou mais detalhado como IPTU, Luz, Net, Gas, Eletrodoméstico, Mobília...) e com o campo descrição opcional poderia ser mais detalhado.**
 
 ## Problema
 
