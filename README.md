@@ -25,8 +25,12 @@
 21. [ ] Ver quais funções deveriam ser `async`com `asyncio` estudar e aplicar.
 22. [ ] Pegar o subtitulo dos dados ao ter erro como unprocessable content e mostrar os dados que não foram inseridos com o titulo correto
 23. [ ] Melhor aquele esquema do if update_id... etc
-24. [ ] A tabela fichas tera um campo para RG ou CPF em vez de dois campos para cada acompanhante.
-25. [ ] Colocar valores que se repetem diretamente no pdf e remover do banco de dados.
+24. [x] A tabela fichas tera um campo para RG ou CPF em vez de dois campos para cada acompanhante (no front pelo menos ta certo).
+25. [ ] Colocar valores que se repetem diretamente no pdf e remover do banco de dados (na verdade deixa assim, quando estiver em produção talvez).
+26. [ ] Na visualização de DataFrames, colocar a coluna id na primeira posição.
+27. [x] Reescrever o modo como os 'acompanhantes' são armazenados, array ou json (dict).
+28. [ ] Descobrir um jeito de validar a nível do banco de dados os JSON dos acompanhantes.
+
 **Na aba consultar, acho que deveriam ter botões para deletar e editar, talvez fique melhor, e na aba da ficha o botão para imprimir.**
 
 **Provavelmente todos os valores monetários eu devesse usar str e depois passar para float no front, aceitando como separador decimal tanto ',' quanto '.'.**
