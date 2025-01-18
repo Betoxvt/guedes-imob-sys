@@ -36,3 +36,22 @@ def none_or_str(value: str | None) -> str | None:
             return str(value)
     else:
         return None
+    
+
+def two_liner(s: str):
+    if len(s) > 77:
+        s = s.split(' ')
+        s1 =[]
+        s2 = s.copy()
+        for i in range(0, len(s)-1):
+            s1.append(s[i])
+            del s2[0]
+            if len(' '.join(s1)) > 77:
+                s1.pop()
+                s2.insert(0, s[i])
+                break
+        l1 = ' '.join(s1)
+        l2 = ' '.join(s2)
+        return l1, l2
+    else:
+        return s

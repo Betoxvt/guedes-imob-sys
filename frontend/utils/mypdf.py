@@ -1,9 +1,10 @@
-from datetime import datetime
 import os
-from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import A4
+from datetime import datetime
 import json
-
+from reportlab.lib.pagesizes import A4
+from reportlab.pdfgen import canvas
+from reportlab.platypus import Paragraph
+from mystr import two_liner
 
 def fill_ficha(data: dict[str, str], img: str, dir: str):
     file_name = f"ficha_{str(data['id'])}_{str(data['modificado_em'])}___{datetime.now()}.pdf"
@@ -74,7 +75,19 @@ def fill_ficha(data: dict[str, str], img: str, dir: str):
     
     if data['observacoes']:
         x, y = observacoes['l1']
-        c.drawString(x, A4[1]-y, str(data['observacoes']))
+        if len(str(data['observacoes'])) > 77:
+            lines = two_liner(str(data['observacoes']))
+            p1 = Paragraph(str(lines[0]))
+            p2 = Paragraph(str(lines[1]))
+            p1.wrap(400,800)
+            p1.drawOn(c, x, A4[1]-y)
+            x, y = observacoes['l2']
+            p2.wrap(400,800)
+            p2.drawOn(c, x, A4[1]-y)
+        else:
+            p = Paragraph(str(data['observacoes']))
+            # p.wrap(400, 800)
+            p.drawOn(c, x, A4[1]-y)
 
     if data['imob_fone']:
         x, y = imob_fone['ddd']
