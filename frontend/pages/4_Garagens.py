@@ -93,7 +93,7 @@ with tab2:
         if get_response.status_code == 200:
             garagem = get_response.json()
             df_get = pd.DataFrame([garagem])
-            st.dataframe(df_get, hide_index=True)
+            st.dataframe(df_get.set_index('id'))
         else:
             show_response_message(get_response)
 
@@ -111,7 +111,7 @@ with tab3:
         if update_response.status_code == 200:
             garagem_up = update_response.json()
             df_up = pd.DataFrame([garagem_up])
-            st.dataframe(df_up, hide_index=True)
+            st.dataframe(df_up.set_index('id'))
             with st.form('update_garagem'):
                 apto_origem_id: int = st.number_input(
                     label='ID Apartamento de origem',
@@ -190,7 +190,7 @@ with tab4:
         if show_delete_response.status_code == 200:
             garagem_delete = show_delete_response.json()
             df_delete = pd.DataFrame([garagem_delete])
-            st.dataframe(df_delete, hide_index=True)
+            st.dataframe(df_delete.set_index('id'))
         else:
             show_response_message(show_delete_response)
         if st.button(
@@ -210,6 +210,6 @@ with tab5:
         if get_list_response.status_code == 200:
             garagens = get_list_response.json()
             df_list = pd.DataFrame(garagens)
-            st.dataframe(df_list, hide_index=True)
+            st.dataframe(df_list.set_index('id'))
         else:
             show_response_message(get_list_response)

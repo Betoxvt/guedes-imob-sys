@@ -7,7 +7,7 @@ import streamlit as st
 def show_data_output(data: dict):
     if isinstance(data, dict):
         df = pd.DataFrame([data])
-        st.dataframe(df, hide_index=True)
+        st.dataframe(df.set_index('id'))
 
 
 def merge_dictionaries(dict1_data, dict2_data):

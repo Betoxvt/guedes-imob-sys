@@ -6,7 +6,7 @@
 2. [ ] Criar checks e validations em `models.py`.
 3. [ ] Criar um `README.md` top.
 4. [ ] Criar e melhorar as docstrings, comentários e documentação. (De preferência em inglês, exceto o banco de dados que deve se manter em português).
-5. [ ] Criar um módulo que permita preencher e exportar em PDF a 'ficha de controle de inquilino' requisitada pelo condomínio. E assim associar estes dados ao seu respectivo aluguel. Acredito que uma nova tabela seja necessária, seriam os dados do inquilino, acompanhantes, veículo, etc.
+5. [x] Criar um módulo que permita preencher e exportar em PDF a 'ficha de controle de inquilino' requisitada pelo condomínio. E assim associar estes dados ao seu respectivo aluguel. Acredito que uma nova tabela seja necessária, seriam os dados do inquilino, acompanhantes, veículo, etc.
 6. [x] Verificar se realmente há necessidade do offset e limit nas funções de `read_<all>` em `crud.py` ou se fica melhor diretamente no **frontend**.
 7. [x] Renomear routes para router e checar os schemas de response.
 8. [ ] Adicionar tratamento de erros.
@@ -17,19 +17,20 @@
 13. [x] Refazer os models/schemas/crud: Fix nos tipos de dados que estão int para str (cep, cpf, telefone, rg...)
 14. [ ] Criar todas as páginas.
 15. [ ] Valores default e autocomplete para create.
-16. [ ] offset e limit das querys.
+16. [ ] Ver como é a configuração para aplicar offset e limit das querys no frontend.
 17. [ ] Fazer o login direito.
 18. [x] Revisar os dfs, dicts, responses, keys e importações no frontend, paginas 1 a 6.
-19. [ ] Definir Placeholders nos formulários do frontend páginas 1 a 6.
+19. [ ] Definir Placeholders nos formulários do frontend páginas 1 a 6. E marcar campos Obrigatórios com um '*'.
 20. [ ] Tentar recriar as páginas que fazem cálculos para exibição instantânea do resultado, aprendi que não pode ser dentro de um `st.form()`, OU, inserir botão de 'refresh' para recalcular diárias e valor_total, mas também não sei como.
 21. [ ] Ver quais funções deveriam ser `async`com `asyncio` estudar e aplicar.
 22. [ ] Pegar o subtitulo dos dados ao ter erro como unprocessable content e mostrar os dados que não foram inseridos com o titulo correto
 23. [ ] Melhor aquele esquema do if update_id... etc
 24. [x] A tabela fichas tera um campo para RG ou CPF em vez de dois campos para cada acompanhante (no front pelo menos ta certo).
 25. [ ] Colocar valores que se repetem diretamente no pdf e remover do banco de dados (na verdade deixa assim, quando estiver em produção talvez).
-26. [ ] Na visualização de DataFrames, colocar a coluna id na primeira posição.
+26. [x] Na visualização de DataFrames, colocar a coluna id na primeira posição.
 27. [x] Reescrever o modo como os 'acompanhantes' são armazenados, array ou json (dict).
 28. [ ] Descobrir um jeito de validar a nível do banco de dados os JSON dos acompanhantes.
+29. [ ] Descobrir um jeito de reduzir o número de linhas que ocupa o formulário de acompanhantes.
 
 **Na aba consultar, acho que deveriam ter botões para deletar e editar, talvez fique melhor, e na aba da ficha o botão para imprimir.**
 

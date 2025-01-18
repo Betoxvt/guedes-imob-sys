@@ -1,4 +1,4 @@
 import streamlit as st
 
-st.title('Configurações')
 st.sidebar.markdown('# Configurações')
+st.title('Configurações')

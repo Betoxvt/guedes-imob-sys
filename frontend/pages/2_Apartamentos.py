@@ -99,7 +99,7 @@ with tab2:
         if get_response.status_code == 200:
             apto = get_response.json()
             df_get = pd.DataFrame([apto])
-            st.dataframe(df_get, hide_index=True)
+            st.dataframe(df_get.set_index('id'))
         else:
             show_response_message(get_response)
 
@@ -117,7 +117,7 @@ with tab3:
         if update_response.status_code == 200:
             apto_up = update_response.json()
             df_up = pd.DataFrame([apto_up])
-            st.dataframe(df_up, hide_index=True)
+            st.dataframe(df_up.set_index('id'))
             with st.form('update_apartamento'):
                 apto = st.text_input(
                     label='Apartamento',
@@ -202,7 +202,7 @@ with tab4:
         if show_delete_response.status_code == 200:
             apto_delete = show_delete_response.json()
             df_delete = pd.DataFrame([apto_delete])
-            st.dataframe(df_delete, hide_index=True)
+            st.dataframe(df_delete.set_index('id'))
         else:
             show_response_message(show_delete_response)
         if st.button(
@@ -222,6 +222,6 @@ with tab5:
         if get_list_response.status_code == 200:
             apartamentos = get_list_response.json()
             df_list = pd.DataFrame(apartamentos)
-            st.dataframe(df_list, hide_index=True)
+            st.dataframe(df_list.set_index('id'))
         else:
             show_response_message(get_list_response)
