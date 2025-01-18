@@ -29,7 +29,10 @@ def format_apto(input: str) -> str:
 
 
 def none_or_str(value: str | None) -> str | None:
-    if value == None:
-        return None
+    if value:
+        if value == None:
+            return None
+        else:
+            return str(value)
     else:
-        return str(value)
+        return None

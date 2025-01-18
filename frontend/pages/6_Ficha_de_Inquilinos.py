@@ -564,220 +564,220 @@ with tab3:
                 st.markdown('**Acompanhante 01**')
                 a0_nome = st.text_input(
                     label='Nome',
-                    value=none_or_str(df_up.a0_nome[0]),
+                    value=none_or_str(df_up['a0'].iloc[0].get('nome')),
                     key=8099
                 )
                 a0_doc = st.text_input(
                     label='Documento (RG/CPF)',
-                    value=none_or_str(df_up.a0_doc[0]),
+                    value=none_or_str(df_up['a0'].iloc[0].get('doc')),
                     key=8100
                 )
                 a0_idade = st.text_input(
                     label='Idade',
-                    value=none_or_str(df_up.loc[0, 'a0_idade']),
+                    value=none_or_str(df_up['a0'].iloc[0].get('idade')),
                     key=8102
                 )
                 a0_parentesco = st.text_input(
                     label='Parentesco',
-                    value=none_or_str(df_up.a0_parentesco[0]),
+                    value=none_or_str(df_up['a0'].iloc[0].get('parentesco')),
                     key=8103
                 )
 
                 st.markdown('**Acompanhante 02**')
                 a1_nome = st.text_input(
                     label='Nome',
-                    value=none_or_str(df_up.a1_nome[0]),
+                    value=none_or_str(df_up['a1'].iloc[0].get('nome')),
                     key=8104
                 )
                 a1_doc = st.text_input(
                     label='Documento (RG/CPF)',
-                    value=none_or_str(df_up.a1_doc[0]),
+                    value=none_or_str(df_up['a1'].iloc[0].get('doc')),
                     key=8105
                 )
                 a1_idade = st.text_input(
                     label='Idade',
-                    value=none_or_str(df_up.loc[0, 'a1_idade']),
+                    value=none_or_str(df_up['a1'].iloc[0].get('idade')),
                     key=8107
                 )
                 a1_parentesco = st.text_input(
                     label='Parentesco',
-                    value=none_or_str(df_up.a1_parentesco[0]),
+                    value=none_or_str(df_up['a1'].iloc[0].get('parentesco')),
                     key=8108
                 )
 
                 st.markdown('**Acompanhante 03**')
                 a2_nome = st.text_input(
                     label='Nome',
-                    value=none_or_str(df_up.a2_nome[0]),
+                    value=none_or_str(df_up['a2'].iloc[0].get('nome')),
                     key=8109
                 )
                 a2_doc = st.text_input(
                     label='Documento (RG/CPF)',
-                    value=none_or_str(df_up.a2_doc[0]),
+                    value=none_or_str(df_up['a2'].iloc[0].get('doc')),
                     key=8110
                 )
                 a2_idade = st.text_input(
                     label='Idade',
-                    value=none_or_str(df_up.loc[0, 'a2_idade']),
+                    value=none_or_str(df_up['a2'].iloc[0].get('idade')),
                     key=8112
                 )
                 a2_parentesco = st.text_input(
                     label='Parentesco',
-                    value=none_or_str(df_up.a2_parentesco[0]),
+                    value=none_or_str(df_up['a2'].iloc[0].get('parentesco')),
                     key=8113
                 )
 
                 st.markdown('**Acompanhante 04**')
                 a3_nome = st.text_input(
                     label='Nome',
-                    value=none_or_str(df_up.a3_nome[0]),
+                    value=none_or_str(df_up['a3'].iloc[0].get('nome')),
                     key=8114
                 )
                 a3_doc = st.text_input(
                     label='Documento (RG/CPF)',
-                    value=none_or_str(df_up.a3_doc[0]),
+                    value=none_or_str(df_up['a3'].iloc[0].get('doc')),
                     key=8115
                 )
                 a3_idade = st.text_input(
                     label='Idade',
-                    value=none_or_str(df_up.loc[0, 'a3_idade']),
+                    value=none_or_str(df_up['a3'].iloc[0].get('idade')),
                     key=8117
                 )
                 a3_parentesco = st.text_input(
                     label='Parentesco',
-                    value=none_or_str(df_up.a3_parentesco[0]),
+                    value=none_or_str(df_up['a3'].iloc[0].get('parentesco')),
                     key=8118
                 )
 
                 st.markdown('**Acompanhante 05**')
                 a4_nome = st.text_input(
                     label='Nome',
-                    value=none_or_str(df_up.a4_nome[0]),
+                    value=none_or_str(df_up['a4'].iloc[0].get('nome')),
                     key=8119
                 )
                 a4_doc = st.text_input(
                     label='Documento (RG/CPF)',
-                    value=none_or_str(df_up.a4_doc[0]),
+                    value=none_or_str(df_up['a4'].iloc[0].get('doc')),
                     key=8120
                 )
                 a4_idade = st.text_input(
                     label='Idade',
-                    value=none_or_str(df_up.loc[0, 'a4_idade']),
+                    value=none_or_str(df_up['a4'].iloc[0].get('idade')),
                     key=8122
                 )
                 a4_parentesco = st.text_input(
                     label='Parentesco',
-                    value=none_or_str(df_up.a4_parentesco[0]),
+                    value=none_or_str(df_up['a4'].iloc[0].get('parentesco')),
                     key=8123
                 )
 
                 st.markdown('**Acompanhante 06**')
                 a5_nome = st.text_input(
                     label='Nome',
-                    value=none_or_str(df_up.a5_nome[0]),
+                    value=none_or_str(df_up['a5'].iloc[0].get('nome')),
                     key=8124
                 )
                 a5_doc = st.text_input(
                     label='Documento (RG/CPF)',
-                    value=none_or_str(df_up.a5_doc[0]),
+                    value=none_or_str(df_up['a5'].iloc[0].get('doc')),
                     key=8125
                 )
                 a5_idade = st.text_input(
                     label='Idade',
-                    value=none_or_str(df_up.loc[0, 'a5_idade']),
+                    value=none_or_str(df_up['a5'].iloc[0].get('idade')),
                     key=8127
                 )
                 a5_parentesco = st.text_input(
                     label='Parentesco',
-                    value=none_or_str(df_up.a5_parentesco[0]),
+                    value=none_or_str(df_up['a5'].iloc[0].get('parentesco')),
                     key=8128
                 )
 
                 st.markdown('**Acompanhante 07**')
                 a6_nome = st.text_input(
                     label='Nome',
-                    value=none_or_str(df_up.a6_nome[0]),
+                    value=none_or_str(df_up['a6'].iloc[0].get('nome')),
                     key=8129
                 )
                 a6_doc = st.text_input(
                     label='Documento (RG/CPF)',
-                    value=none_or_str(df_up.a6_doc[0]),
+                    value=none_or_str(df_up['a6'].iloc[0].get('doc')),
                     key=8130
                 )
                 a6_idade = st.text_input(
                     label='Idade',
-                    value=none_or_str(df_up.loc[0, 'a6_idade']),
+                    value=none_or_str(df_up['a6'].iloc[0].get('idade')),
                     key=8132
                 )
                 a6_parentesco = st.text_input(
                     label='Parentesco',
-                    value=none_or_str(df_up.a6_parentesco[0]),
+                    value=none_or_str(df_up['a6'].iloc[0].get('parentesco')),
                     key=8133
                 )
 
                 st.markdown('**Acompanhante 08**')
                 a7_nome = st.text_input(
                     label='Nome',
-                    value=none_or_str(df_up.a7_nome[0]),
+                    value=none_or_str(df_up['a7'].iloc[0].get('nome')),
                     key=8134
                 )
                 a7_doc = st.text_input(
                     label='Documento (RG/CPF)',
-                    value=none_or_str(df_up.a7_doc[0]),
+                    value=none_or_str(df_up['a7'].iloc[0].get('doc')),
                     key=8135
                 )
                 a7_idade = st.text_input(
                     label='Idade',
-                    value=none_or_str(df_up.loc[0, 'a7_idade']),
+                    value=none_or_str(df_up['a7'].iloc[0].get('idade')),
                     key=8137
                 )
                 a7_parentesco = st.text_input(
                     label='Parentesco',
-                    value=none_or_str(df_up.a7_parentesco[0]),
+                    value=none_or_str(df_up['a7'].iloc[0].get('parentesco')),
                     key=8138
                 )
 
                 st.markdown('**Acompanhante 09**')
                 a8_nome = st.text_input(
                     label='Nome',
-                    value=none_or_str(df_up.a8_nome[0]),
+                    value=none_or_str(df_up['a8'].iloc[0].get('nome')),
                     key=8139
                 )
                 a8_doc = st.text_input(
                     label='Documento (RG/CPF)',
-                    value=none_or_str(df_up.a8_doc[0]),
+                    value=none_or_str(df_up['a8'].iloc[0].get('doc')),
                     key=8140
                 )
                 a8_idade = st.text_input(
                     label='Idade',
-                    value=none_or_str(df_up.loc[0, 'a8_idade']),
+                    value=none_or_str(df_up['a8'].iloc[0].get('idade')),
                     key=8142
                 )
                 a8_parentesco = st.text_input(
                     label='Parentesco',
-                    value=none_or_str(df_up.a8_parentesco[0]),
+                    value=none_or_str(df_up['a8'].iloc[0].get('parentesco')),
                     key=8143
                 )
 
                 st.markdown('**Acompanhante 10**')
                 a9_nome = st.text_input(
                     label='Nome',
-                    value=none_or_str(df_up.a9_nome[0]),
+                    value=none_or_str(df_up['a9'].iloc[0].get('nome')),
                     key=8144
                 )
                 a9_doc = st.text_input(
                     label='Documento (RG/CPF)',
-                    value=none_or_str(df_up.a9_doc[0]),
+                    value=none_or_str(df_up['a9'].iloc[0].get('doc')),
                     key=8145
                 )
                 a9_idade = st.text_input(
                     label='Idade',
-                    value=none_or_str(df_up.loc[0, 'a9_idade']),
+                    value=none_or_str(df_up['a9'].iloc[0].get('idade')),
                     key=8147
                 )
                 a9_parentesco = st.text_input(
                     label='Parentesco',
-                    value=none_or_str(df_up.a9_parentesco[0]),
+                    value=none_or_str(df_up['a9'].iloc[0].get('parentesco')),
                     key=8148
                 )
 
