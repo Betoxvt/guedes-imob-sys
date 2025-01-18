@@ -16,19 +16,19 @@ def fill_ficha(data: dict[str, str], img: str, dir: str):
         "apto":         [117, 193],
         "nome":         [217, 193],
         "cidade":       [187, 218],
-        "cep":          [379, 218],
-        "uf":           [480, 218],
+        "cep":          [376, 218],
+        "uf":           [482, 218],
         "pais":         [117, 230],
         "tel":          [300, 230],
-        "estado_civil": [150, 241],
+        "estado_civil": [151, 241],
         "profissao":    [351, 241],
-        "rg":           [178, 253],
-        "cpf":          [348, 252.6],
+        "rg":           [178, 253.4],
+        "cpf":          [348, 253],
         "mae":          [118, 265],
         "automovel":    [146, 276.5],
-        "modelo_auto":  [320, 276.5],
-        "placa_auto":   [117, 288.5],
-        "cor_auto":     [302, 288.5],
+        "modelo_auto":  [321, 276.5],
+        "placa_auto":   [118, 288.5],
+        "cor_auto":     [303, 288.5],
         "proprietario": [195, 744],
     }
     acomp_coord = [
@@ -86,7 +86,7 @@ def fill_ficha(data: dict[str, str], img: str, dir: str):
             p2.drawOn(c, x, A4[1]-y)
         else:
             p = Paragraph(str(data['observacoes']))
-            # p.wrap(400, 800)
+            p.wrap(400, 800)
             p.drawOn(c, x, A4[1]-y)
 
     if data['imob_fone']:
@@ -95,8 +95,8 @@ def fill_ficha(data: dict[str, str], img: str, dir: str):
         x, y = imob_fone['tel']
         c.drawString(x, A4[1]-y, str(data['imob_fone'][9:]))
 
-    checkin = {'dia': [222, 494], 'mes': [262, 494], 'ano': [292, 494]}
-    checkout = {'dia': [379, 494], 'mes': [422, 494], 'ano': [457, 494]}
+    checkin = {'dia': [226, 494], 'mes': [262, 494], 'ano': [292, 494]}
+    checkout = {'dia': [385, 494], 'mes': [422, 494], 'ano': [457, 494]}
     
     if data['checkin']:
         x, y = checkin['dia']
