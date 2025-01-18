@@ -31,8 +31,7 @@
 27. [x] Reescrever o modo como os 'acompanhantes' são armazenados, array ou json (dict).
 28. [ ] Descobrir um jeito de validar a nível do banco de dados os JSON dos acompanhantes.
 29. [ ] Descobrir um jeito de reduzir o número de linhas que ocupa o formulário de acompanhantes.
-
-**Na aba consultar, acho que deveriam ter botões para deletar e editar, talvez fique melhor, e na aba da ficha o botão para imprimir.**
+30. [ ]Na aba consultar, acho que deveriam ter botões para deletar e editar, talvez fique melhor, e na aba da ficha o botão para imprimir.
 
 **Provavelmente todos os valores monetários eu devesse usar str e depois passar para float no front, aceitando como separador decimal tanto ',' quanto '.'.**
 
