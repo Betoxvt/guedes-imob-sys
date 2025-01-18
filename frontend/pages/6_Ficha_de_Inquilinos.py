@@ -70,7 +70,7 @@ with tab1:
             label='Estado civíl',
             index=0,
             placeholder='Selecione opção',
-            options=['Solteiro(a)', 'Casado(a)', 'Separado(a)', 'Divorciado(a)', 'Viúvo(a)'],
+            options=['Casado(a)', 'Divorciado(a)', 'Separado(a)', 'Solteiro(a)', 'Viúvo(a)'],
             key=8009
         )
         profissao = st.text_input(
@@ -487,7 +487,7 @@ with tab3:
                 )
                 estado_civil = st.selectbox(
                     label='Estado civíl',
-                    options=['Solteiro', 'Casado', 'Separado', 'Divorciado', 'Viúvo'],
+                    options=['Casado(a)', 'Divorciado(a)', 'Separado(a)', 'Solteiro(a)', 'Viúvo(a)'],
                     placeholder=str(df_up.estado_civil[0]),
                     key=8081
                 )
