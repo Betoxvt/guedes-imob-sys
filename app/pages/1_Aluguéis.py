@@ -61,7 +61,7 @@ with tab1:
         if submit_button:
             aluguel_data = empty_none_dict({
                     "apto_id": apto_id,
-                    "ficha_id": ficha_id,
+                    "ficha_id": ficha_id if ficha_id > 0 else None,
                     "checkin": checkin.isoformat(),
                     "checkout": checkout.isoformat(),
                     "diarias": diarias,
@@ -159,7 +159,7 @@ with tab3:
                 if update_button:
                     aluguel_up_data = empty_none_dict({
                         "apto_id": apto_id,
-                        "ficha_id": ficha_id,
+                        "ficha_id": ficha_id if ficha_id > 0 else None,
                         "checkin": checkin.isoformat(),
                         "checkout": checkout.isoformat(),
                         "diarias": diarias,

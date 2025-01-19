@@ -35,7 +35,7 @@ with tab1:
     label='Valor da despesa',
     min_value=0.00,
     max_value=None,
-    value=0.00,
+    value=None,
     format='%0.2f',
     step=0.01,
     key=3103
