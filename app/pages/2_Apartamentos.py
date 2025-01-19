@@ -74,7 +74,7 @@ with tab1:
             })
             submit_data = json.dumps(obj=apto_data, separators=(',',':'))
             try:
-                post_response = requests.post("http://backend:8000/apartamentos/", submit_data)
+                post_response = requests.post("http://api:8000/apartamentos/", submit_data)
                 show_response_message(post_response)
                 if post_response.status_code == 200:
                     st.subheader('Dados inseridos, tudo OK:')
@@ -95,7 +95,7 @@ with tab2:
         key=2200
     )
     if get_id:
-        get_response = requests.get(f'http://backend:8000/apartamentos/{get_id}')
+        get_response = requests.get(f'http://api:8000/apartamentos/{get_id}')
         if get_response.status_code == 200:
             apto = get_response.json()
             df_get = pd.DataFrame([apto])
@@ -114,7 +114,7 @@ with tab3:
         key=2300
     )
     if update_id:
-        update_response = requests.get(f'http://backend:8000/apartamentos/{update_id}')
+        update_response = requests.get(f'http://api:8000/apartamentos/{update_id}')
         if update_response.status_code == 200:
             apto_up = update_response.json()
             df_up = pd.DataFrame([apto_up])
@@ -177,7 +177,7 @@ with tab3:
                     })
                     update_data = json.dumps(obj=apto_up_data, separators=(',',':'))
                     try:
-                        put_response = requests.put(f"http://backend:8000/apartamentos/{update_id}", update_data)
+                        put_response = requests.put(f"http://api:8000/apartamentos/{update_id}", update_data)
                         show_response_message(put_response)
                         if put_response.status_code == 200:
                             st.subheader('Dados inseridos, tudo OK:')
@@ -200,7 +200,7 @@ with tab4:
         key=2400
     )
     if delete_id:
-        show_delete_response = requests.get(f'http://backend:8000/apartamentos/{delete_id}')
+        show_delete_response = requests.get(f'http://api:8000/apartamentos/{delete_id}')
         if show_delete_response.status_code == 200:
             apto_delete = show_delete_response.json()
             df_delete = pd.DataFrame([apto_delete])
@@ -211,7 +211,7 @@ with tab4:
             'Deletar',
             key=2401
         ):
-            delete_response = requests.delete(f'http://backend:8000/apartamentos/{delete_id}')
+            delete_response = requests.delete(f'http://api:8000/apartamentos/{delete_id}')
             show_response_message(delete_response)
 
 with tab5:
@@ -220,10 +220,13 @@ with tab5:
         "Mostrar",
         key=2007
     ):
-        get_list_response = requests.get(f'http://backend:8000/apartamentos/')
+        get_list_response = requests.get(f'http://api:8000/apartamentos/')
         if get_list_response.status_code == 200:
             apartamentos = get_list_response.json()
-            df_list = pd.DataFrame(apartamentos)
-            st.dataframe(df_list.set_index('id'))
+            if apartamentos:
+                df_list = pd.DataFrame(apartamentos)
+                st.dataframe(df_list.set_index('id'))
+            else:
+                st.warning('Não há apartamentos para listar')
         else:
             show_response_message(get_list_response)

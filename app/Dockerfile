@@ -1,4 +1,4 @@
-# Dockerfile-frontend
+# Dockerfile-APP
 
 # Imagem base
 FROM python:3.13

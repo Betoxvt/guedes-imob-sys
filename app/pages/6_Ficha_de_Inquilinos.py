@@ -401,7 +401,7 @@ with tab1:
             submit_data = json.dumps(obj=empty_none_dict(ficha_data), separators=(',',':'))
 
             try:
-                post_response = requests.post('http://backend:8000/fichas/', submit_data)
+                post_response = requests.post('http://api:8000/fichas/', submit_data)
                 show_response_message(post_response)
                 if post_response.status_code == 200:
                     st.subheader('Dados inseridos, tudo OK:')
@@ -422,7 +422,7 @@ with tab2:
         key=8250
     )
     if get_id:
-        get_response = requests.get(f'http://backend:8000/fichas/{get_id}')
+        get_response = requests.get(f'http://api:8000/fichas/{get_id}')
         if get_response.status_code == 200:
             ficha = get_response.json()
             df_get = pd.DataFrame([ficha])
@@ -456,7 +456,7 @@ with tab3:
         key=8151
     )
     if update_id:
-        update_response = requests.get(f'http://backend:8000/fichas/{update_id}')
+        update_response = requests.get(f'http://api:8000/fichas/{update_id}')
         if update_response.status_code == 200:
             ficha_up = update_response.json()
             df_up = pd.DataFrame([ficha_up])
@@ -840,7 +840,7 @@ with tab3:
                     update_data = json.dumps(obj=empty_none_dict(ficha_up_data), separators=(',',':'))
 
                     try:
-                        put_response = requests.put(f'http://backend:8000/fichas/{update_id}', update_data)
+                        put_response = requests.put(f'http://api:8000/fichas/{update_id}', update_data)
                         show_response_message(put_response)
                         if put_response.status_code == 200:
                             st.subheader('Dados inseridos, tudo OK:')
@@ -864,7 +864,7 @@ with tab4:
         key=8149
     )
     if delete_id:
-        show_delete_response = requests.get(f'http://backend:8000/fichas/{delete_id}')
+        show_delete_response = requests.get(f'http://api:8000/fichas/{delete_id}')
         if show_delete_response.status_code == 200:
             ficha_delete = show_delete_response.json()
             df_delete = pd.DataFrame([ficha_delete])
@@ -876,7 +876,7 @@ with tab4:
             key=6400
         ):
             try:
-                delete_response = requests.delete(f'http://backend:8000/fichas/{delete_id}')
+                delete_response = requests.delete(f'http://api:8000/fichas/{delete_id}')
             except Exception as e:
                 print(e)
             finally:
@@ -888,10 +888,13 @@ with tab5:
         'Mostrar',
         key=6500
     ):
-        get_list_response = requests.get(f'http://backend:8000/fichas/')
+        get_list_response = requests.get(f'http://api:8000/fichas/')
         if get_list_response.status_code == 200:
-            list_fichas = get_list_response.json()
-            df_list = pd.DataFrame(list_fichas)
-            st.dataframe(df_list.set_index('id'))
+            fichas = get_list_response.json()
+            if fichas:
+                df_list = pd.DataFrame(fichas)
+                st.dataframe(df_list.set_index('id'))
+            else:
+                st.warning('Não há fichas para listar')
         else:
             show_response_message(get_list_response)
