@@ -223,7 +223,13 @@ with tab5:
         get_list_response = requests.get(f'http://backend:8000/apartamentos/')
         if get_list_response.status_code == 200:
             apartamentos = get_list_response.json()
-            df_list = pd.DataFrame(apartamentos)
-            st.dataframe(df_list.set_index('id'))
+            if apartamentos:
+                df_list = pd.DataFrame(apartamentos)
+                if df_list['id']:
+                    st.dataframe(df_list.set_index('id'))
+                else:
+                    st.dataframe(df_list, hide_index=True)
+            else:
+                st.warning('Não há apartamentos para listar')
         else:
             show_response_message(get_list_response)

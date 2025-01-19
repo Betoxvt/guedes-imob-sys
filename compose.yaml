@@ -13,10 +13,10 @@ services:
   
   backend:
     build:
-      context: ./backend
+      context: ./api
       dockerfile: Dockerfile
     volumes:
-      - ./backend:/app
+      - ./api:/app
     environment:
       DATABASE_URL: postgres://user:password@postgres/mydatabase
     ports:
@@ -28,10 +28,10 @@ services:
 
   frontend:
     build:
-      context: ./frontend
+      context: ./app
       dockerfile: Dockerfile
     volumes:
-      - ./frontend:/app
+      - ./app:/app
     ports:
       - "8501:8501"
     networks:

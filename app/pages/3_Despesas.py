@@ -184,7 +184,13 @@ with tab5:
         get_list_response = requests.get(f'http://backend:8000/despesas/')
         if get_list_response.status_code == 200:
             despesas = get_list_response.json()
-            df_list = pd.DataFrame(despesas)
-            st.dataframe(df_list.set_index('id'))
+            if despesas:
+                df_list = pd.DataFrame(despesas)
+                if df_list['id']:
+                    st.dataframe(df_list.set_index('id'))
+                else:
+                    st.dataframe(df_list, hide_index=True)
+            else:
+                st.warning('Não há despesas para listar')
         else:
             show_response_message(get_list_response)

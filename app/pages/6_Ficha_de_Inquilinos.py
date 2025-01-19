@@ -890,8 +890,14 @@ with tab5:
     ):
         get_list_response = requests.get(f'http://backend:8000/fichas/')
         if get_list_response.status_code == 200:
-            list_fichas = get_list_response.json()
-            df_list = pd.DataFrame(list_fichas)
-            st.dataframe(df_list.set_index('id'))
+            fichas = get_list_response.json()
+            if fichas:
+                df_list = pd.DataFrame(fichas)
+                if df_list['id']:
+                    st.dataframe(df_list.set_index('id'))
+                else:
+                    st.dataframe(df_list, hide_index=True)
+            else:
+                st.warning('Não há fichas para listar')
         else:
             show_response_message(get_list_response)

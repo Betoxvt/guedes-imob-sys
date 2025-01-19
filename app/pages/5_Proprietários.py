@@ -168,7 +168,13 @@ with tab5:
         get_list_response = requests.get(f'http://backend:8000/proprietarios/')
         if get_list_response.status_code == 200:
             proprietarios = get_list_response.json()
-            df_list = pd.DataFrame(proprietarios)
-            st.dataframe(df_list.set_index('id'))
+            if proprietarios:
+                df_list = pd.DataFrame(proprietarios)
+                if df_list['id']:
+                    st.dataframe(df_list.set_index('id'))
+                else:
+                    st.dataframe(df_list, hide_index=True)
+            else:
+                st.warning('Não há proprietários para listar')
         else:
             show_response_message(get_list_response)
