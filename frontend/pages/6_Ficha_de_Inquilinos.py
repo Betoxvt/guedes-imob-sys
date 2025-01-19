@@ -19,8 +19,6 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(['Registrar', 'Consultar', 'Modificar', '
 
 # Em registrar deve ser possível fazer upload de um arquivo ou forms essas coisas que o inquilino pode já ter preenchido em casa e enviado para nós (google forms ou sei lá)
 
-# Em consultar, deve ser possível então exportar a ficha em pdf no modelo proposto pelo condomínio
-
 # Ajeitar a validação dos dados, formato de envio para o banco de dados e formato de exibição.
 
 with tab1:
@@ -436,8 +434,7 @@ with tab2:
             if pdf:
                 st.success(f'PDF gerado com sucesso')
                 with open(pdf, 'rb') as f:
-                    # contents = f.read()
-                    st.download_button(  # indent letf
+                    st.download_button(
                         label='Download PDF',
                         data=f,
                         file_name=pdf[26:],

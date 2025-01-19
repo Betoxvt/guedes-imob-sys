@@ -11,7 +11,6 @@ def fill_ficha(data: dict[str, str]):
     dir = './files/tmp_filled_fichas/'
     path = os.path.join(dir, file_name)
     c = canvas.Canvas(path)
-    # c.setFont('Times-Roman', 12)
     c.drawImage(img, 0, 0, width=A4[0], height=A4[1])
     s: dict[int, int] = {
         'apto':         [117, 193],
@@ -57,7 +56,8 @@ def fill_ficha(data: dict[str, str]):
             for key, value in field.items():
                 x, y = acomp_coord[counter][key]
                 v = value
-                c.drawString(x=x, y=A4[1] - y, text=str(v))
+                if value != None:
+                    c.drawString(x=x, y=A4[1] - y, text=str(v))
             counter += 1
 
     tipo_residencia = {'anual': [177, 207], 'temp': [253, 207]}
@@ -117,21 +117,3 @@ def fill_ficha(data: dict[str, str]):
 
     c.save()
     return path
-
-if __name__ == '__main__':
-    import csv
-
-    with open('./files/data_test2.csv', 'r', encoding='utf-8-sig') as csvfile:
-        reader = csv.reader(csvfile)
-        chaves = next(reader)
-        valores = next(reader)
-        dados = dict(zip(chaves, valores))
-    print(dados)
-    dir = './files/filled_fichas/'
-    img = './files/ficha_model/ficha.png'
-    pdf = fill_ficha(dados, img, dir)
-    print(f'PDF gerado: {pdf}')
-
-
-
-
