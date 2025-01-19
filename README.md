@@ -31,7 +31,7 @@
 27. [x] Reescrever o modo como os 'acompanhantes' são armazenados, array ou json (dict).
 28. [ ] Descobrir um jeito de validar a nível do banco de dados os JSON dos acompanhantes.
 29. [ ] Descobrir um jeito de reduzir o número de linhas que ocupa o formulário de acompanhantes.
-30. [ ] Na Page Fichas colocar botão para obter o PDF.
+30. [x] Na Page Fichas colocar botão para obter o PDF.
 31. [ ] Pedir confirmação antes de deletar um registro.
 32. [ ] Na tabela fichas, tem que haver uma coluna para gravar o nome do último arquivo gerado, assim pela consulta consegue-se baixar novamente sem ter que gerar outro PDF.
 
