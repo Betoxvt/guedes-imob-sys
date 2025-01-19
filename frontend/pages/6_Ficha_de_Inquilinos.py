@@ -4,7 +4,7 @@ import pandas as pd
 import requests
 import streamlit as st
 from utils.mydate import calculate_diarias, str_to_date
-from utils.myfunc import merge_dictionaries, show_data_output, show_response_message
+from utils.myfunc import show_data_output, show_response_message
 from utils.mystr import empty_none_dict, none_or_str
 
 st.set_page_config(
@@ -117,15 +117,16 @@ with tab1:
             label='Check-in',
             format='DD/MM/YYYY',
             key=8018,
-            value=date.today()
+            value=None
         )
         checkout = st.date_input(
             label='Check-out',
             format='DD/MM/YYYY',
             key=8019,
-            value=checkin + timedelta(days=1)
+            value=None
         )
         diarias: int = calculate_diarias(checkin, checkout)
+        st.write(f'Diárias: {diarias}')
         observacoes = st.text_area(
             label='Observações',
             value=None,
@@ -402,12 +403,12 @@ with tab1:
             try:
                 post_response = requests.post("http://backend:8000/fichas/", submit_data)
                 show_response_message(post_response)
-                st.subheader('Dados inseridos:')
+                if post_response.status_code == 200:
+                    st.subheader('Dados inseridos, tudo OK:')
+                else:
+                    st.subheader('Dados NÃO inseridos, favor revisar:')
                 show_data_output(ficha_data)
             except Exception as e:
-                show_response_message(post_response)
-                st.subheader('Dados NÃO inseridos:')
-                show_data_output(ficha_data)
                 print(e)
 
 with tab2:
@@ -821,14 +822,14 @@ with tab3:
 
                     try:
                         put_response = requests.put(f"http://backend:8000/fichas/{update_id}", update_data)
-                        show_response_message(put_response)
-                        st.subheader('Dados inseridos:')
+                        show_response_message(post_response)
+                        if post_response.status_code == 200:
+                            st.subheader('Dados inseridos, tudo OK:')
+                        else:
+                            st.subheader('Dados NÃO inseridos, favor revisar:')
                         show_data_output(ficha_up_data)
                     except Exception as e:
-                        show_response_message(put_response)
-                        st.subheader('Dados NÃO inseridos:')
-                        show_data_output(ficha_up_data)
-                        print(e) 
+                        print(e)
 
         else:
             show_response_message(update_response)

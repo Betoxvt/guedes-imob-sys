@@ -56,7 +56,6 @@ with tab1:
         key=4105
     )
     valor_total: float = calculate_valortotal(diarias, valor_diaria)
-    st.write(f'Valor Total: R$ {valor_total}')
     with st.form('new_garagem'):
         submit_button = st.form_submit_button('Registrar')
         if submit_button:
@@ -73,12 +72,12 @@ with tab1:
             try:
                 post_response = requests.post("http://backend:8000/garagens/", submit_data)
                 show_response_message(post_response)
-                st.subheader('Dados inseridos:')
+                if post_response.status_code == 200:
+                    st.subheader('Dados inseridos, tudo OK:')
+                else:
+                    st.subheader('Dados NÃO inseridos, favor revisar:')
                 show_data_output(garagem_data)
             except Exception as e:
-                show_response_message(post_response)
-                st.subheader('Dados NÃO inseridos:')
-                show_data_output(garagem_data)
                 print(e)
 
 with tab2:
@@ -154,7 +153,6 @@ with tab3:
                 key=4306
             )
             valor_total: float = calculate_valortotal(diarias, valor_diaria)
-            st.write(f'Valor Total: R$ {valor_total}')
             with st.form('update_garagem'):
                 update_button = st.form_submit_button('Modificar')
                 if update_button:
@@ -170,13 +168,13 @@ with tab3:
                     update_data = json.dumps(obj=garagem_up_data, separators=(',',':'))
                     try:
                         put_response = requests.put(f"http://backend:8000/garagens/{update_id}", update_data)
-                        show_response_message(put_response)
-                        st.subheader('Dados inseridos:')
+                        show_response_message(post_response)
+                        if post_response.status_code == 200:
+                            st.subheader('Dados inseridos, tudo OK:')
+                        else:
+                            st.subheader('Dados NÃO inseridos, favor revisar:')
                         show_data_output(garagem_up_data)
                     except Exception as e:
-                        show_response_message(put_response)
-                        st.subheader('Dados NÃO inseridos:')
-                        show_data_output(garagem_up_data)
                         print(e) 
         else:
             show_response_message(update_response)

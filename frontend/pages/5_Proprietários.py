@@ -48,12 +48,12 @@ with tab1:
             try:
                 post_response = requests.post("http://backend:8000/proprietarios/", submit_data)
                 show_response_message(post_response)
-                st.subheader('Dados inseridos:')
+                if post_response.status_code == 200:
+                    st.subheader('Dados inseridos, tudo OK:')
+                else:
+                    st.subheader('Dados NÃO inseridos, favor revisar:')
                 show_data_output(prop_data)
             except Exception as e:
-                show_response_message(post_response)
-                st.subheader('Dados NÃO inseridos:')
-                show_data_output(prop_data)
                 print(e)
 
 with tab2:
@@ -121,13 +121,13 @@ with tab3:
                     update_data = json.dumps(obj=prop_up_data, separators=(',',':'))
                     try:
                         put_response = requests.put(f"http://backend:8000/proprietarios/{update_id}", update_data)
-                        show_response_message(put_response)
-                        st.subheader('Dados inseridos:')
+                        show_response_message(post_response)
+                        if post_response.status_code == 200:
+                            st.subheader('Dados inseridos, tudo OK:')
+                        else:
+                            st.subheader('Dados NÃO inseridos, favor revisar:')
                         show_data_output(prop_up_data)
                     except Exception as e:
-                        show_response_message(put_response)
-                        st.subheader('Dados NÃO inseridos:')
-                        show_data_output(prop_up_data)
                         print(e) 
         else:
             show_response_message(update_response)
