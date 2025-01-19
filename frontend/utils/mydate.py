@@ -40,7 +40,7 @@ def calculate_diarias(checkin, checkout):
             st.warning("A data de check-out deve ser posterior à data de check-in.")
             return 0
     else:
-        st.warning(f"As entradas não são do tipo `date`")
+        st.warning(f"Insira as datas de Check-in e Check-out")
         return 0
 
 

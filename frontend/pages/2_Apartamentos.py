@@ -17,50 +17,49 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(['Registrar', 'Consultar', 'Modificar', '
 
 with tab1:
     st.header('Registrar Apartamento')
+    apto = st.text_input(
+        label='Apartamento',
+        value=None,
+        key=2100
+    )
+    proprietario_id = st.number_input(
+        label='ID Proprietário',
+        min_value=1,
+        format='%d',
+        step=1,
+        key=2101
+    )
+    cod_celesc = st.text_input(
+        label='Unidade Consumidora Celesc',
+        value=None,
+        key=2102
+    )
+    cod_gas = st.text_input(
+        label='Código Supergasbras',
+        value=None,
+        key=2103
+    )
+    prov_net = st.text_input(
+        label='Provedor de Internet',
+        value=None,
+        key=2104
+    )
+    wifi = st.text_input(
+        label='Nome da Rede WiFi',
+        value=None,
+        key=2105
+    )
+    wifi_senha = st.text_input(
+        label='Senha da Rede Wifi',
+        value=None,
+        key=2106
+    )
+    lock_senha = st.text_input(
+        label='Senha da Fechadura',
+        value=None,
+        key=2107
+    )
     with st.form('new_apartamento'):
-        apto = st.text_input(
-            label='Apartamento',
-            value=None,
-            key=2100
-        )
-        proprietario_id = st.number_input(
-            label='ID Proprietário',
-            min_value=1,
-            format='%d',
-            step=1,
-            key=2101
-        )
-        cod_celesc = st.text_input(
-            label='Unidade Consumidora Celesc',
-            value=None,
-            key=2102
-        )
-        cod_gas = st.text_input(
-            label='Código Supergasbras',
-            value=None,
-            key=2103
-        )
-        prov_net = st.text_input(
-            label='Provedor de Internet',
-            value=None,
-            key=2104
-        )
-        wifi = st.text_input(
-            label='Nome da Rede WiFi',
-            value=None,
-            key=2105
-        )
-        wifi_senha = st.text_input(
-            label='Senha da Rede Wifi',
-            value=None,
-            key=2106
-        )
-        lock_senha = st.text_input(
-            label='Senha da Fechadura',
-            value=None,
-            key=2107
-        )
-
         submit_button = st.form_submit_button('Registrar')
         if submit_button:
             apto_data = empty_none_dict({
@@ -118,50 +117,50 @@ with tab3:
             apto_up = update_response.json()
             df_up = pd.DataFrame([apto_up])
             st.dataframe(df_up.set_index('id'))
+            apto = st.text_input(
+                label='Apartamento',
+                value=str(df_up.apto[0]),
+                key=2301
+            )
+            proprietario_id = st.number_input(
+                label='ID Proprietário',
+                min_value=1,
+                format='%d',
+                step=1,
+                value=df_up.loc[0, 'proprietario_id'],
+                key=2302
+            )
+            cod_celesc = st.text_input(
+                label='Unidade Consumidora Celesc',
+                value=str(df_up.cod_celesc[0]),
+                key=2304
+            )
+            cod_gas = st.text_input(
+                label='Código Supergasbras',
+                value=str(df_up.cod_gas[0]),
+                key=2305
+            )
+            prov_net = st.text_input(
+                label='Provedor de Internet',
+                value=str(df_up.prov_net[0]),
+                key=2306
+            )
+            wifi = st.text_input(
+                label='Nome da Rede WiFi',
+                value=str(df_up.wifi[0]),
+                key=2307
+            )
+            wifi_senha = st.text_input(
+                label='Senha da Rede Wifi',
+                value=str(df_up.wifi_senha[0]),
+                key=2308
+            )
+            lock_senha = st.text_input(
+                label='Senha da Fechadura',
+                value=str(df_up.lock_senha[0]),
+                key=2309
+            )
             with st.form('update_apartamento'):
-                apto = st.text_input(
-                    label='Apartamento',
-                    value=str(df_up.apto[0]),
-                    key=2301
-                )
-                proprietario_id = st.number_input(
-                    label='ID Proprietário',
-                    min_value=1,
-                    format='%d',
-                    step=1,
-                    value=df_up.loc[0, 'proprietario_id'],
-                    key=2302
-                )
-                cod_celesc = st.text_input(
-                    label='Unidade Consumidora Celesc',
-                    value=str(df_up.cod_celesc[0]),
-                    key=2304
-                )
-                cod_gas = st.text_input(
-                    label='Código Supergasbras',
-                    value=str(df_up.cod_gas[0]),
-                    key=2305
-                )
-                prov_net = st.text_input(
-                    label='Provedor de Internet',
-                    value=str(df_up.prov_net[0]),
-                    key=2306
-                )
-                wifi = st.text_input(
-                    label='Nome da Rede WiFi',
-                    value=str(df_up.wifi[0]),
-                    key=2307
-                )
-                wifi_senha = st.text_input(
-                    label='Senha da Rede Wifi',
-                    value=str(df_up.wifi_senha[0]),
-                    key=2308
-                )
-                lock_senha = st.text_input(
-                    label='Senha da Fechadura',
-                    value=str(df_up.lock_senha[0]),
-                    key=2309
-                )
                 update_button = st.form_submit_button('Modificar')
                 if update_button:
                     apto_up_data = empty_none_dict({

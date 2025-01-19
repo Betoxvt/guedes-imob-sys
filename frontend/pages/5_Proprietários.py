@@ -15,28 +15,27 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(['Registrar', 'Consultar', 'Modificar', '
 
 with tab1:
     st.header('Registrar Proprietário')
+    nome: str = st.text_input(
+        label='Nome',
+        key=5000,
+        value=None
+    )
+    cpf: str = st.text_input(
+        label='CPF',
+        key=5101,
+        value=None
+    )
+    tel: str = st.text_input(
+        label='Telefone',
+        key=5102,
+        value=None
+    )
+    email: str = st.text_input(
+        label='E-Mail',
+        key=5103,
+        value=None
+    )
     with st.form('new_proprietario'):
-        nome: str = st.text_input(
-            label='Nome',
-            key=5000,
-            value=None
-        )
-        cpf: str = st.text_input(
-            label='CPF',
-            key=5101,
-            value=None
-        )
-        tel: str = st.text_input(
-            label='Telefone',
-            key=5102,
-            value=None
-        )
-        email: str = st.text_input(
-            label='E-Mail',
-            key=5103,
-            value=None
-        )
-
         submit_button = st.form_submit_button('Registrar')
         if submit_button:
             prop_data = empty_none_dict({
@@ -90,27 +89,27 @@ with tab3:
             prop_up = update_response.json()
             df_up = pd.DataFrame([prop_up])
             st.dataframe(df_up.set_index('id'))
+            nome: str = st.text_input(
+                label='Nome',
+                key=5301,
+                value=str(df_up.nome[0])
+            )
+            cpf: str = st.text_input(
+                label='CPF',
+                key=5302,
+                value=str(df_up.cpf[0])
+            )
+            tel: str = st.text_input(
+                label='Telefone',
+                key=5303,
+                value=str(df_up.tel[0])
+            )
+            email: str = st.text_input(
+                label='E-Mail',
+                key=5304,
+                value=str(df_up.email[0])
+            )
             with st.form('update_proprietario'):
-                nome: str = st.text_input(
-                    label='Nome',
-                    key=5301,
-                    value=str(df_up.nome[0])
-                )
-                cpf: str = st.text_input(
-                    label='CPF',
-                    key=5302,
-                    value=str(df_up.cpf[0])
-                )
-                tel: str = st.text_input(
-                    label='Telefone',
-                    key=5303,
-                    value=str(df_up.tel[0])
-                )
-                email: str = st.text_input(
-                    label='E-Mail',
-                    key=5304,
-                    value=str(df_up.email[0])
-                )
                 update_button = st.form_submit_button('Modificar')
                 if update_button:
                     prop_up_data = empty_none_dict({
