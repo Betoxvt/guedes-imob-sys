@@ -6,6 +6,7 @@ import streamlit as st
 from utils.mydate import calculate_diarias, str_to_date
 from utils.myfunc import show_data_output, show_response_message
 from utils.mystr import empty_none_dict, none_or_str
+from utils.mypdf import fill_ficha
 
 st.set_page_config(
     page_title='Ficha de Inquilinos',
@@ -419,7 +420,7 @@ with tab2:
         value=None,
         format='%d',
         step=1,
-        key=8150
+        key=8250
     )
     if get_id:
         get_response = requests.get(f'http://backend:8000/fichas/{get_id}')
@@ -429,6 +430,22 @@ with tab2:
             st.dataframe(df_get.set_index('id'))
         else:
             show_response_message(get_response)
+        if st.button('Gerar PDF',key=8251):
+            pdf = fill_ficha(ficha, img="./files/ficha_model/ficha.png", dir='./files/filled_fichas/')
+            if pdf:
+                st.success(f'PDF gerado: {pdf}')
+                with open(f'./files/filled_fichas/{pdf}', 'rb') as f:
+                    contents = f.read()
+                st.download_button(
+                    label="Download PDF",
+                    data=contents,
+                    file_name=pdf,
+                    mime='application/pdf',
+                    key=8252
+                )
+            else:
+                st.error(f'Não foi possível gerar o PDF')
+
 
 with tab3:
     st.header('Modificar Ficha de Inquilino')
@@ -850,22 +867,22 @@ with tab4:
     )
     if delete_id:
         show_delete_response = requests.get(f'http://backend:8000/fichas/{delete_id}')
-    if show_delete_response.status_code == 200:
-        ficha_delete = show_delete_response.json()
-        df_delete = pd.DataFrame([ficha_delete])
-        st.dataframe(df_delete.set_index('id'))
-    else:
-        show_response_message(show_delete_response)
-    if st.button(
-        'Deletar',
-        key=6400
-    ):
-        try:
-            delete_response = requests.delete(f'http://backend:8000/fichas/{delete_id}')
-        except Exception as e:
-            print(e)
-        finally:
-            show_response_message(delete_response)
+        if show_delete_response.status_code == 200:
+            ficha_delete = show_delete_response.json()
+            df_delete = pd.DataFrame([ficha_delete])
+            st.dataframe(df_delete.set_index('id'))
+        else:
+            show_response_message(show_delete_response)
+        if st.button(
+            'Deletar',
+            key=6400
+        ):
+            try:
+                delete_response = requests.delete(f'http://backend:8000/fichas/{delete_id}')
+            except Exception as e:
+                print(e)
+            finally:
+                show_response_message(delete_response)
 
 with tab5:
     st.header('Listar Fichas de Inquilino')

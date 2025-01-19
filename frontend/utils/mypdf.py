@@ -4,10 +4,10 @@ import json
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 from reportlab.platypus import Paragraph
-from mystr import two_liner
+from utils.mystr import two_liner
 
 def fill_ficha(data: dict[str, str], img: str, dir: str):
-    file_name = f"ficha_{str(data['id'])}_{str(data['modificado_em'])}___{datetime.now()}.pdf"
+    file_name = f"fichaID_{str(data['id'])}_checkin_{str(data['checkin'])}_T_{datetime.now()}.pdf"
     path = os.path.join(dir, file_name)
     c = canvas.Canvas(path)
     # canvas.setFont("Helvetica", 12)
@@ -52,7 +52,7 @@ def fill_ficha(data: dict[str, str], img: str, dir: str):
                 y = (A4[1] - coord[1])
                 c.drawString(x=x, y=y, text=str(v))
         if k in acomps and data[k] is not None:
-            field: dict = json.loads(data[k])
+            field: dict = data[k]
             for key, value in field.items():
                 x, y = acomp_coord[counter][key]
                 v = value
