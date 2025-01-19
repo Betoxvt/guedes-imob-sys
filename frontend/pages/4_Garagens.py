@@ -1,4 +1,4 @@
-from datetime import date, timedelta
+from datetime import date
 import json
 import pandas as pd
 import requests
@@ -18,44 +18,46 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(['Registrar', 'Consultar', 'Modificar', '
 
 with tab1:
     st.header('Registrar Garagem')
+    apto_origem_id: int = st.number_input(
+        label='ID Apartamento de origem',
+        min_value=1,
+        value=None,
+        format='%d',
+        step=1,
+        key=4100
+    )
+    apto_destino_id: int = st.number_input(
+        label='ID Apartamento de destino',
+        min_value=1,
+        format='%d',
+        step=1,
+        key=4101
+    )
+    checkin: date = st.date_input(
+        label='Check-in',
+        format='DD/MM/YYYY',
+        key=4102,
+        value=None
+    )
+    checkout: date = st.date_input(
+        label='Check-out',
+        format='DD/MM/YYYY',
+        key=4103,
+        value=None
+    )
+    diarias: int = calculate_diarias(checkin, checkout)
+    st.write(f'Diárias: {diarias}')
+    valor_diaria: float = st.number_input(
+        label='Valor da diária',
+        min_value=0.00,
+        max_value=900.00,
+        value=None,
+        format='%0.2f',
+        step=10.00,
+        key=4105
+    )
+    valor_total: float = calculate_valortotal(diarias, valor_diaria)
     with st.form('new_garagem'):
-        apto_origem_id: int = st.number_input(
-            label='ID Apartamento de origem',
-            min_value=1,
-            format='%d',
-            step=1,
-            key=4100
-        )
-        apto_destino_id: int = st.number_input(
-            label='ID Apartamento de destino',
-            min_value=1,
-            format='%d',
-            step=1,
-            key=4101
-        )
-        checkin: date = st.date_input(
-            label='Check-in',
-            format='DD/MM/YYYY',
-            key=4102,
-            value=date.today()
-        )
-        checkout: date = st.date_input(
-            label='Check-out',
-            format='DD/MM/YYYY',
-            key=4103,
-            value=checkin + timedelta(days=1)
-        )
-        diarias: int = calculate_diarias(checkin, checkout)
-        valor_diaria: float = st.number_input(
-            label='Valor da diária',
-            min_value=0.00,
-            max_value=900.00,
-            value=None,
-            format='%0.2f',
-            step=10.00,
-            key=4105
-        )
-        valor_total: float = calculate_valortotal(diarias, valor_diaria)
         submit_button = st.form_submit_button('Registrar')
         if submit_button:
             garagem_data = empty_none_dict({
@@ -71,12 +73,12 @@ with tab1:
             try:
                 post_response = requests.post("http://backend:8000/garagens/", submit_data)
                 show_response_message(post_response)
-                st.subheader('Dados inseridos:')
+                if post_response.status_code == 200:
+                    st.subheader('Dados inseridos, tudo OK:')
+                else:
+                    st.subheader('Dados NÃO inseridos, favor revisar:')
                 show_data_output(garagem_data)
             except Exception as e:
-                show_response_message(post_response)
-                st.subheader('Dados NÃO inseridos:')
-                show_data_output(garagem_data)
                 print(e)
 
 with tab2:
@@ -84,6 +86,7 @@ with tab2:
     get_id = st.number_input(
         'ID Garagem',
         min_value=1,
+        value=None,
         format='%d',
         step=1,
         key=4200
@@ -102,6 +105,7 @@ with tab3:
     update_id = st.number_input(
         'ID do Garagem',
         min_value=1,
+        value=None,
         format='%d',
         step=1,
         key=4300
@@ -112,46 +116,47 @@ with tab3:
             garagem_up = update_response.json()
             df_up = pd.DataFrame([garagem_up])
             st.dataframe(df_up.set_index('id'))
+            apto_origem_id: int = st.number_input(
+                label='ID Apartamento de origem',
+                min_value=1,
+                format='%d',
+                step=1,
+                key=4301,
+                value=df_up.loc[0, 'apto_origem_id']
+            )
+            apto_destino_id: int = st.number_input(
+                label='ID Apartamento de destino',
+                min_value=1,
+                format='%d',
+                step=1,
+                key=4302,
+                value=df_up.loc[0, 'apto_destino_id']
+            )
+            checkin: date = st.date_input(
+                label='Check-in',
+                value=str_to_date(df_up.checkin[0]),
+                format='DD/MM/YYYY',
+                key=4303
+            )
+            checkout: date = st.date_input(
+                label='Check-out',
+                value=str_to_date(df_up.checkout[0]),
+                format='DD/MM/YYYY',
+                key=4304
+            )
+            diarias: int = calculate_diarias(checkin, checkout)
+            st.write(f'Diárias: {diarias}')
+            valor_diaria: float = st.number_input(
+                label='Valor da diária',
+                min_value=0.00,
+                max_value=3000.00,
+                value=df_up.loc[0, 'valor_diaria'],
+                format='%0.2f',
+                step=10.00,
+                key=4306
+            )
+            valor_total: float = calculate_valortotal(diarias, valor_diaria)
             with st.form('update_garagem'):
-                apto_origem_id: int = st.number_input(
-                    label='ID Apartamento de origem',
-                    min_value=1,
-                    format='%d',
-                    step=1,
-                    key=4301,
-                    value=df_up.loc[0, 'apto_origem_id']
-                )
-                apto_destino_id: int = st.number_input(
-                    label='ID Apartamento de destino',
-                    min_value=1,
-                    format='%d',
-                    step=1,
-                    key=4302,
-                    value=df_up.loc[0, 'apto_destino_id']
-                )
-                checkin: date = st.date_input(
-                    label='Check-in',
-                    value=str_to_date(df_up.checkin[0]),
-                    format='DD/MM/YYYY',
-                    key=4303
-                )
-                checkout: date = st.date_input(
-                    label='Check-out',
-                    value=str_to_date(df_up.checkout[0]),
-                    format='DD/MM/YYYY',
-                    key=4304
-                )
-                diarias: int = calculate_diarias(checkin, checkout)
-                valor_diaria: float = st.number_input(
-                    label='Valor da diária',
-                    min_value=0.00,
-                    max_value=3000.00,
-                    value=df_up.loc[0, 'valor_diaria'],
-                    format='%0.2f',
-                    step=10.00,
-                    key=4306
-                )
-                valor_total: float = calculate_valortotal(diarias, valor_diaria)
                 update_button = st.form_submit_button('Modificar')
                 if update_button:
                     garagem_up_data = {
@@ -167,12 +172,12 @@ with tab3:
                     try:
                         put_response = requests.put(f"http://backend:8000/garagens/{update_id}", update_data)
                         show_response_message(put_response)
-                        st.subheader('Dados inseridos:')
+                        if put_response.status_code == 200:
+                            st.subheader('Dados inseridos, tudo OK:')
+                        else:
+                            st.subheader('Dados NÃO inseridos, favor revisar:')
                         show_data_output(garagem_up_data)
                     except Exception as e:
-                        show_response_message(put_response)
-                        st.subheader('Dados NÃO inseridos:')
-                        show_data_output(garagem_up_data)
                         print(e) 
         else:
             show_response_message(update_response)
@@ -182,6 +187,7 @@ with tab4:
     delete_id = st.number_input(
         label="ID Garagem",
         min_value=1,
+        value=None,
         format='%d',
         key=4400
     )

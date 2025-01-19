@@ -17,35 +17,35 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(['Registrar', 'Consultar', 'Modificar', '
 
 with tab1:
     st.header('Registrar Despesa')
+    apto_id: int = st.number_input(
+    label='ID Apartamento',
+    min_value=1,
+    value=None,
+    format='%d',
+    step=1,
+    key=3100
+    )
+    data_pagamento: date = st.date_input(
+    label='Data de pagamento',
+    format='DD/MM/YYYY',
+    key=3102,
+    value=date.today()
+    )
+    valor: float = st.number_input(
+    label='Valor da despesa',
+    min_value=0.00,
+    max_value=None,
+    value=0.00,
+    format='%0.2f',
+    step=0.01,
+    key=3103
+    )
+    descricao: str = st.text_area(
+        label='Descrição',
+        value=None,
+        key=3104
+    )
     with st.form('new_despesa'):
-        apto_id: int = st.number_input(
-        label='ID Apartamento',
-        min_value=1,
-        format='%d',
-        step=1,
-        key=3100
-        )
-        data_pagamento: date = st.date_input(
-        label='Data de pagamento',
-        format='DD/MM/YYYY',
-        key=3102,
-        value=date.today()
-        )
-        valor: float = st.number_input(
-        label='Valor da despesa',
-        min_value=0.00,
-        max_value=None,
-        value=0.00,
-        format='%0.2f',
-        step=0.01,
-        key=3103
-        )
-        descricao: str = st.text_area(
-            label='Descrição',
-            value=None,
-            key=3104
-        )
-
         submit_button = st.form_submit_button('Registrar')
         if submit_button:
             despesa_data = empty_none_dict({
@@ -58,12 +58,12 @@ with tab1:
             try:
                 post_response = requests.post("http://backend:8000/despesas/", submit_data)
                 show_response_message(post_response)
-                st.subheader('Dados inseridos:')
+                if post_response.status_code == 200:
+                    st.subheader('Dados inseridos, tudo OK:')
+                else:
+                    st.subheader('Dados NÃO inseridos, favor revisar:')
                 show_data_output(despesa_data)
             except Exception as e:
-                show_response_message(post_response)
-                st.subheader('Dados NÃO inseridos:')
-                show_data_output(despesa_data)
                 print(e)
 
 with tab2:
@@ -71,6 +71,7 @@ with tab2:
     get_id = st.number_input(
         'ID Despesa',
         min_value=1,
+        value=None,
         format='%d',
         step=1,
         key=3200
@@ -89,6 +90,7 @@ with tab3:
     update_id = st.number_input(
         'ID do Despesa',
         min_value=1,
+        value=None,
         format='%d',
         key=3300
     )
@@ -98,35 +100,35 @@ with tab3:
             despesa_up = update_response.json()
             df_up = pd.DataFrame([despesa_up])
             st.dataframe(df_up.set_index('id'))
+            apto_id: int = st.number_input(
+                label='ID Apartamento',
+                min_value=1,
+                format='%d',
+                step=1,
+                key=3301,
+                value=df_up.loc[0, 'apto_id']
+            )
+            data_pagamento: date = st.date_input(
+                label='Data de pagamento',
+                value=str_to_date(df_up.data_pagamento[0]),
+                format='DD/MM/YYYY',
+                key=3302
+            )
+            valor: float = st.number_input(
+                label='Valor da despesa',
+                min_value=0.00,
+                max_value=None,
+                value=df_up.loc[0, 'valor'],
+                format='%0.2f',
+                step=0.01,
+                key=3303
+            )
+            descricao: str = st.text_area(
+                label='Descrição',
+                value=str(df_up.descricao[0]),
+                key=3304
+            )
             with st.form('update_despesa'):
-                apto_id: int = st.number_input(
-                    label='ID Apartamento',
-                    min_value=1,
-                    format='%d',
-                    step=1,
-                    key=3301,
-                    value=df_up.loc[0, 'apto_id']
-                )
-                data_pagamento: date = st.date_input(
-                    label='Data de pagamento',
-                    value=str_to_date(df_up.data_pagamento[0]),
-                    format='DD/MM/YYYY',
-                    key=3302
-                )
-                valor: float = st.number_input(
-                    label='Valor da despesa',
-                    min_value=0.00,
-                    max_value=None,
-                    value=df_up.loc[0, 'valor'],
-                    format='%0.2f',
-                    step=0.01,
-                    key=3303
-                )
-                descricao: str = st.text_area(
-                    label='Descrição',
-                    value=str(df_up.descricao[0]),
-                    key=3304
-                )
                 update_button = st.form_submit_button('Modificar')
                 if update_button:
                     despesa_up_data = empty_none_dict({
@@ -139,12 +141,12 @@ with tab3:
                     try:
                         put_response = requests.put(f"http://backend:8000/despesas/{update_id}", update_data)
                         show_response_message(put_response)
-                        st.subheader('Dados inseridos:')
-                        show_data_output(update_data)
-                    except Exception as e:
-                        show_response_message(despesa_up_data)
-                        st.subheader('Dados NÃO inseridos:')
+                        if put_response.status_code == 200:
+                            st.subheader('Dados inseridos, tudo OK:')
+                        else:
+                            st.subheader('Dados NÃO inseridos, favor revisar:')
                         show_data_output(despesa_up_data)
+                    except Exception as e:
                         print(e) 
         else:
             show_response_message(update_response)
@@ -154,6 +156,7 @@ with tab4:
     delete_id = st.number_input(
         label="ID Despesa",
         min_value=1,
+        value=None,
         format='%d',
         key=3400
     )

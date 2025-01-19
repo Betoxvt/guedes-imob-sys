@@ -1,11 +1,13 @@
-from datetime import date, timedelta
+from datetime import date
 import json
+import os
 import pandas as pd
 import requests
 import streamlit as st
 from utils.mydate import calculate_diarias, str_to_date
-from utils.myfunc import merge_dictionaries, show_data_output, show_response_message
+from utils.myfunc import show_data_output, show_response_message
 from utils.mystr import empty_none_dict, none_or_str
+from utils.mypdf import fill_ficha
 
 st.set_page_config(
     page_title='Ficha de Inquilinos',
@@ -16,8 +18,6 @@ st.title('Ficha de Inquilinos')
 tab1, tab2, tab3, tab4, tab5 = st.tabs(['Registrar', 'Consultar', 'Modificar', 'Deletar', 'Listar'])
 
 # Em registrar deve ser possível fazer upload de um arquivo ou forms essas coisas que o inquilino pode já ter preenchido em casa e enviado para nós (google forms ou sei lá)
-
-# Em consultar, deve ser possível então exportar a ficha em pdf no modelo proposto pelo condomínio
 
 # Ajeitar a validação dos dados, formato de envio para o banco de dados e formato de exibição.
 
@@ -113,19 +113,20 @@ with tab1:
             value=None,
             key=8017
         )
-        checkin = st.date_input(
+        checkin: date = st.date_input(
             label='Check-in',
             format='DD/MM/YYYY',
             key=8018,
-            value=date.today()
+            value=None
         )
-        checkout = st.date_input(
+        checkout: date = st.date_input(
             label='Check-out',
             format='DD/MM/YYYY',
             key=8019,
-            value=checkin + timedelta(days=1)
+            value=None
         )
         diarias: int = calculate_diarias(checkin, checkout)
+        st.write(f'Diárias: {diarias}')
         observacoes = st.text_area(
             label='Observações',
             value=None,
@@ -364,50 +365,50 @@ with tab1:
         submit_button = st.form_submit_button('Registrar')
         if submit_button:
             ficha_data = {
-                "apto": apto,
-                "nome": nome,
-                "tipo_residencia": tipo_residencia,
-                "cidade": cidade,
-                "cep": cep,
-                "uf": uf,
-                "pais": pais,
-                "tel": tel,
-                "estado_civil": estado_civil,
-                "profissao": profissao,
-                "rg": rg,
-                "cpf": cpf,
-                "mae": mae,
-                "automovel": automovel,
-                "modelo_auto": modelo_auto,
-                "placa_auto": placa_auto,
-                "cor_auto": cor_auto,
-                "checkin": checkin.isoformat(),
-                "checkout": checkout.isoformat(),
-                "observacoes": observacoes,
-                "proprietario": proprietario,
-                "imob_fone": imob_fone,
-                "a0": {'nome': a0_nome, 'doc': a0_doc, 'idade': a0_idade, 'parentesco': a0_parentesco},
-                "a1": {'nome': a1_nome, 'doc': a1_doc, 'idade': a1_idade, 'parentesco': a1_parentesco},
-                "a2": {'nome': a2_nome, 'doc': a2_doc, 'idade': a2_idade, 'parentesco': a2_parentesco},
-                "a3": {'nome': a3_nome, 'doc': a3_doc, 'idade': a3_idade, 'parentesco': a3_parentesco},
-                "a4": {'nome': a4_nome, 'doc': a4_doc, 'idade': a4_idade, 'parentesco': a4_parentesco},
-                "a5": {'nome': a5_nome, 'doc': a5_doc, 'idade': a5_idade, 'parentesco': a5_parentesco},
-                "a6": {'nome': a6_nome, 'doc': a6_doc, 'idade': a6_idade, 'parentesco': a6_parentesco},
-                "a7": {'nome': a7_nome, 'doc': a7_doc, 'idade': a7_idade, 'parentesco': a7_parentesco},
-                "a8": {'nome': a8_nome, 'doc': a8_doc, 'idade': a8_idade, 'parentesco': a8_parentesco},
-                "a9": {'nome': a9_nome, 'doc': a9_doc, 'idade': a9_idade, 'parentesco': a9_parentesco}
+                'apto': apto,
+                'nome': nome,
+                'tipo_residencia': tipo_residencia,
+                'cidade': cidade,
+                'cep': cep,
+                'uf': uf,
+                'pais': pais,
+                'tel': tel,
+                'estado_civil': estado_civil,
+                'profissao': profissao,
+                'rg': rg,
+                'cpf': cpf,
+                'mae': mae,
+                'automovel': automovel,
+                'modelo_auto': modelo_auto,
+                'placa_auto': placa_auto,
+                'cor_auto': cor_auto,
+                'checkin': checkin.isoformat(),
+                'checkout': checkout.isoformat(),
+                'observacoes': observacoes,
+                'proprietario': proprietario,
+                'imob_fone': imob_fone,
+                'a0': {'nome': a0_nome, 'doc': a0_doc, 'idade': a0_idade, 'parentesco': a0_parentesco},
+                'a1': {'nome': a1_nome, 'doc': a1_doc, 'idade': a1_idade, 'parentesco': a1_parentesco},
+                'a2': {'nome': a2_nome, 'doc': a2_doc, 'idade': a2_idade, 'parentesco': a2_parentesco},
+                'a3': {'nome': a3_nome, 'doc': a3_doc, 'idade': a3_idade, 'parentesco': a3_parentesco},
+                'a4': {'nome': a4_nome, 'doc': a4_doc, 'idade': a4_idade, 'parentesco': a4_parentesco},
+                'a5': {'nome': a5_nome, 'doc': a5_doc, 'idade': a5_idade, 'parentesco': a5_parentesco},
+                'a6': {'nome': a6_nome, 'doc': a6_doc, 'idade': a6_idade, 'parentesco': a6_parentesco},
+                'a7': {'nome': a7_nome, 'doc': a7_doc, 'idade': a7_idade, 'parentesco': a7_parentesco},
+                'a8': {'nome': a8_nome, 'doc': a8_doc, 'idade': a8_idade, 'parentesco': a8_parentesco},
+                'a9': {'nome': a9_nome, 'doc': a9_doc, 'idade': a9_idade, 'parentesco': a9_parentesco}
             }
             submit_data = json.dumps(obj=empty_none_dict(ficha_data), separators=(',',':'))
 
             try:
-                post_response = requests.post("http://backend:8000/fichas/", submit_data)
+                post_response = requests.post('http://backend:8000/fichas/', submit_data)
                 show_response_message(post_response)
-                st.subheader('Dados inseridos:')
+                if post_response.status_code == 200:
+                    st.subheader('Dados inseridos, tudo OK:')
+                else:
+                    st.subheader('Dados NÃO inseridos, favor revisar:')
                 show_data_output(ficha_data)
             except Exception as e:
-                show_response_message(post_response)
-                st.subheader('Dados NÃO inseridos:')
-                show_data_output(ficha_data)
                 print(e)
 
 with tab2:
@@ -415,8 +416,10 @@ with tab2:
     get_id = st.number_input(
         'ID da Ficha de Inquilino',
         min_value=1,
+        value=None,
         format='%d',
-        key=8150
+        step=1,
+        key=8250
     )
     if get_id:
         get_response = requests.get(f'http://backend:8000/fichas/{get_id}')
@@ -426,13 +429,30 @@ with tab2:
             st.dataframe(df_get.set_index('id'))
         else:
             show_response_message(get_response)
+        if st.button('Gerar PDF',key=8251):
+            pdf = fill_ficha(ficha)
+            if pdf:
+                st.success(f'PDF gerado com sucesso')
+                with open(pdf, 'rb') as f:
+                    st.download_button(
+                        label='Download PDF',
+                        data=f,
+                        file_name=pdf[26:],
+                        mime='application/pdf',
+                        key=8252
+                    )
+                os.remove(pdf)
+            else:
+                st.error(f'Não foi possível gerar o PDF')
 
 with tab3:
     st.header('Modificar Ficha de Inquilino')
     update_id = st.number_input(
         'ID da Ficha',
         min_value=1,
+        value=None,
         format='%d',
+        step=1,
         key=8151
     )
     if update_id:
@@ -441,7 +461,7 @@ with tab3:
             ficha_up = update_response.json()
             df_up = pd.DataFrame([ficha_up])
             st.dataframe(df_up.set_index('id'))
-            st.subheader(f"Ficha de Inquilino nº: {update_id}")
+            st.subheader(f'Ficha de Inquilino nº: {update_id}')
             with st.form('update_ficha'):
                 apto = st.text_input(
                     label='Apartamento',
@@ -532,13 +552,13 @@ with tab3:
                     value=none_or_str(df_up.cor_auto[0]),
                     key=8093
                 )
-                checkin = st.date_input(
+                checkin: date = st.date_input(
                     label='Check-in',
                     value=str_to_date(df_up.checkin[0]),
                     format='DD/MM/YYYY',
                     key=8094
                 )
-                checkout = st.date_input(
+                checkout: date = st.date_input(
                     label='Check-out',
                     value=str_to_date(df_up.checkout[0]),
                     format='DD/MM/YYYY',
@@ -784,51 +804,51 @@ with tab3:
                 update_button = st.form_submit_button('Modificar')
                 if update_button:
                     ficha_up_data = {
-                        "apto": apto,
-                        "nome": nome,
-                        "tipo_residencia": tipo_residencia,
-                        "cidade": cidade,
-                        "cep": cep,
-                        "uf": uf,
-                        "pais": pais,
-                        "tel": tel,
-                        "estado_civil": estado_civil,
-                        "profissao": profissao,
-                        "rg": rg,
-                        "cpf": cpf,
-                        "mae": mae,
-                        "automovel": automovel,
-                        "modelo_auto": modelo_auto,
-                        "placa_auto": placa_auto,
-                        "cor_auto": cor_auto,
-                        "checkin": checkin.isoformat(),
-                        "checkout": checkout.isoformat(),
-                        "observacoes": observacoes,
-                        "proprietario": proprietario,
-                        "imob_fone": imob_fone,
-                        "a0": {'nome': a0_nome, 'doc': a0_doc, 'idade': a0_idade, 'parentesco': a0_parentesco},
-                        "a1": {'nome': a1_nome, 'doc': a1_doc, 'idade': a1_idade, 'parentesco': a1_parentesco},
-                        "a2": {'nome': a2_nome, 'doc': a2_doc, 'idade': a2_idade, 'parentesco': a2_parentesco},
-                        "a3": {'nome': a3_nome, 'doc': a3_doc, 'idade': a3_idade, 'parentesco': a3_parentesco},
-                        "a4": {'nome': a4_nome, 'doc': a4_doc, 'idade': a4_idade, 'parentesco': a4_parentesco},
-                        "a5": {'nome': a5_nome, 'doc': a5_doc, 'idade': a5_idade, 'parentesco': a5_parentesco},
-                        "a6": {'nome': a6_nome, 'doc': a6_doc, 'idade': a6_idade, 'parentesco': a6_parentesco},
-                        "a7": {'nome': a7_nome, 'doc': a7_doc, 'idade': a7_idade, 'parentesco': a7_parentesco},
-                        "a8": {'nome': a8_nome, 'doc': a8_doc, 'idade': a8_idade, 'parentesco': a8_parentesco},
-                        "a9": {'nome': a9_nome, 'doc': a9_doc, 'idade': a9_idade, 'parentesco': a9_parentesco}
+                        'apto': apto,
+                        'nome': nome,
+                        'tipo_residencia': tipo_residencia,
+                        'cidade': cidade,
+                        'cep': cep,
+                        'uf': uf,
+                        'pais': pais,
+                        'tel': tel,
+                        'estado_civil': estado_civil,
+                        'profissao': profissao,
+                        'rg': rg,
+                        'cpf': cpf,
+                        'mae': mae,
+                        'automovel': automovel,
+                        'modelo_auto': modelo_auto,
+                        'placa_auto': placa_auto,
+                        'cor_auto': cor_auto,
+                        'checkin': checkin.isoformat(),
+                        'checkout': checkout.isoformat(),
+                        'observacoes': observacoes,
+                        'proprietario': proprietario,
+                        'imob_fone': imob_fone,
+                        'a0': {'nome': a0_nome, 'doc': a0_doc, 'idade': a0_idade, 'parentesco': a0_parentesco},
+                        'a1': {'nome': a1_nome, 'doc': a1_doc, 'idade': a1_idade, 'parentesco': a1_parentesco},
+                        'a2': {'nome': a2_nome, 'doc': a2_doc, 'idade': a2_idade, 'parentesco': a2_parentesco},
+                        'a3': {'nome': a3_nome, 'doc': a3_doc, 'idade': a3_idade, 'parentesco': a3_parentesco},
+                        'a4': {'nome': a4_nome, 'doc': a4_doc, 'idade': a4_idade, 'parentesco': a4_parentesco},
+                        'a5': {'nome': a5_nome, 'doc': a5_doc, 'idade': a5_idade, 'parentesco': a5_parentesco},
+                        'a6': {'nome': a6_nome, 'doc': a6_doc, 'idade': a6_idade, 'parentesco': a6_parentesco},
+                        'a7': {'nome': a7_nome, 'doc': a7_doc, 'idade': a7_idade, 'parentesco': a7_parentesco},
+                        'a8': {'nome': a8_nome, 'doc': a8_doc, 'idade': a8_idade, 'parentesco': a8_parentesco},
+                        'a9': {'nome': a9_nome, 'doc': a9_doc, 'idade': a9_idade, 'parentesco': a9_parentesco}
                     }
                     update_data = json.dumps(obj=empty_none_dict(ficha_up_data), separators=(',',':'))
 
                     try:
-                        put_response = requests.put(f"http://backend:8000/fichas/{update_id}", update_data)
+                        put_response = requests.put(f'http://backend:8000/fichas/{update_id}', update_data)
                         show_response_message(put_response)
-                        st.subheader('Dados inseridos:')
+                        if put_response.status_code == 200:
+                            st.subheader('Dados inseridos, tudo OK:')
+                        else:
+                            st.subheader('Dados NÃO inseridos, favor revisar:')
                         show_data_output(ficha_up_data)
                     except Exception as e:
-                        show_response_message(put_response)
-                        st.subheader('Dados NÃO inseridos:')
-                        show_data_output(ficha_up_data)
-                        print(e) 
+                        print(e)
 
         else:
             show_response_message(update_response)
@@ -836,35 +856,36 @@ with tab3:
 with tab4:
     st.header('Deletar Ficha de Inquilino')
     delete_id = st.number_input(
-        label="ID Ficha",
+        label='ID Ficha',
         min_value=1,
+        value=None,
         format='%d',
         step=1,
         key=8149
     )
     if delete_id:
         show_delete_response = requests.get(f'http://backend:8000/fichas/{delete_id}')
-    if show_delete_response.status_code == 200:
-        ficha_delete = show_delete_response.json()
-        df_delete = pd.DataFrame([ficha_delete])
-        st.dataframe(df_delete.set_index('id'))
-    else:
-        show_response_message(show_delete_response)
-    if st.button(
-        'Deletar',
-        key=6400
-    ):
-        try:
-            delete_response = requests.delete(f'http://backend:8000/fichas/{delete_id}')
-        except Exception as e:
-            print(e)
-        finally:
-            show_response_message(delete_response)
+        if show_delete_response.status_code == 200:
+            ficha_delete = show_delete_response.json()
+            df_delete = pd.DataFrame([ficha_delete])
+            st.dataframe(df_delete.set_index('id'))
+        else:
+            show_response_message(show_delete_response)
+        if st.button(
+            'Deletar',
+            key=6400
+        ):
+            try:
+                delete_response = requests.delete(f'http://backend:8000/fichas/{delete_id}')
+            except Exception as e:
+                print(e)
+            finally:
+                show_response_message(delete_response)
 
 with tab5:
     st.header('Listar Fichas de Inquilino')
     if st.button(
-        "Mostrar",
+        'Mostrar',
         key=6500
     ):
         get_list_response = requests.get(f'http://backend:8000/fichas/')
