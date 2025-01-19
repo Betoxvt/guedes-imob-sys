@@ -55,7 +55,7 @@ def update_fields_generator(id: int, table: str, reg: str, page_n: int):
             updated_json = json.dumps(obj=updated, indent=1, separators=(',',':'))
             response = requests.put(f"http://backend:8000/{table}/{id}", data=updated_json)
             show_response_message(response)
-
+            
 
 def show_response_message(response) -> None:
     if response.status_code == 200:

@@ -83,7 +83,7 @@ with tab3:
         value=None,
         step=1,
         format='%d',
-        key=5300,
+        key=5300
     )
     if update_id:
         update_response = requests.get(f'http://backend:8000/proprietarios/{update_id}')
