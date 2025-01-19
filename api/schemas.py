@@ -45,6 +45,7 @@ class DespesaBase(BaseModel):
     apto_id: Optional[int]
     data_pagamento: date
     valor: float
+    categoria: str
     descricao: str
 
 
