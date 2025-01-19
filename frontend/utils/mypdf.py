@@ -50,13 +50,14 @@ def fill_ficha(data: dict[str, str]):
             if k == i:
                 x = coord[0]
                 y = (A4[1] - coord[1])
-                c.drawString(x=x, y=y, text=str(v))
+                if v != None:
+                    c.drawString(x=x, y=y, text=str(v))
         if k in acomps and data[k] is not None:
             field: dict = data[k]
             for key, value in field.items():
                 x, y = acomp_coord[counter][key]
                 v = value
-                if value != None:
+                if v != None:
                     c.drawString(x=x, y=A4[1] - y, text=str(v))
             counter += 1
 
