@@ -56,7 +56,7 @@ with tab1:
             })
             submit_data = json.dumps(obj=despesa_data, separators=(',',':'))
             try:
-                post_response = requests.post("http://backend:8000/despesas/", submit_data)
+                post_response = requests.post("http://api:8000/despesas/", submit_data)
                 show_response_message(post_response)
                 if post_response.status_code == 200:
                     st.subheader('Dados inseridos, tudo OK:')
@@ -77,7 +77,7 @@ with tab2:
         key=3200
     )
     if get_id:
-        get_response = requests.get(f'http://backend:8000/despesas/{get_id}')
+        get_response = requests.get(f'http://api:8000/despesas/{get_id}')
         if get_response.status_code == 200:
             despesa = get_response.json()
             df_get = pd.DataFrame([despesa])
@@ -95,7 +95,7 @@ with tab3:
         key=3300
     )
     if update_id:
-        update_response = requests.get(f'http://backend:8000/despesas/{update_id}')
+        update_response = requests.get(f'http://api:8000/despesas/{update_id}')
         if update_response.status_code == 200:
             despesa_up = update_response.json()
             df_up = pd.DataFrame([despesa_up])
@@ -139,7 +139,7 @@ with tab3:
                     })
                     update_data = json.dumps(obj=despesa_up_data, separators=(',',':'))
                     try:
-                        put_response = requests.put(f"http://backend:8000/despesas/{update_id}", update_data)
+                        put_response = requests.put(f"http://api:8000/despesas/{update_id}", update_data)
                         show_response_message(put_response)
                         if put_response.status_code == 200:
                             st.subheader('Dados inseridos, tudo OK:')
@@ -161,7 +161,7 @@ with tab4:
         key=3400
     )
     if delete_id:
-        show_delete_response = requests.get(f'http://backend:8000/despesas/{delete_id}')
+        show_delete_response = requests.get(f'http://api:8000/despesas/{delete_id}')
         if show_delete_response.status_code == 200:
             despesa_delete = show_delete_response.json()
             df_delete = pd.DataFrame([despesa_delete])
@@ -172,7 +172,7 @@ with tab4:
             'Deletar',
             key=3401
         ):
-            delete_response = requests.delete(f'http://backend:8000/despesas/{delete_id}')
+            delete_response = requests.delete(f'http://api:8000/despesas/{delete_id}')
             show_response_message(delete_response)
 
 with tab5:
@@ -181,15 +181,12 @@ with tab5:
         "Mostrar",
         key=3500
     ):
-        get_list_response = requests.get(f'http://backend:8000/despesas/')
+        get_list_response = requests.get(f'http://api:8000/despesas/')
         if get_list_response.status_code == 200:
             despesas = get_list_response.json()
             if despesas:
                 df_list = pd.DataFrame(despesas)
-                if df_list['id']:
-                    st.dataframe(df_list.set_index('id'))
-                else:
-                    st.dataframe(df_list, hide_index=True)
+                st.dataframe(df_list.set_index('id'))
             else:
                 st.warning('Não há despesas para listar')
         else:

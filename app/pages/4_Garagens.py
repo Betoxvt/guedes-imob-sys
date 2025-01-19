@@ -71,7 +71,7 @@ with tab1:
             })
             submit_data = json.dumps(obj=garagem_data, separators=(',',':'))
             try:
-                post_response = requests.post("http://backend:8000/garagens/", submit_data)
+                post_response = requests.post("http://api:8000/garagens/", submit_data)
                 show_response_message(post_response)
                 if post_response.status_code == 200:
                     st.subheader('Dados inseridos, tudo OK:')
@@ -92,7 +92,7 @@ with tab2:
         key=4200
     )
     if get_id:
-        get_response = requests.get(f'http://backend:8000/garagens/{get_id}')
+        get_response = requests.get(f'http://api:8000/garagens/{get_id}')
         if get_response.status_code == 200:
             garagem = get_response.json()
             df_get = pd.DataFrame([garagem])
@@ -111,7 +111,7 @@ with tab3:
         key=4300
     )
     if update_id:
-        update_response = requests.get(f'http://backend:8000/garagens/{update_id}')
+        update_response = requests.get(f'http://api:8000/garagens/{update_id}')
         if update_response.status_code == 200:
             garagem_up = update_response.json()
             df_up = pd.DataFrame([garagem_up])
@@ -170,7 +170,7 @@ with tab3:
                     }
                     update_data = json.dumps(obj=garagem_up_data, separators=(',',':'))
                     try:
-                        put_response = requests.put(f"http://backend:8000/garagens/{update_id}", update_data)
+                        put_response = requests.put(f"http://api:8000/garagens/{update_id}", update_data)
                         show_response_message(put_response)
                         if put_response.status_code == 200:
                             st.subheader('Dados inseridos, tudo OK:')
@@ -192,7 +192,7 @@ with tab4:
         key=4400
     )
     if delete_id:
-        show_delete_response = requests.get(f'http://backend:8000/garagens/{delete_id}')
+        show_delete_response = requests.get(f'http://api:8000/garagens/{delete_id}')
         if show_delete_response.status_code == 200:
             garagem_delete = show_delete_response.json()
             df_delete = pd.DataFrame([garagem_delete])
@@ -203,7 +203,7 @@ with tab4:
             'Deletar',
             key=4401
         ):
-            delete_response = requests.delete(f'http://backend:8000/garagens/{delete_id}')
+            delete_response = requests.delete(f'http://api:8000/garagens/{delete_id}')
             show_response_message(delete_response)
 
 with tab5:
@@ -212,15 +212,12 @@ with tab5:
         "Mostrar",
         key=4500
     ):
-        get_list_response = requests.get(f'http://backend:8000/garagens/')
+        get_list_response = requests.get(f'http://api:8000/garagens/')
         if get_list_response.status_code == 200:
             garagens = get_list_response.json()
             if garagens:
                 df_list = pd.DataFrame(garagens)
-                if df_list['id']:
-                    st.dataframe(df_list.set_index('id'))
-                else:
-                    st.dataframe(df_list, hide_index=True)
+                st.dataframe(df_list.set_index('id'))
             else:
                 st.warning('Não há garagens para listar')
         else:
