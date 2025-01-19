@@ -61,6 +61,7 @@ with tab2:
     get_id = st.number_input(
         'ID Proprietário',
         min_value=1,
+        value=None,
         format='%d',
         step=1,
         key=5200
@@ -79,6 +80,7 @@ with tab3:
     update_id = st.number_input(
         'ID do Proprietário',
         min_value=1,
+        value=None,
         step=1,
         format='%d',
         key=5300,
@@ -121,8 +123,8 @@ with tab3:
                     update_data = json.dumps(obj=prop_up_data, separators=(',',':'))
                     try:
                         put_response = requests.put(f"http://backend:8000/proprietarios/{update_id}", update_data)
-                        show_response_message(post_response)
-                        if post_response.status_code == 200:
+                        show_response_message(put_response)
+                        if put_response.status_code == 200:
                             st.subheader('Dados inseridos, tudo OK:')
                         else:
                             st.subheader('Dados NÃO inseridos, favor revisar:')
@@ -131,11 +133,13 @@ with tab3:
                         print(e) 
         else:
             show_response_message(update_response)
+
 with tab4:
     st.header('Deletar Proprietário')
     delete_id = st.number_input(
         label="ID Proprietário",
         min_value=1,
+        value=None,
         format='%d',
         step=1,
         key=5400
@@ -143,8 +147,8 @@ with tab4:
     if delete_id:
         show_delete_response = requests.get(f'http://backend:8000/proprietarios/{delete_id}')
         if show_delete_response.status_code == 200:
-            despesa_delete = show_delete_response.json()
-            df_delete = pd.DataFrame([despesa_delete])
+            proprietario_delete = show_delete_response.json()
+            df_delete = pd.DataFrame([proprietario_delete])
             st.dataframe(df_delete.set_index('id'))
             if st.button(
                 'Deletar',

@@ -1,4 +1,4 @@
-from datetime import date, timedelta
+from datetime import date
 import json
 import pandas as pd
 import requests
@@ -21,6 +21,7 @@ with tab1:
     apto_origem_id: int = st.number_input(
         label='ID Apartamento de origem',
         min_value=1,
+        value=None,
         format='%d',
         step=1,
         key=4100
@@ -85,6 +86,7 @@ with tab2:
     get_id = st.number_input(
         'ID Garagem',
         min_value=1,
+        value=None,
         format='%d',
         step=1,
         key=4200
@@ -103,6 +105,7 @@ with tab3:
     update_id = st.number_input(
         'ID do Garagem',
         min_value=1,
+        value=None,
         format='%d',
         step=1,
         key=4300
@@ -184,6 +187,7 @@ with tab4:
     delete_id = st.number_input(
         label="ID Garagem",
         min_value=1,
+        value=None,
         format='%d',
         key=4400
     )

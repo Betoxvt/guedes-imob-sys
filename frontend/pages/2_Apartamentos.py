@@ -89,6 +89,7 @@ with tab2:
     get_id = st.number_input(
         'ID Apartamento',
         min_value=1,
+        value=None,
         format='%d',
         step=1,
         key=2200
@@ -107,6 +108,7 @@ with tab3:
     update_id = st.number_input(
         'ID do Apartamento',
         min_value=1,
+        value=None,
         format='%d',
         step=1,
         key=2300
@@ -192,6 +194,7 @@ with tab4:
     delete_id = st.number_input(
         label="ID Apartamento",
         min_value=1,
+        value=None,
         format='%d',
         step=1,
         key=2400

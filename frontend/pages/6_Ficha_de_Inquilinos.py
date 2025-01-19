@@ -1,4 +1,4 @@
-from datetime import date, timedelta
+from datetime import date
 import json
 import pandas as pd
 import requests
@@ -113,13 +113,13 @@ with tab1:
             value=None,
             key=8017
         )
-        checkin = st.date_input(
+        checkin: date = st.date_input(
             label='Check-in',
             format='DD/MM/YYYY',
             key=8018,
             value=None
         )
-        checkout = st.date_input(
+        checkout: date = st.date_input(
             label='Check-out',
             format='DD/MM/YYYY',
             key=8019,
@@ -416,7 +416,9 @@ with tab2:
     get_id = st.number_input(
         'ID da Ficha de Inquilino',
         min_value=1,
+        value=None,
         format='%d',
+        step=1,
         key=8150
     )
     if get_id:
@@ -433,7 +435,9 @@ with tab3:
     update_id = st.number_input(
         'ID da Ficha',
         min_value=1,
+        value=None,
         format='%d',
+        step=1,
         key=8151
     )
     if update_id:
@@ -533,13 +537,13 @@ with tab3:
                     value=none_or_str(df_up.cor_auto[0]),
                     key=8093
                 )
-                checkin = st.date_input(
+                checkin: date = st.date_input(
                     label='Check-in',
                     value=str_to_date(df_up.checkin[0]),
                     format='DD/MM/YYYY',
                     key=8094
                 )
-                checkout = st.date_input(
+                checkout: date = st.date_input(
                     label='Check-out',
                     value=str_to_date(df_up.checkout[0]),
                     format='DD/MM/YYYY',
@@ -839,6 +843,7 @@ with tab4:
     delete_id = st.number_input(
         label="ID Ficha",
         min_value=1,
+        value=None,
         format='%d',
         step=1,
         key=8149

@@ -20,6 +20,7 @@ with tab1:
     apto_id: int = st.number_input(
     label='ID Apartamento',
     min_value=1,
+    value=None,
     format='%d',
     step=1,
     key=3100
@@ -70,6 +71,7 @@ with tab2:
     get_id = st.number_input(
         'ID Despesa',
         min_value=1,
+        value=None,
         format='%d',
         step=1,
         key=3200
@@ -88,6 +90,7 @@ with tab3:
     update_id = st.number_input(
         'ID do Despesa',
         min_value=1,
+        value=None,
         format='%d',
         key=3300
     )
@@ -153,6 +156,7 @@ with tab4:
     delete_id = st.number_input(
         label="ID Despesa",
         min_value=1,
+        value=None,
         format='%d',
         key=3400
     )
