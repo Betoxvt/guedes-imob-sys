@@ -5,7 +5,7 @@ import pandas as pd
 import requests
 import streamlit as st
 from utils.mydate import calculate_diarias, str_to_date
-from utils.myfunc import show_data_output, show_response_message
+from utils.myfunc import cat_index, show_data_output, show_response_message
 from utils.mystr import empty_none_dict, none_or_str
 from utils.mypdf import fill_ficha
 
@@ -36,7 +36,7 @@ with tab1:
         )
         tipo_residencia = st.radio(
             label='Tipo de residência',
-            options=['Anual', 'Temporária'],
+            options=['Anual', 'Temporário'],
             index=1,
             horizontal=True,
             key=8003
@@ -446,6 +446,7 @@ with tab2:
                 st.error(f'Não foi possível gerar o PDF')
 
 with tab3:
+    civil_cats = ['Casado(a)', 'Divorciado(a)', 'Separado(a)', 'Solteiro(a)', 'Viúvo(a)']
     st.header('Modificar Ficha de Inquilino')
     update_id = st.number_input(
         'ID da Ficha',
@@ -475,8 +476,8 @@ with tab3:
                 )
                 tipo_residencia = st.radio(
                     label='Tipo de residência',
-                    options=['Anual', 'Temporária'],
-                    index=1,
+                    options=['Anual', 'Temporário'],
+                    index=cat_index(df_up, 'tipo_residencia', ['Anual', 'Temporário']),
                     horizontal=True,
                     key=8075
                 )
@@ -508,7 +509,7 @@ with tab3:
                 estado_civil = st.selectbox(
                     label='Estado civíl',
                     options=['Casado(a)', 'Divorciado(a)', 'Separado(a)', 'Solteiro(a)', 'Viúvo(a)'],
-                    placeholder=str(df_up.estado_civil[0]),
+                    index=cat_index(df_up, 'estado_civil', civil_cats),
                     key=8081
                 )
                 profissao = st.text_input(

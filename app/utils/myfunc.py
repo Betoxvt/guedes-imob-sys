@@ -2,15 +2,13 @@ import json
 import pandas as pd
 import requests
 import streamlit as st
+from typing import List
 
 
-def show_data_output(data: dict):
-    if isinstance(data, dict):
-        df = pd.DataFrame([data])
-        if 'id' in df.columns:
-            st.dataframe(df.set_index('id'))
-        else:
-            st.dataframe(df, hide_index=True)
+def cat_index(df: pd.DataFrame, label: str, cats: List[str]):
+    for i in range(0, len(cats)):
+        if df.loc[0, label] == cats[i]:
+            return i
 
 
 def merge_dictionaries(dict1_data, dict2_data):
@@ -26,7 +24,32 @@ def merge_dictionaries(dict1_data, dict2_data):
   """
   merged_data = {**dict1_data, **dict2_data} 
   return merged_data
-  
+
+
+def show_data_output(data: dict):
+    if isinstance(data, dict):
+        df = pd.DataFrame([data])
+        if 'id' in df.columns:
+            st.dataframe(df.set_index('id'))
+        else:
+            st.dataframe(df, hide_index=True)
+
+
+def show_response_message(response) -> None:
+    if response.status_code == 200:
+        st.success('Operação realizada com sucesso!')
+    else:
+        try:
+            data = response.json()
+            if 'detail' in data:
+                if isinstance(data['detail'], list):
+                    errors = '\n'.join([error['msg'] for error in data['detail']])
+                    st.error(f'Erro: {errors}')
+                else:
+                    st.error(f'Erro: {data["detail"]}')
+        except ValueError:
+            st.error('Erro desconhecido. Não foi possível decodificar a resposta.')
+
 
 def update_fields_generator(id: int, table: str, reg: str, page_n: int):
     response = requests.get(f'http://backend:8000/{table}/{id}')
@@ -55,19 +78,3 @@ def update_fields_generator(id: int, table: str, reg: str, page_n: int):
             updated_json = json.dumps(obj=updated, indent=1, separators=(',',':'))
             response = requests.put(f"http://backend:8000/{table}/{id}", data=updated_json)
             show_response_message(response)
-            
-
-def show_response_message(response) -> None:
-    if response.status_code == 200:
-        st.success('Operação realizada com sucesso!')
-    else:
-        try:
-            data = response.json()
-            if 'detail' in data:
-                if isinstance(data['detail'], list):
-                    errors = '\n'.join([error['msg'] for error in data['detail']])
-                    st.error(f'Erro: {errors}')
-                else:
-                    st.error(f'Erro: {data["detail"]}')
-        except ValueError:
-            st.error('Erro desconhecido. Não foi possível decodificar a resposta.')
