@@ -23,125 +23,125 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(['Registrar', 'Consultar', 'Modificar', '
 
 with tab1:
     st.header('Registrar Ficha de Inquilino')
+    apto = st.text_input(
+        label='Apartamento',
+        value=None,
+        key=8001
+    )
+    nome = st.text_input(
+        label='Nome completo',
+        value=None,
+        key=8002
+    )
+    tipo_residencia = st.radio(
+        label='Tipo de residência',
+        options=['Anual', 'Temporário'],
+        index=1,
+        horizontal=True,
+        key=8003
+    )
+    cidade = st.text_input(
+        label='Naturalidade (cidade)',
+        value=None,
+        key=8004
+    )
+    cep = st.text_input(
+        label='CEP',
+        value=None,
+        key=8005
+    )
+    uf = st.text_input(
+        label='Estado (UF)',
+        value=None,
+        key=8006
+    )
+    pais = st.text_input(
+        label='País',
+        value=None,
+        key=8007
+    )
+    tel = st.text_input(
+        label='Telefone',
+        value=None,
+        key=8008
+    )
+    estado_civil = st.selectbox(
+        label='Estado civíl',
+        index=0,
+        placeholder='Selecione opção',
+        options=['Casado(a)', 'Divorciado(a)', 'Separado(a)', 'Solteiro(a)', 'Viúvo(a)'],
+        key=8009
+    )
+    profissao = st.text_input(
+        label='Profissão',
+        value=None,
+        key=8010
+    )
+    rg = st.text_input(
+        label='Identidade',
+        value=None,
+        key=8011
+    )
+    cpf = st.text_input(
+        label='CPF',
+        value=None,
+        key=8012
+    )
+    mae = st.text_input(
+        label='Nome completo da mãe',
+        value=None,
+        key=8013
+    )        
+    automovel = st.text_input(
+        label='Automóvel',
+        value=None,
+        key=8014
+    )
+    modelo_auto = st.text_input(
+        label='Modelo',
+        value=None,
+        key=8015
+    )
+    placa_auto = st.text_input(
+        label='Placa',
+        value=None,
+        key=8016
+    )
+    cor_auto = st.text_input(
+        label='Cor',
+        value=None,
+        key=8017
+    )
+    checkin: date = st.date_input(
+        label='Check-in',
+        format='DD/MM/YYYY',
+        key=8018,
+        value=None
+    )
+    checkout: date = st.date_input(
+        label='Check-out',
+        format='DD/MM/YYYY',
+        key=8019,
+        value=None
+    )
+    diarias: int = calculate_diarias(checkin, checkout)
+    st.write(f'Diárias: {diarias}')
+    observacoes = st.text_area(
+        label='Observações',
+        value=None,
+        key=8020
+    )
+    proprietario = st.text_input(
+        label='Proprietário',
+        value=None,
+        key=8021
+    )
+    imob_fone = st.text_input(
+        label='Telefone Imobiliária',
+        value=None,
+        key=8022
+    )
     with st.form('new_ficha'):
-        apto = st.text_input(
-            label='Apartamento',
-            value=None,
-            key=8001
-        )
-        nome = st.text_input(
-            label='Nome completo',
-            value=None,
-            key=8002
-        )
-        tipo_residencia = st.radio(
-            label='Tipo de residência',
-            options=['Anual', 'Temporário'],
-            index=1,
-            horizontal=True,
-            key=8003
-        )
-        cidade = st.text_input(
-            label='Naturalidade (cidade)',
-            value=None,
-            key=8004
-        )
-        cep = st.text_input(
-            label='CEP',
-            value=None,
-            key=8005
-        )
-        uf = st.text_input(
-            label='Estado (UF)',
-            value=None,
-            key=8006
-        )
-        pais = st.text_input(
-            label='País',
-            value=None,
-            key=8007
-        )
-        tel = st.text_input(
-            label='Telefone',
-            value=None,
-            key=8008
-        )
-        estado_civil = st.selectbox(
-            label='Estado civíl',
-            index=0,
-            placeholder='Selecione opção',
-            options=['Casado(a)', 'Divorciado(a)', 'Separado(a)', 'Solteiro(a)', 'Viúvo(a)'],
-            key=8009
-        )
-        profissao = st.text_input(
-            label='Profissão',
-            value=None,
-            key=8010
-        )
-        rg = st.text_input(
-            label='Identidade',
-            value=None,
-            key=8011
-        )
-        cpf = st.text_input(
-            label='CPF',
-            value=None,
-            key=8012
-        )
-        mae = st.text_input(
-            label='Nome completo da mãe',
-            value=None,
-            key=8013
-        )        
-        automovel = st.text_input(
-            label='Automóvel',
-            value=None,
-            key=8014
-        )
-        modelo_auto = st.text_input(
-            label='Modelo',
-            value=None,
-            key=8015
-        )
-        placa_auto = st.text_input(
-            label='Placa',
-            value=None,
-            key=8016
-        )
-        cor_auto = st.text_input(
-            label='Cor',
-            value=None,
-            key=8017
-        )
-        checkin: date = st.date_input(
-            label='Check-in',
-            format='DD/MM/YYYY',
-            key=8018,
-            value=None
-        )
-        checkout: date = st.date_input(
-            label='Check-out',
-            format='DD/MM/YYYY',
-            key=8019,
-            value=None
-        )
-        diarias: int = calculate_diarias(checkin, checkout)
-        st.write(f'Diárias: {diarias}')
-        observacoes = st.text_area(
-            label='Observações',
-            value=None,
-            key=8020
-        )
-        proprietario = st.text_input(
-            label='Proprietário',
-            value=None,
-            key=8021
-        )
-        imob_fone = st.text_input(
-            label='Telefone Imobiliária',
-            value=None,
-            key=8022
-        )
         st.markdown('**Acompanhante 01**')
         a0_nome = st.text_input(
             label='Nome',
@@ -463,125 +463,124 @@ with tab3:
             df_up = pd.DataFrame([ficha_up])
             st.dataframe(df_up.set_index('id'))
             st.subheader(f'Ficha de Inquilino nº: {update_id}')
+            apto = st.text_input(
+                label='Apartamento',
+                value=str(df_up.apto[0]),
+                key=8073
+            )
+            nome = st.text_input(
+                label='Nome completo',
+                value=str(df_up.nome[0]),
+                key=8074
+            )
+            tipo_residencia = st.radio(
+                label='Tipo de residência',
+                options=['Anual', 'Temporário'],
+                index=cat_index(df_up, 'tipo_residencia', ['Anual', 'Temporário']),
+                horizontal=True,
+                key=8075
+            )
+            cidade = st.text_input(
+                label='Naturalidade (cidade)',
+                value=str(df_up.cidade[0]),
+                key=8076
+            )
+            cep = st.text_input(
+                label='CEP',
+                value=str(df_up.cep[0]),
+                key=8077
+            )
+            uf = st.text_input(
+                label='Estado (UF)',
+                value=str(df_up.uf[0]),
+                key=8078
+            )
+            pais = st.text_input(
+                label='País',
+                value=str(df_up.pais[0]),
+                key=8079
+            )
+            tel = st.text_input(
+                label='Telefone',
+                value=str(df_up.tel[0]),
+                key=8080
+            )
+            estado_civil = st.selectbox(
+                label='Estado civíl',
+                options=['Casado(a)', 'Divorciado(a)', 'Separado(a)', 'Solteiro(a)', 'Viúvo(a)'],
+                index=cat_index(df_up, 'estado_civil', civil_cats),
+                key=8081
+            )
+            profissao = st.text_input(
+                label='Profissão',
+                value=str(df_up.profissao[0]),
+                key=8082
+            )
+            rg = st.text_input(
+                label='Identidade (RG)',
+                value=none_or_str(df_up.rg[0]),
+                key=8083
+            )
+            cpf = st.text_input(
+                label='CPF',
+                value=str(df_up.cpf[0]),
+                help='Somente números',
+                key=8084
+            )
+            mae = st.text_input(
+                label='Nome completo da mãe',
+                value=str(df_up.mae[0]),
+                key=8085
+            )
+            automovel = st.text_input(
+                label='Automóvel',
+                value=none_or_str(df_up.automovel[0]),
+                key=8087
+            )
+            modelo_auto = st.text_input(
+                label='Modelo',
+                value=none_or_str(df_up.modelo_auto[0]),
+                key=8089
+            )
+            placa_auto = st.text_input(
+                label='Placa',
+                value=none_or_str(df_up.placa_auto[0]),
+                key=8091
+            )
+            cor_auto = st.text_input(
+                label='Cor',
+                value=none_or_str(df_up.cor_auto[0]),
+                key=8093
+            )
+            checkin: date = st.date_input(
+                label='Check-in',
+                value=str_to_date(df_up.checkin[0]),
+                format='DD/MM/YYYY',
+                key=8094
+            )
+            checkout: date = st.date_input(
+                label='Check-out',
+                value=str_to_date(df_up.checkout[0]),
+                format='DD/MM/YYYY',
+                key=8095
+            )
+            diarias: int = calculate_diarias(checkin, checkout)
+            observacoes = st.text_area(
+                label='Observações',
+                value=none_or_str(df_up.loc[0, 'observacoes']),
+                key=8096
+            )
+            proprietario = st.text_input(
+                label='Proprietário',
+                value=none_or_str(df_up.proprietario[0]),
+                key=8097
+            )
+            imob_fone = st.text_input(
+                label='Telefone Imobiliária',
+                value=none_or_str(df_up.imob_fone[0]),
+                key=8098
+            )
             with st.form('update_ficha'):
-                apto = st.text_input(
-                    label='Apartamento',
-                    value=str(df_up.apto[0]),
-                    key=8073
-                )
-                nome = st.text_input(
-                    label='Nome completo',
-                    value=str(df_up.nome[0]),
-                    key=8074
-                )
-                tipo_residencia = st.radio(
-                    label='Tipo de residência',
-                    options=['Anual', 'Temporário'],
-                    index=cat_index(df_up, 'tipo_residencia', ['Anual', 'Temporário']),
-                    horizontal=True,
-                    key=8075
-                )
-                cidade = st.text_input(
-                    label='Naturalidade (cidade)',
-                    value=str(df_up.cidade[0]),
-                    key=8076
-                )
-                cep = st.text_input(
-                    label='CEP',
-                    value=str(df_up.cep[0]),
-                    key=8077
-                )
-                uf = st.text_input(
-                    label='Estado (UF)',
-                    value=str(df_up.uf[0]),
-                    key=8078
-                )
-                pais = st.text_input(
-                    label='País',
-                    value=str(df_up.pais[0]),
-                    key=8079
-                )
-                tel = st.text_input(
-                    label='Telefone',
-                    value=str(df_up.tel[0]),
-                    key=8080
-                )
-                estado_civil = st.selectbox(
-                    label='Estado civíl',
-                    options=['Casado(a)', 'Divorciado(a)', 'Separado(a)', 'Solteiro(a)', 'Viúvo(a)'],
-                    index=cat_index(df_up, 'estado_civil', civil_cats),
-                    key=8081
-                )
-                profissao = st.text_input(
-                    label='Profissão',
-                    value=str(df_up.profissao[0]),
-                    key=8082
-                )
-                rg = st.text_input(
-                    label='Identidade (RG)',
-                    value=none_or_str(df_up.rg[0]),
-                    key=8083
-                )
-                cpf = st.text_input(
-                    label='CPF',
-                    value=str(df_up.cpf[0]),
-                    help='Somente números',
-                    key=8084
-                )
-                mae = st.text_input(
-                    label='Nome completo da mãe',
-                    value=str(df_up.mae[0]),
-                    key=8085
-                )
-                automovel = st.text_input(
-                    label='Automóvel',
-                    value=none_or_str(df_up.automovel[0]),
-                    key=8087
-                )
-                modelo_auto = st.text_input(
-                    label='Modelo',
-                    value=none_or_str(df_up.modelo_auto[0]),
-                    key=8089
-                )
-                placa_auto = st.text_input(
-                    label='Placa',
-                    value=none_or_str(df_up.placa_auto[0]),
-                    key=8091
-                )
-                cor_auto = st.text_input(
-                    label='Cor',
-                    value=none_or_str(df_up.cor_auto[0]),
-                    key=8093
-                )
-                checkin: date = st.date_input(
-                    label='Check-in',
-                    value=str_to_date(df_up.checkin[0]),
-                    format='DD/MM/YYYY',
-                    key=8094
-                )
-                checkout: date = st.date_input(
-                    label='Check-out',
-                    value=str_to_date(df_up.checkout[0]),
-                    format='DD/MM/YYYY',
-                    key=8095
-                )
-                diarias: int = calculate_diarias(checkin, checkout)
-                observacoes = st.text_area(
-                    label='Observações',
-                    value=none_or_str(df_up.loc[0, 'observacoes']),
-                    key=8096
-                )
-                proprietario = st.text_input(
-                    label='Proprietário',
-                    value=none_or_str(df_up.proprietario[0]),
-                    key=8097
-                )
-                imob_fone = st.text_input(
-                    label='Telefone Imobiliária',
-                    value=none_or_str(df_up.imob_fone[0]),
-                    key=8098
-                )
-
                 st.markdown('**Acompanhante 01**')
                 a0_nome = st.text_input(
                     label='Nome',
