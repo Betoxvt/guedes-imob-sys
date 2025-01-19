@@ -140,8 +140,8 @@ with tab3:
                     update_data = json.dumps(obj=despesa_up_data, separators=(',',':'))
                     try:
                         put_response = requests.put(f"http://backend:8000/despesas/{update_id}", update_data)
-                        show_response_message(post_response)
-                        if post_response.status_code == 200:
+                        show_response_message(put_response)
+                        if put_response.status_code == 200:
                             st.subheader('Dados inseridos, tudo OK:')
                         else:
                             st.subheader('Dados NÃO inseridos, favor revisar:')

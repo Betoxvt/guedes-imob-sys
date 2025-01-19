@@ -446,7 +446,6 @@ with tab2:
             else:
                 st.error(f'Não foi possível gerar o PDF')
 
-
 with tab3:
     st.header('Modificar Ficha de Inquilino')
     update_id = st.number_input(
@@ -843,8 +842,8 @@ with tab3:
 
                     try:
                         put_response = requests.put(f"http://backend:8000/fichas/{update_id}", update_data)
-                        show_response_message(post_response)
-                        if post_response.status_code == 200:
+                        show_response_message(put_response)
+                        if put_response.status_code == 200:
                             st.subheader('Dados inseridos, tudo OK:')
                         else:
                             st.subheader('Dados NÃO inseridos, favor revisar:')
