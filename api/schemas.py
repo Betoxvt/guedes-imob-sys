@@ -1,4 +1,5 @@
 from datetime import date
+from enum import Enum
 from pydantic import BaseModel
 from typing import Optional
 
@@ -30,6 +31,16 @@ class ApartamentoBase(BaseModel):
     lock_senha: Optional[str]
 
 
+class DespesaCat(Enum):
+    cat1 = 'IPTU'
+    cat2 = 'CONDOMÍNIO'
+    cat3 = 'LUZ'
+    cat4 = 'GÁS'
+    cat5 = 'INTERNET'
+    cat6 = 'MANUTENÇÃO'
+    cat7 = 'OUTROS'
+
+
 class DespesaBase(BaseModel):
     apto_id: Optional[int]
     data_pagamento: date
@@ -52,6 +63,11 @@ class ProprietarioBase(BaseModel):
     cpf: Optional[str]
     tel: Optional[str]
     email: Optional[str]
+
+
+class FichaCat:
+    cat1 = 'Anual'
+    cat2 = 'Temporária'
 
 
 class FichaBase(BaseModel):

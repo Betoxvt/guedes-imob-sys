@@ -36,7 +36,7 @@ class Apartamento(Base):
     lock_senha: Mapped[str] = mapped_column(String, nullable=True)
     criado_em: Mapped[date] = mapped_column(server_default=func.current_date(), nullable=False)
     modificado_em: Mapped[date] = mapped_column(server_default=func.current_date(), onupdate=func.current_date(), nullable=False)
-    
+
 
 class Despesa(Base):
     __tablename__ = 'despesas'
@@ -45,6 +45,7 @@ class Despesa(Base):
     apto_id: Mapped[int] = mapped_column(ForeignKey('apartamentos.id'), nullable=True)
     data_pagamento: Mapped[date] = mapped_column(server_default=func.current_date(), nullable=False)
     valor: Mapped[float] = mapped_column(Numeric(10, 2), nullable=False)
+    categoria: Mapped[str] = mapped_column(String, nullable=False)
     descricao: Mapped[str] = mapped_column(String, nullable=False)
     criado_em: Mapped[date] = mapped_column(server_default=func.current_date(), nullable=False)
     modificado_em: Mapped[date] = mapped_column(server_default=func.current_date(), onupdate=func.current_date(), nullable=False)
