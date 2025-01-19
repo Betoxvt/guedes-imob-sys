@@ -1,5 +1,6 @@
 from datetime import date
 import json
+import os
 import pandas as pd
 import requests
 import streamlit as st
@@ -366,43 +367,43 @@ with tab1:
         submit_button = st.form_submit_button('Registrar')
         if submit_button:
             ficha_data = {
-                "apto": apto,
-                "nome": nome,
-                "tipo_residencia": tipo_residencia,
-                "cidade": cidade,
-                "cep": cep,
-                "uf": uf,
-                "pais": pais,
-                "tel": tel,
-                "estado_civil": estado_civil,
-                "profissao": profissao,
-                "rg": rg,
-                "cpf": cpf,
-                "mae": mae,
-                "automovel": automovel,
-                "modelo_auto": modelo_auto,
-                "placa_auto": placa_auto,
-                "cor_auto": cor_auto,
-                "checkin": checkin.isoformat(),
-                "checkout": checkout.isoformat(),
-                "observacoes": observacoes,
-                "proprietario": proprietario,
-                "imob_fone": imob_fone,
-                "a0": {'nome': a0_nome, 'doc': a0_doc, 'idade': a0_idade, 'parentesco': a0_parentesco},
-                "a1": {'nome': a1_nome, 'doc': a1_doc, 'idade': a1_idade, 'parentesco': a1_parentesco},
-                "a2": {'nome': a2_nome, 'doc': a2_doc, 'idade': a2_idade, 'parentesco': a2_parentesco},
-                "a3": {'nome': a3_nome, 'doc': a3_doc, 'idade': a3_idade, 'parentesco': a3_parentesco},
-                "a4": {'nome': a4_nome, 'doc': a4_doc, 'idade': a4_idade, 'parentesco': a4_parentesco},
-                "a5": {'nome': a5_nome, 'doc': a5_doc, 'idade': a5_idade, 'parentesco': a5_parentesco},
-                "a6": {'nome': a6_nome, 'doc': a6_doc, 'idade': a6_idade, 'parentesco': a6_parentesco},
-                "a7": {'nome': a7_nome, 'doc': a7_doc, 'idade': a7_idade, 'parentesco': a7_parentesco},
-                "a8": {'nome': a8_nome, 'doc': a8_doc, 'idade': a8_idade, 'parentesco': a8_parentesco},
-                "a9": {'nome': a9_nome, 'doc': a9_doc, 'idade': a9_idade, 'parentesco': a9_parentesco}
+                'apto': apto,
+                'nome': nome,
+                'tipo_residencia': tipo_residencia,
+                'cidade': cidade,
+                'cep': cep,
+                'uf': uf,
+                'pais': pais,
+                'tel': tel,
+                'estado_civil': estado_civil,
+                'profissao': profissao,
+                'rg': rg,
+                'cpf': cpf,
+                'mae': mae,
+                'automovel': automovel,
+                'modelo_auto': modelo_auto,
+                'placa_auto': placa_auto,
+                'cor_auto': cor_auto,
+                'checkin': checkin.isoformat(),
+                'checkout': checkout.isoformat(),
+                'observacoes': observacoes,
+                'proprietario': proprietario,
+                'imob_fone': imob_fone,
+                'a0': {'nome': a0_nome, 'doc': a0_doc, 'idade': a0_idade, 'parentesco': a0_parentesco},
+                'a1': {'nome': a1_nome, 'doc': a1_doc, 'idade': a1_idade, 'parentesco': a1_parentesco},
+                'a2': {'nome': a2_nome, 'doc': a2_doc, 'idade': a2_idade, 'parentesco': a2_parentesco},
+                'a3': {'nome': a3_nome, 'doc': a3_doc, 'idade': a3_idade, 'parentesco': a3_parentesco},
+                'a4': {'nome': a4_nome, 'doc': a4_doc, 'idade': a4_idade, 'parentesco': a4_parentesco},
+                'a5': {'nome': a5_nome, 'doc': a5_doc, 'idade': a5_idade, 'parentesco': a5_parentesco},
+                'a6': {'nome': a6_nome, 'doc': a6_doc, 'idade': a6_idade, 'parentesco': a6_parentesco},
+                'a7': {'nome': a7_nome, 'doc': a7_doc, 'idade': a7_idade, 'parentesco': a7_parentesco},
+                'a8': {'nome': a8_nome, 'doc': a8_doc, 'idade': a8_idade, 'parentesco': a8_parentesco},
+                'a9': {'nome': a9_nome, 'doc': a9_doc, 'idade': a9_idade, 'parentesco': a9_parentesco}
             }
             submit_data = json.dumps(obj=empty_none_dict(ficha_data), separators=(',',':'))
 
             try:
-                post_response = requests.post("http://backend:8000/fichas/", submit_data)
+                post_response = requests.post('http://backend:8000/fichas/', submit_data)
                 show_response_message(post_response)
                 if post_response.status_code == 200:
                     st.subheader('Dados inseridos, tudo OK:')
@@ -431,18 +432,19 @@ with tab2:
         else:
             show_response_message(get_response)
         if st.button('Gerar PDF',key=8251):
-            pdf = fill_ficha(ficha, img="./files/ficha_model/ficha.png", dir='./files/filled_fichas/')
+            pdf = fill_ficha(ficha)
             if pdf:
-                st.success(f'PDF gerado: {pdf}')
-                with open(f'./files/filled_fichas/{pdf}', 'rb') as f:
-                    contents = f.read()
-                st.download_button(
-                    label="Download PDF",
-                    data=contents,
-                    file_name=pdf,
-                    mime='application/pdf',
-                    key=8252
-                )
+                st.success(f'PDF gerado com sucesso')
+                with open(pdf, 'rb') as f:
+                    # contents = f.read()
+                    st.download_button(  # indent letf
+                        label='Download PDF',
+                        data=f,
+                        file_name=pdf[26:],
+                        mime='application/pdf',
+                        key=8252
+                    )
+                os.remove(pdf)
             else:
                 st.error(f'Não foi possível gerar o PDF')
 
@@ -462,7 +464,7 @@ with tab3:
             ficha_up = update_response.json()
             df_up = pd.DataFrame([ficha_up])
             st.dataframe(df_up.set_index('id'))
-            st.subheader(f"Ficha de Inquilino nº: {update_id}")
+            st.subheader(f'Ficha de Inquilino nº: {update_id}')
             with st.form('update_ficha'):
                 apto = st.text_input(
                     label='Apartamento',
@@ -805,43 +807,43 @@ with tab3:
                 update_button = st.form_submit_button('Modificar')
                 if update_button:
                     ficha_up_data = {
-                        "apto": apto,
-                        "nome": nome,
-                        "tipo_residencia": tipo_residencia,
-                        "cidade": cidade,
-                        "cep": cep,
-                        "uf": uf,
-                        "pais": pais,
-                        "tel": tel,
-                        "estado_civil": estado_civil,
-                        "profissao": profissao,
-                        "rg": rg,
-                        "cpf": cpf,
-                        "mae": mae,
-                        "automovel": automovel,
-                        "modelo_auto": modelo_auto,
-                        "placa_auto": placa_auto,
-                        "cor_auto": cor_auto,
-                        "checkin": checkin.isoformat(),
-                        "checkout": checkout.isoformat(),
-                        "observacoes": observacoes,
-                        "proprietario": proprietario,
-                        "imob_fone": imob_fone,
-                        "a0": {'nome': a0_nome, 'doc': a0_doc, 'idade': a0_idade, 'parentesco': a0_parentesco},
-                        "a1": {'nome': a1_nome, 'doc': a1_doc, 'idade': a1_idade, 'parentesco': a1_parentesco},
-                        "a2": {'nome': a2_nome, 'doc': a2_doc, 'idade': a2_idade, 'parentesco': a2_parentesco},
-                        "a3": {'nome': a3_nome, 'doc': a3_doc, 'idade': a3_idade, 'parentesco': a3_parentesco},
-                        "a4": {'nome': a4_nome, 'doc': a4_doc, 'idade': a4_idade, 'parentesco': a4_parentesco},
-                        "a5": {'nome': a5_nome, 'doc': a5_doc, 'idade': a5_idade, 'parentesco': a5_parentesco},
-                        "a6": {'nome': a6_nome, 'doc': a6_doc, 'idade': a6_idade, 'parentesco': a6_parentesco},
-                        "a7": {'nome': a7_nome, 'doc': a7_doc, 'idade': a7_idade, 'parentesco': a7_parentesco},
-                        "a8": {'nome': a8_nome, 'doc': a8_doc, 'idade': a8_idade, 'parentesco': a8_parentesco},
-                        "a9": {'nome': a9_nome, 'doc': a9_doc, 'idade': a9_idade, 'parentesco': a9_parentesco}
+                        'apto': apto,
+                        'nome': nome,
+                        'tipo_residencia': tipo_residencia,
+                        'cidade': cidade,
+                        'cep': cep,
+                        'uf': uf,
+                        'pais': pais,
+                        'tel': tel,
+                        'estado_civil': estado_civil,
+                        'profissao': profissao,
+                        'rg': rg,
+                        'cpf': cpf,
+                        'mae': mae,
+                        'automovel': automovel,
+                        'modelo_auto': modelo_auto,
+                        'placa_auto': placa_auto,
+                        'cor_auto': cor_auto,
+                        'checkin': checkin.isoformat(),
+                        'checkout': checkout.isoformat(),
+                        'observacoes': observacoes,
+                        'proprietario': proprietario,
+                        'imob_fone': imob_fone,
+                        'a0': {'nome': a0_nome, 'doc': a0_doc, 'idade': a0_idade, 'parentesco': a0_parentesco},
+                        'a1': {'nome': a1_nome, 'doc': a1_doc, 'idade': a1_idade, 'parentesco': a1_parentesco},
+                        'a2': {'nome': a2_nome, 'doc': a2_doc, 'idade': a2_idade, 'parentesco': a2_parentesco},
+                        'a3': {'nome': a3_nome, 'doc': a3_doc, 'idade': a3_idade, 'parentesco': a3_parentesco},
+                        'a4': {'nome': a4_nome, 'doc': a4_doc, 'idade': a4_idade, 'parentesco': a4_parentesco},
+                        'a5': {'nome': a5_nome, 'doc': a5_doc, 'idade': a5_idade, 'parentesco': a5_parentesco},
+                        'a6': {'nome': a6_nome, 'doc': a6_doc, 'idade': a6_idade, 'parentesco': a6_parentesco},
+                        'a7': {'nome': a7_nome, 'doc': a7_doc, 'idade': a7_idade, 'parentesco': a7_parentesco},
+                        'a8': {'nome': a8_nome, 'doc': a8_doc, 'idade': a8_idade, 'parentesco': a8_parentesco},
+                        'a9': {'nome': a9_nome, 'doc': a9_doc, 'idade': a9_idade, 'parentesco': a9_parentesco}
                     }
                     update_data = json.dumps(obj=empty_none_dict(ficha_up_data), separators=(',',':'))
 
                     try:
-                        put_response = requests.put(f"http://backend:8000/fichas/{update_id}", update_data)
+                        put_response = requests.put(f'http://backend:8000/fichas/{update_id}', update_data)
                         show_response_message(put_response)
                         if put_response.status_code == 200:
                             st.subheader('Dados inseridos, tudo OK:')
@@ -857,7 +859,7 @@ with tab3:
 with tab4:
     st.header('Deletar Ficha de Inquilino')
     delete_id = st.number_input(
-        label="ID Ficha",
+        label='ID Ficha',
         min_value=1,
         value=None,
         format='%d',
@@ -886,7 +888,7 @@ with tab4:
 with tab5:
     st.header('Listar Fichas de Inquilino')
     if st.button(
-        "Mostrar",
+        'Mostrar',
         key=6500
     ):
         get_list_response = requests.get(f'http://backend:8000/fichas/')

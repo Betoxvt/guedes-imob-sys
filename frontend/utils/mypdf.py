@@ -1,35 +1,36 @@
 import os
 from datetime import datetime
-import json
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 from reportlab.platypus import Paragraph
 from utils.mystr import two_liner
 
-def fill_ficha(data: dict[str, str], img: str, dir: str):
-    file_name = f"fichaID_{str(data['id'])}_checkin_{str(data['checkin'])}_T_{datetime.now()}.pdf"
+def fill_ficha(data: dict[str, str]):
+    file_name = f'ChkIn_{str(data['checkin'])}_ID_{str(data['id'])}_T_{datetime.now().strftime("%Y-%m-%d_%H-%M")}.pdf'
+    img = './files/ficha_model/ficha.png'
+    dir = './files/tmp_filled_fichas/'
     path = os.path.join(dir, file_name)
     c = canvas.Canvas(path)
-    # canvas.setFont("Helvetica", 12)
+    # c.setFont('Times-Roman', 12)
     c.drawImage(img, 0, 0, width=A4[0], height=A4[1])
     s: dict[int, int] = {
-        "apto":         [117, 193],
-        "nome":         [217, 193],
-        "cidade":       [187, 218],
-        "cep":          [376, 218],
-        "uf":           [482, 218],
-        "pais":         [117, 230],
-        "tel":          [300, 230],
-        "estado_civil": [151, 241],
-        "profissao":    [351, 241],
-        "rg":           [178, 253.4],
-        "cpf":          [348, 253],
-        "mae":          [118, 265],
-        "automovel":    [146, 276.5],
-        "modelo_auto":  [321, 276.5],
-        "placa_auto":   [118, 288.5],
-        "cor_auto":     [303, 288.5],
-        "proprietario": [195, 744],
+        'apto':         [117, 193],
+        'nome':         [217, 193],
+        'cidade':       [187, 218],
+        'cep':          [376, 218],
+        'uf':           [482, 218],
+        'pais':         [117, 230],
+        'tel':          [300, 230],
+        'estado_civil': [151, 241],
+        'profissao':    [351, 241],
+        'rg':           [178, 253.4],
+        'cpf':          [348, 253],
+        'mae':          [118, 265],
+        'automovel':    [146, 276.5],
+        'modelo_auto':  [321, 276.5],
+        'placa_auto':   [118, 288.5],
+        'cor_auto':     [303, 288.5],
+        'proprietario': [195, 744],
     }
     acomp_coord = [
         {'doc': [293, 328], 'idade': [405, 328], 'nome': [101, 328], 'parentesco': [443, 328]},
@@ -115,7 +116,7 @@ def fill_ficha(data: dict[str, str], img: str, dir: str):
         c.drawString(x, A4[1]-y, str(data['checkout'][:4]))
 
     c.save()
-    return file_name
+    return path
 
 if __name__ == '__main__':
     import csv
@@ -127,9 +128,9 @@ if __name__ == '__main__':
         dados = dict(zip(chaves, valores))
     print(dados)
     dir = './files/filled_fichas/'
-    img = "./files/ficha_model/ficha.png"
+    img = './files/ficha_model/ficha.png'
     pdf = fill_ficha(dados, img, dir)
-    print(f"PDF gerado: {pdf}")
+    print(f'PDF gerado: {pdf}')
 
 
 
