@@ -91,27 +91,28 @@ with tab1:
         label='Nome completo da mãe',
         value=None,
         key=8013
-    )        
-    automovel = st.text_input(
-        label='Automóvel',
-        value=None,
-        key=8014
     )
-    modelo_auto = st.text_input(
-        label='Modelo',
-        value=None,
-        key=8015
-    )
-    placa_auto = st.text_input(
-        label='Placa',
-        value=None,
-        key=8016
-    )
-    cor_auto = st.text_input(
-        label='Cor',
-        value=None,
-        key=8017
-    )
+    with st.expander('Dados do Automóvel'):        
+        automovel = st.text_input(
+            label='Automóvel',
+            value=None,
+            key=8014
+        )
+        modelo_auto = st.text_input(
+            label='Modelo',
+            value=None,
+            key=8015
+        )
+        placa_auto = st.text_input(
+            label='Placa',
+            value=None,
+            key=8016
+        )
+        cor_auto = st.text_input(
+            label='Cor',
+            value=None,
+            key=8017
+        )
     checkin: date = st.date_input(
         label='Check-in',
         format='DD/MM/YYYY',
@@ -125,8 +126,10 @@ with tab1:
         value=None
     )
     diarias: int = calculate_diarias(checkin, checkout)
-    st.write(f'Diárias: {diarias}')
-    observacoes = st.text_area(
+    st.write(
+        f'Diárias: {diarias}'
+    )
+    observacoes = st.text_input(
         label='Observações',
         value=None,
         key=8020
@@ -141,7 +144,7 @@ with tab1:
         value=None,
         key=8022
     )
-    with st.form('new_ficha'):
+    with st.expander(label='Acompanhantes 1 a 5'):
         st.markdown('**Acompanhante 01**')
         a0_nome = st.text_input(
             label='Nome',
@@ -251,7 +254,7 @@ with tab1:
             value=None,
             key=8047
         )
-
+    with st.expander('Acompanhantes 6 a 10'):
         st.markdown('**Acompanhante 06**')
         a5_nome = st.text_input(
             label='Nome',
@@ -361,55 +364,53 @@ with tab1:
             value=None,
             key=8072
         )
+    if st.button('Registrar'):
+        ficha_data = {
+            'apto': apto,
+            'nome': nome,
+            'tipo_residencia': tipo_residencia,
+            'cidade': cidade,
+            'cep': cep,
+            'uf': uf,
+            'pais': pais,
+            'tel': tel,
+            'estado_civil': estado_civil,
+            'profissao': profissao,
+            'rg': rg,
+            'cpf': cpf,
+            'mae': mae,
+            'automovel': automovel,
+            'modelo_auto': modelo_auto,
+            'placa_auto': placa_auto,
+            'cor_auto': cor_auto,
+            'checkin': checkin.isoformat(),
+            'checkout': checkout.isoformat(),
+            'observacoes': observacoes,
+            'proprietario': proprietario,
+            'imob_fone': imob_fone,
+            'a0': {'nome': a0_nome, 'doc': a0_doc, 'idade': a0_idade, 'parentesco': a0_parentesco},
+            'a1': {'nome': a1_nome, 'doc': a1_doc, 'idade': a1_idade, 'parentesco': a1_parentesco},
+            'a2': {'nome': a2_nome, 'doc': a2_doc, 'idade': a2_idade, 'parentesco': a2_parentesco},
+            'a3': {'nome': a3_nome, 'doc': a3_doc, 'idade': a3_idade, 'parentesco': a3_parentesco},
+            'a4': {'nome': a4_nome, 'doc': a4_doc, 'idade': a4_idade, 'parentesco': a4_parentesco},
+            'a5': {'nome': a5_nome, 'doc': a5_doc, 'idade': a5_idade, 'parentesco': a5_parentesco},
+            'a6': {'nome': a6_nome, 'doc': a6_doc, 'idade': a6_idade, 'parentesco': a6_parentesco},
+            'a7': {'nome': a7_nome, 'doc': a7_doc, 'idade': a7_idade, 'parentesco': a7_parentesco},
+            'a8': {'nome': a8_nome, 'doc': a8_doc, 'idade': a8_idade, 'parentesco': a8_parentesco},
+            'a9': {'nome': a9_nome, 'doc': a9_doc, 'idade': a9_idade, 'parentesco': a9_parentesco}
+        }
+        submit_data = json.dumps(obj=empty_none_dict(ficha_data), separators=(',',':'))
 
-        submit_button = st.form_submit_button('Registrar')
-        if submit_button:
-            ficha_data = {
-                'apto': apto,
-                'nome': nome,
-                'tipo_residencia': tipo_residencia,
-                'cidade': cidade,
-                'cep': cep,
-                'uf': uf,
-                'pais': pais,
-                'tel': tel,
-                'estado_civil': estado_civil,
-                'profissao': profissao,
-                'rg': rg,
-                'cpf': cpf,
-                'mae': mae,
-                'automovel': automovel,
-                'modelo_auto': modelo_auto,
-                'placa_auto': placa_auto,
-                'cor_auto': cor_auto,
-                'checkin': checkin.isoformat(),
-                'checkout': checkout.isoformat(),
-                'observacoes': observacoes,
-                'proprietario': proprietario,
-                'imob_fone': imob_fone,
-                'a0': {'nome': a0_nome, 'doc': a0_doc, 'idade': a0_idade, 'parentesco': a0_parentesco},
-                'a1': {'nome': a1_nome, 'doc': a1_doc, 'idade': a1_idade, 'parentesco': a1_parentesco},
-                'a2': {'nome': a2_nome, 'doc': a2_doc, 'idade': a2_idade, 'parentesco': a2_parentesco},
-                'a3': {'nome': a3_nome, 'doc': a3_doc, 'idade': a3_idade, 'parentesco': a3_parentesco},
-                'a4': {'nome': a4_nome, 'doc': a4_doc, 'idade': a4_idade, 'parentesco': a4_parentesco},
-                'a5': {'nome': a5_nome, 'doc': a5_doc, 'idade': a5_idade, 'parentesco': a5_parentesco},
-                'a6': {'nome': a6_nome, 'doc': a6_doc, 'idade': a6_idade, 'parentesco': a6_parentesco},
-                'a7': {'nome': a7_nome, 'doc': a7_doc, 'idade': a7_idade, 'parentesco': a7_parentesco},
-                'a8': {'nome': a8_nome, 'doc': a8_doc, 'idade': a8_idade, 'parentesco': a8_parentesco},
-                'a9': {'nome': a9_nome, 'doc': a9_doc, 'idade': a9_idade, 'parentesco': a9_parentesco}
-            }
-            submit_data = json.dumps(obj=empty_none_dict(ficha_data), separators=(',',':'))
-
-            try:
-                post_response = requests.post('http://api:8000/fichas/', submit_data)
-                show_response_message(post_response)
-                if post_response.status_code == 200:
-                    st.subheader('Dados inseridos, tudo OK:')
-                else:
-                    st.subheader('Dados NÃO inseridos, favor revisar:')
-                show_data_output(ficha_data)
-            except Exception as e:
-                print(e)
+        try:
+            post_response = requests.post('http://api:8000/fichas/', submit_data)
+            show_response_message(post_response)
+            if post_response.status_code == 200:
+                st.subheader('Dados inseridos, tudo OK:')
+            else:
+                st.subheader('Dados NÃO inseridos, favor revisar:')
+            show_data_output(ficha_data)
+        except Exception as e:
+            print(e)
 
 with tab2:
     st.header('Consultar Ficha de Inquilino')
