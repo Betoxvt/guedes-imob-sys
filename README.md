@@ -36,11 +36,13 @@
 32. [x] Incluir categorias nos modelos para o banco de dados.
 33. [x] Alterar a forma que o modificar funciona. Atualmente está utilizando os schemas de update, onde todos os campos são opcionais, mas como são enviados com put e não com patch, todos os campos devem ser enviados (incluindo nulos), o que pode atrapalhar a verificação do schema, ficando por conta do banco de dados e não é o ideal.
 34. [ ] Adicionar com cuidado um st.rerun(), somente se um registro for efetuado com sucesso no banco de dados, a intenção é limpar os campos de entrada.
-35. [ ] Incluir ao sistema o valor já depositado (de uma reserva/aluguel), assim também mostrando o quanto falta (para o valor total).
+35. [x] Incluir ao sistema o valor já depositado (de uma reserva/aluguel), assim também mostrando o quanto falta (para o valor total).
 36. [ ] Adicionar a página para visualização das tabelas de reservas.
 37. [ ] Marcar campos obrigatórios. E resaltalos no caso de ausência ao enviar um registro.
+38. [ ] Incluir ao sistema o módulo de cálculo para armazenar os dados de contabilidade relacionado aos proprietários e seus apartamentos. (Caixa de cada apto, e finalmente o caixa de cada proprietário)
 
 **Pensar em como utilizar o patch para alterações individuais de campos, ainda não vejo muito sentido nisso, mas como estudo pode ser bom.**
+**Agora até vejo que pode ser útil para atualizar os valores depositados para cada aluguel, e o valores entregues para os proprietarios**
 
 **Provavelmente todos os valores monetários eu devesse usar str e depois passar para float no front, aceitando como separador decimal tanto ',' quanto '.'.**
 

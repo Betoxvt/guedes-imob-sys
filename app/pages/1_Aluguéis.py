@@ -5,7 +5,7 @@ import requests
 import streamlit as st
 from utils.mydate import calculate_diarias, str_to_date
 from utils.myfunc import show_data_output, show_response_message
-from utils.mynum import calculate_valortotal
+from utils.mynum import calculate_saldo, calculate_valortotal
 from utils.mystr import empty_none_dict
 
 st.set_page_config(
@@ -45,7 +45,6 @@ with tab1:
         value=None
     )
     diarias: int = calculate_diarias(checkin, checkout)
-    st.write(f'Diárias: {diarias} dias')
     valor_diaria: float = st.number_input(
         label='Valor da Diária',
         min_value=0.00,
@@ -56,30 +55,39 @@ with tab1:
         key=1105
     )
     valor_total: float = calculate_valortotal(diarias, valor_diaria)
-    with st.form('new_aluguel'):
-        submit_button = st.form_submit_button('Registrar')
-        if submit_button:
-            aluguel_data = empty_none_dict({
-                    "apto_id": apto_id,
-                    "ficha_id": ficha_id if ficha_id > 0 else None,
-                    "checkin": checkin.isoformat(),
-                    "checkout": checkout.isoformat(),
-                    "diarias": diarias,
-                    "valor_diaria": valor_diaria,
-                    "valor_total": valor_total
-                })
-            submit_data = json.dumps(obj=aluguel_data, separators=(',',':'))
-            try:
-                post_response = requests.post("http://api:8000/alugueis/", submit_data)
-                show_response_message(post_response)
-                if post_response.status_code == 200:
-                    st.subheader('Dados inseridos, tudo OK:')
-                else:
-                    st.subheader('Dados NÃO inseridos, favor revisar:')
-                    st.write('Dica: Verifique a ID do apartamento')
-                show_data_output(aluguel_data)
-            except Exception as e:
-                print(e)
+    valor_depositado: float = st.number_input(
+        label='Valor Depositado',
+        min_value=0.00,
+        max_value=90000.0,
+        value=None,
+        format='%0.2f',
+        key=1106
+    )
+    saldo: float = calculate_saldo(valor_total, valor_depositado)
+    if st.button('Registrar', key=1108):
+        aluguel_data = empty_none_dict({
+                "apto_id": apto_id,
+                "ficha_id": ficha_id if ficha_id > 0 else None,
+                "checkin": checkin.isoformat(),
+                "checkout": checkout.isoformat(),
+                "diarias": diarias,
+                "valor_diaria": valor_diaria,
+                "valor_total": valor_total,
+                "valor_depositado": valor_depositado,
+                "saldo": saldo
+            })
+        submit_data = json.dumps(obj=aluguel_data, separators=(',',':'))
+        try:
+            post_response = requests.post("http://api:8000/alugueis/", submit_data)
+            show_response_message(post_response)
+            if post_response.status_code == 200:
+                st.subheader('Dados inseridos, tudo OK:')
+            else:
+                st.subheader('Dados NÃO inseridos, favor revisar:')
+                st.write('Dica: Verifique a ID do apartamento')
+            show_data_output(aluguel_data)
+        except Exception as e:
+            print(e)
 
 with tab2:
     st.header('Consultar Aluguéis')
@@ -154,29 +162,38 @@ with tab3:
                 key=1306
             )
             valor_total: float = calculate_valortotal(diarias, valor_diaria)
-            with st.form('update_aluguel'):
-                update_button = st.form_submit_button('Modificar')
-                if update_button:
-                    aluguel_up_data = empty_none_dict({
-                        "apto_id": apto_id,
-                        "ficha_id": ficha_id if ficha_id > 0 else None,
-                        "checkin": checkin.isoformat(),
-                        "checkout": checkout.isoformat(),
-                        "diarias": diarias,
-                        "valor_diaria": valor_diaria,
-                        "valor_total": valor_total
-                    })
-                    update_data = json.dumps(obj=aluguel_up_data, separators=(',',':'))
-                    try:
-                        put_response = requests.put(f"http://api:8000/alugueis/{update_id}", update_data)
-                        show_response_message(put_response)
-                        if put_response.status_code == 200:
-                            st.subheader('Dados inseridos, tudo OK:')
-                        else:
-                            st.subheader('Dados NÃO inseridos, favor revisar:')
-                        show_data_output(aluguel_up_data)
-                    except Exception as e:
-                        print(e)         
+            valor_depositado: float = st.number_input(
+                label='Valor Depositado',
+                min_value=0.00,
+                max_value=90000.0,
+                value=df_up.loc(0, 'valor_depositado'),
+                format='%0.2f',
+                key=1106
+            )
+            saldo: float = calculate_saldo(valor_total, valor_depositado)
+            if st.button('Modificar'):
+                aluguel_up_data = empty_none_dict({
+                    "apto_id": apto_id,
+                    "ficha_id": ficha_id if ficha_id > 0 else None,
+                    "checkin": checkin.isoformat(),
+                    "checkout": checkout.isoformat(),
+                    "diarias": diarias,
+                    "valor_diaria": valor_diaria,
+                    "valor_total": valor_total,
+                    "valor_depositado": valor_depositado,
+                    "saldo": saldo
+                })
+                update_data = json.dumps(obj=aluguel_up_data, separators=(',',':'))
+                try:
+                    put_response = requests.put(f"http://api:8000/alugueis/{update_id}", update_data)
+                    show_response_message(put_response)
+                    if put_response.status_code == 200:
+                        st.subheader('Dados inseridos, tudo OK:')
+                    else:
+                        st.subheader('Dados NÃO inseridos, favor revisar:')
+                    show_data_output(aluguel_up_data)
+                except Exception as e:
+                    print(e)         
         else:
             show_response_message(update_response)
 
