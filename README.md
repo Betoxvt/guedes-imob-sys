@@ -33,6 +33,7 @@
 29. [ ] Descobrir um jeito de reduzir o número de linhas que ocupa o formulário de acompanhantes.
 30. [x] Na Page Fichas colocar botão para obter o PDF.
 31. [ ] Pedir confirmação antes de deletar um registro.
+32. [ ] Incluir categorias nos modelos para o banco de dados.
 
 **Provavelmente todos os valores monetários eu devesse usar str e depois passar para float no front, aceitando como separador decimal tanto ',' quanto '.'.**
 

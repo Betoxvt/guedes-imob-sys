@@ -4,7 +4,7 @@ import pandas as pd
 import requests
 import streamlit as st
 from utils.mydate import str_to_date
-from utils.myfunc import show_data_output, show_response_message
+from utils.myfunc import cat_index, show_data_output, show_response_message
 from utils.mystr import empty_none_dict
 
 st.set_page_config(
@@ -35,15 +35,20 @@ with tab1:
     label='Valor da despesa',
     min_value=0.00,
     max_value=None,
-    value=0.00,
+    value=None,
     format='%0.2f',
     step=0.01,
     key=3103
     )
+    categoria: str = st.selectbox(
+        label='Categoria',
+        options=['IPTU', 'CONDOMÍNIO', 'LUZ', 'GÁS', 'INTERNET', 'MANUTENÇÃO', 'OUTROS'],
+        key=3104
+    )
     descricao: str = st.text_area(
         label='Descrição',
         value=None,
-        key=3104
+        key=3105
     )
     with st.form('new_despesa'):
         submit_button = st.form_submit_button('Registrar')
@@ -52,7 +57,8 @@ with tab1:
                 "apto_id": apto_id,
                 "data_pagamento": data_pagamento.isoformat(),
                 "valor": valor,
-                "descricao": descricao,
+                "categoria": categoria,
+                "descricao": descricao
             })
             submit_data = json.dumps(obj=despesa_data, separators=(',',':'))
             try:
@@ -86,6 +92,7 @@ with tab2:
             show_response_message(get_response)
 
 with tab3:
+    categorias = ['IPTU', 'CONDOMÍNIO', 'LUZ', 'GÁS', 'INTERNET', 'MANUTENÇÃO', 'OUTROS']
     st.header('Modificar Despesa')
     update_id = st.number_input(
         'ID do Despesa',
@@ -123,10 +130,16 @@ with tab3:
                 step=0.01,
                 key=3303
             )
+            categoria: str = st.selectbox(
+                label='Categoria',
+                options=['IPTU', 'CONDOMÍNIO', 'LUZ', 'GÁS', 'INTERNET', 'MANUTENÇÃO', 'OUTROS'],
+                index=cat_index(df_up, 'categoria', categorias),
+                key=3304
+            )
             descricao: str = st.text_area(
                 label='Descrição',
                 value=str(df_up.descricao[0]),
-                key=3304
+                key=3305
             )
             with st.form('update_despesa'):
                 update_button = st.form_submit_button('Modificar')

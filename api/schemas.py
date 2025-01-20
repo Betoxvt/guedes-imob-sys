@@ -1,5 +1,6 @@
 from datetime import date
-from pydantic import BaseModel
+from enum import Enum
+from pydantic import BaseModel, EmailStr, field_validator
 from typing import Optional
 
 
@@ -30,11 +31,28 @@ class ApartamentoBase(BaseModel):
     lock_senha: Optional[str]
 
 
+class DespesaCat(Enum):
+    cat1 = 'IPTU'
+    cat2 = 'CONDOMÍNIO'
+    cat3 = 'LUZ'
+    cat4 = 'GÁS'
+    cat5 = 'INTERNET'
+    cat6 = 'MANUTENÇÃO'
+    cat7 = 'OUTROS'
+
+
 class DespesaBase(BaseModel):
     apto_id: Optional[int]
     data_pagamento: date
     valor: float
+    categoria: str
     descricao: str
+
+    @field_validator("categoria")
+    def check_categoria_base(cls, v):
+        if v in [item.value for item in DespesaCat]:
+            return v
+        raise ValueError("Categoria inválida")
 
 
 class GaragemBase(BaseModel):
@@ -51,7 +69,20 @@ class ProprietarioBase(BaseModel):
     nome: str
     cpf: Optional[str]
     tel: Optional[str]
-    email: Optional[str]
+    email: Optional[EmailStr]
+
+
+class FichaTipoCat(Enum):
+    cat1 = 'Anual'
+    cat2 = 'Temporário'
+
+
+class FichaCivilCat(Enum):
+    cat1 = 'Casado(a)'
+    cat2 = 'Divorciado(a)'
+    cat3 = 'Separado(a)'
+    cat4 = 'Solteiro(a)'
+    cat5 = 'Viúvo(a)'
 
 
 class FichaBase(BaseModel):
@@ -88,6 +119,17 @@ class FichaBase(BaseModel):
     a8: Optional[dict]
     a9: Optional[dict]
 
+    @field_validator("estado_civil")
+    def check_categoria_base(cls, v):
+        if v in [item.value for item in FichaCivilCat]:
+            return v
+        raise ValueError("Categoria inválida")
+    
+    @field_validator("tipo_residencia")
+    def check_categoria_base(cls, v):
+        if v in [item.value for item in FichaTipoCat]:
+            return v
+        raise ValueError("Categoria inválida")
 
 # Create schemas
 
@@ -186,6 +228,14 @@ class ApartamentoUpdate(ApartamentoCreate):
 class DespesaUpdate(DespesaCreate):
     __annotations__ = convert_to_optional(DespesaCreate)
 
+    @field_validator("categoria")
+    def check_categoria_up(cls, v):
+        if v is None:
+            return v
+        if v in [item.value for item in DespesaCat]:
+            return v
+        raise ValueError("Categoria inválida")
+
 
 class GaragemUpdate(GaragemCreate):
     __annotations__ = convert_to_optional(DespesaCreate)
@@ -197,3 +247,19 @@ class ProprietarioUpdate(ProprietarioCreate):
 
 class FichaUpdate(FichaCreate):
     __annotations__ = convert_to_optional(FichaCreate)
+
+    @field_validator("estado_civil")
+    def check_categoria_up(cls, v):
+        if v is None:
+            return v
+        if v in [item.value for item in FichaCivilCat]:
+            return v
+        raise ValueError("Categoria inválida")
+    
+    @field_validator("tipo_residencia")
+    def check_categoria_up(cls, v):
+        if v is None:
+            return v
+        if v in [item.value for item in FichaTipoCat]:
+            return v
+        raise ValueError("Categoria inválida")

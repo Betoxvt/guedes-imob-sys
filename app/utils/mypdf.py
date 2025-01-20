@@ -1,12 +1,11 @@
 import os
-from datetime import datetime
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 from reportlab.platypus import Paragraph
 from utils.mystr import two_liner
 
 def fill_ficha(data: dict[str, str]):
-    file_name = f'ChkIn_{str(data['checkin'])}_ID_{str(data['id'])}_T_{datetime.now().strftime("%Y-%m-%d_%H-%M")}.pdf'
+    file_name = f'{str(data['checkin'])}_{str(data['apto'])}_{str(data['id'])}.pdf'
     img = './files/ficha_model/ficha.png'
     dir = './files/tmp_filled_fichas/'
     path = os.path.join(dir, file_name)
