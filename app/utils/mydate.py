@@ -3,7 +3,7 @@ import pandas as pd
 import streamlit as st
 
 def brazil_datestr(year_first_date: str | date) -> str:
-    """Converts a date like object to Brazilian date format (DD/MM/YYY)
+    """Converts a date like object to Brazilian date format (DD/MM/YYYY)
     
     Args:
         year_first_date: The input of a date like object, normally starts with Year
@@ -79,7 +79,7 @@ def showbr_dfdate(df: pd.DataFrame) -> pd.DataFrame:
 
 def str_to_date(str_date: str) -> date:
     try:
-        date_date = pd.to_datetime(arg=str_date, yearfirst=True).date()
+        date_date = pd.to_datetime(arg=str_date, yearfirst=True, dayfirst=True).date()
     except (ValueError, AttributeError):
         date_date = None
         return str_date
