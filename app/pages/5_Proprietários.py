@@ -35,26 +35,24 @@ with tab1:
         key=5103,
         value=None
     )
-    with st.form('new_proprietario'):
-        submit_button = st.form_submit_button('Registrar')
-        if submit_button:
-            prop_data = empty_none_dict({
-                "nome": nome,
-                "cpf": cpf,
-                "tel": tel,
-                "email": email
-            })
-            submit_data = json.dumps(obj=prop_data, separators=(',',':'))
-            try:
-                post_response = requests.post("http://api:8000/proprietarios/", submit_data)
-                show_response_message(post_response)
-                if post_response.status_code == 200:
-                    st.subheader('Dados inseridos, tudo OK:')
-                else:
-                    st.subheader('Dados NÃO inseridos, favor revisar:')
-                show_data_output(prop_data)
-            except Exception as e:
-                print(e)
+    if st.button('Registrar', key=5104):
+        prop_data = empty_none_dict({
+            "nome": nome,
+            "cpf": cpf,
+            "tel": tel,
+            "email": email
+        })
+        submit_data = json.dumps(obj=prop_data, separators=(',',':'))
+        try:
+            post_response = requests.post("http://api:8000/proprietarios/", submit_data)
+            show_response_message(post_response)
+            if post_response.status_code == 200:
+                st.subheader('Dados inseridos, tudo OK:')
+            else:
+                st.subheader('Dados NÃO inseridos, favor revisar:')
+            show_data_output(prop_data)
+        except Exception as e:
+            print(e)
 
 with tab2:
     st.header('Consultar Proprietários')
@@ -111,26 +109,24 @@ with tab3:
                 key=5304,
                 value=str(df_up.email[0])
             )
-            with st.form('update_proprietario'):
-                update_button = st.form_submit_button('Modificar')
-                if update_button:
-                    prop_up_data = empty_none_dict({
-                        "nome": nome,
-                        "cpf": cpf,
-                        "tel": tel,
-                        "email": email,
-                    })
-                    update_data = json.dumps(obj=prop_up_data, separators=(',',':'))
-                    try:
-                        put_response = requests.put(f"http://api:8000/proprietarios/{update_id}", update_data)
-                        show_response_message(put_response)
-                        if put_response.status_code == 200:
-                            st.subheader('Dados inseridos, tudo OK:')
-                        else:
-                            st.subheader('Dados NÃO inseridos, favor revisar:')
-                        show_data_output(prop_up_data)
-                    except Exception as e:
-                        print(e) 
+            if st.button('Modificar', key=5305):
+                prop_up_data = empty_none_dict({
+                    "nome": nome,
+                    "cpf": cpf,
+                    "tel": tel,
+                    "email": email,
+                })
+                update_data = json.dumps(obj=prop_up_data, separators=(',',':'))
+                try:
+                    put_response = requests.put(f"http://api:8000/proprietarios/{update_id}", update_data)
+                    show_response_message(put_response)
+                    if put_response.status_code == 200:
+                        st.subheader('Dados inseridos, tudo OK:')
+                    else:
+                        st.subheader('Dados NÃO inseridos, favor revisar:')
+                    show_data_output(prop_up_data)
+                except Exception as e:
+                    print(e) 
         else:
             show_response_message(update_response)
 

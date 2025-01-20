@@ -18,13 +18,12 @@ class AluguelBase(BaseModel):
     diarias: int
     valor_diaria: float
     valor_total: float
-    valor_depositado: float
-    saldo: float
+    valor_depositado: Optional[float]
 
 
 class ApartamentoBase(BaseModel):
     apto: str
-    proprietario_id: Optional[int]
+    proprietario_id: int
     cod_celesc: Optional[str]
     cod_gas: Optional[str]
     prov_net: Optional[str]
@@ -44,7 +43,7 @@ class DespesaCat(Enum):
 
 
 class DespesaBase(BaseModel):
-    apto_id: Optional[int]
+    apto_id: int
     data_pagamento: date
     valor: float
     categoria: str
@@ -65,6 +64,7 @@ class GaragemBase(BaseModel):
     diarias: int
     valor_diaria: float
     valor_total: float
+    valor_depositado: Optional[float]
 
 
 class ProprietarioBase(BaseModel):

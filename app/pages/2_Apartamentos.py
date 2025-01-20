@@ -59,30 +59,28 @@ with tab1:
         value=None,
         key=2107
     )
-    with st.form('new_apartamento'):
-        submit_button = st.form_submit_button('Registrar')
-        if submit_button:
-            apto_data = empty_none_dict({
-                "apto": apto,
-                "proprietario_id": proprietario_id,
-                "cod_celesc": cod_celesc,
-                "cod_gas": cod_gas,
-                "prov_net": prov_net,
-                "wifi": wifi,
-                "wifi_senha": wifi_senha,
-                "lock_senha": lock_senha
-            })
-            submit_data = json.dumps(obj=apto_data, separators=(',',':'))
-            try:
-                post_response = requests.post("http://api:8000/apartamentos/", submit_data)
-                show_response_message(post_response)
-                if post_response.status_code == 200:
-                    st.subheader('Dados inseridos, tudo OK:')
-                else:
-                    st.subheader('Dados NÃO inseridos, favor revisar:')
-                show_data_output(apto_data)
-            except Exception as e:
-                print(e)
+    if st.button('Registrar', key=2108):
+        apto_data = empty_none_dict({
+            "apto": apto,
+            "proprietario_id": proprietario_id,
+            "cod_celesc": cod_celesc,
+            "cod_gas": cod_gas,
+            "prov_net": prov_net,
+            "wifi": wifi,
+            "wifi_senha": wifi_senha,
+            "lock_senha": lock_senha
+        })
+        submit_data = json.dumps(obj=apto_data, separators=(',',':'))
+        try:
+            post_response = requests.post("http://api:8000/apartamentos/", submit_data)
+            show_response_message(post_response)
+            if post_response.status_code == 200:
+                st.subheader('Dados inseridos, tudo OK:')
+            else:
+                st.subheader('Dados NÃO inseridos, favor revisar:')
+            show_data_output(apto_data)
+        except Exception as e:
+            print(e)
 
 with tab2:
     st.header('Consultar Apartamentos')
@@ -162,30 +160,28 @@ with tab3:
                 value=str(df_up.lock_senha[0]),
                 key=2309
             )
-            with st.form('update_apartamento'):
-                update_button = st.form_submit_button('Modificar')
-                if update_button:
-                    apto_up_data = empty_none_dict({
-                        "apto": apto,
-                        "proprietario_id": proprietario_id,
-                        "cod_celesc": cod_celesc,
-                        "cod_gas": cod_gas,
-                        "prov_net": prov_net,
-                        "wifi": wifi,
-                        "wifi_senha": wifi_senha,
-                        "lock_senha": lock_senha
-                    })
-                    update_data = json.dumps(obj=apto_up_data, separators=(',',':'))
-                    try:
-                        put_response = requests.put(f"http://api:8000/apartamentos/{update_id}", update_data)
-                        show_response_message(put_response)
-                        if put_response.status_code == 200:
-                            st.subheader('Dados inseridos, tudo OK:')
-                        else:
-                            st.subheader('Dados NÃO inseridos, favor revisar:')
-                        show_data_output(apto_up_data)
-                    except Exception as e:
-                        print(e) 
+            if st.button('Modificar', key=2310):
+                apto_up_data = empty_none_dict({
+                    "apto": apto,
+                    "proprietario_id": proprietario_id,
+                    "cod_celesc": cod_celesc,
+                    "cod_gas": cod_gas,
+                    "prov_net": prov_net,
+                    "wifi": wifi,
+                    "wifi_senha": wifi_senha,
+                    "lock_senha": lock_senha
+                })
+                update_data = json.dumps(obj=apto_up_data, separators=(',',':'))
+                try:
+                    put_response = requests.put(f"http://api:8000/apartamentos/{update_id}", update_data)
+                    show_response_message(put_response)
+                    if put_response.status_code == 200:
+                        st.subheader('Dados inseridos, tudo OK:')
+                    else:
+                        st.subheader('Dados NÃO inseridos, favor revisar:')
+                    show_data_output(apto_up_data)
+                except Exception as e:
+                    print(e) 
         else:
             show_response_message(update_response)
 

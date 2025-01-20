@@ -19,7 +19,6 @@ class Aluguel(Base):
     valor_diaria: Mapped[float] = mapped_column(Numeric(10, 2), nullable=False)
     valor_total: Mapped[float] = mapped_column(Numeric(10, 2), nullable=False)
     valor_depositado: Mapped[float] = mapped_column(Numeric(10, 2), nullable=True)
-    saldo: Mapped[float] = mapped_column(Numeric(10, 2), nullable=True)
     criado_em: Mapped[date] = mapped_column(server_default=func.current_date(), nullable=False)
     modificado_em: Mapped[date] = mapped_column(server_default=func.current_date(), onupdate=func.current_date(), nullable=False)
 
@@ -29,7 +28,7 @@ class Apartamento(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     apto: Mapped[str] = mapped_column(String, nullable=True, unique=True)
-    proprietario_id: Mapped[int] = mapped_column(ForeignKey('proprietarios.id'), nullable=True)
+    proprietario_id: Mapped[int] = mapped_column(ForeignKey('proprietarios.id'), nullable=False)
     cod_celesc: Mapped[str] = mapped_column(String, nullable=True)
     cod_gas: Mapped[str] = mapped_column(String, nullable=True)
     prov_net: Mapped[str] = mapped_column(String, nullable=True)
@@ -44,7 +43,7 @@ class Despesa(Base):
     __tablename__ = 'despesas'
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    apto_id: Mapped[int] = mapped_column(ForeignKey('apartamentos.id'), nullable=True)
+    apto_id: Mapped[int] = mapped_column(ForeignKey('apartamentos.id'), nullable=False)
     data_pagamento: Mapped[date] = mapped_column(server_default=func.current_date(), nullable=False)
     valor: Mapped[float] = mapped_column(Numeric(10, 2), nullable=False)
     categoria: Mapped[str] = mapped_column(String, nullable=False)
@@ -64,6 +63,7 @@ class Garagem(Base):
     diarias: Mapped[int] = mapped_column(nullable=False)
     valor_diaria: Mapped[float] = mapped_column(Numeric(10, 2), nullable=False)
     valor_total: Mapped[float] = mapped_column(Numeric(10, 2), nullable=False)
+    valor_depositado: Mapped[float] = mapped_column(Numeric(10, 2), nullable=True)
     criado_em: Mapped[date] = mapped_column(server_default=func.current_date(), nullable=False)
     modificado_em: Mapped[date] = mapped_column(server_default=func.current_date(), onupdate=func.current_date(), nullable=False)
 

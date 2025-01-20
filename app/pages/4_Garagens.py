@@ -5,7 +5,7 @@ import requests
 import streamlit as st
 from utils.mydate import calculate_diarias, str_to_date
 from utils.myfunc import show_data_output, show_response_message
-from utils.mynum import calculate_valortotal
+from utils.mynum import calculate_saldo, calculate_valortotal
 from utils.mystr import empty_none_dict
 
 st.set_page_config(
@@ -57,29 +57,38 @@ with tab1:
         key=4105
     )
     valor_total: float = calculate_valortotal(diarias, valor_diaria)
-    with st.form('new_garagem'):
-        submit_button = st.form_submit_button('Registrar')
-        if submit_button:
-            garagem_data = empty_none_dict({
-                "apto_origem_id": apto_origem_id,
-                "apto_destino_id": apto_destino_id,
-                "checkin": checkin.isoformat(),
-                "checkout": checkout.isoformat(),
-                "diarias": diarias,
-                "valor_diaria": valor_diaria,
-                "valor_total": valor_total
-            })
-            submit_data = json.dumps(obj=garagem_data, separators=(',',':'))
-            try:
-                post_response = requests.post("http://api:8000/garagens/", submit_data)
-                show_response_message(post_response)
-                if post_response.status_code == 200:
-                    st.subheader('Dados inseridos, tudo OK:')
-                else:
-                    st.subheader('Dados NÃO inseridos, favor revisar:')
-                show_data_output(garagem_data)
-            except Exception as e:
-                print(e)
+    valor_depositado: float = st.number_input(
+        label='Valor Depositado',
+        min_value=0.00,
+        max_value=9000.00,
+        value=None,
+        format='%0.2f',
+        step=10.00,
+        key=4106
+    )
+    saldo = calculate_saldo(valor_total, valor_depositado)
+    if st.button('Registrar', key=4107):
+        garagem_data = empty_none_dict({
+            "apto_origem_id": apto_origem_id,
+            "apto_destino_id": apto_destino_id,
+            "checkin": checkin.isoformat(),
+            "checkout": checkout.isoformat(),
+            "diarias": diarias,
+            "valor_diaria": valor_diaria,
+            "valor_total": valor_total,
+            "valor_depositado": valor_depositado
+        })
+        submit_data = json.dumps(obj=garagem_data, separators=(',',':'))
+        try:
+            post_response = requests.post("http://api:8000/garagens/", submit_data)
+            show_response_message(post_response)
+            if post_response.status_code == 200:
+                st.subheader('Dados inseridos, tudo OK:')
+            else:
+                st.subheader('Dados NÃO inseridos, favor revisar:')
+            show_data_output(garagem_data)
+        except Exception as e:
+            print(e)
 
 with tab2:
     st.header('Consultar Garagens')
@@ -156,29 +165,38 @@ with tab3:
                 key=4306
             )
             valor_total: float = calculate_valortotal(diarias, valor_diaria)
-            with st.form('update_garagem'):
-                update_button = st.form_submit_button('Modificar')
-                if update_button:
-                    garagem_up_data = {
-                        "apto_origem_id": apto_origem_id,
-                        "apto_destino_id": apto_destino_id,
-                        "checkin": checkin.isoformat(),
-                        "checkout": checkout.isoformat(),
-                        "diarias": diarias,
-                        "valor_diaria": valor_diaria,
-                        "valor_total": valor_total
-                    }
-                    update_data = json.dumps(obj=garagem_up_data, separators=(',',':'))
-                    try:
-                        put_response = requests.put(f"http://api:8000/garagens/{update_id}", update_data)
-                        show_response_message(put_response)
-                        if put_response.status_code == 200:
-                            st.subheader('Dados inseridos, tudo OK:')
-                        else:
-                            st.subheader('Dados NÃO inseridos, favor revisar:')
-                        show_data_output(garagem_up_data)
-                    except Exception as e:
-                        print(e) 
+            valor_depositado: float = st.number_input(
+                label='Valor Depositado',
+                min_value=0.00,
+                max_value=9000.00,
+                value=df_up.loc[0, valor_depositado],
+                format='%0.2f',
+                step=10.00,
+                key=4307
+            )
+            saldo = calculate_saldo(valor_total, valor_depositado)
+            if st.button('Modificar', key=4308):
+                garagem_up_data = {
+                    "apto_origem_id": apto_origem_id,
+                    "apto_destino_id": apto_destino_id,
+                    "checkin": checkin.isoformat(),
+                    "checkout": checkout.isoformat(),
+                    "diarias": diarias,
+                    "valor_diaria": valor_diaria,
+                    "valor_total": valor_total,
+                    "valor_depositado": valor_depositado
+                }
+                update_data = json.dumps(obj=garagem_up_data, separators=(',',':'))
+                try:
+                    put_response = requests.put(f"http://api:8000/garagens/{update_id}", update_data)
+                    show_response_message(put_response)
+                    if put_response.status_code == 200:
+                        st.subheader('Dados inseridos, tudo OK:')
+                    else:
+                        st.subheader('Dados NÃO inseridos, favor revisar:')
+                    show_data_output(garagem_up_data)
+                except Exception as e:
+                    print(e) 
         else:
             show_response_message(update_response)
 
