@@ -50,7 +50,7 @@ class DespesaBase(BaseModel):
     descricao: str
 
     @field_validator("categoria")
-    def check_categoria_base(cls, v):
+    def check_categoria__despesa_base(cls, v):
         if v in [item.value for item in DespesaCat]:
             return v
         raise ValueError("Categoria inválida")
@@ -88,7 +88,7 @@ class FichaCivilCat(Enum):
 
 
 class FichaBase(BaseModel):
-    apto: str
+    apto: Optional[str]
     nome: str
     tipo_residencia: str
     cidade: str
@@ -122,13 +122,13 @@ class FichaBase(BaseModel):
     a9: Optional[dict]
 
     @field_validator("estado_civil")
-    def check_categoria_base(cls, v):
+    def check_categoria_estado_civil_base(cls, v):
         if v in [item.value for item in FichaCivilCat]:
             return v
         raise ValueError("Categoria inválida")
     
     @field_validator("tipo_residencia")
-    def check_categoria_base(cls, v):
+    def check_categoria_tipo_residencia_base(cls, v):
         if v in [item.value for item in FichaTipoCat]:
             return v
         raise ValueError("Categoria inválida")
@@ -231,7 +231,7 @@ class DespesaUpdate(DespesaCreate):
     __annotations__ = convert_to_optional(DespesaCreate)
 
     @field_validator("categoria")
-    def check_categoria_up(cls, v):
+    def check_categoria_despesa_up(cls, v):
         if v is None:
             return v
         if v in [item.value for item in DespesaCat]:
@@ -251,7 +251,7 @@ class FichaUpdate(FichaCreate):
     __annotations__ = convert_to_optional(FichaCreate)
 
     @field_validator("estado_civil")
-    def check_categoria_up(cls, v):
+    def check_categoria_estado_civil_up(cls, v):
         if v is None:
             return v
         if v in [item.value for item in FichaCivilCat]:
@@ -259,7 +259,7 @@ class FichaUpdate(FichaCreate):
         raise ValueError("Categoria inválida")
     
     @field_validator("tipo_residencia")
-    def check_categoria_up(cls, v):
+    def check_categoria_tipo_residencia_up(cls, v):
         if v is None:
             return v
         if v in [item.value for item in FichaTipoCat]:

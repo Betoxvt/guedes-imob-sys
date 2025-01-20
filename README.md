@@ -13,7 +13,7 @@
 9. [ ] Adicionar logs.
 10. [ ] Verificação de CEP, CPF, RG, Telefone...
 11. [ ] Formato de apresentação de CEP, CPF, RG, Telefone...
-12. [ ] Importar forms ou tipos de arquivo (csv/json) para ficha de inquilino.
+12. [x] Importar csv para ficha de inquilino.
 13. [x] Refazer os models/schemas/crud: Fix nos tipos de dados que estão int para str (cep, cpf, telefone, rg...)
 14. [ ] Criar todas as páginas.
 15. [ ] Valores default e autocomplete para create.

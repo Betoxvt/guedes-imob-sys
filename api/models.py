@@ -84,7 +84,7 @@ class Ficha(Base):
     __tablename__ = 'fichas'
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    apto: Mapped[str] = mapped_column(String, nullable=False)
+    apto: Mapped[str] = mapped_column(String, nullable=True)
     nome: Mapped[str] = mapped_column(String, nullable=False)
     tipo_residencia: Mapped[str] = mapped_column(String, nullable=False)
     cidade: Mapped[str] = mapped_column(String, nullable=False)
