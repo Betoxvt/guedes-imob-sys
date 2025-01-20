@@ -11,7 +11,7 @@
 7. [x] Renomear routes para router e checar os schemas de response.
 8. [ ] Adicionar tratamento de erros.
 9. [ ] Adicionar logs.
-10. [ ] Validação de CEP, CPF, RG, Telefone...
+10. [ ] Verificação de CEP, CPF, RG, Telefone...
 11. [ ] Formato de apresentação de CEP, CPF, RG, Telefone...
 12. [ ] Importar forms ou tipos de arquivo (csv/json) para ficha de inquilino.
 13. [x] Refazer os models/schemas/crud: Fix nos tipos de dados que estão int para str (cep, cpf, telefone, rg...)
@@ -29,7 +29,7 @@
 25. [ ] Colocar valores que se repetem diretamente no pdf e remover do banco de dados (na verdade deixa assim, quando estiver em produção talvez).
 26. [x] Na visualização de DataFrames, colocar a coluna id na primeira posição.
 27. [x] Reescrever o modo como os 'acompanhantes' são armazenados, array ou json (dict).
-28. [ ] Descobrir um jeito de validar a nível do banco de dados os JSON dos acompanhantes.
+28. [ ] Descobrir um jeito de verificar a nível do banco de dados os JSON dos acompanhantes.
 29. [ ] Descobrir um jeito de reduzir o número de linhas que ocupa o formulário de acompanhantes.
 30. [x] Na Page Fichas colocar botão para obter o PDF.
 31. [ ] Pedir confirmação antes de deletar um registro.
@@ -72,7 +72,7 @@ Mais informações:
 
 - A princípio, desenvolver um sistema em rede local para os computadores da imobiliária, utilizando a linguagem Python 3.13
 - Configurar o banco de dados PostgreSQL utilizando SQLAlchemy
-- Validar dados com Pydantic
+- Verificar/Validar dados com Pydantic
 - Backend com FastAPI (inserir, editar, apagar)
 - Frontend com Streamlit. Integração com as funções do fastAPI e dataviz
 - Gerador de PDF com os dados preenchidos para impressão de fichas dos inquilinos, no mesmo modelo que o exigido pelo condomínio
