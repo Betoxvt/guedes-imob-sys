@@ -34,7 +34,7 @@
 30. [x] Na Page Fichas colocar botão para obter o PDF.
 31. [ ] Pedir confirmação antes de deletar um registro.
 32. [x] Incluir categorias nos modelos para o banco de dados.
-33. [ ] Alterar a forma que o modificar funciona. Atualmente está utilizando os schemas de update, onde todos os campos são opcionais, mas como são enviados com put e não com patch, todos os campos devem ser enviados (incluindo nulos), o que pode atrapalhar a verificação do schema, ficando por conta do banco de dados e não é o ideal.
+33. [x] Alterar a forma que o modificar funciona. Atualmente está utilizando os schemas de update, onde todos os campos são opcionais, mas como são enviados com put e não com patch, todos os campos devem ser enviados (incluindo nulos), o que pode atrapalhar a verificação do schema, ficando por conta do banco de dados e não é o ideal.
 34. [ ] Adicionar com cuidado um st.rerun(), somente se um registro for efetuado com sucesso no banco de dados, a intenção é limpar os campos de entrada.
 35. [ ] Incluir ao sistema o valor já depositado (de uma reserva/aluguel), assim também mostrando o quanto falta (para o valor total).
 36. [ ] Adicionar a página para visualização das tabelas de reservas.
