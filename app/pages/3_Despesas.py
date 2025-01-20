@@ -50,27 +50,25 @@ with tab1:
         value=None,
         key=3105
     )
-    with st.form('new_despesa'):
-        submit_button = st.form_submit_button('Registrar')
-        if submit_button:
-            despesa_data = empty_none_dict({
-                "apto_id": apto_id,
-                "data_pagamento": data_pagamento.isoformat(),
-                "valor": valor,
-                "categoria": categoria,
-                "descricao": descricao
-            })
-            submit_data = json.dumps(obj=despesa_data, separators=(',',':'))
-            try:
-                post_response = requests.post("http://api:8000/despesas/", submit_data)
-                show_response_message(post_response)
-                if post_response.status_code == 200:
-                    st.subheader('Dados inseridos, tudo OK:')
-                else:
-                    st.subheader('Dados NÃO inseridos, favor revisar:')
-                show_data_output(despesa_data)
-            except Exception as e:
-                print(e)
+    if st.button('Registrar', key=3106):
+        despesa_data = empty_none_dict({
+            "apto_id": apto_id,
+            "data_pagamento": data_pagamento.isoformat(),
+            "valor": valor,
+            "categoria": categoria,
+            "descricao": descricao
+        })
+        submit_data = json.dumps(obj=despesa_data, separators=(',',':'))
+        try:
+            post_response = requests.post("http://api:8000/despesas/", submit_data)
+            show_response_message(post_response)
+            if post_response.status_code == 200:
+                st.subheader('Dados inseridos, tudo OK:')
+            else:
+                st.subheader('Dados NÃO inseridos, favor revisar:')
+            show_data_output(despesa_data)
+        except Exception as e:
+            print(e)
 
 with tab2:
     st.header('Consultar Despesas')
@@ -141,26 +139,24 @@ with tab3:
                 value=str(df_up.descricao[0]),
                 key=3305
             )
-            with st.form('update_despesa'):
-                update_button = st.form_submit_button('Modificar')
-                if update_button:
-                    despesa_up_data = empty_none_dict({
-                        "apto_id": apto_id,
-                        "data_pagamento": data_pagamento.isoformat(),
-                        "valor": valor,
-                        "descricao": descricao,
-                    })
-                    update_data = json.dumps(obj=despesa_up_data, separators=(',',':'))
-                    try:
-                        put_response = requests.put(f"http://api:8000/despesas/{update_id}", update_data)
-                        show_response_message(put_response)
-                        if put_response.status_code == 200:
-                            st.subheader('Dados inseridos, tudo OK:')
-                        else:
-                            st.subheader('Dados NÃO inseridos, favor revisar:')
-                        show_data_output(despesa_up_data)
-                    except Exception as e:
-                        print(e) 
+            if st.button('Modificar', key=3306):
+                despesa_up_data = empty_none_dict({
+                    "apto_id": apto_id,
+                    "data_pagamento": data_pagamento.isoformat(),
+                    "valor": valor,
+                    "descricao": descricao,
+                })
+                update_data = json.dumps(obj=despesa_up_data, separators=(',',':'))
+                try:
+                    put_response = requests.put(f"http://api:8000/despesas/{update_id}", update_data)
+                    show_response_message(put_response)
+                    if put_response.status_code == 200:
+                        st.subheader('Dados inseridos, tudo OK:')
+                    else:
+                        st.subheader('Dados NÃO inseridos, favor revisar:')
+                    show_data_output(despesa_up_data)
+                except Exception as e:
+                    print(e) 
         else:
             show_response_message(update_response)
 

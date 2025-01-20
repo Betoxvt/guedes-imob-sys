@@ -73,8 +73,7 @@ with tab1:
                 "diarias": diarias,
                 "valor_diaria": valor_diaria,
                 "valor_total": valor_total,
-                "valor_depositado": valor_depositado,
-                "saldo": saldo
+                "valor_depositado": valor_depositado
             })
         submit_data = json.dumps(obj=aluguel_data, separators=(',',':'))
         try:
@@ -180,8 +179,7 @@ with tab3:
                     "diarias": diarias,
                     "valor_diaria": valor_diaria,
                     "valor_total": valor_total,
-                    "valor_depositado": valor_depositado,
-                    "saldo": saldo
+                    "valor_depositado": valor_depositado
                 })
                 update_data = json.dumps(obj=aluguel_up_data, separators=(',',':'))
                 try:

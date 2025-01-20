@@ -30,8 +30,8 @@ def calculate_saldo(total, depositado):
             st.write('Saldo: R$ 0,00')
             return None
         if total and depositado is None:
-            st.write(f'Saldo: {total}')
+            st.write(f'Saldo: {total*-1}')
     else:
-        saldo = total - depositado
+        saldo = depositado - total
         st.write(f'Saldo: {saldo}')
         return saldo
