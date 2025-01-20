@@ -90,7 +90,7 @@ def read_aluguel(db: Session, aluguel_id: int) -> Aluguel:
         raise e
 
 
-def update_aluguel(db: Session, aluguel_id: int, aluguel: AluguelUpdate) -> Aluguel:
+def update_aluguel(db: Session, aluguel_id: int, aluguel: AluguelCreate) -> Aluguel:
     """
     Updates an existing aluguel in the database.
 
@@ -219,7 +219,7 @@ def read_apartamento(db: Session, apartamento_id: int):
         raise e
 
 
-def update_apartamento(db: Session, apartamento_id: int, apartamento: ApartamentoUpdate):
+def update_apartamento(db: Session, apartamento_id: int, apartamento: ApartamentoCreate):
     """
     Updates all elements from database table apartamentos
     """
@@ -319,7 +319,7 @@ def read_despesa(db: Session, despesa_id: int):
         raise e
 
 
-def update_despesa(db: Session, despesa_id: int, despesa: DespesaUpdate):
+def update_despesa(db: Session, despesa_id: int, despesa: DespesaCreate):
     """
     Updates all elements from database table despesas
     """
@@ -419,7 +419,7 @@ def read_garagem(db: Session, garagem_id: int):
         raise e
 
 
-def update_garagem(db: Session, garagem_id: int, garagem: GaragemUpdate):
+def update_garagem(db: Session, garagem_id: int, garagem: GaragemCreate):
     """
     Updates all elements from database table garagens
     """
@@ -519,7 +519,7 @@ def read_proprietario(db: Session, proprietario_id: int):
         raise e
 
 
-def update_proprietario(db: Session, proprietario_id: int, proprietario: ProprietarioUpdate):
+def update_proprietario(db: Session, proprietario_id: int, proprietario: ProprietarioCreate):
     """
     Updates all elements from database table proprietarios
     """
@@ -620,7 +620,7 @@ def read_ficha(db: Session, ficha_id: int):
         raise e
 
 
-def update_ficha(db: Session, ficha_id: int, ficha: FichaUpdate):
+def update_ficha(db: Session, ficha_id: int, ficha: FichaCreate):
     """
     Updates all elements from database table fichas
     

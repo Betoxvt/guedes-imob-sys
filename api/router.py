@@ -41,7 +41,7 @@ def read_aluguel_route(aluguel_id: int, db: Session = Depends(get_db)):
 
 
 @router.put("/alugueis/{aluguel_id}", response_model=AluguelResponse)
-def update_aluguel_route(aluguel_id: int, aluguel: AluguelUpdate, db: Session = Depends(get_db)):
+def update_aluguel_route(aluguel_id: int, aluguel: AluguelCreate, db: Session = Depends(get_db)):
     db_aluguel = update_aluguel(db=db, aluguel_id=aluguel_id, aluguel=aluguel)
     if db_aluguel is None:
         raise HTTPException(status_code=404, detail="Aluguel not found")
@@ -84,7 +84,7 @@ def read_apartamento_route(apartamento_id: int, db: Session = Depends(get_db)):
 
 
 @router.put("/apartamentos/{apartamento_id}", response_model=ApartamentoResponse)
-def update_apartamento_route(apartamento_id: int, apartamento: ApartamentoUpdate, db: Session = Depends(get_db)):
+def update_apartamento_route(apartamento_id: int, apartamento: ApartamentoCreate, db: Session = Depends(get_db)):
     db_apartamento = update_apartamento(db=db, apartamento_id=apartamento_id, apartamento=apartamento)
     if db_apartamento is None:
         raise HTTPException(status_code=404, detail="Apartamento not found")
@@ -127,7 +127,7 @@ def read_despesa_route(despesa_id: int, db: Session = Depends(get_db)):
 
 
 @router.put("/despesas/{despesa_id}", response_model=DespesaResponse)
-def update_despesa_route(despesa_id: int, despesa: DespesaUpdate, db: Session = Depends(get_db)):
+def update_despesa_route(despesa_id: int, despesa: DespesaCreate, db: Session = Depends(get_db)):
     db_despesa = update_despesa(db=db, despesa_id=despesa_id, despesa=despesa)
     if db_despesa is None:
         raise HTTPException(status_code=404, detail="Despesa not found")
@@ -170,7 +170,7 @@ def read_garagem_route(garagem_id: int, db: Session = Depends(get_db)):
 
 
 @router.put("/garagens/{garagem_id}", response_model=GaragemResponse)
-def update_garagem_route(garagem_id: int, garagem: GaragemUpdate, db: Session = Depends(get_db)):
+def update_garagem_route(garagem_id: int, garagem: GaragemCreate, db: Session = Depends(get_db)):
     db_garagem = update_garagem(db=db, garagem_id=garagem_id, garagem=garagem)
     if db_garagem is None:
         raise HTTPException(status_code=404, detail="Garagem not found")
@@ -213,7 +213,7 @@ def read_proprietario_route(proprietario_id: int, db: Session = Depends(get_db))
 
 
 @router.put("/proprietarios/{proprietario_id}", response_model=ProprietarioResponse)
-def update_proprietario_route(proprietario_id: int, proprietario: ProprietarioUpdate, db: Session = Depends(get_db)):
+def update_proprietario_route(proprietario_id: int, proprietario: ProprietarioCreate, db: Session = Depends(get_db)):
     db_proprietario = update_proprietario(db=db, proprietario_id=proprietario_id, proprietario=proprietario)
     if db_proprietario is None:
         raise HTTPException(status_code=404, detail="Proprietario not found")
@@ -256,7 +256,7 @@ def read_ficha_route(ficha_id: int, db: Session = Depends(get_db)):
 
 
 @router.put("/fichas/{ficha_id}", response_model=FichaResponse)
-def update_ficha_route(ficha_id: int, ficha: FichaUpdate, db: Session = Depends(get_db)):
+def update_ficha_route(ficha_id: int, ficha: FichaCreate, db: Session = Depends(get_db)):
     db_ficha = update_ficha(db=db, ficha_id=ficha_id, ficha=ficha)
     if db_ficha is None:
         raise HTTPException(status_code=404, detail="Ficha not found")

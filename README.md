@@ -38,6 +38,7 @@
 34. [ ] Adicionar com cuidado um st.rerun(), somente se um registro for efetuado com sucesso no banco de dados, a intenção é limpar os campos de entrada.
 35. [ ] Incluir ao sistema o valor já depositado (de uma reserva/aluguel), assim também mostrando o quanto falta (para o valor total).
 36. [ ] Adicionar a página para visualização das tabelas de reservas.
+37. [ ] Marcar campos obrigatórios. E resaltalos no caso de ausência ao enviar um registro.
 
 **Pensar em como utilizar o patch para alterações individuais de campos, ainda não vejo muito sentido nisso, mas como estudo pode ser bom.**
 
