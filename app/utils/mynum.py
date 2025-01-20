@@ -22,3 +22,16 @@ def calculate_valortotal(diarias, valor_diaria):
     if valor_total:
         st.write(f'Valor Total: R$ {valor_total}')
         return valor_total
+    
+
+def calculate_saldo(total, depositado):
+    if total is None or depositado is None:
+        if total is None:
+            st.write('Saldo: R$ 0,00')
+            return None
+        if total and depositado is None:
+            st.write(f'Saldo: {total}')
+    else:
+        saldo = total - depositado
+        st.write(f'Saldo: {saldo}')
+        return saldo

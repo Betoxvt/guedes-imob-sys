@@ -35,12 +35,15 @@ def calculate_diarias(checkin, checkout):
     if isinstance(checkin, date) and isinstance(checkout, date):
         difference = (checkout - checkin).days
         if difference >= 1:
+            st.write(f'Diarias: {difference} dias')
             return difference
         else:
             st.warning("A data de check-out deve ser posterior à data de check-in.")
+            st.write(f'Diarias: 0 dias')
             return 0
     else:
         st.warning(f"Insira as datas de Check-in e Check-out")
+        st.write(f'Diarias: 0 dias')
         return 0
 
 
