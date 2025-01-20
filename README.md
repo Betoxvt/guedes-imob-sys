@@ -33,11 +33,12 @@
 29. [ ] Descobrir um jeito de reduzir o número de linhas que ocupa o formulário de acompanhantes.
 30. [x] Na Page Fichas colocar botão para obter o PDF.
 31. [ ] Pedir confirmação antes de deletar um registro.
-32. [ ] Incluir categorias nos modelos para o banco de dados.
+32. [x] Incluir categorias nos modelos para o banco de dados.
+33. [ ] Alterar a forma que o modificar funciona, atualmente está utilizando schemas de update, onde todos os campos são opcionais, mas na verdade como são enviados com put e não com patch, a verificação fica por conta do banco de dados e não é o ideal.
+
+**Pensar em como utilizar o patch para alterações individuais de campos, ainda não vejo muito sentido nisso, mas como estudo pode ser bom.**
 
 **Provavelmente todos os valores monetários eu devesse usar str e depois passar para float no front, aceitando como separador decimal tanto ',' quanto '.'.**
-
-**Pensar melhor nos atributos para a tabela despesas. Talvez mes_referencia, categoria (Contas Recorrentes, Manutenção, ou mais detalhado como IPTU, Luz, Net, Gas, Eletrodoméstico, Mobília...) e com o campo descrição opcional poderia ser mais detalhado.**
 
 ## Problema
 
