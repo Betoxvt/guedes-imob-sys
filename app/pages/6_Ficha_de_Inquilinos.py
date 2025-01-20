@@ -533,26 +533,27 @@ with tab3:
                 value=str(df_up.mae[0]),
                 key=8085
             )
-            automovel = st.text_input(
-                label='Automóvel',
-                value=none_or_str(df_up.automovel[0]),
-                key=8087
-            )
-            modelo_auto = st.text_input(
-                label='Modelo',
-                value=none_or_str(df_up.modelo_auto[0]),
-                key=8089
-            )
-            placa_auto = st.text_input(
-                label='Placa',
-                value=none_or_str(df_up.placa_auto[0]),
-                key=8091
-            )
-            cor_auto = st.text_input(
-                label='Cor',
-                value=none_or_str(df_up.cor_auto[0]),
-                key=8093
-            )
+            with st.expander('Dados do Automóvel'):
+                automovel = st.text_input(
+                    label='Automóvel',
+                    value=none_or_str(df_up.automovel[0]),
+                    key=8087
+                )
+                modelo_auto = st.text_input(
+                    label='Modelo',
+                    value=none_or_str(df_up.modelo_auto[0]),
+                    key=8089
+                )
+                placa_auto = st.text_input(
+                    label='Placa',
+                    value=none_or_str(df_up.placa_auto[0]),
+                    key=8091
+                )
+                cor_auto = st.text_input(
+                    label='Cor',
+                    value=none_or_str(df_up.cor_auto[0]),
+                    key=8093
+                )
             checkin: date = st.date_input(
                 label='Check-in',
                 value=str_to_date(df_up.checkin[0]),
@@ -566,7 +567,10 @@ with tab3:
                 key=8095
             )
             diarias: int = calculate_diarias(checkin, checkout)
-            observacoes = st.text_area(
+            st.write(
+                f'Diárias: {diarias}'
+            )
+            observacoes = st.text_input(
                 label='Observações',
                 value=none_or_str(df_up.loc[0, 'observacoes']),
                 key=8096
@@ -581,7 +585,7 @@ with tab3:
                 value=none_or_str(df_up.imob_fone[0]),
                 key=8098
             )
-            with st.form('update_ficha'):
+            with st.expander('Acompanhantes 1 a 5'):
                 st.markdown('**Acompanhante 01**')
                 a0_nome = st.text_input(
                     label='Nome',
@@ -691,7 +695,7 @@ with tab3:
                     value=none_or_str(df_up['a4'].iloc[0].get('parentesco')),
                     key=8123
                 )
-
+            with st.expander('Acompanhantes 6 a 10'):
                 st.markdown('**Acompanhante 06**')
                 a5_nome = st.text_input(
                     label='Nome',
