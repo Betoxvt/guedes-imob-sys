@@ -1,4 +1,4 @@
-# Sistema para imobiliária
+# Sistema para imobiliária, um estudo sobre sistemas
 
 ## Tasks
 
@@ -21,7 +21,7 @@
 17. [ ] Fazer o login direito.
 18. [x] Revisar os dfs, dicts, responses, keys e importações no frontend, paginas 1 a 6.
 19. [ ] Definir Placeholders nos formulários do frontend páginas 1 a 6. E marcar campos Obrigatórios com um '*'.
-20. [x] Tentar recriar as páginas que fazem cálculos para exibição instantânea do resultado, aprendi que não pode ser dentro de um `st.form()`, OU, inserir botão de 'refresh' para recalcular diárias e valor_total, mas também não sei como.
+20. [x] Tentar recriar as páginas que fazem cálculos para exibição instantânea do resultado, aprendi que não pode ser dentro de um `st.form()`.
 21. [ ] Ver quais funções deveriam ser `async`com `asyncio` estudar e aplicar.
 22. [ ] Pegar o subtitulo dos dados ao ter erro como unprocessable content e mostrar os dados que não foram inseridos com o titulo correto
 23. [x] Melhor aquele esquema do if update_id... etc
@@ -30,11 +30,12 @@
 26. [x] Na visualização de DataFrames, colocar a coluna id na primeira posição.
 27. [x] Reescrever o modo como os 'acompanhantes' são armazenados, array ou json (dict).
 28. [ ] Descobrir um jeito de verificar a nível do banco de dados os JSON dos acompanhantes.
-29. [ ] Descobrir um jeito de reduzir o número de linhas que ocupa o formulário de acompanhantes.
+29. [x] Descobrir um jeito de reduzir o número de linhas que ocupa o formulário de acompanhantes.
 30. [x] Na Page Fichas colocar botão para obter o PDF.
 31. [ ] Pedir confirmação antes de deletar um registro.
 32. [x] Incluir categorias nos modelos para o banco de dados.
-33. [ ] Alterar a forma que o modificar funciona, atualmente está utilizando schemas de update, onde todos os campos são opcionais, mas na verdade como são enviados com put e não com patch, a verificação fica por conta do banco de dados e não é o ideal.
+33. [ ] Alterar a forma que o modificar funciona. Atualmente está utilizando os schemas de update, onde todos os campos são opcionais, mas como são enviados com put e não com patch, todos os campos devem ser enviados (incluindo nulos), o que pode atrapalhar a verificação do schema, ficando por conta do banco de dados e não é o ideal.
+34. [ ] Adicionar com cuidado um st.rerun(), somente se um registro for efetuado com sucesso no banco de dados, a intenção é limpar os campos de entrada.
 
 **Pensar em como utilizar o patch para alterações individuais de campos, ainda não vejo muito sentido nisso, mas como estudo pode ser bom.**
 
