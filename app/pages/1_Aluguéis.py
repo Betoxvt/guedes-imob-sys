@@ -86,7 +86,7 @@ with tab1:
                 st.write('Dica: Verifique a ID do apartamento')
             show_data_output(aluguel_data)
         except Exception as e:
-            print(e)
+            raise(e)
 
 with tab2:
     st.header('Consultar Aluguéis')
@@ -191,7 +191,7 @@ with tab3:
                         st.subheader('Dados NÃO inseridos, favor revisar:')
                     show_data_output(aluguel_up_data)
                 except Exception as e:
-                    print(e)         
+                    raise(e)         
         else:
             show_response_message(update_response)
 

@@ -16,7 +16,7 @@ def brazil_datestr(year_first_date: str | date) -> str:
         br_date = pd.to_datetime(year_first_date).strftime("%d/%m/%Y")
         return br_date
     except Exception as e:
-        print(f"Error trying to convert: {e}")
+        st.error(f"Error trying to convert: {e}")
         return year_first_date
     
 
@@ -60,7 +60,7 @@ def showbr_dfdate(df: pd.DataFrame) -> pd.DataFrame:
         Returns None if input is not a DataFrame.
     """
     if not isinstance(df, pd.DataFrame):
-        print("Input must be a Pandas DataFrame.")
+        st.warning("Input must be a Pandas DataFrame.")
         return None
     df_new = df.copy()
     date_columns = ['checkin', 'checkout', 'criado_em', 'modificado_em', 'data_pagamento']
@@ -72,7 +72,7 @@ def showbr_dfdate(df: pd.DataFrame) -> pd.DataFrame:
                 else:
                     df_new[col] = pd.to_datetime(df_new[col], errors='coerce').dt.strftime('%d/%m/%Y')
             except (ValueError, TypeError) as e:
-                print(f"Warning: Column '{col}' could not be converted to date: {e}")
+                st.warning(f"Warning: Column '{col}' could not be converted to date: {e}")
                 pass
     return df_new
 

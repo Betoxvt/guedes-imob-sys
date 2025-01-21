@@ -76,7 +76,7 @@ with tab1:
                                 st.subheader('Dados NÃO inseridos, favor revisar:')
                             show_data_output(ficha_data)
                         except Exception as e:
-                            print(e)
+                            raise(e)
             except pd.errors.ParserError:
                 st.error("Erro: O arquivo enviado não é um CSV válido ou está mal formatado.")
             except Exception as e:
@@ -469,7 +469,7 @@ with tab1:
                 st.subheader('Dados NÃO inseridos, favor revisar:')
             show_data_output(ficha_data)
         except Exception as e:
-            print(e)
+            raise(e)
 
 with tab2:
     st.header('Consultar Ficha de Inquilino')
@@ -910,7 +910,7 @@ with tab3:
                         st.subheader('Dados NÃO inseridos, favor revisar:')
                     show_data_output(ficha_up_data)
                 except Exception as e:
-                    print(e)
+                    raise(e)
 
         else:
             show_response_message(update_response)
@@ -940,7 +940,7 @@ with tab4:
             try:
                 delete_response = requests.delete(f'http://api:8000/fichas/{delete_id}')
             except Exception as e:
-                print(e)
+                raise(e)
             finally:
                 show_response_message(delete_response)
 

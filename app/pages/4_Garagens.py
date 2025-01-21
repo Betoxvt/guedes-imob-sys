@@ -88,7 +88,7 @@ with tab1:
                 st.subheader('Dados NÃO inseridos, favor revisar:')
             show_data_output(garagem_data)
         except Exception as e:
-            print(e)
+            raise(e)
 
 with tab2:
     st.header('Consultar Garagens')
@@ -196,7 +196,7 @@ with tab3:
                         st.subheader('Dados NÃO inseridos, favor revisar:')
                     show_data_output(garagem_up_data)
                 except Exception as e:
-                    print(e) 
+                    raise(e) 
         else:
             show_response_message(update_response)
 
