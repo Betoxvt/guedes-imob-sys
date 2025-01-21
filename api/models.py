@@ -118,3 +118,16 @@ class Ficha(Base):
     a9: Mapped[dict] = mapped_column(JSON, nullable=True)
     criado_em: Mapped[date] = mapped_column(server_default=func.current_date(), nullable=False)
     modificado_em: Mapped[date] = mapped_column(server_default=func.current_date(), onupdate=func.current_date(), nullable=False)
+
+
+class Pagamento(Base):
+    __tablename__ = 'pagamentos'
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    aluguel_id: Mapped[int] = mapped_column(ForeignKey('alugueis.id'), nullable=True)
+    valor: Mapped[float] = mapped_column(Numeric(10, 2), nullable=False)
+    nome: Mapped[str] = mapped_column(String, nullable=True)
+    contato: Mapped[str] = mapped_column(String, nullable=True)
+    apto: Mapped[str] = mapped_column(String, nullable=True)
+    criado_em: Mapped[date] = mapped_column(server_default=func.current_date(), nullable=False)
+    modificado_em: Mapped[date] = mapped_column(server_default=func.current_date(), onupdate=func.current_date(), nullable=False)

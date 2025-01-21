@@ -1,11 +1,12 @@
-from models import Aluguel, Apartamento, Despesa, Garagem, Proprietario, Ficha
+from models import Aluguel, Apartamento, Despesa, Ficha, Garagem, Pagamento, Proprietario
 from schemas import (
     AluguelCreate, AluguelUpdate,
     ApartamentoCreate, ApartamentoUpdate,
     DespesaCreate, DespesaUpdate,
+    FichaCreate, FichaUpdate,
     GaragemCreate, GaragemUpdate,
-    ProprietarioCreate, ProprietarioUpdate,
-    FichaCreate, FichaUpdate
+    PagamentoCreate, PagamentoUpdate,
+    ProprietarioCreate, ProprietarioUpdate
 )
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
@@ -679,5 +680,174 @@ def delete_ficha(db: Session, ficha_id: int):
         return db_ficha
     except SQLAlchemyError as e:
         print(f'Erro ao deletar ficha: {e}')
+        db.rollback()
+        raise e
+
+
+def create_pagamento(db: Session, pagamento: PagamentoCreate) -> Pagamento:
+    """
+    Creates a new pagamento record in the database.
+
+    This function takes an `PagamentoCreate` object containing the new pagamento data 
+    and persists it to the database.
+
+    Args:
+        db (Session): A SQLAlchemy session to interact with the database.
+        pagamento (PagamentoCreate): An object containing the new pagamento data.
+
+    Returns:
+        Pagamento: The newly created pagamento object.
+
+    Raises:
+        SQLAlchemyError: If an error occurs during the creation.
+    """
+    try:
+        db_pagamento = Pagamento(**pagamento.model_dump())
+        db.add(db_pagamento)
+        db.commit()
+        db.refresh(db_pagamento)
+        return db_pagamento
+    except SQLAlchemyError as e:
+        print(f'Erro ao registrar pagamento: {e}')
+        db.rollback()
+        raise e
+
+
+def read_pagamentos(db: Session, offset: int = 0, limit: int = 100) -> List[Pagamento]:
+    """
+    Retrieves pagamentos from the database with pagination.
+
+    This function queries the 'pagamentos' table in the database and returns the records,
+    ordered by ID in descending order. It allows pagination of the results through
+    the `offset` and `limit` parameters.
+
+    Args:
+        db (Session): A SQLAlchemy session to interact with the database.
+        offset (int, optional): The starting index of the results. Defaults to 0.
+        limit (int, optional): The maximum number of results to be returned. Defaults to 100.
+
+    Returns:
+        List[Pagamento]: A list of `Pagamento` objects from the database.
+
+    Raises:
+        SQLAlchemyError: If an error occurs during the database query.
+    """
+    try:
+        return db.query(Pagamento).order_by(Pagamento.id.desc()).offset(offset).limit(limit).all()
+    except SQLAlchemyError as e:
+        print(f'Erro ao buscar aluguéis: {e}')
+        raise e
+
+
+def read_pagamento(db: Session, pagamento_id: int) -> Pagamento:
+    """
+    Retrieves a specific pagamento from the database.
+
+    This function queries the database for a pagamento with the given ID.
+
+    Args:
+        db (Session): A SQLAlchemy session to interact with the database.
+        pagamento_id (int): The ID of the pagamento to retrieve.
+
+    Returns:
+        Pagamento: The pagamento object with the specified ID.
+
+    Raises:
+        SQLAlchemyError: If an error occurs during the query.
+    """
+    try:
+        return db.query(Pagamento).filter(Pagamento.id == pagamento_id).first()
+    except SQLAlchemyError as e:
+        print(f'Erro ao buscar pagamento: {e}')
+        raise e
+
+
+def update_pagamento(db: Session, pagamento_id: int, pagamento: PagamentoCreate) -> Pagamento:
+    """
+    Updates an existing pagamento in the database.
+
+    This function takes the pagamento ID and an `PagamentoUpdate` object containing the new 
+    data, and updates the corresponding record in the database.
+
+    Args:
+        db (Session): A SQLAlchemy session to interact with the database.
+        pagamento_id (int): The ID of the pagamento to be updated.
+        pagamento (PagamentoUpdate): An object containing the updated pagamento data.
+
+    Returns:
+        Pagamento: The updated pagamento object.
+
+    Raises:
+        SQLAlchemyError: If an error occurs during the update.
+    """
+    try:
+        db_pagamento = db.query(Pagamento).filter(Pagamento.id == pagamento_id).first()
+        if db_pagamento is None:
+            return None
+    
+        db.query(Pagamento).filter(Pagamento.id == pagamento_id).update(pagamento.model_dump())
+        db.commit()
+        db.refresh(db_pagamento)
+        return db_pagamento
+    except SQLAlchemyError as e:
+        print(f'Erro ao atualizar pagamento: {e}')
+        db.rollback()
+        raise e
+
+
+def patch_pagamento(db: Session, pagamento_id: int, pagamento: PagamentoUpdate) -> Pagamento:
+    """
+    Updates specific elements from an existing pagamento in the database.
+
+    This function takes the pagamento ID and an `PagamentoUpdate` object containing the new 
+    data, and updates the corresponding record in the database.
+        
+    Args:
+        db (Session): SQLAlchemy database session.
+        pagamento_id (int): ID of the pagamento record to update.
+        pagamento (PagamentoUpdate): Data to update.
+    
+    Returns:
+        Pagamento: The updated pagamento record.
+    """
+    try:
+        db_pagamento = db.query(Pagamento).filter(Pagamento.id == pagamento_id).first()
+        if db_pagamento is None:
+            return None
+
+        for key, value in pagamento.model_dump(exclude_unset=True).items():
+            setattr(db_pagamento, key, value)
+        db.commit()
+        db.refresh(db_pagamento)
+        return db_pagamento
+    except SQLAlchemyError as e:
+        print(f'Erro ao atualizar pagamento: {e}')
+        db.rollback()
+        raise e
+
+
+def delete_pagamento(db: Session, pagamento_id: int) -> Pagamento:
+    """
+    Deletes a pagamento from the database.
+
+    This function deletes the pagamento with the given ID from the database.
+
+    Args:
+        db (Session): A SQLAlchemy session to interact with the database.
+        pagamento_id (int): The ID of the pagamento to be deleted.
+    
+    Returns:
+        Pagamento: The deleted pagamento record.
+
+    Raises:
+        SQLAlchemyError: If an error occurs during the deletion.
+    """
+    try:
+        db_pagamento = db.query(Pagamento).filter(Pagamento.id == pagamento_id).first()
+        db.delete(db_pagamento)
+        db.commit()
+        return db_pagamento
+    except SQLAlchemyError as e:
+        print(f'Erro ao deletar pagamento: {e}')
         db.rollback()
         raise e
