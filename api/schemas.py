@@ -132,6 +132,15 @@ class FichaBase(BaseModel):
         if v in [item.value for item in FichaTipoCat]:
             return v
         raise ValueError("Categoria inválida")
+    
+    
+class PagamentoBase(BaseModel):
+    aluguel_id: Optional[int]
+    valor: float
+    nome: Optional[str]
+    contato: Optional[str]
+    apto: Optional[str]
+
 
 # Create schemas
 
@@ -157,6 +166,10 @@ class ProprietarioCreate(ProprietarioBase):
 
 
 class FichaCreate(FichaBase):
+    pass
+
+
+class PagamentoCreate(PagamentoBase):
     pass
 
 
@@ -217,6 +230,15 @@ class FichaResponse(FichaBase):
         from_attributes = True
 
 
+class PagamentoResponse(PagamentoBase):
+    id: int
+    criado_em: date
+    modificado_em: date
+
+    class Config:
+        from_attributes = True
+
+
 # Update schemas
 
 class AluguelUpdate(AluguelCreate):
@@ -265,3 +287,7 @@ class FichaUpdate(FichaCreate):
         if v in [item.value for item in FichaTipoCat]:
             return v
         raise ValueError("Categoria inválida")
+
+
+class PagamentoUpdate(PagamentoCreate):
+    __annotations__ = convert_to_optional(PagamentoCreate)
