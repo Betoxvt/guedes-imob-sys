@@ -3,6 +3,7 @@ import pandas as pd
 import requests
 import streamlit as st
 from utils.myfunc import show_data_output, show_response_message
+from utils.mynum import cpf_input, tel_input_br
 from utils.mystr import empty_none_dict
 
 st.set_page_config(
@@ -38,8 +39,8 @@ with tab1:
     if st.button('Registrar', key=5104):
         prop_data = empty_none_dict({
             "nome": nome,
-            "cpf": cpf,
-            "tel": tel,
+            "cpf": cpf_input(cpf),
+            "tel": tel_input_br(tel),
             "email": email
         })
         submit_data = json.dumps(obj=prop_data, separators=(',',':'))
@@ -112,8 +113,8 @@ with tab3:
             if st.button('Modificar', key=5305):
                 prop_up_data = empty_none_dict({
                     "nome": nome,
-                    "cpf": cpf,
-                    "tel": tel,
+                    "cpf": cpf_input(cpf),
+                    "tel": tel_input_br(tel),
                     "email": email,
                 })
                 update_data = json.dumps(obj=prop_up_data, separators=(',',':'))

@@ -3,7 +3,7 @@ import pandas as pd
 import requests
 import streamlit as st
 from utils.myfunc import show_data_output, show_response_message
-from utils.mystr import empty_none_dict
+from utils.mystr import apto_input, empty_none_dict
 
 # Seria ótimo que quando fosse registrar a foreign key (ID Proprietário) mostrasse o nome conforme o registro em sua tabela
 
@@ -61,7 +61,7 @@ with tab1:
     )
     if st.button('Registrar', key=2108):
         apto_data = empty_none_dict({
-            "apto": apto,
+            "apto": apto_input(apto),
             "proprietario_id": proprietario_id,
             "cod_celesc": cod_celesc,
             "cod_gas": cod_gas,
@@ -162,7 +162,7 @@ with tab3:
             )
             if st.button('Modificar', key=2310):
                 apto_up_data = empty_none_dict({
-                    "apto": apto,
+                    "apto": apto_input(apto),
                     "proprietario_id": proprietario_id,
                     "cod_celesc": cod_celesc,
                     "cod_gas": cod_gas,
