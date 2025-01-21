@@ -6,8 +6,9 @@ import requests
 import streamlit as st
 from utils.mydate import calculate_diarias, str_to_date
 from utils.myfunc import cat_index, show_data_output, show_response_message
-from utils.mystr import csv_handler, empty_none_dict, none_or_str
+from utils.mynum import cep_input, cpf_input, rg_input, tel_input_br
 from utils.mypdf import fill_ficha
+from utils.mystr import apto_input, csv_handler, empty_none_dict, none_or_str
 
 st.set_page_config(
     page_title='Ficha de Inquilinos',
@@ -37,14 +38,14 @@ with tab1:
                             'nome': df.nome[i],
                             'tipo_residencia': 'Temporário',
                             'cidade': df.cidade[i],
-                            'cep': df.cep[i],
+                            'cep': cep_input(df.cep[i]),
                             'uf': df.uf[i],
                             'pais': df.pais[i],
-                            'tel': df.tel[i],
+                            'tel': tel_input_br(df.tel[i]),
                             'estado_civil': df.estado_civil[i],
                             'profissao': df.profissao[i],
-                            'rg': df.rg[i],
-                            'cpf': df.cpf[i],
+                            'rg': rg_input(df.rg[i]),
+                            'cpf': cpf_input(df.cpf[i]),
                             'mae': df.mae[i],
                             'automovel': df.automovel[i],
                             'modelo_auto': df.modelo_auto[i],
@@ -425,18 +426,18 @@ with tab1:
         )
     if st.button('Registrar', key=6173):
         ficha_data = {
-            'apto': apto,
+            'apto': apto_input(apto),
             'nome': nome,
             'tipo_residencia': tipo_residencia,
             'cidade': cidade,
-            'cep': cep,
+            'cep': cep_input(cep),
             'uf': uf,
             'pais': pais,
-            'tel': tel,
+            'tel': tel_input_br(tel),
             'estado_civil': estado_civil,
             'profissao': profissao,
-            'rg': rg,
-            'cpf': cpf,
+            'rg': rg_input(rg),
+            'cpf': cpf_input(cpf),
             'mae': mae,
             'automovel': automovel,
             'modelo_auto': modelo_auto,
@@ -446,7 +447,7 @@ with tab1:
             'checkout': checkout.isoformat(),
             'observacoes': observacoes,
             'proprietario': proprietario,
-            'imob_fone': imob_fone,
+            'imob_fone': tel_input_br(imob_fone),
             'a0': {'nome': a0_nome, 'doc': a0_doc, 'idade': a0_idade, 'parentesco': a0_parentesco},
             'a1': {'nome': a1_nome, 'doc': a1_doc, 'idade': a1_idade, 'parentesco': a1_parentesco},
             'a2': {'nome': a2_nome, 'doc': a2_doc, 'idade': a2_idade, 'parentesco': a2_parentesco},
@@ -866,18 +867,18 @@ with tab3:
                 )
             if st.button('Modificar'):
                 ficha_up_data = {
-                    'apto': apto,
+                    'apto': apto_input(apto),
                     'nome': nome,
                     'tipo_residencia': tipo_residencia,
                     'cidade': cidade,
-                    'cep': cep,
+                    'cep': cep_input(cep),
                     'uf': uf,
                     'pais': pais,
-                    'tel': tel,
+                    'tel': tel_input_br(tel),
                     'estado_civil': estado_civil,
                     'profissao': profissao,
-                    'rg': rg,
-                    'cpf': cpf,
+                    'rg': rg_input(rg),
+                    'cpf': cpf_input(cpf),
                     'mae': mae,
                     'automovel': automovel,
                     'modelo_auto': modelo_auto,
@@ -887,7 +888,7 @@ with tab3:
                     'checkout': checkout.isoformat(),
                     'observacoes': observacoes,
                     'proprietario': proprietario,
-                    'imob_fone': imob_fone,
+                    'imob_fone': tel_input_br(imob_fone),
                     'a0': {'nome': a0_nome, 'doc': a0_doc, 'idade': a0_idade, 'parentesco': a0_parentesco},
                     'a1': {'nome': a1_nome, 'doc': a1_doc, 'idade': a1_idade, 'parentesco': a1_parentesco},
                     'a2': {'nome': a2_nome, 'doc': a2_doc, 'idade': a2_idade, 'parentesco': a2_parentesco},

@@ -49,7 +49,7 @@ def empty_none_dict(obj: dict) -> dict:
     return obj
 
 
-def format_apto(input: str) -> str:
+def apto_input(input: str) -> str:
     """Formats a string to 'letter-number'.
     Args:
         input: string to be formated.
