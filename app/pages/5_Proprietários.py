@@ -16,8 +16,9 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(['Registrar', 'Consultar', 'Modificar', '
 
 with tab1:
     st.header('Registrar Proprietário')
+    st.markdown('<p style="font-size: 12px;">Campos com * são obrigatórios</p>', unsafe_allow_html=True)
     nome: str = st.text_input(
-        label='Nome',
+        label='Nome *',
         key=5000,
         value=None
     )
@@ -76,6 +77,7 @@ with tab2:
 
 with tab3:
     st.header('Modificar Proprietário')
+    st.markdown('<p style="font-size: 12px;">Campos com * são obrigatórios</p>', unsafe_allow_html=True)
     update_id = st.number_input(
         'ID do Proprietário',
         min_value=1,
@@ -91,7 +93,7 @@ with tab3:
             df_up = pd.DataFrame([prop_up])
             st.dataframe(df_up.set_index('id'))
             nome: str = st.text_input(
-                label='Nome',
+                label='Nome *',
                 key=5301,
                 value=str(df_up.nome[0])
             )

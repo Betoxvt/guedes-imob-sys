@@ -17,13 +17,14 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(['Registrar', 'Consultar', 'Modificar', '
 
 with tab1:
     st.header('Registrar Apartamento')
+    st.markdown('<p style="font-size: 12px;">Campos com * são obrigatórios</p>', unsafe_allow_html=True)
     apto = st.text_input(
-        label='Apartamento',
+        label='Apartamento *',
         value=None,
         key=2100
     )
     proprietario_id = st.number_input(
-        label='ID Proprietário',
+        label='ID Proprietário *',
         min_value=1,
         format='%d',
         step=1,
@@ -103,6 +104,7 @@ with tab2:
 
 with tab3:
     st.header('Modificar Apartamento')
+    st.markdown('<p style="font-size: 12px;">Campos com * são obrigatórios</p>', unsafe_allow_html=True)
     update_id = st.number_input(
         'ID do Apartamento',
         min_value=1,
@@ -118,12 +120,12 @@ with tab3:
             df_up = pd.DataFrame([apto_up])
             st.dataframe(df_up.set_index('id'))
             apto = st.text_input(
-                label='Apartamento',
+                label='Apartamento *',
                 value=str(df_up.apto[0]),
                 key=2301
             )
             proprietario_id = st.number_input(
-                label='ID Proprietário',
+                label='ID Proprietário *',
                 min_value=1,
                 format='%d',
                 step=1,

@@ -15,8 +15,9 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(['Registrar', 'Consultar', 'Modificar', '
 
 with tab1:
     st.header('Registrar Pagamento')
+    st.markdown('<p style="font-size: 12px;">Campos com * são obrigatórios</p>', unsafe_allow_html=True)
     valor: float = st.number_input(
-        label='Valor',
+        label='Valor *',
         min_value=0.00,
         max_value=90000.00,
         format='%0.2f',
@@ -87,6 +88,7 @@ with tab2:
 
 with tab3:
     st.header('Modificar Pagamento')
+    st.markdown('<p style="font-size: 12px;">Campos com * são obrigatórios</p>', unsafe_allow_html=True)
     update_id = st.number_input(
         'ID do Pagamento',
         min_value=1,
@@ -102,7 +104,7 @@ with tab3:
             df_up = pd.DataFrame([pagamento_up])
             st.dataframe(df_up.set_index('id'))
             valor: float = st.number_input(
-                label='Valor',
+                label='Valor *',
                 min_value=0.00,
                 max_value=90000.00,
                 format='%0.2f',

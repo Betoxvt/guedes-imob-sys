@@ -18,8 +18,9 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(['Registrar', 'Consultar', 'Modificar', '
 
 with tab1:
     st.header('Registrar Garagem')
+    st.markdown('<p style="font-size: 12px;">Campos com * são obrigatórios</p>', unsafe_allow_html=True)
     apto_origem_id: int = st.number_input(
-        label='ID Apartamento de origem',
+        label='ID Apartamento de origem *',
         min_value=1,
         value=None,
         format='%d',
@@ -27,20 +28,20 @@ with tab1:
         key=4100
     )
     apto_destino_id: int = st.number_input(
-        label='ID Apartamento de destino',
+        label='ID Apartamento de destino *',
         min_value=1,
         format='%d',
         step=1,
         key=4101
     )
     checkin: date = st.date_input(
-        label='Check-in',
+        label='Check-in *' ,
         format='DD/MM/YYYY',
         key=4102,
         value=None
     )
     checkout: date = st.date_input(
-        label='Check-out',
+        label='Check-out *',
         format='DD/MM/YYYY',
         key=4103,
         value=None
@@ -48,7 +49,7 @@ with tab1:
     diarias: int = calculate_diarias(checkin, checkout)
     st.write(f'Diárias: {diarias}')
     valor_diaria: float = st.number_input(
-        label='Valor da diária',
+        label='Valor da diária *',
         min_value=0.00,
         max_value=900.00,
         value=None,
@@ -111,6 +112,7 @@ with tab2:
 
 with tab3:
     st.header('Modificar Garagem')
+    st.markdown('<p style="font-size: 12px;">Campos com * são obrigatórios</p>', unsafe_allow_html=True)
     update_id = st.number_input(
         'ID do Garagem',
         min_value=1,
@@ -126,7 +128,7 @@ with tab3:
             df_up = pd.DataFrame([garagem_up])
             st.dataframe(df_up.set_index('id'))
             apto_origem_id: int = st.number_input(
-                label='ID Apartamento de origem',
+                label='ID Apartamento de origem *',
                 min_value=1,
                 format='%d',
                 step=1,
@@ -134,7 +136,7 @@ with tab3:
                 value=df_up.loc[0, 'apto_origem_id']
             )
             apto_destino_id: int = st.number_input(
-                label='ID Apartamento de destino',
+                label='ID Apartamento de destino *',
                 min_value=1,
                 format='%d',
                 step=1,
@@ -142,13 +144,13 @@ with tab3:
                 value=df_up.loc[0, 'apto_destino_id']
             )
             checkin: date = st.date_input(
-                label='Check-in',
+                label='Check-in *',
                 value=str_to_date(df_up.checkin[0]),
                 format='DD/MM/YYYY',
                 key=4303
             )
             checkout: date = st.date_input(
-                label='Check-out',
+                label='Check-out *',
                 value=str_to_date(df_up.checkout[0]),
                 format='DD/MM/YYYY',
                 key=4304
@@ -156,7 +158,7 @@ with tab3:
             diarias: int = calculate_diarias(checkin, checkout)
             st.write(f'Diárias: {diarias}')
             valor_diaria: float = st.number_input(
-                label='Valor da diária',
+                label='Valor da diária *',
                 min_value=0.00,
                 max_value=3000.00,
                 value=df_up.loc[0, 'valor_diaria'],
