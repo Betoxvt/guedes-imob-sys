@@ -1,23 +1,25 @@
-from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
-from typing import List
-from database import get_db
-from schemas import (
-    AluguelCreate, AluguelResponse, AluguelUpdate,
-    ApartamentoCreate, ApartamentoResponse, ApartamentoUpdate,
-    DespesaCreate, DespesaResponse, DespesaUpdate,
-    GaragemCreate, GaragemResponse, GaragemUpdate,
-    ProprietarioCreate, ProprietarioResponse, ProprietarioUpdate,
-    FichaCreate, FichaResponse, FichaUpdate
-)
 from crud import (
     create_aluguel, read_alugueis, read_aluguel, update_aluguel, patch_aluguel, delete_aluguel,
     create_apartamento, read_apartamentos, read_apartamento, update_apartamento, patch_apartamento, delete_apartamento,
     create_despesa, read_despesas, read_despesa, update_despesa, patch_despesa, delete_despesa, 
+    create_ficha, read_ficha, read_fichas, update_ficha, patch_ficha, delete_ficha,
     create_garagem, read_garagem, read_garagens, update_garagem, patch_garagem, delete_garagem,
+    create_pagamento, read_pagamento, read_pagamentos, update_pagamento, patch_pagamento, delete_pagamento,
     create_proprietario, read_proprietario, read_proprietarios, update_proprietario, patch_proprietario, delete_proprietario,
-    create_ficha, read_ficha, read_fichas, update_ficha, patch_ficha, delete_ficha
 )
+from database import get_db
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.orm import Session
+from schemas import (
+    AluguelCreate, AluguelResponse, AluguelUpdate,
+    ApartamentoCreate, ApartamentoResponse, ApartamentoUpdate,
+    DespesaCreate, DespesaResponse, DespesaUpdate,
+    FichaCreate, FichaResponse, FichaUpdate,
+    GaragemCreate, GaragemResponse, GaragemUpdate,
+    PagamentoCreate, PagamentoResponse, PagamentoUpdate,
+    ProprietarioCreate, ProprietarioResponse, ProprietarioUpdate,
+)
+from typing import List
 
 router = APIRouter()
 
@@ -277,3 +279,46 @@ def delete_ficha_route(ficha_id: int, db: Session = Depends(get_db)):
     if db_ficha is None:
         raise HTTPException(status_code=404, detail="Ficha not found")
     return db_ficha
+
+
+@router.post("/pagamentos/", response_model=PagamentoResponse)
+def create_pagamento_route(pagamento: PagamentoCreate, db: Session = Depends(get_db)):
+    return create_pagamento(db=db, pagamento=pagamento)
+
+
+@router.get("/pagamentos/", response_model=List[PagamentoResponse])
+def read_pagamentos_route(offset: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    pagamentos = read_pagamentos(db, offset=offset, limit=limit)
+    return pagamentos
+
+
+@router.get("/pagamentos/{pagamento_id}", response_model=PagamentoResponse)
+def read_pagamento_route(pagamento_id: int, db: Session = Depends(get_db)):
+    pagamento = read_pagamento(db, pagamento_id=pagamento_id)
+    if pagamento is None:
+        raise HTTPException(status_code=404, detail="Pagamento not found")
+    return pagamento
+
+
+@router.put("/pagamentos/{pagamento_id}", response_model=PagamentoResponse)
+def update_pagamento_route(pagamento_id: int, pagamento: PagamentoCreate, db: Session = Depends(get_db)):
+    db_pagamento = update_pagamento(db=db, pagamento_id=pagamento_id, pagamento=pagamento)
+    if db_pagamento is None:
+        raise HTTPException(status_code=404, detail="Pagamento not found")
+    return db_pagamento
+
+
+@router.patch("/pagamentos/{pagamento_id}", response_model=PagamentoResponse)
+def patch_pagamento_route(pagamento_id: int, pagamento: PagamentoUpdate, db: Session = Depends(get_db)):
+    db_pagamento = patch_pagamento(db=db, pagamento_id=pagamento_id, pagamento=pagamento)
+    if db_pagamento is None:
+        raise HTTPException(status_code=404, detail="Pagamento not found")
+    return db_pagamento
+
+
+@router.delete("/pagamentos/{pagamento_id}", response_model=PagamentoResponse)
+def delete_pagamento_route(pagamento_id: int, db: Session = Depends(get_db)):
+    db_pagamento = delete_pagamento(db, pagamento_id=pagamento_id)
+    if db_pagamento is None:
+        raise HTTPException(status_code=404, detail="Pagamento not found")
+    return db_pagamento
