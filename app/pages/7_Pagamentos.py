@@ -172,12 +172,13 @@ with tab4:
             pagamento_delete = show_delete_response.json()
             df_delete = pd.DataFrame([pagamento_delete])
             st.dataframe(df_delete.set_index('id'))
-            if st.button(
-                'Deletar',
-                key=7401
-            ):
-                show_delete_response = requests.delete(f'http://api:8000/pagamentos/{delete_id}')
-                show_response_message(show_delete_response)
+            delete_confirm = st.checkbox('Confirma que deseja deletar o registro?')
+            delete_button = st.button('Deletar', key=1401)
+            if delete_button and delete_confirm:
+                delete_response = requests.delete(f'http://api:8000/pagamentos/{delete_id}')
+                show_response_message(delete_response)
+            elif delete_button and not delete_confirm:
+                st.warning('Você deve confirmar primeiro para deletar o registro')
         else:
             show_response_message(show_delete_response)
 
