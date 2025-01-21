@@ -17,8 +17,9 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(['Registrar', 'Consultar', 'Modificar', '
 
 with tab1:
     st.header('Registrar Despesa')
+    st.markdown('<p style="font-size: 12px;">Campos com * são obrigatórios</p>', unsafe_allow_html=True)
     apto_id: int = st.number_input(
-    label='ID Apartamento',
+    label='ID Apartamento *',
     min_value=1,
     value=None,
     format='%d',
@@ -26,13 +27,13 @@ with tab1:
     key=3100
     )
     data_pagamento: date = st.date_input(
-    label='Data de pagamento',
+    label='Data de pagamento *',
     format='DD/MM/YYYY',
     key=3102,
     value=date.today()
     )
     valor: float = st.number_input(
-    label='Valor da despesa',
+    label='Valor da despesa *',
     min_value=0.00,
     max_value=None,
     value=None,
@@ -41,12 +42,12 @@ with tab1:
     key=3103
     )
     categoria: str = st.selectbox(
-        label='Categoria',
+        label='Categoria *',
         options=['IPTU', 'CONDOMÍNIO', 'LUZ', 'GÁS', 'INTERNET', 'MANUTENÇÃO', 'OUTROS'],
         key=3104
     )
     descricao: str = st.text_area(
-        label='Descrição',
+        label='Descrição *',
         value=None,
         key=3105
     )
@@ -92,6 +93,7 @@ with tab2:
 with tab3:
     categorias = ['IPTU', 'CONDOMÍNIO', 'LUZ', 'GÁS', 'INTERNET', 'MANUTENÇÃO', 'OUTROS']
     st.header('Modificar Despesa')
+    st.markdown('<p style="font-size: 12px;">Campos com * são obrigatórios</p>', unsafe_allow_html=True)
     update_id = st.number_input(
         'ID do Despesa',
         min_value=1,
@@ -106,7 +108,7 @@ with tab3:
             df_up = pd.DataFrame([despesa_up])
             st.dataframe(df_up.set_index('id'))
             apto_id: int = st.number_input(
-                label='ID Apartamento',
+                label='ID Apartamento *',
                 min_value=1,
                 format='%d',
                 step=1,
@@ -114,13 +116,13 @@ with tab3:
                 value=df_up.loc[0, 'apto_id']
             )
             data_pagamento: date = st.date_input(
-                label='Data de pagamento',
+                label='Data de pagamento *',
                 value=str_to_date(df_up.data_pagamento[0]),
                 format='DD/MM/YYYY',
                 key=3302
             )
             valor: float = st.number_input(
-                label='Valor da despesa',
+                label='Valor da despesa *',
                 min_value=0.00,
                 max_value=None,
                 value=df_up.loc[0, 'valor'],
@@ -129,13 +131,13 @@ with tab3:
                 key=3303
             )
             categoria: str = st.selectbox(
-                label='Categoria',
+                label='Categoria *',
                 options=['IPTU', 'CONDOMÍNIO', 'LUZ', 'GÁS', 'INTERNET', 'MANUTENÇÃO', 'OUTROS'],
                 index=cat_index(df_up, 'categoria', categorias),
                 key=3304
             )
             descricao: str = st.text_area(
-                label='Descrição',
+                label='Descrição *',
                 value=str(df_up.descricao[0]),
                 key=3305
             )
@@ -144,6 +146,7 @@ with tab3:
                     "apto_id": apto_id,
                     "data_pagamento": data_pagamento.isoformat(),
                     "valor": valor,
+                    "categoria": categoria,
                     "descricao": descricao,
                 })
                 update_data = json.dumps(obj=despesa_up_data, separators=(',',':'))

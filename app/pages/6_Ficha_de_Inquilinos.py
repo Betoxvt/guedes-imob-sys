@@ -83,72 +83,72 @@ with tab1:
             except Exception as e:
                 st.error(f"Ocorreu um erro ao processar o arquivo: {e}")
     st.write('Ou digite os dados abaixo:')
+    st.markdown('<p style="font-size: 12px;">Campos com * são obrigatórios</p>', unsafe_allow_html=True)
     apto = st.text_input(
         label='Apartamento',
         value=None,
         key=6101
     )
     nome = st.text_input(
-        label='Nome completo',
+        label='Nome completo *',
         value=None,
         key=6102
     )
     tipo_residencia = st.radio(
-        label='Tipo de residência',
+        label='Tipo de residência *',
         options=['Anual', 'Temporário'],
         index=1,
         horizontal=True,
         key=6103
     )
     cidade = st.text_input(
-        label='Naturalidade (cidade)',
+        label='Naturalidade (cidade) *',
         value=None,
         key=6104
     )
     cep = st.text_input(
-        label='CEP',
+        label='CEP *',
         value=None,
         key=6105
     )
     uf = st.text_input(
-        label='Estado (UF)',
+        label='Estado (UF) *',
         value=None,
         key=6106
     )
     pais = st.text_input(
-        label='País',
+        label='País *',
         value=None,
         key=6107
     )
     tel = st.text_input(
-        label='Telefone',
+        label='Telefone *',
         value=None,
         key=6108
     )
     estado_civil = st.selectbox(
-        label='Estado civíl',
+        label='Estado civíl *',
         index=0,
-        placeholder='Selecione opção',
         options=['Casado(a)', 'Divorciado(a)', 'Separado(a)', 'Solteiro(a)', 'Viúvo(a)'],
         key=6109
     )
     profissao = st.text_input(
-        label='Profissão',
+        label='Profissão *',
         value=None,
         key=6110
     )
     rg = st.text_input(
-        label='Identidade',
+        label='Identidade *',
         value=None,
         key=6111
     )
     cpf = st.text_input(
-        label='CPF',
+        label='CPF *',
         value=None,
         key=6112
     )
     mae = st.text_input(
-        label='Nome completo da mãe',
+        label='Nome completo da mãe *',
         value=None,
         key=6113
     )
@@ -174,13 +174,13 @@ with tab1:
             key=6117
         )
     checkin: date = st.date_input(
-        label='Check-in',
+        label='Check-in *',
         format='DD/MM/YYYY',
         key=6118,
         value=None
     )
     checkout: date = st.date_input(
-        label='Check-out',
+        label='Check-out *',
         format='DD/MM/YYYY',
         key=6119,
         value=None
@@ -509,6 +509,7 @@ with tab2:
 with tab3:
     civil_cats = ['Casado(a)', 'Divorciado(a)', 'Separado(a)', 'Solteiro(a)', 'Viúvo(a)']
     st.header('Modificar Ficha de Inquilino')
+    st.markdown('<p style="font-size: 12px;">Campos com * são obrigatórios</p>', unsafe_allow_html=True)
     update_id = st.number_input(
         'ID da Ficha',
         min_value=1,
@@ -530,66 +531,66 @@ with tab3:
                 key=6301
             )
             nome = st.text_input(
-                label='Nome completo',
+                label='Nome completo *',
                 value=str(df_up.nome[0]),
                 key=6302
             )
             tipo_residencia = st.radio(
-                label='Tipo de residência',
+                label='Tipo de residência *',
                 options=['Anual', 'Temporário'],
                 index=cat_index(df_up, 'tipo_residencia', ['Anual', 'Temporário']),
                 horizontal=True,
                 key=6303
             )
             cidade = st.text_input(
-                label='Naturalidade (cidade)',
+                label='Naturalidade (cidade) *',
                 value=str(df_up.cidade[0]),
                 key=6304
             )
             cep = st.text_input(
-                label='CEP',
+                label='CEP *',
                 value=str(df_up.cep[0]),
                 key=6305
             )
             uf = st.text_input(
-                label='Estado (UF)',
+                label='Estado (UF) *',
                 value=str(df_up.uf[0]),
                 key=6306
             )
             pais = st.text_input(
-                label='País',
+                label='País *',
                 value=str(df_up.pais[0]),
                 key=6307
             )
             tel = st.text_input(
-                label='Telefone',
+                label='Telefone *',
                 value=str(df_up.tel[0]),
                 key=6308
             )
             estado_civil = st.selectbox(
-                label='Estado civíl',
+                label='Estado civíl *',
                 options=['Casado(a)', 'Divorciado(a)', 'Separado(a)', 'Solteiro(a)', 'Viúvo(a)'],
                 index=cat_index(df_up, 'estado_civil', civil_cats),
                 key=6309
             )
             profissao = st.text_input(
-                label='Profissão',
+                label='Profissão *',
                 value=str(df_up.profissao[0]),
                 key=6310
             )
             rg = st.text_input(
-                label='Identidade (RG)',
+                label='Identidade (RG) *',
                 value=none_or_str(df_up.rg[0]),
                 key=6311
             )
             cpf = st.text_input(
-                label='CPF',
+                label='CPF *',
                 value=str(df_up.cpf[0]),
                 help='Somente números',
                 key=6312
             )
             mae = st.text_input(
-                label='Nome completo da mãe',
+                label='Nome completo da mãe *',
                 value=str(df_up.mae[0]),
                 key=6313
             )
@@ -615,13 +616,13 @@ with tab3:
                     key=6317
                 )
             checkin: date = st.date_input(
-                label='Check-in',
+                label='Check-in *',
                 value=str_to_date(df_up.checkin[0]),
                 format='DD/MM/YYYY',
                 key=6318
             )
             checkout: date = st.date_input(
-                label='Check-out',
+                label='Check-out *',
                 value=str_to_date(df_up.checkout[0]),
                 format='DD/MM/YYYY',
                 key=6319
