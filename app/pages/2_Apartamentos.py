@@ -48,9 +48,10 @@ with tab1:
                 "lock_senha": lock_senha,
             }
         )
-        submit_data = json.dumps(obj=apto_data, separators=(",", ":"))
         try:
-            post_response = requests.post("http://api:8000/apartamentos/", submit_data)
+            post_response = requests.post(
+                "http://api:8000/apartamentos/", json=apto_data
+            )
             show_response_message(post_response)
             if post_response.status_code == 200:
                 st.subheader("Dados inseridos, tudo OK:")

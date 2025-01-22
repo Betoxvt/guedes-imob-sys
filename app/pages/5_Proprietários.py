@@ -32,9 +32,10 @@ with tab1:
                 "email": email,
             }
         )
-        submit_data = json.dumps(obj=prop_data, separators=(",", ":"))
         try:
-            post_response = requests.post("http://api:8000/proprietarios/", submit_data)
+            post_response = requests.post(
+                "http://api:8000/proprietarios/", json=prop_data
+            )
             show_response_message(post_response)
             if post_response.status_code == 200:
                 st.subheader("Dados inseridos, tudo OK:")
@@ -92,10 +93,9 @@ with tab3:
                         "email": email,
                     }
                 )
-                update_data = json.dumps(obj=prop_up_data, separators=(",", ":"))
                 try:
                     put_response = requests.put(
-                        f"http://api:8000/proprietarios/{update_id}", update_data
+                        f"http://api:8000/proprietarios/{update_id}", json=prop_up_data
                     )
                     show_response_message(put_response)
                     if put_response.status_code == 200:

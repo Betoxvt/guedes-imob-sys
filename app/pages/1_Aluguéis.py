@@ -63,9 +63,10 @@ with tab1:
                 "valor_total": valor_total,
             }
         )
-        submit_data = json.dumps(obj=aluguel_data, separators=(",", ":"))
         try:
-            post_response = requests.post("http://api:8000/alugueis/", submit_data)
+            post_response = requests.post(
+                "http://api:8000/alugueis/", json=aluguel_data
+            )
             show_response_message(post_response)
             if post_response.status_code == 200:
                 st.subheader("Dados inseridos, tudo OK:")
@@ -177,14 +178,6 @@ with tab3:
                 key=1306,
             )
             valor_total: float = calculate_valortotal(diarias, valor_diaria)
-            valor_depositado: float = st.number_input(
-                label="Valor Depositado",
-                min_value=0.00,
-                max_value=90000.0,
-                value=df_up.loc(0, "valor_depositado"),
-                format="%0.2f",
-                key=1106,
-            )
             saldo: float = calculate_saldo(valor_total, valor_depositado)
             if st.button("Modificar"):
                 aluguel_up_data = empty_none_dict(
@@ -196,13 +189,11 @@ with tab3:
                         "diarias": diarias,
                         "valor_diaria": valor_diaria,
                         "valor_total": valor_total,
-                        "valor_depositado": valor_depositado,
                     }
                 )
-                update_data = json.dumps(obj=aluguel_up_data, separators=(",", ":"))
                 try:
                     put_response = requests.put(
-                        f"http://api:8000/alugueis/{update_id}", update_data
+                        f"http://api:8000/alugueis/{update_id}", json=aluguel_up_data
                     )
                     show_response_message(put_response)
                     if put_response.status_code == 200:

@@ -112,10 +112,9 @@ with tab1:
                                 "parentesco": df.a9_parentesco[i],
                             },
                         }
-                        submit_data = json.dumps(obj=ficha_data, separators=(",", ":"))
                         try:
                             post_response = requests.post(
-                                "http://api:8000/fichas/", submit_data
+                                "http://api:8000/fichas/", json=ficha_data
                             )
                             show_response_message(post_response)
                             if post_response.status_code == 200:
@@ -327,10 +326,8 @@ with tab1:
                 "parentesco": a9_parentesco,
             },
         }
-        submit_data = json.dumps(obj=empty_none_dict(ficha_data), separators=(",", ":"))
-
         try:
-            post_response = requests.post("http://api:8000/fichas/", submit_data)
+            post_response = requests.post("http://api:8000/fichas/", json=ficha_data)
             show_response_message(post_response)
             if post_response.status_code == 200:
                 st.subheader("Dados inseridos, tudo OK:")
@@ -786,13 +783,9 @@ with tab3:
                         "parentesco": a9_parentesco,
                     },
                 }
-                update_data = json.dumps(
-                    obj=empty_none_dict(ficha_up_data), separators=(",", ":")
-                )
-
                 try:
                     put_response = requests.put(
-                        f"http://api:8000/fichas/{update_id}", update_data
+                        f"http://api:8000/fichas/{update_id}", json=ficha_up_data
                     )
                     show_response_message(put_response)
                     if put_response.status_code == 200:

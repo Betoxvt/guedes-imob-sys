@@ -68,9 +68,10 @@ with tab1:
                 "valor_depositado": valor_depositado,
             }
         )
-        submit_data = json.dumps(obj=garagem_data, separators=(",", ":"))
         try:
-            post_response = requests.post("http://api:8000/garagens/", submit_data)
+            post_response = requests.post(
+                "http://api:8000/garagens/", json=garagem_data
+            )
             show_response_message(post_response)
             if post_response.status_code == 200:
                 st.subheader("Dados inseridos, tudo OK:")
@@ -164,10 +165,9 @@ with tab3:
                     "valor_total": valor_total,
                     "valor_depositado": valor_depositado,
                 }
-                update_data = json.dumps(obj=garagem_up_data, separators=(",", ":"))
                 try:
                     put_response = requests.put(
-                        f"http://api:8000/garagens/{update_id}", update_data
+                        f"http://api:8000/garagens/{update_id}", json=garagem_up_data
                     )
                     show_response_message(put_response)
                     if put_response.status_code == 200:

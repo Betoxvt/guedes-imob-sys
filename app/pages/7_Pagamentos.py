@@ -56,9 +56,10 @@ with tab1:
                 "notas": notas,
             }
         )
-        submit_data = json.dumps(obj=pagamento_data, separators=(",", ":"))
         try:
-            post_response = requests.post("http://api:8000/pagamentos/", submit_data)
+            post_response = requests.post(
+                "http://api:8000/pagamentos/", json=pagamento_data
+            )
             show_response_message(post_response)
             if post_response.status_code == 200:
                 st.subheader("Dados inseridos, tudo OK:")
@@ -140,10 +141,10 @@ with tab3:
                         "notas": notas,
                     }
                 )
-                update_data = json.dumps(obj=pagamento_up_data, separators=(",", ":"))
                 try:
                     put_response = requests.put(
-                        f"http://api:8000/pagamentos/{update_id}", update_data
+                        f"http://api:8000/pagamentos/{update_id}",
+                        json=pagamento_up_data,
                     )
                     show_response_message(put_response)
                     if put_response.status_code == 200:
