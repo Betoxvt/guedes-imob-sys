@@ -5,14 +5,14 @@ from reportlab.platypus import Paragraph
 from utils.mystr import two_liner
 
 def fill_ficha(data: dict[str, str]):
-    file_name = f'{str(data['checkin'])}_{str(data['apto'])}_{str(data['id'])}.pdf'
+    file_name = f'{str(data['checkin'])}_{str(data['apto_id'])}_{str(data['id'])}.pdf'
     img = './files/ficha_model/ficha.png'
     dir = './files/tmp_filled_fichas/'
     path = os.path.join(dir, file_name)
     c = canvas.Canvas(path)
     c.drawImage(img, 0, 0, width=A4[0], height=A4[1])
     s: dict[int, int] = {
-        'apto':         [117, 193],
+        'apto_id':         [117, 193],
         'nome':         [217, 193],
         'cidade':       [187, 218],
         'cep':          [376, 218],

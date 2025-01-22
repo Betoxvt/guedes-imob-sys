@@ -34,7 +34,7 @@ with tab1:
                 if st.button('Registrar', key= 61005):
                     for i, r in df.iterrows():
                         ficha_data = {
-                            'apto': None,
+                            'apto_id': None,
                             'nome': df.nome[i],
                             'tipo_residencia': 'Temporário',
                             'cidade': df.cidade[i],
@@ -84,7 +84,7 @@ with tab1:
                 st.error(f"Ocorreu um erro ao processar o arquivo: {e}")
     st.write('Ou digite os dados abaixo:')
     st.markdown('<p style="font-size: 12px;">Campos com * são obrigatórios</p>', unsafe_allow_html=True)
-    apto = st.text_input(
+    apto_id = st.text_input(
         label='Apartamento',
         value=None,
         key=6101
@@ -426,7 +426,7 @@ with tab1:
         )
     if st.button('Registrar', key=6173):
         ficha_data = {
-            'apto': apto_input(apto),
+            'apto_id': apto_input(apto_id),
             'nome': nome,
             'tipo_residencia': tipo_residencia,
             'cidade': cidade,
@@ -525,9 +525,9 @@ with tab3:
             df_up = pd.DataFrame([ficha_up])
             st.dataframe(df_up.set_index('id'))
             st.subheader(f'Ficha de Inquilino nº: {update_id}')
-            apto = st.text_input(
+            apto_id = st.text_input(
                 label='Apartamento',
-                value=str(df_up.apto[0]),
+                value=str(df_up.apto_id[0]),
                 key=6301
             )
             nome = st.text_input(
@@ -868,7 +868,7 @@ with tab3:
                 )
             if st.button('Modificar'):
                 ficha_up_data = {
-                    'apto': apto_input(apto),
+                    'apto_id': apto_input(apto_id),
                     'nome': nome,
                     'tipo_residencia': tipo_residencia,
                     'cidade': cidade,

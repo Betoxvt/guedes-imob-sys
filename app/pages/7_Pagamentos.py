@@ -42,18 +42,24 @@ with tab1:
         value=None,
         key=7103,
     )
-    apto: str = st.text_input(
+    apto_id: str = st.text_input(
         label='Apartamento',
         value=None,
         key=7104,
     )
-    if st.button('Registrar', key=7105):
+    notas: str = st.text_input(
+        label='Notas',
+        value=None,
+        key=7105
+    )
+    if st.button('Registrar', key=7106):
         pagamento_data = empty_none_dict({
             "valor": valor,
             "aluguel_id": aluguel_id,
             "nome": nome,
             "contato": contato,
-            "apto": apto
+            "apto_id": apto_id,
+            "notas": notas
         })
         submit_data = json.dumps(obj=pagamento_data, separators=(',',':'))
         try:
@@ -129,10 +135,15 @@ with tab3:
                 value=df_up.contato[0],
                 key=7304,
             )
-            apto: str = st.text_input(
+            apto_id: str = st.text_input(
                 label='Apartamento',
-                value=df_up.apto[0],
+                value=df_up.apto_id[0],
                 key=7305,
+            )
+            notas: str = st.text_input(
+                label='Notas',
+                value=df_up.notas[0],
+                key=7106
             )
             if st.button('Modificar', key=7306):
                 pagamento_up_data = empty_none_dict({
@@ -140,7 +151,8 @@ with tab3:
                     "aluguel_id": aluguel_id,
                     "nome": nome,
                     "contato": contato,
-                    "apto": apto
+                    "apto_id": apto_id,
+                    "notas": notas
                 })
                 update_data = json.dumps(obj=pagamento_up_data, separators=(',',':'))
                 try:

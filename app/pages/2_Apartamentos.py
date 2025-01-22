@@ -18,7 +18,7 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(['Registrar', 'Consultar', 'Modificar', '
 with tab1:
     st.header('Registrar Apartamento')
     st.markdown('<p style="font-size: 12px;">Campos com * são obrigatórios</p>', unsafe_allow_html=True)
-    apto = st.text_input(
+    id = st.text_input(
         label='Apartamento *',
         value=None,
         key=2100
@@ -62,7 +62,7 @@ with tab1:
     )
     if st.button('Registrar', key=2108):
         apto_data = empty_none_dict({
-            "apto": apto_input(apto),
+            "id": apto_input(id),
             "proprietario_id": proprietario_id,
             "cod_celesc": cod_celesc,
             "cod_gas": cod_gas,
@@ -119,9 +119,9 @@ with tab3:
             apto_up = update_response.json()
             df_up = pd.DataFrame([apto_up])
             st.dataframe(df_up.set_index('id'))
-            apto = st.text_input(
+            id = st.text_input(
                 label='Apartamento *',
-                value=str(df_up.apto[0]),
+                value=str(df_up.id[0]),
                 key=2301
             )
             proprietario_id = st.number_input(
@@ -164,7 +164,7 @@ with tab3:
             )
             if st.button('Modificar', key=2310):
                 apto_up_data = empty_none_dict({
-                    "apto": apto_input(apto),
+                    "id": apto_input(id),
                     "proprietario_id": proprietario_id,
                     "cod_celesc": cod_celesc,
                     "cod_gas": cod_gas,
