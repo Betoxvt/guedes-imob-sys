@@ -49,7 +49,7 @@ class DespesaBase(BaseModel):
     categoria: str
     descricao: str
 
-    @field_validator("categoria_despesa")
+    @field_validator("categoria")
     def check_categoria_despesa_base(cls, v):
         if v in [item.value for item in DespesaCat]:
             return v
@@ -141,7 +141,7 @@ class PagamentoBase(BaseModel):
     contato: Optional[str]
     notas: Optional[str]
 
-    @field_validator("categoria_pagamento")
+    @field_validator("tipo")
     def check_categoria_pagamento_base(cls, v):
         if v in [item.value for item in PagamentoCat]:
             return v
@@ -265,7 +265,7 @@ class ApartamentoUpdate(ApartamentoCreate):
 class DespesaUpdate(DespesaCreate):
     __annotations__ = convert_to_optional(DespesaCreate)
 
-    @field_validator("categoria_despesa")
+    @field_validator("categoria")
     def check_categoria_despesa_up(cls, v):
         if v is None:
             return v
@@ -301,7 +301,7 @@ class GaragemUpdate(GaragemCreate):
 class PagamentoUpdate(PagamentoCreate):
     __annotations__ = convert_to_optional(PagamentoCreate)
 
-    @field_validator("categoria_despesa")
+    @field_validator("tipo")
     def check_categoria_pagamento_up(cls, v):
         if v is None:
             return v
