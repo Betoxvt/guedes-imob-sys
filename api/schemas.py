@@ -54,25 +54,7 @@ class DespesaBase(BaseModel):
         if v in [item.value for item in DespesaCat]:
             return v
         raise ValueError("Categoria inválida")
-
-
-class GaragemBase(BaseModel):
-    apto_origem_id: int
-    apto_destino_id: int
-    checkin: date
-    checkout: date
-    diarias: int
-    valor_diaria: float
-    valor_total: float
-    valor_depositado: Optional[float]
-
-
-class ProprietarioBase(BaseModel):
-    nome: str
-    cpf: Optional[str]
-    tel: Optional[str]
-    email: Optional[EmailStr]
-
+    
 
 class FichaTipoCat(Enum):
     cat1 = 'Anual'
@@ -132,6 +114,17 @@ class FichaBase(BaseModel):
         if v in [item.value for item in FichaTipoCat]:
             return v
         raise ValueError("Categoria inválida")
+
+
+class GaragemBase(BaseModel):
+    apto_origem_id: int
+    apto_destino_id: int
+    checkin: date
+    checkout: date
+    diarias: int
+    valor_diaria: float
+    valor_total: float
+    valor_depositado: Optional[float]
     
     
 class PagamentoBase(BaseModel):
@@ -140,6 +133,14 @@ class PagamentoBase(BaseModel):
     nome: Optional[str]
     contato: Optional[str]
     apto: Optional[str]
+    notas: Optional[str]
+
+
+class ProprietarioBase(BaseModel):
+    nome: str
+    cpf: Optional[str]
+    tel: Optional[str]
+    email: Optional[EmailStr]
 
 
 # Create schemas
@@ -157,19 +158,19 @@ class DespesaCreate(DespesaBase):
     pass
 
 
-class GaragemCreate(GaragemBase):
-    pass
-
-
-class ProprietarioCreate(ProprietarioBase):
-    pass
-
-
 class FichaCreate(FichaBase):
     pass
 
 
+class GaragemCreate(GaragemBase):
+    pass
+
+
 class PagamentoCreate(PagamentoBase):
+    pass
+
+
+class ProprietarioCreate(ProprietarioBase):
     pass
 
 
@@ -203,25 +204,16 @@ class DespesaResponse(DespesaBase):
         from_attributes = True
 
 
-class GaragemResponse(GaragemBase):
-    id: int
-    criado_em: date
-    modificado_em: date
-
-    class Config:
-        from_attributes = True
-
-
-class ProprietarioResponse(ProprietarioBase):
-    id: int
-    criado_em: date
-    modificado_em: date
-    
-    class Config:
-        from_attributes = True
-
-
 class FichaResponse(FichaBase):
+    id: int
+    criado_em: date
+    modificado_em: date
+
+    class Config:
+        from_attributes = True
+
+
+class GaragemResponse(GaragemBase):
     id: int
     criado_em: date
     modificado_em: date
@@ -235,6 +227,15 @@ class PagamentoResponse(PagamentoBase):
     criado_em: date
     modificado_em: date
 
+    class Config:
+        from_attributes = True
+
+
+class ProprietarioResponse(ProprietarioBase):
+    id: int
+    criado_em: date
+    modificado_em: date
+    
     class Config:
         from_attributes = True
 
@@ -261,14 +262,6 @@ class DespesaUpdate(DespesaCreate):
         raise ValueError("Categoria inválida")
 
 
-class GaragemUpdate(GaragemCreate):
-    __annotations__ = convert_to_optional(DespesaCreate)
-    
-
-class ProprietarioUpdate(ProprietarioCreate):
-    __annotations__ = convert_to_optional(ProprietarioCreate)
-
-
 class FichaUpdate(FichaCreate):
     __annotations__ = convert_to_optional(FichaCreate)
 
@@ -289,5 +282,13 @@ class FichaUpdate(FichaCreate):
         raise ValueError("Categoria inválida")
 
 
+class GaragemUpdate(GaragemCreate):
+    __annotations__ = convert_to_optional(DespesaCreate)
+
+
 class PagamentoUpdate(PagamentoCreate):
     __annotations__ = convert_to_optional(PagamentoCreate)
+    
+
+class ProprietarioUpdate(ProprietarioCreate):
+    __annotations__ = convert_to_optional(ProprietarioCreate)
