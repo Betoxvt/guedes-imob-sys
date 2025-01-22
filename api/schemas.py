@@ -12,7 +12,7 @@ def convert_to_optional(schema):
 
 
 class AluguelBase(BaseModel):
-    apto_id: int
+    apto_id: str
     ficha_id: Optional[int]
     checkin: date
     checkout: date
@@ -43,7 +43,7 @@ class DespesaCat(Enum):
 
 
 class DespesaBase(BaseModel):
-    apto_id: int
+    apto_id: str
     data_pagamento: date
     valor: float
     categoria: str
@@ -117,8 +117,8 @@ class FichaBase(BaseModel):
 
 
 class GaragemBase(BaseModel):
-    apto_id_origem: int
-    apto_id_destino: int
+    apto_id_origem: str
+    apto_id_destino: str
     checkin: date
     checkout: date
     diarias: int

@@ -125,6 +125,7 @@ def empty_none(obj: str | None) -> str | None:
             or obj.strip().upper() == "NA"
         ):
             return None
+    return obj
 
 
 def two_liner(s: str):

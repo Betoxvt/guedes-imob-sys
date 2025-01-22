@@ -23,7 +23,7 @@ with tab1:
     )
     apto_id: str = st.text_input(label="ID Apartamento *", value=None, key=1100)
     ficha_id: int = st.number_input(
-        label="ID Ficha", min_value=0, value=None, format="%d", step=1, key=1101
+        label="ID Ficha", min_value=1, value=None, format="%d", step=1, key=1101
     )
     checkin: date = st.date_input(
         label="Check-in *", format="DD/MM/YYYY", key=1102, value=None
@@ -55,7 +55,7 @@ with tab1:
         aluguel_data = empty_none_dict(
             {
                 "apto_id": apto_input(apto_id),
-                "ficha_id": ficha_id if ficha_id > 0 else None,
+                "ficha_id": ficha_id,
                 "checkin": checkin.isoformat(),
                 "checkout": checkout.isoformat(),
                 "diarias": diarias,
@@ -70,6 +70,7 @@ with tab1:
             if post_response.status_code == 200:
                 st.subheader("Dados inseridos, tudo OK:")
                 show_data_output(aluguel_data)
+                st.write(empty_none(valor_depositado))
                 if empty_none(valor_depositado) is not None:
                     get_top_response = requests.get(
                         "http://api:8000/alugueis/", params={"limit": 1}
@@ -84,24 +85,34 @@ with tab1:
                                 "apto_id": apto_input(apto_id),
                                 "aluguel_id": aluguel_id,
                                 "notas": "Reserva",
+                                "nome": None,
+                                "contato": None,
                             }
                         )
+                        st.write(pagamento_data)
                         post_pagamento_response = requests.post(
-                            "http://api:8000/pagamentos/"
+                            "http://api:8000/pagamentos/", json=pagamento_data
                         )
                         show_response_message(post_pagamento_response)
-                    if post_pagamento_response.status_code == 200:
-                        st.subheader("Dados do deposito salvos, tudo OK:")
-                        show_data_output(pagamento_data)
+                        if post_pagamento_response.status_code == 200:
+                            st.subheader("Dados do deposito salvos, tudo OK:")
+                            show_data_output(pagamento_data)
+                        else:
+                            st.subheader("Não foi possível salvar os dados do depósito")
+                            show_data_output(pagamento_data)
                     else:
-                        st.subheader("Não foi possível salvar os dados do depósito")
-                        show_data_output(pagamento_data)
+                        st.subheader("Erro ao obter o ID do aluguel")
+                        show_response_message(get_top_response)
+                else:
+                    st.write("Nenhum valor de depósito fornecido.")
             else:
                 st.subheader("Dados NÃO inseridos, favor revisar:")
                 st.write("Dica: Verifique a ID do apartamento")
                 show_data_output(aluguel_data)
+        except requests.exceptions.RequestException as e:
+            st.error(f"Erro na requisição: {e}")
         except Exception as e:
-            raise (e)
+            st.error(f"Um erro inesperado ocorreu: {e}")
 
 with tab2:
     st.header("Consultar Aluguéis")

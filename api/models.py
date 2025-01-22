@@ -1,7 +1,6 @@
 from datetime import date
 from sqlalchemy import ForeignKey, func, Numeric, String, JSON
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
-from typing import List
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 
 class Base(DeclarativeBase):
@@ -26,10 +25,6 @@ class Aluguel(Base):
         server_default=func.current_date(), onupdate=func.current_date(), nullable=False
     )
 
-    apto: Mapped["Apartamento"] = relationship(back_populates="alugueis")
-    ficha: Mapped["Ficha"] = relationship(back_populates="alugueis")
-    pagamentos: Mapped[List["Pagamento"]] = relationship(back_populates="aluguel")
-
 
 class Apartamento(Base):
     __tablename__ = "apartamentos"
@@ -53,18 +48,6 @@ class Apartamento(Base):
         server_default=func.current_date(), onupdate=func.current_date(), nullable=False
     )
 
-    proprietario: Mapped["Proprietario"] = relationship(back_populates="apartamentos")
-    alugueis: Mapped[List["Aluguel"]] = relationship(back_populates="apto")
-    despesas: Mapped[List["Despesa"]] = relationship(back_populates="apto")
-    fichas: Mapped[List["Ficha"]] = relationship(back_populates="apto")
-    garagens_origem: Mapped[List["Garagem"]] = relationship(
-        foreign_keys=["Garagem.apto_id_origem"], back_populates="apto_origem"
-    )
-    garagens_destino: Mapped[List["Garagem"]] = relationship(
-        foreign_keys=["Garagem.apto_id_destino"], back_populates="apto_destino"
-    )
-    pagamentos: Mapped[List["Pagamento"]] = relationship(back_populates="apto")
-
 
 class Despesa(Base):
     __tablename__ = "despesas"
@@ -83,8 +66,6 @@ class Despesa(Base):
     modificado_em: Mapped[date] = mapped_column(
         server_default=func.current_date(), onupdate=func.current_date(), nullable=False
     )
-
-    apto: Mapped["Apartamento"] = relationship(back_populates="despesas")
 
 
 class Ficha(Base):
@@ -130,19 +111,16 @@ class Ficha(Base):
         server_default=func.current_date(), onupdate=func.current_date(), nullable=False
     )
 
-    apto: Mapped["Apartamento"] = relationship(back_populates="fichas")
-    alugueis: Mapped[List["Aluguel"]] = relationship(back_populates="ficha")
-
 
 class Garagem(Base):
     __tablename__ = "garagens"
 
     id: Mapped[int] = mapped_column(primary_key=True)
     apto_id_origem: Mapped[str] = mapped_column(
-        ForeignKey("apartamentos.id"), nullable=False
+        ForeignKey("apartamentos.id"), nullable=False, name="fk_apto_origem"
     )
     apto_id_destino: Mapped[str] = mapped_column(
-        ForeignKey("apartamentos.id"), nullable=False
+        ForeignKey("apartamentos.id"), nullable=False, name="fk_apto_destino"
     )
     checkin: Mapped[date] = mapped_column(nullable=False)
     checkout: Mapped[date] = mapped_column(nullable=False)
@@ -155,13 +133,6 @@ class Garagem(Base):
     )
     modificado_em: Mapped[date] = mapped_column(
         server_default=func.current_date(), onupdate=func.current_date(), nullable=False
-    )
-
-    apto_origem: Mapped["Apartamento"] = relationship(
-        foreign_keys=[apto_id_origem], back_populates="garagens_origem"
-    )
-    apto_destino: Mapped["Apartamento"] = relationship(
-        foreign_keys=[apto_id_destino], back_populates="garagens_destino"
     )
 
 
@@ -182,8 +153,6 @@ class Pagamento(Base):
     modificado_em: Mapped[date] = mapped_column(
         server_default=func.current_date(), onupdate=func.current_date(), nullable=False
     )
-    aluguel: Mapped["Aluguel"] = relationship(back_populates="pagamentos")
-    apto: Mapped["Apartamento"] = relationship(back_populates="pagamentos")
 
 
 class Proprietario(Base):
@@ -199,8 +168,4 @@ class Proprietario(Base):
     )
     modificado_em: Mapped[date] = mapped_column(
         server_default=func.current_date(), onupdate=func.current_date(), nullable=False
-    )
-
-    apartamentos: Mapped[List["Apartamento"]] = relationship(
-        back_populates="proprietario"
     )
