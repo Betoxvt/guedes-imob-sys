@@ -40,13 +40,13 @@
 36. [x] Adicionar a página para visualização das tabelas de reservas.
 37. [x] Marcar campos obrigatórios. E resaltalos no caso de ausência ao enviar um registro.
 38. [x] Incluir ao sistema tabela de registros de pagamentos recebidos referentes aos alugueis.
-39. [ ] Incluir ao sistema o módulo e tabela de cálculo para armazenar os pagamentos e dados de contabilidade relacionados aos seus apartamentos. (Caixa de cada apto)
+39. [ ] Criar as views (com dbt?) que serão utilizadas nos relatórios.
 40. [ ] Utilizar variáveis de ambiente (.env) para valores que desejo aplicar automáticamente ao sistema, sem subir para o GitHub.
+41. [ ] Criar as views que serão utilizadas ta planilha com as locações.
+42. [x] Criar trigger para bloquear alugueis de um mesmo apto com datas conflitantes.
 
 **Pensar em como utilizar o patch para alterações individuais de campos, ainda não vejo muito sentido nisso, mas como estudo pode ser bom.**
 **Agora até vejo que pode ser útil para atualizar os valores depositados para cada aluguel, e o valores entregues para os proprietarios**
-
-**Provavelmente todos os valores monetários eu devesse usar str e depois passar para float no front, aceitando como separador decimal tanto ',' quanto '.'.**
 
 ## Problema
 
