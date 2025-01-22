@@ -3,7 +3,7 @@ import pandas as pd
 import requests
 import streamlit as st
 from utils.myfunc import show_data_output, show_response_message
-from utils.mystr import empty_none_dict
+from utils.mystr import apto_input, empty_none_dict
 
 st.set_page_config(
     page_title='Pagamentos',
@@ -24,6 +24,11 @@ with tab1:
         key=7100,
         value=None
     )
+    apto_id: str = st.text_input(
+        label='Apartamento',
+        value=None,
+        key=7104,
+    )
     aluguel_id: int = st.number_input(
         label='ID Aluguel',
         min_value=0,
@@ -42,11 +47,6 @@ with tab1:
         value=None,
         key=7103,
     )
-    apto_id: str = st.text_input(
-        label='Apartamento',
-        value=None,
-        key=7104,
-    )
     notas: str = st.text_input(
         label='Notas',
         value=None,
@@ -55,10 +55,10 @@ with tab1:
     if st.button('Registrar', key=7106):
         pagamento_data = empty_none_dict({
             "valor": valor,
+            "apto_id": apto_input(apto_id),
             "aluguel_id": aluguel_id,
             "nome": nome,
             "contato": contato,
-            "apto_id": apto_id,
             "notas": notas
         })
         submit_data = json.dumps(obj=pagamento_data, separators=(',',':'))
@@ -117,6 +117,11 @@ with tab3:
                 value=df_up.loc[0, 'valor'],
                 key=7301
             )
+            apto_id: str = st.text_input(
+                label='Apartamento',
+                value=df_up.apto_id[0],
+                key=7305,
+            )
             aluguel_id: int = st.number_input(
                 label='ID Aluguel',
                 min_value=0,
@@ -135,11 +140,6 @@ with tab3:
                 value=df_up.contato[0],
                 key=7304,
             )
-            apto_id: str = st.text_input(
-                label='Apartamento',
-                value=df_up.apto_id[0],
-                key=7305,
-            )
             notas: str = st.text_input(
                 label='Notas',
                 value=df_up.notas[0],
@@ -148,10 +148,10 @@ with tab3:
             if st.button('Modificar', key=7306):
                 pagamento_up_data = empty_none_dict({
                     "valor": valor,
+                    "apto_id": apto_input(apto_id),
                     "aluguel_id": aluguel_id,
                     "nome": nome,
                     "contato": contato,
-                    "apto_id": apto_id,
                     "notas": notas
                 })
                 update_data = json.dumps(obj=pagamento_up_data, separators=(',',':'))

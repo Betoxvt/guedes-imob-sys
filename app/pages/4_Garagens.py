@@ -6,7 +6,7 @@ import streamlit as st
 from utils.mydate import calculate_diarias, str_to_date
 from utils.myfunc import show_data_output, show_response_message
 from utils.mynum import calculate_saldo, calculate_valortotal
-from utils.mystr import empty_none_dict
+from utils.mystr import apto_input, empty_none_dict
 
 st.set_page_config(
     page_title='Garagens',
@@ -19,19 +19,14 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(['Registrar', 'Consultar', 'Modificar', '
 with tab1:
     st.header('Registrar Garagem')
     st.markdown('<p style="font-size: 12px;">Campos com * são obrigatórios</p>', unsafe_allow_html=True)
-    apto_origem_id: int = st.number_input(
+    apto_origem_id: str = st.text_input(
         label='ID Apartamento de origem *',
-        min_value=1,
         value=None,
-        format='%d',
-        step=1,
         key=4100
     )
-    apto_destino_id: int = st.number_input(
+    apto_destino_id: str = st.text_input(
         label='ID Apartamento de destino *',
-        min_value=1,
-        format='%d',
-        step=1,
+        value=None,
         key=4101
     )
     checkin: date = st.date_input(
@@ -70,8 +65,8 @@ with tab1:
     saldo = calculate_saldo(valor_total, valor_depositado)
     if st.button('Registrar', key=4107):
         garagem_data = empty_none_dict({
-            "apto_origem_id": apto_origem_id,
-            "apto_destino_id": apto_destino_id,
+            "apto_origem_id": apto_input(apto_origem_id),
+            "apto_destino_id": apto_input(apto_destino_id),
             "checkin": checkin.isoformat(),
             "checkout": checkout.isoformat(),
             "diarias": diarias,
@@ -127,21 +122,15 @@ with tab3:
             garagem_up = update_response.json()
             df_up = pd.DataFrame([garagem_up])
             st.dataframe(df_up.set_index('id'))
-            apto_origem_id: int = st.number_input(
+            apto_origem_id: str = st.text_input(
                 label='ID Apartamento de origem *',
-                min_value=1,
-                format='%d',
-                step=1,
                 key=4301,
-                value=df_up.loc[0, 'apto_origem_id']
+                value=df_up.apto_origem_id[0]
             )
-            apto_destino_id: int = st.number_input(
+            apto_destino_id: str = st.text_input(
                 label='ID Apartamento de destino *',
-                min_value=1,
-                format='%d',
-                step=1,
                 key=4302,
-                value=df_up.loc[0, 'apto_destino_id']
+                value=df_up.apto_destino_id[0]
             )
             checkin: date = st.date_input(
                 label='Check-in *',
@@ -179,8 +168,8 @@ with tab3:
             saldo = calculate_saldo(valor_total, valor_depositado)
             if st.button('Modificar', key=4308):
                 garagem_up_data = {
-                    "apto_origem_id": apto_origem_id,
-                    "apto_destino_id": apto_destino_id,
+                    "apto_origem_id": apto_input(apto_origem_id),
+                    "apto_destino_id": apto_input(apto_destino_id),
                     "checkin": checkin.isoformat(),
                     "checkout": checkout.isoformat(),
                     "diarias": diarias,

@@ -85,14 +85,12 @@ with tab1:
 
 with tab2:
     st.header('Consultar Apartamentos')
-    get_id = st.number_input(
+    get_id = st.text_input(
         'ID Apartamento',
-        min_value=1,
         value=None,
-        format='%d',
-        step=1,
         key=2200
     )
+    get_id = apto_input(get_id)
     if get_id:
         get_response = requests.get(f'http://api:8000/apartamentos/{get_id}')
         if get_response.status_code == 200:
@@ -105,14 +103,12 @@ with tab2:
 with tab3:
     st.header('Modificar Apartamento')
     st.markdown('<p style="font-size: 12px;">Campos com * são obrigatórios</p>', unsafe_allow_html=True)
-    update_id = st.number_input(
+    update_id = st.text_input(
         'ID do Apartamento',
-        min_value=1,
         value=None,
-        format='%d',
-        step=1,
         key=2300
     )
+    update_id = apto_input(update_id)
     if update_id:
         update_response = requests.get(f'http://api:8000/apartamentos/{update_id}')
         if update_response.status_code == 200:
@@ -189,14 +185,12 @@ with tab3:
 
 with tab4:
     st.header('Deletar Apartamento')
-    delete_id = st.number_input(
+    delete_id = st.text_input(
         label="ID Apartamento",
-        min_value=1,
         value=None,
-        format='%d',
-        step=1,
         key=2400
     )
+    delete_id = apto_input(delete_id)
     if delete_id:
         show_delete_response = requests.get(f'http://api:8000/apartamentos/{delete_id}')
         if show_delete_response.status_code == 200:

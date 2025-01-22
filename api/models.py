@@ -11,7 +11,7 @@ class Aluguel(Base):
     __tablename__ = 'alugueis'
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    apto_id: Mapped[int] = mapped_column(ForeignKey('apartamentos.id'), String, nullable=False)
+    apto_id: Mapped[str] = mapped_column(ForeignKey('apartamentos.id'), nullable=False)
     ficha_id: Mapped[int] = mapped_column(ForeignKey('fichas.id'), nullable=True)
     checkin: Mapped[date] = mapped_column(nullable=False)
     checkout: Mapped[date] = mapped_column(nullable=False)
@@ -42,7 +42,7 @@ class Despesa(Base):
     __tablename__ = 'despesas'
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    apto_id: Mapped[int] = mapped_column(ForeignKey('apartamentos.id'), String, nullable=False)
+    apto_id: Mapped[str] = mapped_column(ForeignKey('apartamentos.id'), nullable=False)
     data_pagamento: Mapped[date] = mapped_column(server_default=func.current_date(), nullable=False)
     valor: Mapped[float] = mapped_column(Numeric(10, 2), nullable=False)
     categoria: Mapped[str] = mapped_column(String, nullable=False)
@@ -55,7 +55,7 @@ class Ficha(Base):
     __tablename__ = 'fichas'
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    apto_id: Mapped[str] = mapped_column(ForeignKey('apartamentos.id'), String, nullable=True)
+    apto_id: Mapped[str] = mapped_column(ForeignKey('apartamentos.id'), nullable=True)
     nome: Mapped[str] = mapped_column(String, nullable=False)
     tipo_residencia: Mapped[str] = mapped_column(String, nullable=False)
     cidade: Mapped[str] = mapped_column(String, nullable=False)
@@ -95,8 +95,8 @@ class Garagem(Base):
     __tablename__ = 'garagens'
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    apto_id_origem: Mapped[int] = mapped_column(ForeignKey('apartamentos.id'), nullable=False)
-    apto_id_destino: Mapped[int] = mapped_column(ForeignKey('apartamentos.id'), nullable=False)
+    apto_id_origem: Mapped[str] = mapped_column(ForeignKey('apartamentos.id'), nullable=False)
+    apto_id_destino: Mapped[str] = mapped_column(ForeignKey('apartamentos.id'), nullable=False)
     checkin: Mapped[date] = mapped_column(nullable=False)
     checkout: Mapped[date] = mapped_column(nullable=False)
     diarias: Mapped[int] = mapped_column(nullable=False)
@@ -115,7 +115,7 @@ class Pagamento(Base):
     aluguel_id: Mapped[int] = mapped_column(ForeignKey('alugueis.id'), nullable=True)
     nome: Mapped[str] = mapped_column(String, nullable=True)
     contato: Mapped[str] = mapped_column(String, nullable=True)
-    apto_id: Mapped[str] = mapped_column(ForeignKey('apartamentos.id'), String, nullable=True)
+    apto_id: Mapped[str] = mapped_column(ForeignKey('apartamentos.id'), nullable=True)
     notas: Mapped[str] = mapped_column(String, nullable=True)
     criado_em: Mapped[date] = mapped_column(server_default=func.current_date(), nullable=False)
     modificado_em: Mapped[date] = mapped_column(server_default=func.current_date(), onupdate=func.current_date(), nullable=False)

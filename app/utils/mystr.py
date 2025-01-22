@@ -2,6 +2,24 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
+
+def apto_input(input: str) -> str:
+    """Formats a string to 'letter-number'.
+    Args:
+        input: string to be formated.
+    Returns:
+        Desired format string.
+    """
+    numbers = ""
+    letter = ""
+    for c in input:
+        if c.isdigit():
+            numbers += c
+        else:
+            letter = c
+    return f'{letter.upper()}-{numbers}'
+
+
 def csv_handler(csv):
     if csv is not None:
         try:
@@ -47,23 +65,6 @@ def empty_none_dict(obj: dict) -> dict:
                 ):
                     obj[k] = None
     return obj
-
-
-def apto_input(input: str) -> str:
-    """Formats a string to 'letter-number'.
-    Args:
-        input: string to be formated.
-    Returns:
-        Desired format string.
-    """
-    numbers = ""
-    letter = ""
-    for c in input:
-        if c.isdigit():
-            numbers += c
-        else:
-            letter = c
-    return f'{letter.upper()}-{numbers}'
 
 
 def none_or_str(value: str | None) -> str | None:

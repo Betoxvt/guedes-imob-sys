@@ -5,7 +5,7 @@ import requests
 import streamlit as st
 from utils.mydate import str_to_date
 from utils.myfunc import cat_index, show_data_output, show_response_message
-from utils.mystr import empty_none_dict
+from utils.mystr import apto_input, empty_none_dict
 
 st.set_page_config(
     page_title='Despesas',
@@ -18,12 +18,9 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(['Registrar', 'Consultar', 'Modificar', '
 with tab1:
     st.header('Registrar Despesa')
     st.markdown('<p style="font-size: 12px;">Campos com * são obrigatórios</p>', unsafe_allow_html=True)
-    apto_id: int = st.number_input(
+    apto_id: str = st.text_input(
     label='ID Apartamento *',
-    min_value=1,
     value=None,
-    format='%d',
-    step=1,
     key=3100
     )
     data_pagamento: date = st.date_input(
@@ -53,7 +50,7 @@ with tab1:
     )
     if st.button('Registrar', key=3106):
         despesa_data = empty_none_dict({
-            "apto_id": apto_id,
+            "apto_id": apto_input(apto_id),
             "data_pagamento": data_pagamento.isoformat(),
             "valor": valor,
             "categoria": categoria,
@@ -107,13 +104,10 @@ with tab3:
             despesa_up = update_response.json()
             df_up = pd.DataFrame([despesa_up])
             st.dataframe(df_up.set_index('id'))
-            apto_id: int = st.number_input(
+            apto_id: str = st.text_input(
                 label='ID Apartamento *',
-                min_value=1,
-                format='%d',
-                step=1,
                 key=3301,
-                value=df_up.loc[0, 'apto_id']
+                value=df_up.apto_id[0]
             )
             data_pagamento: date = st.date_input(
                 label='Data de pagamento *',
@@ -143,7 +137,7 @@ with tab3:
             )
             if st.button('Modificar', key=3306):
                 despesa_up_data = empty_none_dict({
-                    "apto_id": apto_id,
+                    "apto_id": apto_input(apto_id),
                     "data_pagamento": data_pagamento.isoformat(),
                     "valor": valor,
                     "categoria": categoria,

@@ -6,7 +6,7 @@ import streamlit as st
 from utils.mydate import calculate_diarias, str_to_date
 from utils.myfunc import show_data_output, show_response_message
 from utils.mynum import calculate_saldo, calculate_valortotal
-from utils.mystr import empty_none_dict
+from utils.mystr import apto_input, empty_none_dict
 
 st.set_page_config(
     page_title='Aluguéis',
@@ -19,11 +19,9 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(['Registrar', 'Consultar', 'Modificar', '
 with tab1:
     st.header('Registrar Aluguel')
     st.markdown('<p style="font-size: 12px;">Campos com * são obrigatórios</p>', unsafe_allow_html=True)
-    apto_id: int = st.number_input(
+    apto_id: str = st.text_input(
         label='ID Apartamento *',
-        min_value=1,
-        format='%d',
-        step=1,
+        value=None,
         key=1100
     )
     ficha_id: int = st.number_input(
@@ -67,7 +65,7 @@ with tab1:
     saldo: float = calculate_saldo(valor_total, valor_depositado)
     if st.button('Registrar', key=1108):
         aluguel_data = empty_none_dict({
-                "apto_id": apto_id,
+                "apto_id": apto_input(apto_id),
                 "ficha_id": ficha_id if ficha_id > 0 else None,
                 "checkin": checkin.isoformat(),
                 "checkout": checkout.isoformat(),
@@ -124,13 +122,10 @@ with tab3:
             aluguel_up = update_response.json()
             df_up = pd.DataFrame([aluguel_up])
             st.dataframe(df_up, hide_index=True)
-            apto_id: int = st.number_input(
+            apto_id: str = st.text_input(
                 label='ID Apartamento *',
-                min_value=1,
-                format='%d',
-                step=1,
                 key=1301,
-                value=df_up.loc[0, 'apto_id']
+                value=df_up.apto_id[0]
             )
             ficha_id: int = st.number_input(
                 label='ID Ficha',
@@ -174,7 +169,7 @@ with tab3:
             saldo: float = calculate_saldo(valor_total, valor_depositado)
             if st.button('Modificar'):
                 aluguel_up_data = empty_none_dict({
-                    "apto_id": apto_id,
+                    "apto_id": apto_input(apto_id),
                     "ficha_id": ficha_id if ficha_id > 0 else None,
                     "checkin": checkin.isoformat(),
                     "checkout": checkout.isoformat(),
