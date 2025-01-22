@@ -19,7 +19,6 @@ class AluguelBase(BaseModel):
     diarias: int
     valor_diaria: float
     valor_total: float
-    valor_depositado: Optional[float]
 
 
 class ApartamentoBase(BaseModel):
@@ -50,8 +49,8 @@ class DespesaBase(BaseModel):
     categoria: str
     descricao: str
 
-    @field_validator("categoria")
-    def check_categoria__despesa_base(cls, v):
+    @field_validator("categoria_despesa")
+    def check_categoria_despesa_base(cls, v):
         if v in [item.value for item in DespesaCat]:
             return v
         raise ValueError("Categoria inválida")
@@ -128,13 +127,25 @@ class GaragemBase(BaseModel):
     valor_depositado: Optional[float]
 
 
+class PagamentoCat(Enum):
+    categoria1 = "Entrada"
+    categoria2 = "Saída"
+
+
 class PagamentoBase(BaseModel):
+    tipo: str
     valor: float
+    apto_id: str
     aluguel_id: Optional[int]
     nome: Optional[str]
     contato: Optional[str]
-    apto_id: Optional[str]
     notas: Optional[str]
+
+    @field_validator("categoria_pagamento")
+    def check_categoria_pagamento_base(cls, v):
+        if v in [item.value for item in PagamentoCat]:
+            return v
+        raise ValueError("Categoria inválida")
 
 
 class ProprietarioBase(BaseModel):
@@ -254,7 +265,7 @@ class ApartamentoUpdate(ApartamentoCreate):
 class DespesaUpdate(DespesaCreate):
     __annotations__ = convert_to_optional(DespesaCreate)
 
-    @field_validator("categoria")
+    @field_validator("categoria_despesa")
     def check_categoria_despesa_up(cls, v):
         if v is None:
             return v
@@ -284,11 +295,19 @@ class FichaUpdate(FichaCreate):
 
 
 class GaragemUpdate(GaragemCreate):
-    __annotations__ = convert_to_optional(DespesaCreate)
+    __annotations__ = convert_to_optional(GaragemCreate)
 
 
 class PagamentoUpdate(PagamentoCreate):
     __annotations__ = convert_to_optional(PagamentoCreate)
+
+    @field_validator("categoria_despesa")
+    def check_categoria_pagamento_up(cls, v):
+        if v is None:
+            return v
+        if v in [item.value for item in PagamentoCat]:
+            return v
+        raise ValueError("Categoria inválida")
 
 
 class ProprietarioUpdate(ProprietarioCreate):
