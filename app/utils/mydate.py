@@ -2,9 +2,10 @@ from datetime import date
 import pandas as pd
 import streamlit as st
 
+
 def brazil_datestr(year_first_date: str | date) -> str:
     """Converts a date like object to Brazilian date format (DD/MM/YYYY)
-    
+
     Args:
         year_first_date: The input of a date like object, normally starts with Year
 
@@ -18,7 +19,7 @@ def brazil_datestr(year_first_date: str | date) -> str:
     except Exception as e:
         st.error(f"Error trying to convert: {e}")
         return year_first_date
-    
+
 
 def calculate_diarias(checkin, checkout):
     """Calculates in days the difference between checkout and checkin.
@@ -35,15 +36,15 @@ def calculate_diarias(checkin, checkout):
     if isinstance(checkin, date) and isinstance(checkout, date):
         difference = (checkout - checkin).days
         if difference >= 1:
-            st.write(f'Diarias: {difference} dias')
+            st.write(f"Diarias: {difference} dias")
             return difference
         else:
             st.warning("A data de check-out deve ser posterior à data de check-in.")
-            st.write(f'Diarias: 0 dias')
+            st.write(f"Diarias: 0 dias")
             return 0
     else:
         st.warning(f"Insira as datas de Check-in e Check-out")
-        st.write(f'Diarias: 0 dias')
+        st.write(f"Diarias: 0 dias")
         return 0
 
 
@@ -63,16 +64,28 @@ def showbr_dfdate(df: pd.DataFrame) -> pd.DataFrame:
         st.warning("Input must be a Pandas DataFrame.")
         return None
     df_new = df.copy()
-    date_columns = ['checkin', 'checkout', 'criado_em', 'modificado_em', 'data_pagamento']
+    date_columns = [
+        "checkin",
+        "checkout",
+        "criado_em",
+        "modificado_em",
+        "data_pagamento",
+    ]
     for col in df_new.columns:
         if col in date_columns:
             try:
                 if isinstance(df_new[col].iloc[0], date):
-                    df_new[col] = df_new[col].apply(lambda x: x.strftime('%d/%m/%Y') if isinstance(x, date) else x)
+                    df_new[col] = df_new[col].apply(
+                        lambda x: x.strftime("%d/%m/%Y") if isinstance(x, date) else x
+                    )
                 else:
-                    df_new[col] = pd.to_datetime(df_new[col], errors='coerce').dt.strftime('%d/%m/%Y')
+                    df_new[col] = pd.to_datetime(
+                        df_new[col], errors="coerce"
+                    ).dt.strftime("%d/%m/%Y")
             except (ValueError, TypeError) as e:
-                st.warning(f"Warning: Column '{col}' could not be converted to date: {e}")
+                st.warning(
+                    f"Warning: Column '{col}' could not be converted to date: {e}"
+                )
                 pass
     return df_new
 

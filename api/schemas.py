@@ -7,6 +7,7 @@ from typing import Optional
 def convert_to_optional(schema):
     return {k: Optional[v] for k, v in schema.__annotations__.items()}
 
+
 # Base schemas
 
 
@@ -33,13 +34,13 @@ class ApartamentoBase(BaseModel):
 
 
 class DespesaCat(Enum):
-    cat1 = 'IPTU'
-    cat2 = 'CONDOMÍNIO'
-    cat3 = 'LUZ'
-    cat4 = 'GÁS'
-    cat5 = 'INTERNET'
-    cat6 = 'MANUTENÇÃO'
-    cat7 = 'OUTROS'
+    cat1 = "IPTU"
+    cat2 = "CONDOMÍNIO"
+    cat3 = "LUZ"
+    cat4 = "GÁS"
+    cat5 = "INTERNET"
+    cat6 = "MANUTENÇÃO"
+    cat7 = "OUTROS"
 
 
 class DespesaBase(BaseModel):
@@ -54,19 +55,19 @@ class DespesaBase(BaseModel):
         if v in [item.value for item in DespesaCat]:
             return v
         raise ValueError("Categoria inválida")
-    
+
 
 class FichaTipoCat(Enum):
-    cat1 = 'Anual'
-    cat2 = 'Temporário'
+    cat1 = "Anual"
+    cat2 = "Temporário"
 
 
 class FichaCivilCat(Enum):
-    cat1 = 'Casado(a)'
-    cat2 = 'Divorciado(a)'
-    cat3 = 'Separado(a)'
-    cat4 = 'Solteiro(a)'
-    cat5 = 'Viúvo(a)'
+    cat1 = "Casado(a)"
+    cat2 = "Divorciado(a)"
+    cat3 = "Separado(a)"
+    cat4 = "Solteiro(a)"
+    cat5 = "Viúvo(a)"
 
 
 class FichaBase(BaseModel):
@@ -77,7 +78,7 @@ class FichaBase(BaseModel):
     cep: str
     uf: str
     pais: str
-    tel: str 
+    tel: str
     estado_civil: str
     profissao: str
     rg: str
@@ -108,7 +109,7 @@ class FichaBase(BaseModel):
         if v in [item.value for item in FichaCivilCat]:
             return v
         raise ValueError("Categoria inválida")
-    
+
     @field_validator("tipo_residencia")
     def check_categoria_tipo_residencia_base(cls, v):
         if v in [item.value for item in FichaTipoCat]:
@@ -125,8 +126,8 @@ class GaragemBase(BaseModel):
     valor_diaria: float
     valor_total: float
     valor_depositado: Optional[float]
-    
-    
+
+
 class PagamentoBase(BaseModel):
     valor: float
     aluguel_id: Optional[int]
@@ -234,12 +235,13 @@ class ProprietarioResponse(ProprietarioBase):
     id: int
     criado_em: date
     modificado_em: date
-    
+
     class Config:
         from_attributes = True
 
 
 # Update schemas
+
 
 class AluguelUpdate(AluguelCreate):
     __annotations__ = convert_to_optional(AluguelCreate)
@@ -271,7 +273,7 @@ class FichaUpdate(FichaCreate):
         if v in [item.value for item in FichaCivilCat]:
             return v
         raise ValueError("Categoria inválida")
-    
+
     @field_validator("tipo_residencia")
     def check_categoria_tipo_residencia_up(cls, v):
         if v is None:
@@ -287,7 +289,7 @@ class GaragemUpdate(GaragemCreate):
 
 class PagamentoUpdate(PagamentoCreate):
     __annotations__ = convert_to_optional(PagamentoCreate)
-    
+
 
 class ProprietarioUpdate(ProprietarioCreate):
     __annotations__ = convert_to_optional(ProprietarioCreate)
