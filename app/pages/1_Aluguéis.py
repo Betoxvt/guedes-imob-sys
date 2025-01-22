@@ -6,7 +6,7 @@ import streamlit as st
 from utils.mydate import calculate_diarias, str_to_date
 from utils.myfunc import show_data_output, show_response_message
 from utils.mynum import calculate_saldo, calculate_valortotal
-from utils.mystr import apto_input, empty_none_dict
+from utils.mystr import apto_input, empty_none, empty_none_dict
 
 st.set_page_config(page_title="Aluguéis", layout="wide")
 st.title("Aluguéis")
@@ -61,7 +61,6 @@ with tab1:
                 "diarias": diarias,
                 "valor_diaria": valor_diaria,
                 "valor_total": valor_total,
-                "valor_depositado": valor_depositado,
             }
         )
         submit_data = json.dumps(obj=aluguel_data, separators=(",", ":"))
@@ -70,10 +69,37 @@ with tab1:
             show_response_message(post_response)
             if post_response.status_code == 200:
                 st.subheader("Dados inseridos, tudo OK:")
+                show_data_output(aluguel_data)
+                if empty_none(valor_depositado) is not None:
+                    get_top_response = requests.get(
+                        "http://api:8000/alugueis/", params={"limit": 1}
+                    )
+                    if get_top_response.status_code == 200:
+                        top_data = get_top_response.json()
+                        aluguel_id = top_data[0].get("id")
+                        pagamento_data = empty_none_dict(
+                            {
+                                "tipo": "Entrada",
+                                "valor": valor_depositado,
+                                "apto_id": apto_input(apto_id),
+                                "aluguel_id": aluguel_id,
+                                "notas": "Reserva",
+                            }
+                        )
+                        post_pagamento_response = requests.post(
+                            "http://api:8000/pagamentos/"
+                        )
+                        show_response_message(post_pagamento_response)
+                    if post_pagamento_response.status_code == 200:
+                        st.subheader("Dados do deposito salvos, tudo OK:")
+                        show_data_output(pagamento_data)
+                    else:
+                        st.subheader("Não foi possível salvar os dados do depósito")
+                        show_data_output(pagamento_data)
             else:
                 st.subheader("Dados NÃO inseridos, favor revisar:")
                 st.write("Dica: Verifique a ID do apartamento")
-            show_data_output(aluguel_data)
+                show_data_output(aluguel_data)
         except Exception as e:
             raise (e)
 
