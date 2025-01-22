@@ -16,14 +16,14 @@
 12. [x] Importar csv para ficha de inquilino.
 13. [x] Refazer os models/schemas/crud: Fix nos tipos de dados que estão int para str (cep, cpf, telefone, rg...)
 14. [x] Criar todas as páginas.
-15. [ ] Valores default e autocomplete para create.
+15. [ ] Valores default e autocomplete para create, pode se extender às **task 25** e **task 40**.
 16. [ ] Ver como é a configuração para aplicar offset e limit das querys no frontend.
 17. [ ] Fazer o login direito.
 18. [x] Revisar os dfs, dicts, responses, keys e importações no frontend, paginas 1 a 6.
 19. [ ] Definir Placeholders nos formulários do frontend páginas 1 a 6. E marcar campos Obrigatórios com um '*'.
 20. [x] Tentar recriar as páginas que fazem cálculos para exibição instantânea do resultado, aprendi que não pode ser dentro de um `st.form()`.
 21. [ ] Ver quais funções deveriam ser `async`com `asyncio` estudar e aplicar.
-22. [ ] Pegar o subtitulo dos dados ao ter erro como unprocessable content e mostrar os dados que não foram inseridos com o titulo correto
+22. [ ] Reduzir as repetições de código com funções e decoradores.
 23. [x] Melhor aquele esquema do if update_id... etc
 24. [x] A tabela fichas tera um campo para RG ou CPF em vez de dois campos para cada acompanhante (no front pelo menos ta certo).
 25. [ ] Colocar valores que se repetem diretamente no pdf e remover do banco de dados (na verdade deixa assim, quando estiver em produção talvez).
@@ -32,13 +32,13 @@
 28. [ ] Descobrir um jeito de verificar a nível do banco de dados os JSON dos acompanhantes.
 29. [x] Descobrir um jeito de reduzir o número de linhas que ocupa o formulário de acompanhantes.
 30. [x] Na Page Fichas colocar botão para obter o PDF.
-31. [ ] Pedir confirmação antes de deletar um registro.
+31. [x] Pedir confirmação antes de deletar um registro.
 32. [x] Incluir categorias nos modelos para o banco de dados.
 33. [x] Alterar a forma que o modificar funciona. Atualmente está utilizando os schemas de update, onde todos os campos são opcionais, mas como são enviados com put e não com patch, todos os campos devem ser enviados (incluindo nulos), o que pode atrapalhar a verificação do schema, ficando por conta do banco de dados e não é o ideal.
 34. [ ] Adicionar com cuidado um st.rerun(), somente se um registro for efetuado com sucesso no banco de dados, a intenção é limpar os campos de entrada.
 35. [x] Incluir ao sistema o valor já depositado (de uma reserva/aluguel), assim também mostrando o quanto falta (para o valor total). Adicionar para garagens também.
 36. [x] Adicionar a página para visualização das tabelas de reservas.
-37. [ ] Marcar campos obrigatórios. E resaltalos no caso de ausência ao enviar um registro.
+37. [x] Marcar campos obrigatórios. E resaltalos no caso de ausência ao enviar um registro.
 38. [x] Incluir ao sistema tabela de registros de pagamentos recebidos referentes aos alugueis.
 39. [ ] Incluir ao sistema o módulo e tabela de cálculo para armazenar os pagamentos e dados de contabilidade relacionados aos seus apartamentos. (Caixa de cada apto)
 40. [ ] Utilizar variáveis de ambiente (.env) para valores que desejo aplicar automáticamente ao sistema, sem subir para o GitHub.

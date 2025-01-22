@@ -212,13 +212,14 @@ with tab4:
         if show_delete_response.status_code == 200:
             aluguel_delete = show_delete_response.json()
             df_delete = pd.DataFrame([aluguel_delete])
-            st.dataframe(df_delete, hide_index=True)
-            if st.button(
-                'Deletar',
-                key=1401
-            ):
+            st.dataframe(df_delete.set_index('id'))
+            delete_confirm = st.checkbox('Confirma que deseja deletar o registro?')
+            delete_button = st.button('Deletar', key=1401)
+            if delete_button and delete_confirm:
                 delete_response = requests.delete(f'http://api:8000/alugueis/{delete_id}')
                 show_response_message(delete_response)
+            elif delete_button and not delete_confirm:
+                st.warning('Você deve confirmar primeiro para deletar o registro')
         else:
             show_response_message(show_delete_response)
 
