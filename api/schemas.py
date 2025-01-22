@@ -70,7 +70,7 @@ class FichaCivilCat(Enum):
 
 
 class FichaBase(BaseModel):
-    apto: Optional[str]
+    apto_id: Optional[str]
     nome: str
     tipo_residencia: str
     cidade: str
@@ -128,8 +128,8 @@ class GaragemBase(BaseModel):
     
     
 class PagamentoBase(BaseModel):
-    aluguel_id: Optional[int]
     valor: float
+    aluguel_id: Optional[int]
     nome: Optional[str]
     contato: Optional[str]
     apto_id: Optional[str]

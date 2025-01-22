@@ -111,8 +111,8 @@ class Pagamento(Base):
     __tablename__ = 'pagamentos'
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    aluguel_id: Mapped[int] = mapped_column(ForeignKey('alugueis.id'), nullable=True)
     valor: Mapped[float] = mapped_column(Numeric(10, 2), nullable=False)
+    aluguel_id: Mapped[int] = mapped_column(ForeignKey('alugueis.id'), nullable=True)
     nome: Mapped[str] = mapped_column(String, nullable=True)
     contato: Mapped[str] = mapped_column(String, nullable=True)
     apto_id: Mapped[str] = mapped_column(ForeignKey('apartamentos.id'), String, nullable=True)
