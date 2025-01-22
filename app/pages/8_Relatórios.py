@@ -1,5 +1,5 @@
 import streamlit as st
 
-st.title('Relatórios')
+st.title("Relatórios")
 
 # Coisas opções para gerar relatórios

@@ -1,27 +1,77 @@
 from crud import (
-    create_aluguel, read_alugueis, read_aluguel, update_aluguel, patch_aluguel, delete_aluguel,
-    create_apartamento, read_apartamentos, read_apartamento, update_apartamento, patch_apartamento, delete_apartamento,
-    create_despesa, read_despesas, read_despesa, update_despesa, patch_despesa, delete_despesa, 
-    create_ficha, read_ficha, read_fichas, update_ficha, patch_ficha, delete_ficha,
-    create_garagem, read_garagem, read_garagens, update_garagem, patch_garagem, delete_garagem,
-    create_pagamento, read_pagamento, read_pagamentos, update_pagamento, patch_pagamento, delete_pagamento,
-    create_proprietario, read_proprietario, read_proprietarios, update_proprietario, patch_proprietario, delete_proprietario,
+    create_aluguel,
+    read_alugueis,
+    read_aluguel,
+    update_aluguel,
+    patch_aluguel,
+    delete_aluguel,
+    create_apartamento,
+    read_apartamentos,
+    read_apartamento,
+    update_apartamento,
+    patch_apartamento,
+    delete_apartamento,
+    create_despesa,
+    read_despesas,
+    read_despesa,
+    update_despesa,
+    patch_despesa,
+    delete_despesa,
+    create_ficha,
+    read_ficha,
+    read_fichas,
+    update_ficha,
+    patch_ficha,
+    delete_ficha,
+    create_garagem,
+    read_garagem,
+    read_garagens,
+    update_garagem,
+    patch_garagem,
+    delete_garagem,
+    create_pagamento,
+    read_pagamento,
+    read_pagamentos,
+    update_pagamento,
+    patch_pagamento,
+    delete_pagamento,
+    create_proprietario,
+    read_proprietario,
+    read_proprietarios,
+    update_proprietario,
+    patch_proprietario,
+    delete_proprietario,
 )
 from database import get_db
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from schemas import (
-    AluguelCreate, AluguelResponse, AluguelUpdate,
-    ApartamentoCreate, ApartamentoResponse, ApartamentoUpdate,
-    DespesaCreate, DespesaResponse, DespesaUpdate,
-    FichaCreate, FichaResponse, FichaUpdate,
-    GaragemCreate, GaragemResponse, GaragemUpdate,
-    PagamentoCreate, PagamentoResponse, PagamentoUpdate,
-    ProprietarioCreate, ProprietarioResponse, ProprietarioUpdate,
+    AluguelCreate,
+    AluguelResponse,
+    AluguelUpdate,
+    ApartamentoCreate,
+    ApartamentoResponse,
+    ApartamentoUpdate,
+    DespesaCreate,
+    DespesaResponse,
+    DespesaUpdate,
+    FichaCreate,
+    FichaResponse,
+    FichaUpdate,
+    GaragemCreate,
+    GaragemResponse,
+    GaragemUpdate,
+    PagamentoCreate,
+    PagamentoResponse,
+    PagamentoUpdate,
+    ProprietarioCreate,
+    ProprietarioResponse,
+    ProprietarioUpdate,
 )
 from typing import List
 
 router = APIRouter()
+
 
 @router.post("/alugueis/", response_model=AluguelResponse)
 def create_aluguel_route(aluguel: AluguelCreate, db: Session = Depends(get_db)):
@@ -29,7 +79,9 @@ def create_aluguel_route(aluguel: AluguelCreate, db: Session = Depends(get_db)):
 
 
 @router.get("/alugueis/", response_model=List[AluguelResponse])
-def read_alugueis_route(offset: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+def read_alugueis_route(
+    offset: int = 0, limit: int = 100, db: Session = Depends(get_db)
+):
     alugueis = read_alugueis(db, offset=offset, limit=limit)
     return alugueis
 
@@ -43,7 +95,9 @@ def read_aluguel_route(aluguel_id: int, db: Session = Depends(get_db)):
 
 
 @router.put("/alugueis/{aluguel_id}", response_model=AluguelResponse)
-def update_aluguel_route(aluguel_id: int, aluguel: AluguelCreate, db: Session = Depends(get_db)):
+def update_aluguel_route(
+    aluguel_id: int, aluguel: AluguelCreate, db: Session = Depends(get_db)
+):
     db_aluguel = update_aluguel(db=db, aluguel_id=aluguel_id, aluguel=aluguel)
     if db_aluguel is None:
         raise HTTPException(status_code=404, detail="Aluguel not found")
@@ -51,7 +105,9 @@ def update_aluguel_route(aluguel_id: int, aluguel: AluguelCreate, db: Session = 
 
 
 @router.patch("/alugueis/{aluguel_id}", response_model=AluguelResponse)
-def patch_aluguel_route(aluguel_id: int, aluguel: AluguelUpdate, db: Session = Depends(get_db)):
+def patch_aluguel_route(
+    aluguel_id: int, aluguel: AluguelUpdate, db: Session = Depends(get_db)
+):
     db_aluguel = patch_aluguel(db=db, aluguel_id=aluguel_id, aluguel=aluguel)
     if db_aluguel is None:
         raise HTTPException(status_code=404, detail="Aluguel not found")
@@ -67,12 +123,16 @@ def delete_aluguel_route(aluguel_id: int, db: Session = Depends(get_db)):
 
 
 @router.post("/apartamentos/", response_model=ApartamentoResponse)
-def create_apartamento_route(apartamento: ApartamentoCreate, db: Session = Depends(get_db)):
+def create_apartamento_route(
+    apartamento: ApartamentoCreate, db: Session = Depends(get_db)
+):
     return create_apartamento(db=db, apartamento=apartamento)
 
 
 @router.get("/apartamentos/", response_model=List[ApartamentoResponse])
-def read_apartamentos_route(offset: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+def read_apartamentos_route(
+    offset: int = 0, limit: int = 100, db: Session = Depends(get_db)
+):
     apartamentos = read_apartamentos(db, offset=offset, limit=limit)
     return apartamentos
 
@@ -86,16 +146,24 @@ def read_apartamento_route(apartamento_id: int, db: Session = Depends(get_db)):
 
 
 @router.put("/apartamentos/{apartamento_id}", response_model=ApartamentoResponse)
-def update_apartamento_route(apartamento_id: int, apartamento: ApartamentoCreate, db: Session = Depends(get_db)):
-    db_apartamento = update_apartamento(db=db, apartamento_id=apartamento_id, apartamento=apartamento)
+def update_apartamento_route(
+    apartamento_id: int, apartamento: ApartamentoCreate, db: Session = Depends(get_db)
+):
+    db_apartamento = update_apartamento(
+        db=db, apartamento_id=apartamento_id, apartamento=apartamento
+    )
     if db_apartamento is None:
         raise HTTPException(status_code=404, detail="Apartamento not found")
     return db_apartamento
 
 
 @router.patch("/apartamentos/{apartamento_id}", response_model=ApartamentoResponse)
-def patch_apartamento_route(apartamento_id: int, apartamento: ApartamentoUpdate, db: Session = Depends(get_db)):
-    db_apartamento = patch_apartamento(db=db, apartamento_id=apartamento_id, apartamento=apartamento)
+def patch_apartamento_route(
+    apartamento_id: int, apartamento: ApartamentoUpdate, db: Session = Depends(get_db)
+):
+    db_apartamento = patch_apartamento(
+        db=db, apartamento_id=apartamento_id, apartamento=apartamento
+    )
     if db_apartamento is None:
         raise HTTPException(status_code=404, detail="Apartamento not found")
     return db_apartamento
@@ -115,7 +183,9 @@ def create_despesa_route(despesa: DespesaCreate, db: Session = Depends(get_db)):
 
 
 @router.get("/despesas/", response_model=List[DespesaResponse])
-def read_despesas_route(offset: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+def read_despesas_route(
+    offset: int = 0, limit: int = 100, db: Session = Depends(get_db)
+):
     despesas = read_despesas(db, offset=offset, limit=limit)
     return despesas
 
@@ -129,7 +199,9 @@ def read_despesa_route(despesa_id: int, db: Session = Depends(get_db)):
 
 
 @router.put("/despesas/{despesa_id}", response_model=DespesaResponse)
-def update_despesa_route(despesa_id: int, despesa: DespesaCreate, db: Session = Depends(get_db)):
+def update_despesa_route(
+    despesa_id: int, despesa: DespesaCreate, db: Session = Depends(get_db)
+):
     db_despesa = update_despesa(db=db, despesa_id=despesa_id, despesa=despesa)
     if db_despesa is None:
         raise HTTPException(status_code=404, detail="Despesa not found")
@@ -137,7 +209,9 @@ def update_despesa_route(despesa_id: int, despesa: DespesaCreate, db: Session = 
 
 
 @router.patch("/despesas/{despesa_id}", response_model=DespesaResponse)
-def patch_despesa_route(despesa_id: int, despesa: DespesaUpdate, db: Session = Depends(get_db)):
+def patch_despesa_route(
+    despesa_id: int, despesa: DespesaUpdate, db: Session = Depends(get_db)
+):
     db_despesa = patch_despesa(db=db, despesa_id=despesa_id, despesa=despesa)
     if db_despesa is None:
         raise HTTPException(status_code=404, detail="Despesa not found")
@@ -158,7 +232,9 @@ def create_garagem_route(garagem: GaragemCreate, db: Session = Depends(get_db)):
 
 
 @router.get("/garagens/", response_model=List[GaragemResponse])
-def read_garagens_route(offset: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+def read_garagens_route(
+    offset: int = 0, limit: int = 100, db: Session = Depends(get_db)
+):
     garagens = read_garagens(db, offset=offset, limit=limit)
     return garagens
 
@@ -172,7 +248,9 @@ def read_garagem_route(garagem_id: int, db: Session = Depends(get_db)):
 
 
 @router.put("/garagens/{garagem_id}", response_model=GaragemResponse)
-def update_garagem_route(garagem_id: int, garagem: GaragemCreate, db: Session = Depends(get_db)):
+def update_garagem_route(
+    garagem_id: int, garagem: GaragemCreate, db: Session = Depends(get_db)
+):
     db_garagem = update_garagem(db=db, garagem_id=garagem_id, garagem=garagem)
     if db_garagem is None:
         raise HTTPException(status_code=404, detail="Garagem not found")
@@ -180,7 +258,9 @@ def update_garagem_route(garagem_id: int, garagem: GaragemCreate, db: Session = 
 
 
 @router.patch("/garagens/{garagem_id}", response_model=GaragemResponse)
-def patch_garagem_route(garagem_id: int, garagem: GaragemUpdate, db: Session = Depends(get_db)):
+def patch_garagem_route(
+    garagem_id: int, garagem: GaragemUpdate, db: Session = Depends(get_db)
+):
     db_garagem = patch_garagem(db=db, garagem_id=garagem_id, garagem=garagem)
     if db_garagem is None:
         raise HTTPException(status_code=404, detail="Garagem not found")
@@ -196,12 +276,16 @@ def delete_garagem_route(garagem_id: int, db: Session = Depends(get_db)):
 
 
 @router.post("/proprietarios/", response_model=ProprietarioResponse)
-def create_proprietario_route(proprietario: ProprietarioCreate, db: Session = Depends(get_db)):
+def create_proprietario_route(
+    proprietario: ProprietarioCreate, db: Session = Depends(get_db)
+):
     return create_proprietario(db=db, proprietario=proprietario)
 
 
 @router.get("/proprietarios/", response_model=List[ProprietarioResponse])
-def read_proprietarios_route(offset: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+def read_proprietarios_route(
+    offset: int = 0, limit: int = 100, db: Session = Depends(get_db)
+):
     proprietarios = read_proprietarios(db, offset=offset, limit=limit)
     return proprietarios
 
@@ -215,16 +299,28 @@ def read_proprietario_route(proprietario_id: int, db: Session = Depends(get_db))
 
 
 @router.put("/proprietarios/{proprietario_id}", response_model=ProprietarioResponse)
-def update_proprietario_route(proprietario_id: int, proprietario: ProprietarioCreate, db: Session = Depends(get_db)):
-    db_proprietario = update_proprietario(db=db, proprietario_id=proprietario_id, proprietario=proprietario)
+def update_proprietario_route(
+    proprietario_id: int,
+    proprietario: ProprietarioCreate,
+    db: Session = Depends(get_db),
+):
+    db_proprietario = update_proprietario(
+        db=db, proprietario_id=proprietario_id, proprietario=proprietario
+    )
     if db_proprietario is None:
         raise HTTPException(status_code=404, detail="Proprietario not found")
     return db_proprietario
 
 
 @router.patch("/proprietarios/{proprietario_id}", response_model=ProprietarioResponse)
-def patch_proprietario_route(proprietario_id: int, proprietario: ProprietarioUpdate, db: Session = Depends(get_db)):
-    db_proprietario = patch_proprietario(db=db, proprietario_id=proprietario_id, proprietario=proprietario)
+def patch_proprietario_route(
+    proprietario_id: int,
+    proprietario: ProprietarioUpdate,
+    db: Session = Depends(get_db),
+):
+    db_proprietario = patch_proprietario(
+        db=db, proprietario_id=proprietario_id, proprietario=proprietario
+    )
     if db_proprietario is None:
         raise HTTPException(status_code=404, detail="Proprietario not found")
     return db_proprietario
@@ -258,7 +354,9 @@ def read_ficha_route(ficha_id: int, db: Session = Depends(get_db)):
 
 
 @router.put("/fichas/{ficha_id}", response_model=FichaResponse)
-def update_ficha_route(ficha_id: int, ficha: FichaCreate, db: Session = Depends(get_db)):
+def update_ficha_route(
+    ficha_id: int, ficha: FichaCreate, db: Session = Depends(get_db)
+):
     db_ficha = update_ficha(db=db, ficha_id=ficha_id, ficha=ficha)
     if db_ficha is None:
         raise HTTPException(status_code=404, detail="Ficha not found")
@@ -287,7 +385,9 @@ def create_pagamento_route(pagamento: PagamentoCreate, db: Session = Depends(get
 
 
 @router.get("/pagamentos/", response_model=List[PagamentoResponse])
-def read_pagamentos_route(offset: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+def read_pagamentos_route(
+    offset: int = 0, limit: int = 100, db: Session = Depends(get_db)
+):
     pagamentos = read_pagamentos(db, offset=offset, limit=limit)
     return pagamentos
 
@@ -301,16 +401,24 @@ def read_pagamento_route(pagamento_id: int, db: Session = Depends(get_db)):
 
 
 @router.put("/pagamentos/{pagamento_id}", response_model=PagamentoResponse)
-def update_pagamento_route(pagamento_id: int, pagamento: PagamentoCreate, db: Session = Depends(get_db)):
-    db_pagamento = update_pagamento(db=db, pagamento_id=pagamento_id, pagamento=pagamento)
+def update_pagamento_route(
+    pagamento_id: int, pagamento: PagamentoCreate, db: Session = Depends(get_db)
+):
+    db_pagamento = update_pagamento(
+        db=db, pagamento_id=pagamento_id, pagamento=pagamento
+    )
     if db_pagamento is None:
         raise HTTPException(status_code=404, detail="Pagamento not found")
     return db_pagamento
 
 
 @router.patch("/pagamentos/{pagamento_id}", response_model=PagamentoResponse)
-def patch_pagamento_route(pagamento_id: int, pagamento: PagamentoUpdate, db: Session = Depends(get_db)):
-    db_pagamento = patch_pagamento(db=db, pagamento_id=pagamento_id, pagamento=pagamento)
+def patch_pagamento_route(
+    pagamento_id: int, pagamento: PagamentoUpdate, db: Session = Depends(get_db)
+):
+    db_pagamento = patch_pagamento(
+        db=db, pagamento_id=pagamento_id, pagamento=pagamento
+    )
     if db_pagamento is None:
         raise HTTPException(status_code=404, detail="Pagamento not found")
     return db_pagamento
