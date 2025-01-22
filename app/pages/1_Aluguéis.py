@@ -27,6 +27,7 @@ with tab1:
     ficha_id: int = st.number_input(
         label='ID Ficha',
         min_value=0,
+        value=None,
         format='%d',
         step=1,
         key=1101

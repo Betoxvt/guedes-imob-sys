@@ -10,14 +10,15 @@ def apto_input(input: str) -> str:
     Returns:
         Desired format string.
     """
-    numbers = ""
-    letter = ""
-    for c in input:
-        if c.isdigit():
-            numbers += c
-        else:
-            letter = c
-    return f'{letter.upper()}-{numbers}'
+    if input is not None:
+        numbers = ""
+        letter = ""
+        for c in input:
+            if c.isdigit():
+                numbers += c
+            else:
+                letter = c
+        return f'{letter.upper()}-{numbers}'
 
 
 def csv_handler(csv):

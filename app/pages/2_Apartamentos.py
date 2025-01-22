@@ -26,6 +26,7 @@ with tab1:
     proprietario_id = st.number_input(
         label='ID Proprietário *',
         min_value=1,
+        value=None,
         format='%d',
         step=1,
         key=2101
