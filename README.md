@@ -47,7 +47,10 @@
 43. [x] Usar como primary-key o próprio nome do apartamento, na table apartamentos. E fazer as devidas alterações no restante do projeto.
 44. [x] Alterar pagamentos, alugueis e garagens para atender melhor a necessidade de registros precisos.
 45. [ ] Placeholders e help.
-46. [ ] Show some identification help when chosing an ID.
+46. [x] Mostrar uma identificação mais amigável ao inserir IDs.
+47. [x] Incluir DIC, RIP, Inscrição Imobiliária e Matrícula como colunas dos apartamentos.
+48. [ ] Utilizar o apto+checkin para encontrar uma ficha.
+49. [ ] Por conveniência, colunas com nome e contato devem estar na table de alugueis.
 
 **Pensar em como utilizar o patch para alterações individuais de campos, ainda não vejo muito sentido nisso, mas como estudo pode ser bom.**
 **Agora até vejo que pode ser útil para atualizar os valores depositados para cada aluguel, e o valores entregues para os proprietarios**

@@ -30,6 +30,10 @@ class ApartamentoBase(BaseModel):
     wifi: Optional[str]
     wifi_senha: Optional[str]
     lock_senha: Optional[str]
+    dic: Optional[str]
+    rip: Optional[str]
+    insc_imob: Optional[str]
+    matricula: Optional[str]
 
 
 class DespesaCat(Enum):

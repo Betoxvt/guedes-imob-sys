@@ -43,7 +43,11 @@ with tab1:
     wifi = st.text_input(label="Nome da Rede WiFi", value=None, key=2105)
     wifi_senha = st.text_input(label="Senha da Rede Wifi", value=None, key=2106)
     lock_senha = st.text_input(label="Senha da Fechadura", value=None, key=2107)
-    if st.button("Registrar", key=2108):
+    dic = st.text_input(label="DIC", value=None, key=2108)
+    rip = st.text_input(label="RIP", value=None, key=2109)
+    insc_imob = st.text_input(label="Inscrição Imobiliária", value=None, key=2110)
+    matricula = st.text_input(label="Matrícula", value=None, key=2111)
+    if st.button("Registrar", key=2112):
         apto_data = empty_none_dict(
             {
                 "id": apto_input(id),
@@ -54,6 +58,10 @@ with tab1:
                 "wifi": wifi,
                 "wifi_senha": wifi_senha,
                 "lock_senha": lock_senha,
+                "dic": dic,
+                "rip": rip,
+                "insc_imob": insc_imob,
+                "matricula": matricula,
             }
         )
         try:
@@ -135,7 +143,13 @@ with tab3:
             lock_senha = st.text_input(
                 label="Senha da Fechadura", value=str(df_up.lock_senha[0]), key=2309
             )
-            if st.button("Modificar", key=2310):
+            dic = st.text_input(label="DIC", value=None, key=2310)
+            rip = st.text_input(label="RIP", value=None, key=2311)
+            insc_imob = st.text_input(
+                label="Inscrição Imobiliária", value=None, key=2312
+            )
+            matricula = st.text_input(label="Matrícula", value=None, key=2313)
+            if st.button("Modificar", key=2314):
                 apto_up_data = empty_none_dict(
                     {
                         "id": apto_input(id),
@@ -146,6 +160,10 @@ with tab3:
                         "wifi": wifi,
                         "wifi_senha": wifi_senha,
                         "lock_senha": lock_senha,
+                        "dic": dic,
+                        "rip": rip,
+                        "insc_imob": insc_imob,
+                        "matricula": matricula,
                     }
                 )
                 update_data = json.dumps(obj=apto_up_data, separators=(",", ":"))

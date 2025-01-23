@@ -41,6 +41,10 @@ class Apartamento(Base):
     wifi: Mapped[str] = mapped_column(String, nullable=True)
     wifi_senha: Mapped[str] = mapped_column(String, nullable=True)
     lock_senha: Mapped[str] = mapped_column(String, nullable=True)
+    dic: Mapped[str] = mapped_column(String, nullable=True)
+    rip: Mapped[str] = mapped_column(String, nullable=True)
+    insc_imob: Mapped[str] = mapped_column(String, nullable=True)
+    matricula: Mapped[str] = mapped_column(String, nullable=True)
     criado_em: Mapped[date] = mapped_column(
         server_default=func.current_date(), nullable=False
     )
