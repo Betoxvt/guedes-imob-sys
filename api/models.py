@@ -18,7 +18,6 @@ class Aluguel(Base):
     diarias: Mapped[int] = mapped_column(nullable=False)
     valor_diaria: Mapped[float] = mapped_column(Numeric(10, 2), nullable=False)
     valor_total: Mapped[float] = mapped_column(Numeric(10, 2), nullable=False)
-    valor_depositado: Mapped[float] = mapped_column(Numeric(10, 2), nullable=True)
     criado_em: Mapped[date] = mapped_column(
         server_default=func.current_date(), nullable=False
     )
@@ -118,17 +117,16 @@ class Garagem(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     apto_id_origem: Mapped[str] = mapped_column(
-        ForeignKey("apartamentos.id"), nullable=False
+        ForeignKey("apartamentos.id"), nullable=False, name="fk_apto_origem"
     )
     apto_id_destino: Mapped[str] = mapped_column(
-        ForeignKey("apartamentos.id"), nullable=False
+        ForeignKey("apartamentos.id"), nullable=False, name="fk_apto_destino"
     )
     checkin: Mapped[date] = mapped_column(nullable=False)
     checkout: Mapped[date] = mapped_column(nullable=False)
     diarias: Mapped[int] = mapped_column(nullable=False)
     valor_diaria: Mapped[float] = mapped_column(Numeric(10, 2), nullable=False)
     valor_total: Mapped[float] = mapped_column(Numeric(10, 2), nullable=False)
-    valor_depositado: Mapped[float] = mapped_column(Numeric(10, 2), nullable=True)
     criado_em: Mapped[date] = mapped_column(
         server_default=func.current_date(), nullable=False
     )
@@ -141,11 +139,12 @@ class Pagamento(Base):
     __tablename__ = "pagamentos"
 
     id: Mapped[int] = mapped_column(primary_key=True)
+    tipo: Mapped[str] = mapped_column(String, nullable=False)
     valor: Mapped[float] = mapped_column(Numeric(10, 2), nullable=False)
+    apto_id: Mapped[str] = mapped_column(ForeignKey("apartamentos.id"), nullable=False)
     aluguel_id: Mapped[int] = mapped_column(ForeignKey("alugueis.id"), nullable=True)
     nome: Mapped[str] = mapped_column(String, nullable=True)
     contato: Mapped[str] = mapped_column(String, nullable=True)
-    apto_id: Mapped[str] = mapped_column(ForeignKey("apartamentos.id"), nullable=True)
     notas: Mapped[str] = mapped_column(String, nullable=True)
     criado_em: Mapped[date] = mapped_column(
         server_default=func.current_date(), nullable=False

@@ -57,9 +57,10 @@ with tab1:
                 "descricao": descricao,
             }
         )
-        submit_data = json.dumps(obj=despesa_data, separators=(",", ":"))
         try:
-            post_response = requests.post("http://api:8000/despesas/", submit_data)
+            post_response = requests.post(
+                "http://api:8000/despesas/", json=despesa_data
+            )
             show_response_message(post_response)
             if post_response.status_code == 200:
                 st.subheader("Dados inseridos, tudo OK:")
@@ -152,10 +153,9 @@ with tab3:
                         "descricao": descricao,
                     }
                 )
-                update_data = json.dumps(obj=despesa_up_data, separators=(",", ":"))
                 try:
                     put_response = requests.put(
-                        f"http://api:8000/despesas/{update_id}", update_data
+                        f"http://api:8000/despesas/{update_id}", json=despesa_up_data
                     )
                     show_response_message(put_response)
                     if put_response.status_code == 200:

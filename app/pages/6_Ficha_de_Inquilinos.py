@@ -8,7 +8,7 @@ from utils.mydate import calculate_diarias, str_to_date
 from utils.myfunc import cat_index, show_data_output, show_response_message
 from utils.mynum import cep_input, cpf_input, rg_input, tel_input_br
 from utils.mypdf import fill_ficha
-from utils.mystr import apto_input, csv_handler, empty_none_dict, none_or_str
+from utils.mystr import apto_input, csv_handler, empty_none, empty_none_dict
 
 st.set_page_config(page_title="Ficha de Inquilinos", layout="wide")
 st.title("Ficha de Inquilinos")
@@ -28,94 +28,95 @@ with tab1:
                 st.dataframe(df, hide_index=True)
                 if st.button("Registrar", key=61005):
                     for i, r in df.iterrows():
-                        ficha_data = {
-                            "apto_id": None,
-                            "nome": df.nome[i],
-                            "tipo_residencia": "Temporário",
-                            "cidade": df.cidade[i],
-                            "cep": cep_input(df.cep[i]),
-                            "uf": df.uf[i],
-                            "pais": df.pais[i],
-                            "tel": tel_input_br(df.tel[i]),
-                            "estado_civil": df.estado_civil[i],
-                            "profissao": df.profissao[i],
-                            "rg": rg_input(df.rg[i]),
-                            "cpf": cpf_input(df.cpf[i]),
-                            "mae": df.mae[i],
-                            "automovel": df.automovel[i],
-                            "modelo_auto": df.modelo_auto[i],
-                            "placa_auto": df.placa_auto[i],
-                            "cor_auto": df.cor_auto[i],
-                            "checkin": str(str_to_date(df.checkin[i])),
-                            "checkout": str(str_to_date(df.checkout[i])),
-                            "observacoes": None,
-                            "proprietario": None,
-                            "imob_fone": None,
-                            "a0": {
-                                "nome": df.a0_nome[i],
-                                "doc": df.a0_doc[i],
-                                "idade": df.a0_idade[i],
-                                "parentesco": df.a0_parentesco[i],
-                            },
-                            "a1": {
-                                "nome": df.a1_nome[i],
-                                "doc": df.a1_doc[i],
-                                "idade": df.a1_idade[i],
-                                "parentesco": df.a1_parentesco[i],
-                            },
-                            "a2": {
-                                "nome": df.a2_nome[i],
-                                "doc": df.a2_doc[i],
-                                "idade": df.a2_idade[i],
-                                "parentesco": df.a2_parentesco[i],
-                            },
-                            "a3": {
-                                "nome": df.a3_nome[i],
-                                "doc": df.a3_doc[i],
-                                "idade": df.a3_idade[i],
-                                "parentesco": df.a3_parentesco[i],
-                            },
-                            "a4": {
-                                "nome": df.a4_nome[i],
-                                "doc": df.a4_doc[i],
-                                "idade": df.a4_idade[i],
-                                "parentesco": df.a4_parentesco[i],
-                            },
-                            "a5": {
-                                "nome": df.a5_nome[i],
-                                "doc": df.a5_doc[i],
-                                "idade": df.a5_idade[i],
-                                "parentesco": df.a5_parentesco[i],
-                            },
-                            "a6": {
-                                "nome": df.a6_nome[i],
-                                "doc": df.a6_doc[i],
-                                "idade": df.a6_idade[i],
-                                "parentesco": df.a6_parentesco[i],
-                            },
-                            "a7": {
-                                "nome": df.a7_nome[i],
-                                "doc": df.a7_doc[i],
-                                "idade": df.a7_idade[i],
-                                "parentesco": df.a7_parentesco[i],
-                            },
-                            "a8": {
-                                "nome": df.a8_nome[i],
-                                "doc": df.a8_doc[i],
-                                "idade": df.a8_idade[i],
-                                "parentesco": df.a8_parentesco[i],
-                            },
-                            "a9": {
-                                "nome": df.a9_nome[i],
-                                "doc": df.a9_doc[i],
-                                "idade": df.a9_idade[i],
-                                "parentesco": df.a9_parentesco[i],
-                            },
-                        }
-                        submit_data = json.dumps(obj=ficha_data, separators=(",", ":"))
+                        ficha_data = empty_none_dict(
+                            {
+                                "apto_id": None,
+                                "nome": df.nome[i],
+                                "tipo_residencia": "Temporário",
+                                "cidade": df.cidade[i],
+                                "cep": cep_input(df.cep[i]),
+                                "uf": df.uf[i],
+                                "pais": df.pais[i],
+                                "tel": tel_input_br(df.tel[i]),
+                                "estado_civil": df.estado_civil[i],
+                                "profissao": df.profissao[i],
+                                "rg": rg_input(df.rg[i]),
+                                "cpf": cpf_input(df.cpf[i]),
+                                "mae": df.mae[i],
+                                "automovel": df.automovel[i],
+                                "modelo_auto": df.modelo_auto[i],
+                                "placa_auto": df.placa_auto[i],
+                                "cor_auto": df.cor_auto[i],
+                                "checkin": str(str_to_date(df.checkin[i])),
+                                "checkout": str(str_to_date(df.checkout[i])),
+                                "observacoes": None,
+                                "proprietario": None,
+                                "imob_fone": None,
+                                "a0": {
+                                    "nome": df.a0_nome[i],
+                                    "doc": df.a0_doc[i],
+                                    "idade": df.a0_idade[i],
+                                    "parentesco": df.a0_parentesco[i],
+                                },
+                                "a1": {
+                                    "nome": df.a1_nome[i],
+                                    "doc": df.a1_doc[i],
+                                    "idade": df.a1_idade[i],
+                                    "parentesco": df.a1_parentesco[i],
+                                },
+                                "a2": {
+                                    "nome": df.a2_nome[i],
+                                    "doc": df.a2_doc[i],
+                                    "idade": df.a2_idade[i],
+                                    "parentesco": df.a2_parentesco[i],
+                                },
+                                "a3": {
+                                    "nome": df.a3_nome[i],
+                                    "doc": df.a3_doc[i],
+                                    "idade": df.a3_idade[i],
+                                    "parentesco": df.a3_parentesco[i],
+                                },
+                                "a4": {
+                                    "nome": df.a4_nome[i],
+                                    "doc": df.a4_doc[i],
+                                    "idade": df.a4_idade[i],
+                                    "parentesco": df.a4_parentesco[i],
+                                },
+                                "a5": {
+                                    "nome": df.a5_nome[i],
+                                    "doc": df.a5_doc[i],
+                                    "idade": df.a5_idade[i],
+                                    "parentesco": df.a5_parentesco[i],
+                                },
+                                "a6": {
+                                    "nome": df.a6_nome[i],
+                                    "doc": df.a6_doc[i],
+                                    "idade": df.a6_idade[i],
+                                    "parentesco": df.a6_parentesco[i],
+                                },
+                                "a7": {
+                                    "nome": df.a7_nome[i],
+                                    "doc": df.a7_doc[i],
+                                    "idade": df.a7_idade[i],
+                                    "parentesco": df.a7_parentesco[i],
+                                },
+                                "a8": {
+                                    "nome": df.a8_nome[i],
+                                    "doc": df.a8_doc[i],
+                                    "idade": df.a8_idade[i],
+                                    "parentesco": df.a8_parentesco[i],
+                                },
+                                "a9": {
+                                    "nome": df.a9_nome[i],
+                                    "doc": df.a9_doc[i],
+                                    "idade": df.a9_idade[i],
+                                    "parentesco": df.a9_parentesco[i],
+                                },
+                            }
+                        )
                         try:
                             post_response = requests.post(
-                                "http://api:8000/fichas/", submit_data
+                                "http://api:8000/fichas/", json=ficha_data
                             )
                             show_response_message(post_response)
                             if post_response.status_code == 200:
@@ -243,94 +244,94 @@ with tab1:
         a9_idade = st.text_input(label="Idade", value=None, key=6171)
         a9_parentesco = st.text_input(label="Parentesco", value=None, key=6172)
     if st.button("Registrar", key=6173):
-        ficha_data = {
-            "apto_id": apto_input(apto_id),
-            "nome": nome,
-            "tipo_residencia": tipo_residencia,
-            "cidade": cidade,
-            "cep": cep_input(cep),
-            "uf": uf,
-            "pais": pais,
-            "tel": tel_input_br(tel),
-            "estado_civil": estado_civil,
-            "profissao": profissao,
-            "rg": rg_input(rg),
-            "cpf": cpf_input(cpf),
-            "mae": mae,
-            "automovel": automovel,
-            "modelo_auto": modelo_auto,
-            "placa_auto": placa_auto,
-            "cor_auto": cor_auto,
-            "checkin": checkin.isoformat(),
-            "checkout": checkout.isoformat(),
-            "observacoes": observacoes,
-            "proprietario": proprietario,
-            "imob_fone": tel_input_br(imob_fone),
-            "a0": {
-                "nome": a0_nome,
-                "doc": a0_doc,
-                "idade": a0_idade,
-                "parentesco": a0_parentesco,
-            },
-            "a1": {
-                "nome": a1_nome,
-                "doc": a1_doc,
-                "idade": a1_idade,
-                "parentesco": a1_parentesco,
-            },
-            "a2": {
-                "nome": a2_nome,
-                "doc": a2_doc,
-                "idade": a2_idade,
-                "parentesco": a2_parentesco,
-            },
-            "a3": {
-                "nome": a3_nome,
-                "doc": a3_doc,
-                "idade": a3_idade,
-                "parentesco": a3_parentesco,
-            },
-            "a4": {
-                "nome": a4_nome,
-                "doc": a4_doc,
-                "idade": a4_idade,
-                "parentesco": a4_parentesco,
-            },
-            "a5": {
-                "nome": a5_nome,
-                "doc": a5_doc,
-                "idade": a5_idade,
-                "parentesco": a5_parentesco,
-            },
-            "a6": {
-                "nome": a6_nome,
-                "doc": a6_doc,
-                "idade": a6_idade,
-                "parentesco": a6_parentesco,
-            },
-            "a7": {
-                "nome": a7_nome,
-                "doc": a7_doc,
-                "idade": a7_idade,
-                "parentesco": a7_parentesco,
-            },
-            "a8": {
-                "nome": a8_nome,
-                "doc": a8_doc,
-                "idade": a8_idade,
-                "parentesco": a8_parentesco,
-            },
-            "a9": {
-                "nome": a9_nome,
-                "doc": a9_doc,
-                "idade": a9_idade,
-                "parentesco": a9_parentesco,
-            },
-        }
-        submit_data = json.dumps(obj=empty_none_dict(ficha_data), separators=(",", ":"))
-
+        ficha_data = empty_none_dict(
+            {
+                "apto_id": apto_input(apto_id),
+                "nome": nome,
+                "tipo_residencia": tipo_residencia,
+                "cidade": cidade,
+                "cep": cep_input(cep),
+                "uf": uf,
+                "pais": pais,
+                "tel": tel_input_br(tel),
+                "estado_civil": estado_civil,
+                "profissao": profissao,
+                "rg": rg_input(rg),
+                "cpf": cpf_input(cpf),
+                "mae": mae,
+                "automovel": automovel,
+                "modelo_auto": modelo_auto,
+                "placa_auto": placa_auto,
+                "cor_auto": cor_auto,
+                "checkin": checkin.isoformat(),
+                "checkout": checkout.isoformat(),
+                "observacoes": observacoes,
+                "proprietario": proprietario,
+                "imob_fone": tel_input_br(imob_fone),
+                "a0": {
+                    "nome": a0_nome,
+                    "doc": a0_doc,
+                    "idade": a0_idade,
+                    "parentesco": a0_parentesco,
+                },
+                "a1": {
+                    "nome": a1_nome,
+                    "doc": a1_doc,
+                    "idade": a1_idade,
+                    "parentesco": a1_parentesco,
+                },
+                "a2": {
+                    "nome": a2_nome,
+                    "doc": a2_doc,
+                    "idade": a2_idade,
+                    "parentesco": a2_parentesco,
+                },
+                "a3": {
+                    "nome": a3_nome,
+                    "doc": a3_doc,
+                    "idade": a3_idade,
+                    "parentesco": a3_parentesco,
+                },
+                "a4": {
+                    "nome": a4_nome,
+                    "doc": a4_doc,
+                    "idade": a4_idade,
+                    "parentesco": a4_parentesco,
+                },
+                "a5": {
+                    "nome": a5_nome,
+                    "doc": a5_doc,
+                    "idade": a5_idade,
+                    "parentesco": a5_parentesco,
+                },
+                "a6": {
+                    "nome": a6_nome,
+                    "doc": a6_doc,
+                    "idade": a6_idade,
+                    "parentesco": a6_parentesco,
+                },
+                "a7": {
+                    "nome": a7_nome,
+                    "doc": a7_doc,
+                    "idade": a7_idade,
+                    "parentesco": a7_parentesco,
+                },
+                "a8": {
+                    "nome": a8_nome,
+                    "doc": a8_doc,
+                    "idade": a8_idade,
+                    "parentesco": a8_parentesco,
+                },
+                "a9": {
+                    "nome": a9_nome,
+                    "doc": a9_doc,
+                    "idade": a9_idade,
+                    "parentesco": a9_parentesco,
+                },
+            }
+        )
         try:
-            post_response = requests.post("http://api:8000/fichas/", submit_data)
+            post_response = requests.post("http://api:8000/fichas/", json=ficha_data)
             show_response_message(post_response)
             if post_response.status_code == 200:
                 st.subheader("Dados inseridos, tudo OK:")
@@ -433,7 +434,7 @@ with tab3:
                 label="Profissão *", value=str(df_up.profissao[0]), key=6310
             )
             rg = st.text_input(
-                label="Identidade (RG) *", value=none_or_str(df_up.rg[0]), key=6311
+                label="Identidade (RG) *", value=empty_none(df_up.rg[0]), key=6311
             )
             cpf = st.text_input(
                 label="CPF *", value=str(df_up.cpf[0]), help="Somente números", key=6312
@@ -443,16 +444,16 @@ with tab3:
             )
             with st.expander("Dados do Automóvel"):
                 automovel = st.text_input(
-                    label="Automóvel", value=none_or_str(df_up.automovel[0]), key=6314
+                    label="Automóvel", value=empty_none(df_up.automovel[0]), key=6314
                 )
                 modelo_auto = st.text_input(
-                    label="Modelo", value=none_or_str(df_up.modelo_auto[0]), key=6315
+                    label="Modelo", value=empty_none(df_up.modelo_auto[0]), key=6315
                 )
                 placa_auto = st.text_input(
-                    label="Placa", value=none_or_str(df_up.placa_auto[0]), key=6316
+                    label="Placa", value=empty_none(df_up.placa_auto[0]), key=6316
                 )
                 cor_auto = st.text_input(
-                    label="Cor", value=none_or_str(df_up.cor_auto[0]), key=6317
+                    label="Cor", value=empty_none(df_up.cor_auto[0]), key=6317
                 )
             checkin: date = st.date_input(
                 label="Check-in *",
@@ -470,329 +471,327 @@ with tab3:
             st.write(f"Diárias: {diarias}")
             observacoes = st.text_input(
                 label="Observações",
-                value=none_or_str(df_up.loc[0, "observacoes"]),
+                value=empty_none(df_up.loc[0, "observacoes"]),
                 key=6320,
             )
             proprietario = st.text_input(
-                label="Proprietário", value=none_or_str(df_up.proprietario[0]), key=6321
+                label="Proprietário", value=empty_none(df_up.proprietario[0]), key=6321
             )
             imob_fone = st.text_input(
                 label="Telefone Imobiliária",
-                value=none_or_str(df_up.imob_fone[0]),
+                value=empty_none(df_up.imob_fone[0]),
                 key=6322,
             )
             with st.expander("Acompanhantes 1 a 5"):
                 st.markdown("**Acompanhante 01**")
                 a0_nome = st.text_input(
                     label="Nome",
-                    value=none_or_str(df_up["a0"].iloc[0].get("nome")),
+                    value=empty_none(df_up["a0"].iloc[0].get("nome")),
                     key=6323,
                 )
                 a0_doc = st.text_input(
                     label="Documento (RG/CPF)",
-                    value=none_or_str(df_up["a0"].iloc[0].get("doc")),
+                    value=empty_none(df_up["a0"].iloc[0].get("doc")),
                     key=6324,
                 )
                 a0_idade = st.text_input(
                     label="Idade",
-                    value=none_or_str(df_up["a0"].iloc[0].get("idade")),
+                    value=empty_none(df_up["a0"].iloc[0].get("idade")),
                     key=6325,
                 )
                 a0_parentesco = st.text_input(
                     label="Parentesco",
-                    value=none_or_str(df_up["a0"].iloc[0].get("parentesco")),
+                    value=empty_none(df_up["a0"].iloc[0].get("parentesco")),
                     key=6326,
                 )
 
                 st.markdown("**Acompanhante 02**")
                 a1_nome = st.text_input(
                     label="Nome",
-                    value=none_or_str(df_up["a1"].iloc[0].get("nome")),
+                    value=empty_none(df_up["a1"].iloc[0].get("nome")),
                     key=6327,
                 )
                 a1_doc = st.text_input(
                     label="Documento (RG/CPF)",
-                    value=none_or_str(df_up["a1"].iloc[0].get("doc")),
+                    value=empty_none(df_up["a1"].iloc[0].get("doc")),
                     key=6328,
                 )
                 a1_idade = st.text_input(
                     label="Idade",
-                    value=none_or_str(df_up["a1"].iloc[0].get("idade")),
+                    value=empty_none(df_up["a1"].iloc[0].get("idade")),
                     key=6329,
                 )
                 a1_parentesco = st.text_input(
                     label="Parentesco",
-                    value=none_or_str(df_up["a1"].iloc[0].get("parentesco")),
+                    value=empty_none(df_up["a1"].iloc[0].get("parentesco")),
                     key=6330,
                 )
 
                 st.markdown("**Acompanhante 03**")
                 a2_nome = st.text_input(
                     label="Nome",
-                    value=none_or_str(df_up["a2"].iloc[0].get("nome")),
+                    value=empty_none(df_up["a2"].iloc[0].get("nome")),
                     key=6331,
                 )
                 a2_doc = st.text_input(
                     label="Documento (RG/CPF)",
-                    value=none_or_str(df_up["a2"].iloc[0].get("doc")),
+                    value=empty_none(df_up["a2"].iloc[0].get("doc")),
                     key=6332,
                 )
                 a2_idade = st.text_input(
                     label="Idade",
-                    value=none_or_str(df_up["a2"].iloc[0].get("idade")),
+                    value=empty_none(df_up["a2"].iloc[0].get("idade")),
                     key=6333,
                 )
                 a2_parentesco = st.text_input(
                     label="Parentesco",
-                    value=none_or_str(df_up["a2"].iloc[0].get("parentesco")),
+                    value=empty_none(df_up["a2"].iloc[0].get("parentesco")),
                     key=6334,
                 )
 
                 st.markdown("**Acompanhante 04**")
                 a3_nome = st.text_input(
                     label="Nome",
-                    value=none_or_str(df_up["a3"].iloc[0].get("nome")),
+                    value=empty_none(df_up["a3"].iloc[0].get("nome")),
                     key=6335,
                 )
                 a3_doc = st.text_input(
                     label="Documento (RG/CPF)",
-                    value=none_or_str(df_up["a3"].iloc[0].get("doc")),
+                    value=empty_none(df_up["a3"].iloc[0].get("doc")),
                     key=6336,
                 )
                 a3_idade = st.text_input(
                     label="Idade",
-                    value=none_or_str(df_up["a3"].iloc[0].get("idade")),
+                    value=empty_none(df_up["a3"].iloc[0].get("idade")),
                     key=6337,
                 )
                 a3_parentesco = st.text_input(
                     label="Parentesco",
-                    value=none_or_str(df_up["a3"].iloc[0].get("parentesco")),
+                    value=empty_none(df_up["a3"].iloc[0].get("parentesco")),
                     key=6338,
                 )
 
                 st.markdown("**Acompanhante 05**")
                 a4_nome = st.text_input(
                     label="Nome",
-                    value=none_or_str(df_up["a4"].iloc[0].get("nome")),
+                    value=empty_none(df_up["a4"].iloc[0].get("nome")),
                     key=6339,
                 )
                 a4_doc = st.text_input(
                     label="Documento (RG/CPF)",
-                    value=none_or_str(df_up["a4"].iloc[0].get("doc")),
+                    value=empty_none(df_up["a4"].iloc[0].get("doc")),
                     key=6340,
                 )
                 a4_idade = st.text_input(
                     label="Idade",
-                    value=none_or_str(df_up["a4"].iloc[0].get("idade")),
+                    value=empty_none(df_up["a4"].iloc[0].get("idade")),
                     key=6341,
                 )
                 a4_parentesco = st.text_input(
                     label="Parentesco",
-                    value=none_or_str(df_up["a4"].iloc[0].get("parentesco")),
+                    value=empty_none(df_up["a4"].iloc[0].get("parentesco")),
                     key=6342,
                 )
             with st.expander("Acompanhantes 6 a 10"):
                 st.markdown("**Acompanhante 06**")
                 a5_nome = st.text_input(
                     label="Nome",
-                    value=none_or_str(df_up["a5"].iloc[0].get("nome")),
+                    value=empty_none(df_up["a5"].iloc[0].get("nome")),
                     key=6343,
                 )
                 a5_doc = st.text_input(
                     label="Documento (RG/CPF)",
-                    value=none_or_str(df_up["a5"].iloc[0].get("doc")),
+                    value=empty_none(df_up["a5"].iloc[0].get("doc")),
                     key=6344,
                 )
                 a5_idade = st.text_input(
                     label="Idade",
-                    value=none_or_str(df_up["a5"].iloc[0].get("idade")),
+                    value=empty_none(df_up["a5"].iloc[0].get("idade")),
                     key=6345,
                 )
                 a5_parentesco = st.text_input(
                     label="Parentesco",
-                    value=none_or_str(df_up["a5"].iloc[0].get("parentesco")),
+                    value=empty_none(df_up["a5"].iloc[0].get("parentesco")),
                     key=6346,
                 )
 
                 st.markdown("**Acompanhante 07**")
                 a6_nome = st.text_input(
                     label="Nome",
-                    value=none_or_str(df_up["a6"].iloc[0].get("nome")),
+                    value=empty_none(df_up["a6"].iloc[0].get("nome")),
                     key=6347,
                 )
                 a6_doc = st.text_input(
                     label="Documento (RG/CPF)",
-                    value=none_or_str(df_up["a6"].iloc[0].get("doc")),
+                    value=empty_none(df_up["a6"].iloc[0].get("doc")),
                     key=6348,
                 )
                 a6_idade = st.text_input(
                     label="Idade",
-                    value=none_or_str(df_up["a6"].iloc[0].get("idade")),
+                    value=empty_none(df_up["a6"].iloc[0].get("idade")),
                     key=6349,
                 )
                 a6_parentesco = st.text_input(
                     label="Parentesco",
-                    value=none_or_str(df_up["a6"].iloc[0].get("parentesco")),
+                    value=empty_none(df_up["a6"].iloc[0].get("parentesco")),
                     key=6350,
                 )
 
                 st.markdown("**Acompanhante 08**")
                 a7_nome = st.text_input(
                     label="Nome",
-                    value=none_or_str(df_up["a7"].iloc[0].get("nome")),
+                    value=empty_none(df_up["a7"].iloc[0].get("nome")),
                     key=6351,
                 )
                 a7_doc = st.text_input(
                     label="Documento (RG/CPF)",
-                    value=none_or_str(df_up["a7"].iloc[0].get("doc")),
+                    value=empty_none(df_up["a7"].iloc[0].get("doc")),
                     key=6352,
                 )
                 a7_idade = st.text_input(
                     label="Idade",
-                    value=none_or_str(df_up["a7"].iloc[0].get("idade")),
+                    value=empty_none(df_up["a7"].iloc[0].get("idade")),
                     key=6353,
                 )
                 a7_parentesco = st.text_input(
                     label="Parentesco",
-                    value=none_or_str(df_up["a7"].iloc[0].get("parentesco")),
+                    value=empty_none(df_up["a7"].iloc[0].get("parentesco")),
                     key=6354,
                 )
 
                 st.markdown("**Acompanhante 09**")
                 a8_nome = st.text_input(
                     label="Nome",
-                    value=none_or_str(df_up["a8"].iloc[0].get("nome")),
+                    value=empty_none(df_up["a8"].iloc[0].get("nome")),
                     key=6355,
                 )
                 a8_doc = st.text_input(
                     label="Documento (RG/CPF)",
-                    value=none_or_str(df_up["a8"].iloc[0].get("doc")),
+                    value=empty_none(df_up["a8"].iloc[0].get("doc")),
                     key=6356,
                 )
                 a8_idade = st.text_input(
                     label="Idade",
-                    value=none_or_str(df_up["a8"].iloc[0].get("idade")),
+                    value=empty_none(df_up["a8"].iloc[0].get("idade")),
                     key=6357,
                 )
                 a8_parentesco = st.text_input(
                     label="Parentesco",
-                    value=none_or_str(df_up["a8"].iloc[0].get("parentesco")),
+                    value=empty_none(df_up["a8"].iloc[0].get("parentesco")),
                     key=6358,
                 )
 
                 st.markdown("**Acompanhante 10**")
                 a9_nome = st.text_input(
                     label="Nome",
-                    value=none_or_str(df_up["a9"].iloc[0].get("nome")),
+                    value=empty_none(df_up["a9"].iloc[0].get("nome")),
                     key=6359,
                 )
                 a9_doc = st.text_input(
                     label="Documento (RG/CPF)",
-                    value=none_or_str(df_up["a9"].iloc[0].get("doc")),
+                    value=empty_none(df_up["a9"].iloc[0].get("doc")),
                     key=6360,
                 )
                 a9_idade = st.text_input(
                     label="Idade",
-                    value=none_or_str(df_up["a9"].iloc[0].get("idade")),
+                    value=empty_none(df_up["a9"].iloc[0].get("idade")),
                     key=6361,
                 )
                 a9_parentesco = st.text_input(
                     label="Parentesco",
-                    value=none_or_str(df_up["a9"].iloc[0].get("parentesco")),
+                    value=empty_none(df_up["a9"].iloc[0].get("parentesco")),
                     key=6362,
                 )
             if st.button("Modificar"):
-                ficha_up_data = {
-                    "apto_id": apto_input(apto_id),
-                    "nome": nome,
-                    "tipo_residencia": tipo_residencia,
-                    "cidade": cidade,
-                    "cep": cep_input(cep),
-                    "uf": uf,
-                    "pais": pais,
-                    "tel": tel_input_br(tel),
-                    "estado_civil": estado_civil,
-                    "profissao": profissao,
-                    "rg": rg_input(rg),
-                    "cpf": cpf_input(cpf),
-                    "mae": mae,
-                    "automovel": automovel,
-                    "modelo_auto": modelo_auto,
-                    "placa_auto": placa_auto,
-                    "cor_auto": cor_auto,
-                    "checkin": checkin.isoformat(),
-                    "checkout": checkout.isoformat(),
-                    "observacoes": observacoes,
-                    "proprietario": proprietario,
-                    "imob_fone": tel_input_br(imob_fone),
-                    "a0": {
-                        "nome": a0_nome,
-                        "doc": a0_doc,
-                        "idade": a0_idade,
-                        "parentesco": a0_parentesco,
-                    },
-                    "a1": {
-                        "nome": a1_nome,
-                        "doc": a1_doc,
-                        "idade": a1_idade,
-                        "parentesco": a1_parentesco,
-                    },
-                    "a2": {
-                        "nome": a2_nome,
-                        "doc": a2_doc,
-                        "idade": a2_idade,
-                        "parentesco": a2_parentesco,
-                    },
-                    "a3": {
-                        "nome": a3_nome,
-                        "doc": a3_doc,
-                        "idade": a3_idade,
-                        "parentesco": a3_parentesco,
-                    },
-                    "a4": {
-                        "nome": a4_nome,
-                        "doc": a4_doc,
-                        "idade": a4_idade,
-                        "parentesco": a4_parentesco,
-                    },
-                    "a5": {
-                        "nome": a5_nome,
-                        "doc": a5_doc,
-                        "idade": a5_idade,
-                        "parentesco": a5_parentesco,
-                    },
-                    "a6": {
-                        "nome": a6_nome,
-                        "doc": a6_doc,
-                        "idade": a6_idade,
-                        "parentesco": a6_parentesco,
-                    },
-                    "a7": {
-                        "nome": a7_nome,
-                        "doc": a7_doc,
-                        "idade": a7_idade,
-                        "parentesco": a7_parentesco,
-                    },
-                    "a8": {
-                        "nome": a8_nome,
-                        "doc": a8_doc,
-                        "idade": a8_idade,
-                        "parentesco": a8_parentesco,
-                    },
-                    "a9": {
-                        "nome": a9_nome,
-                        "doc": a9_doc,
-                        "idade": a9_idade,
-                        "parentesco": a9_parentesco,
-                    },
-                }
-                update_data = json.dumps(
-                    obj=empty_none_dict(ficha_up_data), separators=(",", ":")
+                ficha_up_data = empty_none_dict(
+                    {
+                        "apto_id": apto_input(apto_id),
+                        "nome": nome,
+                        "tipo_residencia": tipo_residencia,
+                        "cidade": cidade,
+                        "cep": cep_input(cep),
+                        "uf": uf,
+                        "pais": pais,
+                        "tel": tel_input_br(tel),
+                        "estado_civil": estado_civil,
+                        "profissao": profissao,
+                        "rg": rg_input(rg),
+                        "cpf": cpf_input(cpf),
+                        "mae": mae,
+                        "automovel": automovel,
+                        "modelo_auto": modelo_auto,
+                        "placa_auto": placa_auto,
+                        "cor_auto": cor_auto,
+                        "checkin": checkin.isoformat(),
+                        "checkout": checkout.isoformat(),
+                        "observacoes": observacoes,
+                        "proprietario": proprietario,
+                        "imob_fone": tel_input_br(imob_fone),
+                        "a0": {
+                            "nome": a0_nome,
+                            "doc": a0_doc,
+                            "idade": a0_idade,
+                            "parentesco": a0_parentesco,
+                        },
+                        "a1": {
+                            "nome": a1_nome,
+                            "doc": a1_doc,
+                            "idade": a1_idade,
+                            "parentesco": a1_parentesco,
+                        },
+                        "a2": {
+                            "nome": a2_nome,
+                            "doc": a2_doc,
+                            "idade": a2_idade,
+                            "parentesco": a2_parentesco,
+                        },
+                        "a3": {
+                            "nome": a3_nome,
+                            "doc": a3_doc,
+                            "idade": a3_idade,
+                            "parentesco": a3_parentesco,
+                        },
+                        "a4": {
+                            "nome": a4_nome,
+                            "doc": a4_doc,
+                            "idade": a4_idade,
+                            "parentesco": a4_parentesco,
+                        },
+                        "a5": {
+                            "nome": a5_nome,
+                            "doc": a5_doc,
+                            "idade": a5_idade,
+                            "parentesco": a5_parentesco,
+                        },
+                        "a6": {
+                            "nome": a6_nome,
+                            "doc": a6_doc,
+                            "idade": a6_idade,
+                            "parentesco": a6_parentesco,
+                        },
+                        "a7": {
+                            "nome": a7_nome,
+                            "doc": a7_doc,
+                            "idade": a7_idade,
+                            "parentesco": a7_parentesco,
+                        },
+                        "a8": {
+                            "nome": a8_nome,
+                            "doc": a8_doc,
+                            "idade": a8_idade,
+                            "parentesco": a8_parentesco,
+                        },
+                        "a9": {
+                            "nome": a9_nome,
+                            "doc": a9_doc,
+                            "idade": a9_idade,
+                            "parentesco": a9_parentesco,
+                        },
+                    }
                 )
-
                 try:
                     put_response = requests.put(
-                        f"http://api:8000/fichas/{update_id}", update_data
+                        f"http://api:8000/fichas/{update_id}", json=ficha_up_data
                     )
                     show_response_message(put_response)
                     if put_response.status_code == 200:

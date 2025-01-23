@@ -20,7 +20,7 @@
 16. [ ] Ver como é a configuração para aplicar offset e limit das querys no frontend.
 17. [ ] Fazer o login direito.
 18. [x] Revisar os dfs, dicts, responses, keys e importações no frontend, paginas 1 a 6.
-19. [ ] Definir Placeholders nos formulários do frontend páginas 1 a 6. E marcar campos Obrigatórios com um '*'.
+19. [x] Marcar campos Obrigatórios com um '*'.
 20. [x] Tentar recriar as páginas que fazem cálculos para exibição instantânea do resultado, aprendi que não pode ser dentro de um `st.form()`.
 21. [ ] Ver quais funções deveriam ser `async`com `asyncio` estudar e aplicar.
 22. [ ] Reduzir as repetições de código com funções e decoradores.
@@ -42,9 +42,11 @@
 38. [x] Incluir ao sistema tabela de registros de pagamentos recebidos referentes aos alugueis.
 39. [ ] Criar as views (com dbt?) que serão utilizadas nos relatórios.
 40. [ ] Utilizar variáveis de ambiente (.env) para valores que desejo aplicar automáticamente ao sistema, sem subir para o GitHub.
-41. [ ] Criar as views que serão utilizadas ta planilha com as locações.
+41. [ ] Criar as views que serão utilizadas na planilha com as locações.
 42. [x] Criar trigger para bloquear alugueis de um mesmo apto com datas conflitantes.
 43. [x] Usar como primary-key o próprio nome do apartamento, na table apartamentos. E fazer as devidas alterações no restante do projeto.
+44. [x] Alterar pagamentos, alugueis e garagens para atender melhor a necessidade de registros precisos.
+45. [ ] Placeholders e help.
 
 **Pensar em como utilizar o patch para alterações individuais de campos, ainda não vejo muito sentido nisso, mas como estudo pode ser bom.**
 **Agora até vejo que pode ser útil para atualizar os valores depositados para cada aluguel, e o valores entregues para os proprietarios**

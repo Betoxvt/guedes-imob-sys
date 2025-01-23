@@ -113,14 +113,19 @@ def empty_none_dict(obj: dict) -> dict:
     return obj
 
 
-def none_or_str(value: str | None) -> str | None:
-    if value:
-        if value == None:
-            return None
-        else:
-            return str(value)
-    else:
+def empty_none(obj: str | None) -> str | None:
+    if obj is None:
         return None
+    if isinstance(obj, str):
+        if (
+            obj.strip() == ""
+            or obj.strip().upper() == "NONE"
+            or obj.strip().upper() == "NULL"
+            or obj.strip().upper() == "NAN"
+            or obj.strip().upper() == "NA"
+        ):
+            return None
+    return obj
 
 
 def two_liner(s: str):
