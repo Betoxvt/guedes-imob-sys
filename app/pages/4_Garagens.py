@@ -8,8 +8,8 @@ from utils.myfunc import show_data_output, show_response_message
 from utils.mynum import calculate_saldo, calculate_valortotal
 from utils.mystr import apto_input, empty_none, empty_none_dict
 
-st.set_page_config(page_title="Garagens", layout="wide")
-st.title("Garagens")
+st.set_page_config(page_title="Garagens, Alugueis e Empréstimos", layout="wide")
+st.title("Garagens, Alugueis e Empréstimos")
 
 tab1, tab2, tab3, tab4, tab5 = st.tabs(
     ["Registrar", "Consultar", "Modificar", "Deletar", "Listar"]
