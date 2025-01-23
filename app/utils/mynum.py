@@ -45,7 +45,7 @@ def cep_input(cep_in: str | int | float) -> str:
     if len(cep_num) == 8:
         return f"{cep_num[:5]}-{cep_num[5:]}"
     else:
-        st.warning("Não foi identificado o padrão brasileiro")
+        st.warning("Não foi identificado o padrão brasileiro de CEP")
         return cep_in
 
 
@@ -54,7 +54,7 @@ def cpf_input(cpf_in: str | int | float) -> str:
     if len(cpf_num) == 11:
         return f"{cpf_num[:3]}.{cpf_num[3:6]}.{cpf_num[6:9]}-{cpf_num[9:]}"
     else:
-        st.warning("Não foi identificado o padrão brasileiro")
+        st.warning("Não foi identificado o padrão brasileiro de CPF")
         return cpf_in
 
 
@@ -75,7 +75,7 @@ def rg_input(rg_in: str | int | float) -> str:
         case 11:
             return f"{rg_num[:11]}-{rg_num[11]}"
         case _:
-            st.warning("Não foi identificado o padrão brasileiro")
+            st.warning("Não foi identificado o padrão brasileiro de RG")
             return rg_in
 
 
@@ -83,17 +83,15 @@ def tel_input_br(tel_in: str | int | float) -> str:
     tel_num = re.sub(r"[^0-9]", "", str(tel_in))
     match len(tel_num):
         case 8:
-            return f"{tel_num[:4]}-{tel_num[4:]}"
+            return f"+XX (XX) {tel_num[:4]}-{tel_num[4:]}"
         case 9:
-            return f"{tel_num[0]} {tel_num[1:5]}-{tel_num[5:]}"
+            return f"+XX (XX) {tel_num[0]} {tel_num[1:5]}-{tel_num[5:]}"
         case 10:
             return f"+55 ({tel_num[:2]}) {tel_num[2:6]}-{tel_num[6:]}"
         case 11:
             return f"+55 ({tel_num[:2]}) {tel_num[2]} {tel_num[3:7]}-{tel_num[7:]}"
-        case 12:
-            return tel_num
         case 13:
             return f"+{tel_num[:2]} ({tel_num[2:4]}) {tel_num[4]} {tel_num[5:9]}-{tel_num[9:]}"
         case _:
-            st.warning("Não foi identificado o padrão brasileiro")
+            st.warning("Não foi identificado o padrão brasileiro telefônico")
             return tel_in
