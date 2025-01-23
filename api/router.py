@@ -104,7 +104,7 @@ def update_aluguel_route(
     return db_aluguel
 
 
-@router.patch("/alugueis/{aluguel_id}", response_model=AluguelResponse)
+@router.patch("/alugueis/{aluguel_id}", response_model=AluguelUpdate)
 def patch_aluguel_route(
     aluguel_id: int, aluguel: AluguelUpdate, db: Session = Depends(get_db)
 ):
