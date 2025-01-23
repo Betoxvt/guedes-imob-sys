@@ -3,7 +3,7 @@ import json
 import pandas as pd
 import requests
 import streamlit as st
-from utils.mydate import calculate_diarias, str_to_date
+from utils.mydate import brazil_datestr, calculate_diarias, str_to_date
 from utils.myfunc import show_data_output, show_response_message
 from utils.mynum import calculate_saldo, calculate_valortotal
 from utils.mystr import apto_input, empty_none, empty_none_dict
@@ -25,6 +25,23 @@ with tab1:
     ficha_id: int = st.number_input(
         label="ID Ficha", min_value=1, value=None, format="%d", step=1, key=1101
     )
+    if ficha_id:
+        get_ficha = requests.get(f"http://api:8000/fichas/{ficha_id}")
+        if get_ficha.status_code == 200:
+            ficha_data = get_ficha.json()
+            ficha_name = ficha_data["nome"]
+            ficha_apto = (
+                ficha_data["apto_id"]
+                if ficha_data["apto_id"] is not None
+                else "Não registrado"
+            )
+            ficha_in = brazil_datestr(ficha_data["checkin"])
+            ficha_out = brazil_datestr(ficha_data["checkout"])
+            st.write(
+                f"Inquilino: {ficha_name} ~~~ Apto: {ficha_apto} ~~~ Check-in: {ficha_in} ~~~ Check-out: {ficha_out}"
+            )
+        else:
+            st.write("Não foi encontrada a ficha com este ID")
     checkin: date = st.date_input(
         label="Check-in *", format="DD/MM/YYYY", key=1102, value=None
     )
@@ -153,6 +170,23 @@ with tab3:
                 key=1302,
                 value=df_up.loc[0, "ficha_id"],
             )
+            if ficha_id:
+                get_ficha = requests.get(f"http://api:8000/fichas/{ficha_id}")
+                if get_ficha.status_code == 200:
+                    ficha_data = get_ficha.json()
+                    ficha_name = ficha_data["nome"]
+                    ficha_apto = (
+                        ficha_data["apto_id"]
+                        if ficha_data["apto_id"] is not None
+                        else "Não registrado"
+                    )
+                    ficha_in = brazil_datestr(ficha_data["checkin"])
+                    ficha_out = brazil_datestr(ficha_data["checkout"])
+                    st.write(
+                        f"Inquilino: {ficha_name} ~~~ Apto: {ficha_apto} ~~~ Check-in: {ficha_in} ~~~ Check-out: {ficha_out}"
+                    )
+                else:
+                    st.write("Não foi encontrada a ficha com este ID")
             checkin: date = st.date_input(
                 label="Check-in *",
                 value=str_to_date(df_up.checkin[0]),

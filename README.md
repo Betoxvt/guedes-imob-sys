@@ -47,6 +47,7 @@
 43. [x] Usar como primary-key o próprio nome do apartamento, na table apartamentos. E fazer as devidas alterações no restante do projeto.
 44. [x] Alterar pagamentos, alugueis e garagens para atender melhor a necessidade de registros precisos.
 45. [ ] Placeholders e help.
+46. [ ] Show some identification help when chosing an ID.
 
 **Pensar em como utilizar o patch para alterações individuais de campos, ainda não vejo muito sentido nisso, mas como estudo pode ser bom.**
 **Agora até vejo que pode ser útil para atualizar os valores depositados para cada aluguel, e o valores entregues para os proprietarios**

@@ -29,6 +29,14 @@ with tab1:
         step=1,
         key=2101,
     )
+    if proprietario_id:
+        get_prop = requests.get(f"http://api:8000/proprietarios/{proprietario_id}")
+        if get_prop.status_code == 200:
+            prop_data = get_prop.json()
+            prop_name = prop_data["nome"]
+            st.write(f"Proprietário: {prop_name}")
+        else:
+            st.write("Não há um proprietário com este ID")
     cod_celesc = st.text_input(label="Unidade Consumidora Celesc", value=None, key=2102)
     cod_gas = st.text_input(label="Código Supergasbras", value=None, key=2103)
     prov_net = st.text_input(label="Provedor de Internet", value=None, key=2104)
@@ -97,6 +105,16 @@ with tab3:
                 value=df_up.loc[0, "proprietario_id"],
                 key=2302,
             )
+            if proprietario_id:
+                get_prop = requests.get(
+                    f"http://api:8000/proprietarios/{proprietario_id}"
+                )
+                if get_prop.status_code == 200:
+                    prop_data = get_prop.json()
+                    prop_name = prop_data["nome"]
+                    st.write(f"Proprietário(a): {prop_name}")
+                else:
+                    st.write("Não foi encontrado um proprietário com este ID")
             cod_celesc = st.text_input(
                 label="Unidade Consumidora Celesc",
                 value=str(df_up.cod_celesc[0]),
