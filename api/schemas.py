@@ -124,7 +124,6 @@ class GaragemBase(BaseModel):
     diarias: int
     valor_diaria: float
     valor_total: float
-    valor_depositado: Optional[float]
 
 
 class PagamentoCat(Enum):

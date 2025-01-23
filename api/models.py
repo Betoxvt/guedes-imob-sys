@@ -127,7 +127,6 @@ class Garagem(Base):
     diarias: Mapped[int] = mapped_column(nullable=False)
     valor_diaria: Mapped[float] = mapped_column(Numeric(10, 2), nullable=False)
     valor_total: Mapped[float] = mapped_column(Numeric(10, 2), nullable=False)
-    valor_depositado: Mapped[float] = mapped_column(Numeric(10, 2), nullable=True)
     criado_em: Mapped[date] = mapped_column(
         server_default=func.current_date(), nullable=False
     )

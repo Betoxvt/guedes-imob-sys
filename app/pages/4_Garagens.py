@@ -6,7 +6,7 @@ import streamlit as st
 from utils.mydate import calculate_diarias, str_to_date
 from utils.myfunc import show_data_output, show_response_message
 from utils.mynum import calculate_saldo, calculate_valortotal
-from utils.mystr import apto_input, empty_none_dict
+from utils.mystr import apto_input, empty_none, empty_none_dict
 
 st.set_page_config(page_title="Garagens", layout="wide")
 st.title("Garagens")
@@ -21,10 +21,10 @@ with tab1:
         '<p style="font-size: 12px;">Campos com * são obrigatórios</p>',
         unsafe_allow_html=True,
     )
-    apto_origem_id: str = st.text_input(
+    apto_id_origem: str = st.text_input(
         label="ID Apartamento de origem *", value=None, key=4100
     )
-    apto_destino_id: str = st.text_input(
+    apto_id_destino: str = st.text_input(
         label="ID Apartamento de destino *", value=None, key=4101
     )
     checkin: date = st.date_input(
@@ -58,14 +58,13 @@ with tab1:
     if st.button("Registrar", key=4107):
         garagem_data = empty_none_dict(
             {
-                "apto_origem_id": apto_input(apto_origem_id),
-                "apto_destino_id": apto_input(apto_destino_id),
+                "apto_id_origem": apto_input(apto_id_origem),
+                "apto_id_destino": apto_input(apto_id_destino),
                 "checkin": checkin.isoformat(),
                 "checkout": checkout.isoformat(),
                 "diarias": diarias,
                 "valor_diaria": valor_diaria,
                 "valor_total": valor_total,
-                "valor_depositado": valor_depositado,
             }
         )
         try:
@@ -75,11 +74,48 @@ with tab1:
             show_response_message(post_response)
             if post_response.status_code == 200:
                 st.subheader("Dados inseridos, tudo OK:")
+                show_data_output(garagem_data)
+                if empty_none(valor_depositado) is not None:
+                    get_top_response = requests.get(
+                        "http://api:8000/garagens/", params={"limit": 1}
+                    )
+                    if get_top_response.status_code == 200:
+                        top_data = get_top_response.json()
+                        garagem_id = top_data[0].get("id")
+                        pagamento_data = empty_none_dict(
+                            {
+                                "tipo": "Entrada",
+                                "valor": valor_depositado,
+                                "apto_id": apto_input(apto_id_origem),
+                                "aluguel_id": garagem_id,
+                                "notas": f"Aluguel da vaga de garagem do {apto_input(apto_id_origem)} para {apto_input(apto_id_destino)}",
+                                "nome": None,
+                                "contato": None,
+                            }
+                        )
+                        post_pagamento_response = requests.post(
+                            "http://api:8000/pagamentos/", json=pagamento_data
+                        )
+                        show_response_message(post_pagamento_response)
+                        if post_pagamento_response.status_code == 200:
+                            st.subheader("Dados do deposito salvos, tudo OK:")
+                            show_data_output(pagamento_data)
+                        else:
+                            st.subheader("Não foi possível salvar os dados do depósito")
+                            show_data_output(pagamento_data)
+                    else:
+                        st.subheader("Erro ao obter o ID do aluguel de garagem")
+                        show_response_message(get_top_response)
+                else:
+                    st.write("Nenhum valor de depósito fornecido.")
             else:
                 st.subheader("Dados NÃO inseridos, favor revisar:")
-            show_data_output(garagem_data)
+                st.write("Dica: Verifique a ID do apartamento")
+                show_data_output(garagem_data)
+        except requests.exceptions.RequestException as e:
+            st.error(f"Erro na requisição: {e}")
         except Exception as e:
-            raise (e)
+            st.error(f"Um erro inesperado ocorreu: {e}")
 
 with tab2:
     st.header("Consultar Garagens")
@@ -110,15 +146,15 @@ with tab3:
             garagem_up = update_response.json()
             df_up = pd.DataFrame([garagem_up])
             st.dataframe(df_up.set_index("id"))
-            apto_origem_id: str = st.text_input(
+            apto_id_origem: str = st.text_input(
                 label="ID Apartamento de origem *",
                 key=4301,
                 value=df_up.apto_origem_id[0],
             )
-            apto_destino_id: str = st.text_input(
+            apto_id_destino: str = st.text_input(
                 label="ID Apartamento de destino *",
                 key=4302,
-                value=df_up.apto_destino_id[0],
+                value=df_up.apto_id_destino[0],
             )
             checkin: date = st.date_input(
                 label="Check-in *",
@@ -156,14 +192,13 @@ with tab3:
             saldo = calculate_saldo(valor_total, valor_depositado)
             if st.button("Modificar", key=4308):
                 garagem_up_data = {
-                    "apto_origem_id": apto_input(apto_origem_id),
-                    "apto_destino_id": apto_input(apto_destino_id),
+                    "apto_origem_id": apto_input(apto_id_origem),
+                    "apto_id_destino": apto_input(apto_id_destino),
                     "checkin": checkin.isoformat(),
                     "checkout": checkout.isoformat(),
                     "diarias": diarias,
                     "valor_diaria": valor_diaria,
                     "valor_total": valor_total,
-                    "valor_depositado": valor_depositado,
                 }
                 try:
                     put_response = requests.put(

@@ -71,7 +71,6 @@ with tab1:
             if post_response.status_code == 200:
                 st.subheader("Dados inseridos, tudo OK:")
                 show_data_output(aluguel_data)
-                st.write(empty_none(valor_depositado))
                 if empty_none(valor_depositado) is not None:
                     get_top_response = requests.get(
                         "http://api:8000/alugueis/", params={"limit": 1}
@@ -90,7 +89,6 @@ with tab1:
                                 "contato": None,
                             }
                         )
-                        st.write(pagamento_data)
                         post_pagamento_response = requests.post(
                             "http://api:8000/pagamentos/", json=pagamento_data
                         )

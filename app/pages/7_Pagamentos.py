@@ -2,7 +2,7 @@ import json
 import pandas as pd
 import requests
 import streamlit as st
-from utils.myfunc import show_data_output, show_response_message
+from utils.myfunc import cat_index, show_data_output, show_response_message
 from utils.mystr import apto_input, empty_none_dict
 
 st.set_page_config(page_title="Pagamentos", layout="wide")
@@ -18,36 +18,44 @@ with tab1:
         '<p style="font-size: 12px;">Campos com * são obrigatórios</p>',
         unsafe_allow_html=True,
     )
+    tipo: str = st.radio(
+        label="Tipo de pagamento *",
+        options=["Entrada", "Saida"],
+        index=0,
+        horizontal=True,
+        key=7100,
+    )
     valor: float = st.number_input(
         label="Valor *",
         min_value=0.00,
         max_value=90000.00,
         format="%0.2f",
-        key=7100,
+        key=7101,
         value=None,
     )
     apto_id: str = st.text_input(
         label="Apartamento",
         value=None,
-        key=7104,
+        key=7102,
     )
     aluguel_id: int = st.number_input(
-        label="ID Aluguel", min_value=0, value=None, format="%d", step=1, key=7101
+        label="ID Aluguel", min_value=0, value=None, format="%d", step=1, key=7103
     )
     nome: str = st.text_input(
         label="Nome",
         value=None,
-        key=7102,
+        key=7104,
     )
     contato: str = st.text_input(
         label="Contato",
         value=None,
-        key=7103,
+        key=7105,
     )
-    notas: str = st.text_input(label="Notas", value=None, key=7105)
-    if st.button("Registrar", key=7106):
+    notas: str = st.text_input(label="Notas", value=None, key=7106)
+    if st.button("Registrar", key=7107):
         pagamento_data = empty_none_dict(
             {
+                "tipo": tipo,
                 "valor": valor,
                 "apto_id": apto_input(apto_id),
                 "aluguel_id": aluguel_id,
@@ -98,6 +106,13 @@ with tab3:
             pagamento_up = update_response.json()
             df_up = pd.DataFrame([pagamento_up])
             st.dataframe(df_up.set_index("id"))
+            tipo: str = st.radio(
+                label="Tipo de pagamento *",
+                options=["Entrada", "Saida"],
+                index=cat_index(df_up, "tipo", ["Entrada", "Saída"]),
+                horizontal=True,
+                key=7100,
+            )
             valor: float = st.number_input(
                 label="Valor *",
                 min_value=0.00,
