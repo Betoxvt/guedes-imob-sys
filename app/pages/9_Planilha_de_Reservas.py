@@ -30,7 +30,16 @@ with tab1:
     )
     if ano and mes:
         planilha = gen_reserv_table(ano, mes)
-        st.dataframe(planilha)
+    grandes = planilha.index.str.startswith("A") | planilha.index.str.endswith("0")
+    pequenos = ~grandes
+    planilha_g = planilha.loc[grandes]
+    planilha_p = planilha.loc[pequenos]
+    if not planilha_g.empty:
+        st.subheader("Apartamentos Grandes")
+        st.dataframe(planilha_g)
+    if not planilha_p.empty:
+        st.subheader("Apartamentos Pequenos")
+        st.dataframe(planilha_p)
 
 with tab2:
     st.header("Consultar Reservas | Por Apartamento")
