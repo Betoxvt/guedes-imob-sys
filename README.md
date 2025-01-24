@@ -51,6 +51,8 @@
 47. [x] Incluir DIC, RIP, Inscrição Imobiliária e Matrícula como colunas dos apartamentos.
 48. [ ] Utilizar o apto+checkin para encontrar uma ficha.
 49. [x] Por conveniência, colunas com nome e contato devem estar na table de alugueis.
+50. [ ] Consulta de disponibilidade
+51. [ ] Bloquear overbooking
 
 **Pensar em como utilizar o patch para alterações individuais de campos, ainda não vejo muito sentido nisso, mas como estudo pode ser bom.**
 **Agora até vejo que pode ser útil para atualizar os valores depositados para cada aluguel, e o valores entregues para os proprietarios**

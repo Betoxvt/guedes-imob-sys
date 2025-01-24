@@ -1,5 +1,6 @@
-from datetime import date
+from datetime import date, timedelta
 import pandas as pd
+import requests
 import streamlit as st
 
 
@@ -46,6 +47,37 @@ def calculate_diarias(checkin, checkout):
         st.warning(f"Insira as datas de Check-in e Check-out")
         st.write(f"Diarias: 0 dias")
         return 0
+
+
+def gen_reserv_table(year, month):
+    first_day = date(year, month, 1)
+    last_day = (
+        date(year, month + 1, 1) - timedelta(days=1)
+        if month < 12
+        else date(year + 1, 1, 1) - timedelta(days=1)
+    )
+    get_aptos = requests.get("http://api:8000/apartamentos/")
+    get_alugueis = requests.get("http://api:8000/alugueis/")
+    aptos = get_aptos.json()
+    alugueis = get_alugueis.json()
+    df_alugueis = pd.DataFrame(alugueis, columns=["apto_id", "checkin", "checkout"])
+    df_aptos = pd.DataFrame(aptos, columns=["id"])
+    month_days = (first_day - last_day).days + 1
+    table_days = [first_day + timedelta(days=1) for i in range(month_days)]
+    df_table = pd.DataFrame(index=df_aptos["id"].unique(), columns=table_days)
+    for _, aluguel in df_alugueis.iterrows():
+        checkin = aluguel["checkin"]
+        checkout = aluguel["checkout"]
+        apto = aluguel["apto_id"]
+        for day in table_days:
+            if day == checkin:
+                df_table.loc[apto, day] = "Check-in"
+            elif day == checkout:
+                df_table.loc[apto, day] = "Check-out"
+            else:
+                df_table.loc[apto, day] = "Ocupado"  ## Talvez o nome ou valores
+
+    return df_table
 
 
 def showbr_dfdate(df: pd.DataFrame) -> pd.DataFrame:
