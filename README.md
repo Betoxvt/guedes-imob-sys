@@ -9,8 +9,8 @@
 5. [x] Criar um módulo que permita preencher e exportar em PDF a 'ficha de controle de inquilino' requisitada pelo condomínio. E assim associar estes dados ao seu respectivo aluguel. Acredito que uma nova tabela seja necessária, seriam os dados do inquilino, acompanhantes, veículo, etc.
 6. [x] Verificar se realmente há necessidade do offset e limit nas funções de `read_<all>` em `crud.py` ou se fica melhor diretamente no **frontend**.
 7. [x] Renomear routes para router e checar os schemas de response.
-8. [ ] Adicionar tratamento de erros.
-9. [ ] Adicionar logs.
+8. [x] Adicionar tratamento de erros.
+9. [x] Adicionar logs.
 10. [ ] Verificação de CEP, CPF, RG, Telefone...
 11. [x] Formato de apresentação e input para Apto, CEP, CPF, RG, Telefone...
 12. [x] Importar csv para ficha de inquilino.
@@ -42,7 +42,7 @@
 38. [x] Incluir ao sistema tabela de registros de pagamentos recebidos referentes aos alugueis.
 39. [ ] Criar as views (com dbt?) que serão utilizadas nos relatórios.
 40. [ ] Utilizar variáveis de ambiente (.env) para valores que desejo aplicar automáticamente ao sistema, sem subir para o GitHub.
-41. [ ] Criar as views que serão utilizadas na planilha com as locações.
+41. [x] Criar função que sera utilizadas para gerar a planilha com as reservas.
 42. [x] Criar trigger para bloquear alugueis de um mesmo apto com datas conflitantes.
 43. [x] Usar como primary-key o próprio nome do apartamento, na table apartamentos. E fazer as devidas alterações no restante do projeto.
 44. [x] Alterar pagamentos, alugueis e garagens para atender melhor a necessidade de registros precisos.
@@ -51,8 +51,9 @@
 47. [x] Incluir DIC, RIP, Inscrição Imobiliária e Matrícula como colunas dos apartamentos.
 48. [ ] Utilizar o apto+checkin para encontrar uma ficha.
 49. [x] Por conveniência, colunas com nome e contato devem estar na table de alugueis.
-50. [ ] Consulta de disponibilidade
-51. [ ] Bloquear overbooking
+50. [x] Consulta de disponibilidade
+51. [x] Bloquear overbooking
+52. [x] Separar em duas planilhas, para os dois tipos de aptos, conforme as regras de negócio.
 
 **Pensar em como utilizar o patch para alterações individuais de campos, ainda não vejo muito sentido nisso, mas como estudo pode ser bom.**
 **Agora até vejo que pode ser útil para atualizar os valores depositados para cada aluguel, e o valores entregues para os proprietarios**

@@ -67,8 +67,8 @@ with tab1:
         key=1106,
     )
     saldo: float = calculate_saldo(valor_total, valor_depositado)
-    nome = st.text_input(label="Nome", value=None, key=1107)
-    contato = st.text_input(label="Contato", value=None, key=1108)
+    nome = st.text_input(label="Nome *", value=None, key=1107)
+    contato = st.text_input(label="Contato *", value=None, key=1108)
     if st.button("Registrar", key=1109):
         aluguel_data = empty_none_dict(
             {
@@ -214,8 +214,8 @@ with tab3:
             )
             valor_total: float = calculate_valortotal(diarias, valor_diaria)
             saldo: float = calculate_saldo(valor_total, valor_depositado)
-            nome = st.text_input(label="Nome", value=df_up.nome[0], key=1306)
-            contato = st.text_input(label="Contato", value=df_up.contato[0], key=1307)
+            nome = st.text_input(label="Nome *", value=df_up.nome[0], key=1306)
+            contato = st.text_input(label="Contato *", value=df_up.contato[0], key=1307)
             if st.button("Modificar"):
                 aluguel_up_data = empty_none_dict(
                     {
