@@ -1,5 +1,4 @@
 from datetime import date
-import json
 import pandas as pd
 import requests
 import streamlit as st
@@ -127,7 +126,7 @@ with tab1:
                     st.write("Nenhum valor de depósito fornecido.")
             else:
                 st.subheader("Dados NÃO inseridos, favor revisar:")
-                st.write("Dica: Verifique a ID do apartamento")
+                st.write("Verifique as datas de check-in/out")
                 show_data_output(aluguel_data)
         except requests.exceptions.RequestException as e:
             st.error(f"Erro na requisição: {e}")
@@ -221,7 +220,7 @@ with tab3:
                 aluguel_up_data = empty_none_dict(
                     {
                         "apto_id": apto_input(apto_id),
-                        "ficha_id": ficha_id if ficha_id > 0 else None,
+                        "ficha_id": ficha_id,
                         "checkin": checkin.isoformat(),
                         "checkout": checkout.isoformat(),
                         "diarias": diarias,
