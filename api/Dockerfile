@@ -9,14 +9,14 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 # Ensure PATH is set correctly
 ENV PATH="/root/.local/bin/:$PATH"
 
-# Define app port
+# Define api port
 EXPOSE 8000
 
-# Copy the current directory contents into the container at /app
-COPY . /app
+# Copy the current directory contents into the container at /api
+COPY . /api
 
 # Define the working directory in the container
-WORKDIR /app
+WORKDIR /api
 
 # Install any needed packages specified in requirements.txt
 RUN uv pip install -r requirements.txt --system

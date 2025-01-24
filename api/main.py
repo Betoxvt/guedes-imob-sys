@@ -1,9 +1,11 @@
+from contextlib import asynccontextmanager
+from database import engine, trigger_aluguel, verify_trigger
 from fastapi import FastAPI
-from database import engine
 import models
 from router import router
 
 models.Base.metadata.create_all(bind=engine)
+
 
 app = FastAPI(
     title="Sistema de Gestão Imobiliária",
@@ -18,4 +20,22 @@ app = FastAPI(
         "url": "https://opensource.org/licenses/MIT",
     },
 )
+
+
+@app.on_event("startup")
+async def startup_event():
+    with engine.connect() as conn:
+        try:
+            result = conn.execute(verify_trigger)
+            if result.fetchone() is None:
+                conn.execute(trigger_aluguel)
+                conn.commit()
+                print("Trigger criado com SUCESSO")
+            else:
+                print("Trigger já existe")
+        except Exception as e:
+            conn.rollback()
+            print(f"ERRO ao criar o trigger: {e}")
+
+
 app.include_router(router)
