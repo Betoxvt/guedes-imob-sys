@@ -106,8 +106,8 @@ with tab1:
                                 "apto_id": apto_input(apto_id),
                                 "aluguel_id": aluguel_id,
                                 "notas": "Reserva",
-                                "nome": None,
-                                "contato": None,
+                                "nome": nome,
+                                "contato": contato,
                             }
                         )
                         post_pagamento_response = requests.post(
