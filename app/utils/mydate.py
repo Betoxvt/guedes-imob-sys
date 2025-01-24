@@ -51,32 +51,33 @@ def calculate_diarias(checkin, checkout):
 
 def gen_reserv_table(year, month):
     first_day = date(year, month, 1)
-    last_day = (
-        date(year, month + 1, 1) - timedelta(days=1)
-        if month < 12
-        else date(year + 1, 1, 1) - timedelta(days=1)
-    )
+    if month == 12:
+        last_day = date(year + 1, 1, 1) - timedelta(days=1)
+    else:
+        last_day = date(year, month + 1, 1) - timedelta(days=1)
     get_aptos = requests.get("http://api:8000/apartamentos/")
     get_alugueis = requests.get("http://api:8000/alugueis/")
     aptos = get_aptos.json()
     alugueis = get_alugueis.json()
     df_alugueis = pd.DataFrame(alugueis, columns=["apto_id", "checkin", "checkout"])
     df_aptos = pd.DataFrame(aptos, columns=["id"])
-    month_days = (first_day - last_day).days + 1
-    table_days = [first_day + timedelta(days=1) for i in range(month_days)]
-    df_table = pd.DataFrame(index=df_aptos["id"].unique(), columns=table_days)
+    month_days = (last_day - first_day).days + 1
+    table_days = [first_day + timedelta(days=i) for i in range(month_days)]
+    df_table = pd.DataFrame(index=df_aptos["id"], columns=table_days)
     for _, aluguel in df_alugueis.iterrows():
-        checkin = aluguel["checkin"]
-        checkout = aluguel["checkout"]
+        checkin = date.fromisoformat(aluguel["checkin"])
+        checkout = date.fromisoformat(aluguel["checkout"])
         apto = aluguel["apto_id"]
         for day in table_days:
-            if day == date(checkin).day:
-                df_table.loc[apto, day] = "//"
-            elif day == date(checkout.day - timedelta(days=1)).day:
-                df_table.loc[apto, day] = "(/)"
-            else:
-                df_table.loc[apto, day] = "/"  ## Talvez o nome ou valores
-
+            if checkin <= day < checkout:
+                if day == checkin:
+                    df_table.loc[apto, day] = "/ /"
+                elif day == checkout - timedelta(days=1):
+                    df_table.loc[apto, day] = "( / )"
+                else:
+                    df_table.loc[apto, day] = "/"
+    df_table = df_table.fillna("")
+    df_table.columns = [day.strftime("%d") for day in df_table.columns]
     return df_table
 
 
