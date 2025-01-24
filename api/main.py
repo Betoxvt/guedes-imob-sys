@@ -1,5 +1,4 @@
-from contextlib import asynccontextmanager
-from database import engine, trigger_aluguel, verify_trigger
+from database import engine, trigger_aluguel_b, verify_trigger
 from fastapi import FastAPI
 import models
 from router import router
@@ -28,7 +27,7 @@ async def startup_event():
         try:
             result = conn.execute(verify_trigger)
             if result.fetchone() is None:
-                conn.execute(trigger_aluguel)
+                conn.execute(trigger_aluguel_b)
                 conn.commit()
                 print("Trigger criado com SUCESSO")
             else:

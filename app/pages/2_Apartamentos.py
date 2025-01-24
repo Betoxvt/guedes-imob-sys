@@ -1,11 +1,8 @@
-import json
 import pandas as pd
 import requests
 import streamlit as st
 from utils.myfunc import show_data_output, show_response_message
 from utils.mystr import apto_input, empty_none_dict
-
-# Seria ótimo que quando fosse registrar a foreign key (ID Proprietário) mostrasse o nome conforme o registro em sua tabela
 
 st.set_page_config(page_title="Apartamentos", layout="wide")
 st.title("Apartamentos")
@@ -168,10 +165,9 @@ with tab3:
                         "matricula": matricula,
                     }
                 )
-                update_data = json.dumps(obj=apto_up_data, separators=(",", ":"))
                 try:
                     put_response = requests.put(
-                        f"http://api:8000/apartamentos/{update_id}", update_data
+                        f"http://api:8000/apartamentos/{update_id}", json=apto_up_data
                     )
                     show_response_message(put_response)
                     if put_response.status_code == 200:

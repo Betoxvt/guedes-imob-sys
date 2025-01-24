@@ -1,3 +1,5 @@
+from fastapi import HTTPException
+import logging
 from models import (
     Aluguel,
     Apartamento,
@@ -7,6 +9,7 @@ from models import (
     Pagamento,
     Proprietario,
 )
+import psycopg2
 from schemas import (
     AluguelCreate,
     AluguelUpdate,
@@ -23,7 +26,7 @@ from schemas import (
     ProprietarioCreate,
     ProprietarioUpdate,
 )
-from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.exc import SQLAlchemyError, DBAPIError
 from sqlalchemy.orm import Session
 from typing import List
 
@@ -51,6 +54,17 @@ def create_aluguel(db: Session, aluguel: AluguelCreate) -> Aluguel:
         db.commit()
         db.refresh(db_aluguel)
         return db_aluguel
+    except DBAPIError as e:
+        db.rollback()
+        if isinstance(e.orig, psycopg2.errors.RaiseException):
+            error_msg = str(e.orig.pgerror.split("\n")[0])
+            logging.error(f"Erro ao criar aluguel (trigger): {error_msg}")
+            raise HTTPException(status_code=400, detail=error_msg[8:])
+        else:
+            logging.exception(f"Erro de banco de dados ao criar aluguel: {e}")
+            raise HTTPException(
+                status_code=500, detail="Erro interno do servidor (banco de dados)."
+            )
     except SQLAlchemyError as e:
         db.rollback()
         raise e
