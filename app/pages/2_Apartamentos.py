@@ -143,12 +143,14 @@ with tab3:
             lock_senha = st.text_input(
                 label="Senha da Fechadura", value=str(df_up.lock_senha[0]), key=2309
             )
-            dic = st.text_input(label="DIC", value=None, key=2310)
-            rip = st.text_input(label="RIP", value=None, key=2311)
+            dic = st.text_input(label="DIC", value=df_up.dic[0], key=2310)
+            rip = st.text_input(label="RIP", value=df_up.rip[0], key=2311)
             insc_imob = st.text_input(
-                label="Inscrição Imobiliária", value=None, key=2312
+                label="Inscrição Imobiliária", value=df_up.insc_imob[0], key=2312
             )
-            matricula = st.text_input(label="Matrícula", value=None, key=2313)
+            matricula = st.text_input(
+                label="Matrícula", value=df_up.matricula[0], key=2313
+            )
             if st.button("Modificar", key=2314):
                 apto_up_data = empty_none_dict(
                     {

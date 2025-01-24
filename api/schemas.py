@@ -19,6 +19,8 @@ class AluguelBase(BaseModel):
     diarias: int
     valor_diaria: float
     valor_total: float
+    nome: str
+    contato: str
 
 
 class ApartamentoBase(BaseModel):

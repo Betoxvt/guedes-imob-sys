@@ -68,7 +68,9 @@ with tab1:
         key=1106,
     )
     saldo: float = calculate_saldo(valor_total, valor_depositado)
-    if st.button("Registrar", key=1108):
+    nome = st.text_input(label="Nome", value=None, key=1107)
+    contato = st.text_input(label="Contato", value=None, key=1108)
+    if st.button("Registrar", key=1109):
         aluguel_data = empty_none_dict(
             {
                 "apto_id": apto_input(apto_id),
@@ -78,6 +80,8 @@ with tab1:
                 "diarias": diarias,
                 "valor_diaria": valor_diaria,
                 "valor_total": valor_total,
+                "nome": nome,
+                "contato": contato,
             }
         )
         try:
@@ -207,10 +211,12 @@ with tab3:
                 value=df_up.loc[0, "valor_diaria"],
                 format="%0.2f",
                 step=10.00,
-                key=1306,
+                key=1305,
             )
             valor_total: float = calculate_valortotal(diarias, valor_diaria)
             saldo: float = calculate_saldo(valor_total, valor_depositado)
+            nome = st.text_input(label="Nome", value=df_up.nome[0], key=1306)
+            contato = st.text_input(label="Contato", value=df_up.contato[0], key=1307)
             if st.button("Modificar"):
                 aluguel_up_data = empty_none_dict(
                     {
@@ -221,6 +227,8 @@ with tab3:
                         "diarias": diarias,
                         "valor_diaria": valor_diaria,
                         "valor_total": valor_total,
+                        "nome": nome,
+                        "contato": contato,
                     }
                 )
                 try:
