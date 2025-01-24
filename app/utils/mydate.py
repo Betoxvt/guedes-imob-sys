@@ -71,11 +71,11 @@ def gen_reserv_table(year, month):
         apto = aluguel["apto_id"]
         for day in table_days:
             if day == checkin:
-                df_table.loc[apto, day] = "Check-in"
-            elif day == checkout:
-                df_table.loc[apto, day] = "Check-out"
+                df_table.loc[apto, day] = "//"
+            elif day == checkout - timedelta(days=1):
+                df_table.loc[apto, day] = "(/)"
             else:
-                df_table.loc[apto, day] = "Ocupado"  ## Talvez o nome ou valores
+                df_table.loc[apto, day] = "/"  ## Talvez o nome ou valores
 
     return df_table
 

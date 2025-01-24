@@ -9,8 +9,8 @@
 5. [x] Criar um módulo que permita preencher e exportar em PDF a 'ficha de controle de inquilino' requisitada pelo condomínio. E assim associar estes dados ao seu respectivo aluguel. Acredito que uma nova tabela seja necessária, seriam os dados do inquilino, acompanhantes, veículo, etc.
 6. [x] Verificar se realmente há necessidade do offset e limit nas funções de `read_<all>` em `crud.py` ou se fica melhor diretamente no **frontend**.
 7. [x] Renomear routes para router e checar os schemas de response.
-8. [ ] Adicionar tratamento de erros.
-9. [ ] Adicionar logs.
+8. [x] Adicionar tratamento de erros.
+9. [x] Adicionar logs.
 10. [ ] Verificação de CEP, CPF, RG, Telefone...
 11. [x] Formato de apresentação e input para Apto, CEP, CPF, RG, Telefone...
 12. [x] Importar csv para ficha de inquilino.
@@ -52,7 +52,7 @@
 48. [ ] Utilizar o apto+checkin para encontrar uma ficha.
 49. [x] Por conveniência, colunas com nome e contato devem estar na table de alugueis.
 50. [ ] Consulta de disponibilidade
-51. [ ] Bloquear overbooking
+51. [x] Bloquear overbooking
 
 **Pensar em como utilizar o patch para alterações individuais de campos, ainda não vejo muito sentido nisso, mas como estudo pode ser bom.**
 **Agora até vejo que pode ser útil para atualizar os valores depositados para cada aluguel, e o valores entregues para os proprietarios**
