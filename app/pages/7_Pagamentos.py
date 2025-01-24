@@ -20,7 +20,7 @@ with tab1:
     )
     tipo: str = st.radio(
         label="Tipo de pagamento *",
-        options=["Entrada", "Saida"],
+        options=["Entrada", "Saída"],
         index=0,
         horizontal=True,
         key=7100,

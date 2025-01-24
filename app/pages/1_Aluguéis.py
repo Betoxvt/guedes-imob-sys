@@ -3,7 +3,7 @@ import json
 import pandas as pd
 import requests
 import streamlit as st
-from utils.mydate import calculate_diarias, str_to_date
+from utils.mydate import brazil_datestr, calculate_diarias, str_to_date
 from utils.myfunc import show_data_output, show_response_message
 from utils.mynum import calculate_saldo, calculate_valortotal
 from utils.mystr import apto_input, empty_none, empty_none_dict
@@ -25,6 +25,23 @@ with tab1:
     ficha_id: int = st.number_input(
         label="ID Ficha", min_value=1, value=None, format="%d", step=1, key=1101
     )
+    if ficha_id:
+        get_ficha = requests.get(f"http://api:8000/fichas/{ficha_id}")
+        if get_ficha.status_code == 200:
+            ficha_data = get_ficha.json()
+            ficha_name = ficha_data["nome"]
+            ficha_apto = (
+                ficha_data["apto_id"]
+                if ficha_data["apto_id"] is not None
+                else "Não registrado"
+            )
+            ficha_in = brazil_datestr(ficha_data["checkin"])
+            ficha_out = brazil_datestr(ficha_data["checkout"])
+            st.write(
+                f"Inquilino: {ficha_name} ~~~ Apto: {ficha_apto} ~~~ Check-in: {ficha_in} ~~~ Check-out: {ficha_out}"
+            )
+        else:
+            st.write("Não foi encontrada a ficha com este ID")
     checkin: date = st.date_input(
         label="Check-in *", format="DD/MM/YYYY", key=1102, value=None
     )
@@ -51,7 +68,9 @@ with tab1:
         key=1106,
     )
     saldo: float = calculate_saldo(valor_total, valor_depositado)
-    if st.button("Registrar", key=1108):
+    nome = st.text_input(label="Nome", value=None, key=1107)
+    contato = st.text_input(label="Contato", value=None, key=1108)
+    if st.button("Registrar", key=1109):
         aluguel_data = empty_none_dict(
             {
                 "apto_id": apto_input(apto_id),
@@ -61,6 +80,8 @@ with tab1:
                 "diarias": diarias,
                 "valor_diaria": valor_diaria,
                 "valor_total": valor_total,
+                "nome": nome,
+                "contato": contato,
             }
         )
         try:
@@ -85,8 +106,8 @@ with tab1:
                                 "apto_id": apto_input(apto_id),
                                 "aluguel_id": aluguel_id,
                                 "notas": "Reserva",
-                                "nome": None,
-                                "contato": None,
+                                "nome": nome,
+                                "contato": contato,
                             }
                         )
                         post_pagamento_response = requests.post(
@@ -153,6 +174,23 @@ with tab3:
                 key=1302,
                 value=df_up.loc[0, "ficha_id"],
             )
+            if ficha_id:
+                get_ficha = requests.get(f"http://api:8000/fichas/{ficha_id}")
+                if get_ficha.status_code == 200:
+                    ficha_data = get_ficha.json()
+                    ficha_name = ficha_data["nome"]
+                    ficha_apto = (
+                        ficha_data["apto_id"]
+                        if ficha_data["apto_id"] is not None
+                        else "Não registrado"
+                    )
+                    ficha_in = brazil_datestr(ficha_data["checkin"])
+                    ficha_out = brazil_datestr(ficha_data["checkout"])
+                    st.write(
+                        f"Inquilino: {ficha_name} ~~~ Apto: {ficha_apto} ~~~ Check-in: {ficha_in} ~~~ Check-out: {ficha_out}"
+                    )
+                else:
+                    st.write("Não foi encontrada a ficha com este ID")
             checkin: date = st.date_input(
                 label="Check-in *",
                 value=str_to_date(df_up.checkin[0]),
@@ -173,10 +211,12 @@ with tab3:
                 value=df_up.loc[0, "valor_diaria"],
                 format="%0.2f",
                 step=10.00,
-                key=1306,
+                key=1305,
             )
             valor_total: float = calculate_valortotal(diarias, valor_diaria)
             saldo: float = calculate_saldo(valor_total, valor_depositado)
+            nome = st.text_input(label="Nome", value=df_up.nome[0], key=1306)
+            contato = st.text_input(label="Contato", value=df_up.contato[0], key=1307)
             if st.button("Modificar"):
                 aluguel_up_data = empty_none_dict(
                     {
@@ -187,6 +227,8 @@ with tab3:
                         "diarias": diarias,
                         "valor_diaria": valor_diaria,
                         "valor_total": valor_total,
+                        "nome": nome,
+                        "contato": contato,
                     }
                 )
                 try:

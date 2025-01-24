@@ -29,13 +29,25 @@ with tab1:
         step=1,
         key=2101,
     )
+    if proprietario_id:
+        get_prop = requests.get(f"http://api:8000/proprietarios/{proprietario_id}")
+        if get_prop.status_code == 200:
+            prop_data = get_prop.json()
+            prop_name = prop_data["nome"]
+            st.write(f"Proprietário: {prop_name}")
+        else:
+            st.write("Não há um proprietário com este ID")
     cod_celesc = st.text_input(label="Unidade Consumidora Celesc", value=None, key=2102)
     cod_gas = st.text_input(label="Código Supergasbras", value=None, key=2103)
     prov_net = st.text_input(label="Provedor de Internet", value=None, key=2104)
     wifi = st.text_input(label="Nome da Rede WiFi", value=None, key=2105)
     wifi_senha = st.text_input(label="Senha da Rede Wifi", value=None, key=2106)
     lock_senha = st.text_input(label="Senha da Fechadura", value=None, key=2107)
-    if st.button("Registrar", key=2108):
+    dic = st.text_input(label="DIC", value=None, key=2108)
+    rip = st.text_input(label="RIP", value=None, key=2109)
+    insc_imob = st.text_input(label="Inscrição Imobiliária", value=None, key=2110)
+    matricula = st.text_input(label="Matrícula", value=None, key=2111)
+    if st.button("Registrar", key=2112):
         apto_data = empty_none_dict(
             {
                 "id": apto_input(id),
@@ -46,6 +58,10 @@ with tab1:
                 "wifi": wifi,
                 "wifi_senha": wifi_senha,
                 "lock_senha": lock_senha,
+                "dic": dic,
+                "rip": rip,
+                "insc_imob": insc_imob,
+                "matricula": matricula,
             }
         )
         try:
@@ -97,6 +113,16 @@ with tab3:
                 value=df_up.loc[0, "proprietario_id"],
                 key=2302,
             )
+            if proprietario_id:
+                get_prop = requests.get(
+                    f"http://api:8000/proprietarios/{proprietario_id}"
+                )
+                if get_prop.status_code == 200:
+                    prop_data = get_prop.json()
+                    prop_name = prop_data["nome"]
+                    st.write(f"Proprietário(a): {prop_name}")
+                else:
+                    st.write("Não foi encontrado um proprietário com este ID")
             cod_celesc = st.text_input(
                 label="Unidade Consumidora Celesc",
                 value=str(df_up.cod_celesc[0]),
@@ -117,7 +143,15 @@ with tab3:
             lock_senha = st.text_input(
                 label="Senha da Fechadura", value=str(df_up.lock_senha[0]), key=2309
             )
-            if st.button("Modificar", key=2310):
+            dic = st.text_input(label="DIC", value=df_up.dic[0], key=2310)
+            rip = st.text_input(label="RIP", value=df_up.rip[0], key=2311)
+            insc_imob = st.text_input(
+                label="Inscrição Imobiliária", value=df_up.insc_imob[0], key=2312
+            )
+            matricula = st.text_input(
+                label="Matrícula", value=df_up.matricula[0], key=2313
+            )
+            if st.button("Modificar", key=2314):
                 apto_up_data = empty_none_dict(
                     {
                         "id": apto_input(id),
@@ -128,6 +162,10 @@ with tab3:
                         "wifi": wifi,
                         "wifi_senha": wifi_senha,
                         "lock_senha": lock_senha,
+                        "dic": dic,
+                        "rip": rip,
+                        "insc_imob": insc_imob,
+                        "matricula": matricula,
                     }
                 )
                 update_data = json.dumps(obj=apto_up_data, separators=(",", ":"))

@@ -19,6 +19,8 @@ class AluguelBase(BaseModel):
     diarias: int
     valor_diaria: float
     valor_total: float
+    nome: str
+    contato: str
 
 
 class ApartamentoBase(BaseModel):
@@ -30,6 +32,10 @@ class ApartamentoBase(BaseModel):
     wifi: Optional[str]
     wifi_senha: Optional[str]
     lock_senha: Optional[str]
+    dic: Optional[str]
+    rip: Optional[str]
+    insc_imob: Optional[str]
+    matricula: Optional[str]
 
 
 class DespesaCat(Enum):

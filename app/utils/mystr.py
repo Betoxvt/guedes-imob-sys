@@ -16,7 +16,7 @@ def apto_input(input: str) -> str:
         for c in input:
             if c.isdigit():
                 numbers += c
-            else:
+            if c.isalpha():
                 letter = c
         return f"{letter.upper()}-{numbers}"
 

@@ -18,6 +18,8 @@ class Aluguel(Base):
     diarias: Mapped[int] = mapped_column(nullable=False)
     valor_diaria: Mapped[float] = mapped_column(Numeric(10, 2), nullable=False)
     valor_total: Mapped[float] = mapped_column(Numeric(10, 2), nullable=False)
+    nome: Mapped[str] = mapped_column(String, nullable=True)
+    contato: Mapped[str] = mapped_column(String, nullable=True)
     criado_em: Mapped[date] = mapped_column(
         server_default=func.current_date(), nullable=False
     )
@@ -41,6 +43,10 @@ class Apartamento(Base):
     wifi: Mapped[str] = mapped_column(String, nullable=True)
     wifi_senha: Mapped[str] = mapped_column(String, nullable=True)
     lock_senha: Mapped[str] = mapped_column(String, nullable=True)
+    dic: Mapped[str] = mapped_column(String, nullable=True)
+    rip: Mapped[str] = mapped_column(String, nullable=True)
+    insc_imob: Mapped[str] = mapped_column(String, nullable=True)
+    matricula: Mapped[str] = mapped_column(String, nullable=True)
     criado_em: Mapped[date] = mapped_column(
         server_default=func.current_date(), nullable=False
     )

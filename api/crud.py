@@ -52,7 +52,6 @@ def create_aluguel(db: Session, aluguel: AluguelCreate) -> Aluguel:
         db.refresh(db_aluguel)
         return db_aluguel
     except SQLAlchemyError as e:
-        print(f"Erro ao registrar aluguel: {e}")
         db.rollback()
         raise e
 
@@ -85,7 +84,6 @@ def read_alugueis(db: Session, offset: int = 0, limit: int = 100) -> List[Alugue
             .all()
         )
     except SQLAlchemyError as e:
-        print(f"Erro ao buscar aluguéis: {e}")
         raise e
 
 
@@ -108,7 +106,6 @@ def read_aluguel(db: Session, aluguel_id: int) -> Aluguel:
     try:
         return db.query(Aluguel).filter(Aluguel.id == aluguel_id).first()
     except SQLAlchemyError as e:
-        print(f"Erro ao buscar aluguel: {e}")
         raise e
 
 
@@ -140,7 +137,6 @@ def update_aluguel(db: Session, aluguel_id: int, aluguel: AluguelCreate) -> Alug
         db.refresh(db_aluguel)
         return db_aluguel
     except SQLAlchemyError as e:
-        print(f"Erro ao atualizar aluguel: {e}")
         db.rollback()
         raise e
 
@@ -171,7 +167,6 @@ def patch_aluguel(db: Session, aluguel_id: int, aluguel: AluguelUpdate) -> Alugu
         db.refresh(db_aluguel)
         return db_aluguel
     except SQLAlchemyError as e:
-        print(f"Erro ao atualizar aluguel: {e}")
         db.rollback()
         raise e
 
