@@ -52,7 +52,7 @@ if apto:
         if despesas:
             df_desp = pd.DataFrame(despesas)
             df_desp = df_desp[df_desp["apto_id"] == apto]
-            df_desp = df_desp[df_desp["data"] > from_day]
+            df_desp = df_desp[df_desp["data"] > from_day.isoformat()]
             df_desp = df_desp.sort_values(by=["data"])
             df_desp = df_desp.drop(
                 ["apto_id", "id", "criado_em", "modificado_em"], axis=1
@@ -77,7 +77,7 @@ if apto:
         if alugueis:
             df_alug = pd.DataFrame(alugueis)
             df_alug = df_alug[df_alug["apto_id"] == apto]
-            df_alug = df_alug[df_alug["checkin"] > from_day]
+            df_alug = df_alug[df_alug["checkin"] > from_day.isoformat()]
             df_alug["valor_final"] = df_alug["valor_total"] - (
                 df_alug["valor_total"] * 0.15
             )
@@ -85,7 +85,7 @@ if apto:
             df_alug = df_alug.drop(
                 [
                     "apto_id",
-                    "ficha",
+                    "ficha_id",
                     "nome",
                     "contato",
                     "id",
@@ -175,7 +175,6 @@ if apto:
             despesas = locale.currency(despesas)
             liquido = locale.currency(liquido)
             entregar = locale.currency(entregar)
-            from_day = datetime.strptime(from_day, "%Y-%m-%d")
             from_day = from_day.strftime("%d/%m/%Y")
 
             despesas_table.setStyle(style_despesas)
@@ -183,8 +182,8 @@ if apto:
 
             elements.append(
                 Paragraph(
-                    f"Apartamento {apto} a partir de {from_day}",
-                    style=ParagraphStyle(name="APTO", fontSize=14, alignment=TA_CENTER),
+                    f"Apartamento <b><u>{apto}</u></b> a partir de <b><u>{from_day}</u></b>",
+                    style=ParagraphStyle(name="APTO", fontSize=18, alignment=TA_CENTER),
                 )
             )
             elements.append(Spacer(1, 24))

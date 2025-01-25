@@ -61,6 +61,8 @@
 57. [x] Configurar Docker para instalar locale e setar com pt-br
 58. [ ] Manipular os inputs como nome, etc... com .title, .capitalize, essas coisas para padronização.
 59. [ ] Criar uma função para analisar o input em `contato` (Aluguéis e Pagamentos) a fim de verificar se é telefone ou email para incluir na padronização.
+60. [ ] Adicionar categoria de "Adiantamento" em Despesas para o caso de adiantamento de valores ao proprietário do apartamento.
+61. [ ] Permitir alterações pelo usuário diretamente nos DataFrames utilizados para gerar Relatórios.
 
 **Pensar em como utilizar o patch para alterações individuais de campos, ainda não vejo muito sentido nisso, mas como estudo pode ser bom.**
 **Agora até vejo que pode ser útil para atualizar os valores depositados para cada aluguel, e o valores entregues para os proprietarios**

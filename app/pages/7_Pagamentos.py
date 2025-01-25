@@ -8,6 +8,13 @@ from utils.mystr import apto_input, empty_none_dict
 
 st.set_page_config(page_title="Pagamentos", layout="wide")
 st.title("Pagamentos")
+st.markdown(
+    "Entrada: Pagamento recebido como depósito de reserva, parcela ou total do aluguel"
+)
+st.markdown(
+    "Saída: Pagamento realizados ao entregar valores descritos em relatório ao proprietário do apartamento"
+)
+
 
 tab1, tab2, tab3, tab4, tab5 = st.tabs(
     ["Registrar", "Consultar", "Modificar", "Deletar", "Listar"]
