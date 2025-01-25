@@ -64,7 +64,7 @@ if apto:
                 lambda x: locale.currency(x, grouping=True)
             )
             st.subheader("Despesas")
-            st.dataframe(df_desp)
+            st.dataframe(df_desp, hide_index=True)
             st.write(f"Valor das Despesas: {locale.currency(despesas)}")
         else:
             st.warning("Não há despesas")
@@ -112,7 +112,7 @@ if apto:
                     lambda x: locale.currency(x, grouping=True)
                 )
             st.subheader("Aluguéis")
-            st.dataframe(df_alug)
+            st.dataframe(df_alug, hide_index=True)
             st.write(f"Valor bruto dos alugueis: {locale.currency(bruto)}")
             st.write(f"Valor da comissao: {locale.currency(comissao)}")
             st.write(f"Valor líquido dos alugueis: {locale.currency(liquido)}")
