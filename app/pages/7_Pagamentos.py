@@ -34,10 +34,12 @@ with tab1:
         key=7101,
         value=None,
     )
-    apto_id: str = st.text_input(
-        label="Apartamento",
-        value=None,
-        key=7102,
+    apto_id: str = apto_input(
+        st.text_input(
+            label="Apartamento",
+            value=None,
+            key=7102,
+        )
     )
     data: date = st.date_input(
         label="Data de pagamento *", format="DD/MM/YYYY", key=7103, value=date.today()
@@ -61,8 +63,8 @@ with tab1:
             {
                 "tipo": tipo,
                 "valor": valor,
-                "apto_id": apto_input(apto_id),
-                "data": data,
+                "apto_id": apto_id,
+                "data": data.isoformat(),
                 "aluguel_id": aluguel_id,
                 "nome": nome,
                 "contato": contato,
@@ -126,10 +128,12 @@ with tab3:
                 value=df_up.loc[0, "valor"],
                 key=7301,
             )
-            apto_id: str = st.text_input(
-                label="Apartamento",
-                value=df_up.apto_id[0],
-                key=7302,
+            apto_id: str = apto_input(
+                st.text_input(
+                    label="Apartamento",
+                    value=df_up.apto_id[0],
+                    key=7302,
+                )
             )
             data: date = st.date_input(
                 label="Data de pagamento *",
@@ -160,8 +164,8 @@ with tab3:
                 pagamento_up_data = empty_none_dict(
                     {
                         "valor": valor,
-                        "apto_id": apto_input(apto_id),
-                        "data": data,
+                        "apto_id": apto_id,
+                        "data": data.isoformat(),
                         "aluguel_id": aluguel_id,
                         "nome": nome,
                         "contato": contato,
