@@ -1,6 +1,8 @@
+from datetime import date
 import pandas as pd
 import requests
 import streamlit as st
+from utils.mydate import str_to_date
 from utils.myfunc import cat_index, show_data_output, show_response_message
 from utils.mystr import apto_input, empty_none_dict
 
@@ -37,26 +39,30 @@ with tab1:
         value=None,
         key=7102,
     )
+    data: date = st.date_input(
+        label="Data de pagamento *", format="DD/MM/YYYY", key=7103, value=date.today()
+    )
     aluguel_id: int = st.number_input(
-        label="ID Aluguel", min_value=0, value=None, format="%d", step=1, key=7103
+        label="ID Aluguel", min_value=0, value=None, format="%d", step=1, key=7104
     )
     nome: str = st.text_input(
         label="Nome",
         value=None,
-        key=7104,
+        key=7105,
     )
     contato: str = st.text_input(
         label="Contato",
         value=None,
-        key=7105,
+        key=7106,
     )
-    notas: str = st.text_input(label="Notas", value=None, key=7106)
-    if st.button("Registrar", key=7107):
+    notas: str = st.text_input(label="Notas", value=None, key=7107)
+    if st.button("Registrar", key=7108):
         pagamento_data = empty_none_dict(
             {
                 "tipo": tipo,
                 "valor": valor,
                 "apto_id": apto_input(apto_id),
+                "data": data,
                 "aluguel_id": aluguel_id,
                 "nome": nome,
                 "contato": contato,
@@ -123,7 +129,13 @@ with tab3:
             apto_id: str = st.text_input(
                 label="Apartamento",
                 value=df_up.apto_id[0],
-                key=7305,
+                key=7302,
+            )
+            data: date = st.date_input(
+                label="Data de pagamento *",
+                format="DD/MM/YYYY",
+                key=7303,
+                value=str_to_date(df_up.data[0]),
             )
             aluguel_id: int = st.number_input(
                 label="ID Aluguel",
@@ -131,24 +143,25 @@ with tab3:
                 value=df_up.loc[0, "aluguel_id"],
                 format="%d",
                 step=1,
-                key=7302,
+                key=7304,
             )
             nome: str = st.text_input(
                 label="Nome",
                 value=df_up.nome[0],
-                key=7303,
+                key=7305,
             )
             contato: str = st.text_input(
                 label="Contato",
                 value=df_up.contato[0],
-                key=7304,
+                key=7306,
             )
-            notas: str = st.text_input(label="Notas", value=df_up.notas[0], key=7106)
-            if st.button("Modificar", key=7306):
+            notas: str = st.text_input(label="Notas", value=df_up.notas[0], key=7107)
+            if st.button("Modificar", key=7308):
                 pagamento_up_data = empty_none_dict(
                     {
                         "valor": valor,
                         "apto_id": apto_input(apto_id),
+                        "data": data,
                         "aluguel_id": aluguel_id,
                         "nome": nome,
                         "contato": contato,

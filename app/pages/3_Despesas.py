@@ -20,7 +20,7 @@ with tab1:
         unsafe_allow_html=True,
     )
     apto_id: str = st.text_input(label="ID Apartamento *", value=None, key=3100)
-    data_pagamento: date = st.date_input(
+    data: date = st.date_input(
         label="Data de pagamento *", format="DD/MM/YYYY", key=3102, value=date.today()
     )
     valor: float = st.number_input(
@@ -50,7 +50,7 @@ with tab1:
         despesa_data = empty_none_dict(
             {
                 "apto_id": apto_input(apto_id),
-                "data_pagamento": data_pagamento.isoformat(),
+                "data": data.isoformat(),
                 "valor": valor,
                 "categoria": categoria,
                 "descricao": descricao,
@@ -110,9 +110,9 @@ with tab3:
             apto_id: str = st.text_input(
                 label="ID Apartamento *", key=3301, value=df_up.apto_id[0]
             )
-            data_pagamento: date = st.date_input(
+            data: date = st.date_input(
                 label="Data de pagamento *",
-                value=str_to_date(df_up.data_pagamento[0]),
+                value=str_to_date(df_up.data[0]),
                 format="DD/MM/YYYY",
                 key=3302,
             )
@@ -146,7 +146,7 @@ with tab3:
                 despesa_up_data = empty_none_dict(
                     {
                         "apto_id": apto_input(apto_id),
-                        "data_pagamento": data_pagamento.isoformat(),
+                        "data": data.isoformat(),
                         "valor": valor,
                         "categoria": categoria,
                         "descricao": descricao,
