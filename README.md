@@ -54,8 +54,9 @@
 50. [x] Consulta de disponibilidade
 51. [x] Bloquear overbooking
 52. [x] Separar em duas planilhas, para os dois tipos de aptos, conforme as regras de negócio.
-53. [ ] Adicionar a data na tabela de pagamentos e no restante do sistema.
+53. [x] Adicionar a data na tabela de pagamentos e no restante do sistema.
 54. [ ] Criar a página para gerar os relatórios.
+55. [ ] Definir relations em `models.py`
 
 **Pensar em como utilizar o patch para alterações individuais de campos, ainda não vejo muito sentido nisso, mas como estudo pode ser bom.**
 **Agora até vejo que pode ser útil para atualizar os valores depositados para cada aluguel, e o valores entregues para os proprietarios**
