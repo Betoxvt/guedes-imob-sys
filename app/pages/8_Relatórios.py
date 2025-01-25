@@ -1,18 +1,16 @@
-from datetime import datetime
-from datetime import date
+from datetime import date, datetime
 import locale
 import os
+import pandas as pd
+from reportlab.lib import colors
 from reportlab.lib.enums import TA_LEFT, TA_CENTER
 from reportlab.lib.pagesizes import A4
-from reportlab.platypus import Paragraph, SimpleDocTemplate, Table, TableStyle, Spacer
-from reportlab.lib import colors
 from reportlab.lib.styles import ParagraphStyle
-import pandas as pd
+from reportlab.platypus import Paragraph, SimpleDocTemplate, Table, TableStyle, Spacer
 import requests
 import streamlit as st
-from utils.mystr import apto_input
-
 from utils.mydate import showbr_dfdate
+from utils.mystr import apto_input
 
 st.title("Relatórios")
 comissao = 0.15
@@ -97,7 +95,7 @@ if apto:
 
     # Editar os campos do relatório
 
-    gerar_relatorio = st.button("Gerar relatório")
+    gerar_relatorio = st.button("Gerar relatório", key=8002)
     if gerar_relatorio:
         file_name = f"{apto}_{from_day}.pdf"
         doc = SimpleDocTemplate(file_name, pagesize=A4)
@@ -209,3 +207,12 @@ if apto:
         )
 
         doc.build(elements)
+        with open(f"./{file_name}", "rb") as f:
+            st.download_button(
+                label="Download PDF",
+                data=f,
+                file_name=file_name,
+                mime="application/pdf",
+                key=8003,
+            )
+        os.remove(f"./{file_name}")
