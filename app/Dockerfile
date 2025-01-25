@@ -1,25 +1,25 @@
 # Dockerfile-APP
 
-# Imagem base
 FROM python:3.13
 
-# Instalar o Astral UV
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-# Assegurar o PATH
 ENV PATH="/root/.local/bin/:$PATH"
 
-# Expor a porta 8501
+RUN apt-get update && apt-get install -y locales \
+    && sed -i '/pt_BR.UTF-8/s/^# //g' /etc/locale.gen \
+    && locale-gen pt_BR.UTF-8
+
+ENV LANG pt_BR.UTF-8
+ENV LANGUAGE pt_BR:pt
+ENV LC_ALL pt_BR.UTF-8
+
 EXPOSE 8501
 
-# Copiar os arquivos do projeto
 COPY . /app
 
-# Definir o diretório de trabalho no container
 WORKDIR /app
 
-# Instalar as dependências do projeto
 RUN uv pip install -r requirements.txt --system
 
-# Comando para executar a aplicação
 CMD ["uv", "run", "streamlit", "run", "Home.py", "--server.port=8501", "--server.address=0.0.0.0"]
