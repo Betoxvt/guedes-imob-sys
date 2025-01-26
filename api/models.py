@@ -138,7 +138,6 @@ class Ficha(Base):
     )
 
     apartamento: Mapped["Apartamento"] = relationship(back_populates="fichas")
-    alugueis: Mapped[list["Aluguel"]] = relationship(back_populates="ficha")
     aluguel: Mapped["Aluguel"] = relationship(back_populates="alugueis")
 
 

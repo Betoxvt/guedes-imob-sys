@@ -64,6 +64,9 @@
 60. [ ] Adicionar categoria de "Adiantamento" em Despesas para o caso de adiantamento de valores ao proprietário do apartamento.
 61. [x] Permitir alterações pelo usuário diretamente nos DataFrames utilizados para gerar Relatórios.
 62. [ ] Criar os scripts em SQL para inserir os dados de uma vez e testar o banco e o app.
+63. [ ] Aplicar as mudanças do banco nas páginas do app
+64. [ ] criar tabela para relatórios, deixar os pagamentos apenas para os depósitos de reserva, parcelas, etc. relacionados aos alugueis.
+65. [ ] Em despesas criar a categoria para adiantamento de valores destinado aos proprietários.
 
 **Pensar em como utilizar o patch para alterações individuais de campos, ainda não vejo muito sentido nisso, mas como estudo pode ser bom.**
 **Agora até vejo que pode ser útil para atualizar os valores depositados para cada aluguel, e o valores entregues para os proprietarios**
