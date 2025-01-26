@@ -56,7 +56,7 @@
 52. [x] Separar em duas planilhas, para os dois tipos de aptos, conforme as regras de negócio.
 53. [x] Adicionar a data na tabela de pagamentos e no restante do sistema.
 54. [x] Criar a página para gerar os relatórios.
-55. [ ] Definir relations em `models.py`
+55. [ ] Definir relationships de back_populates em `models.py`, para facilitar as querys.
 56. [ ] Mostrar se há depositos para uma reserva, qual é o total, quanto foi depositado, quanto falta, se está paga.
 57. [x] Configurar Docker para instalar locale e setar com pt-br
 58. [ ] Manipular os inputs como nome, etc... com .title, .capitalize, essas coisas para padronização.
