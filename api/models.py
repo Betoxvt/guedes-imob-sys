@@ -60,7 +60,7 @@ class Despesa(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     apto_id: Mapped[str] = mapped_column(ForeignKey("apartamentos.id"), nullable=False)
-    data_pagamento: Mapped[date] = mapped_column(
+    data: Mapped[date] = mapped_column(
         server_default=func.current_date(), nullable=False
     )
     valor: Mapped[float] = mapped_column(Numeric(10, 2), nullable=False)
@@ -152,6 +152,9 @@ class Pagamento(Base):
     nome: Mapped[str] = mapped_column(String, nullable=True)
     contato: Mapped[str] = mapped_column(String, nullable=True)
     notas: Mapped[str] = mapped_column(String, nullable=True)
+    data: Mapped[date] = mapped_column(
+        server_default=func.current_date(), nullable=False
+    )
     criado_em: Mapped[date] = mapped_column(
         server_default=func.current_date(), nullable=False
     )

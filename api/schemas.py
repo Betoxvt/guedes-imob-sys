@@ -50,7 +50,7 @@ class DespesaCat(Enum):
 
 class DespesaBase(BaseModel):
     apto_id: str
-    data_pagamento: date
+    data: date
     valor: float
     categoria: str
     descricao: str
@@ -145,6 +145,7 @@ class PagamentoBase(BaseModel):
     nome: Optional[str]
     contato: Optional[str]
     notas: Optional[str]
+    data: date
 
     @field_validator("tipo")
     def check_categoria_pagamento_base(cls, v):

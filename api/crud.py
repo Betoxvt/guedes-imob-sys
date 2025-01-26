@@ -245,7 +245,7 @@ def read_apartamentos(db: Session, offset: int = 0, limit: int = 100):
         raise e
 
 
-def read_apartamento(db: Session, apartamento_id: int):
+def read_apartamento(db: Session, apartamento_id: str):
     """
     Returns a specific element from database table apartamentos
     """
@@ -257,7 +257,7 @@ def read_apartamento(db: Session, apartamento_id: int):
 
 
 def update_apartamento(
-    db: Session, apartamento_id: int, apartamento: ApartamentoCreate
+    db: Session, apartamento_id: str, apartamento: ApartamentoCreate
 ):
     """
     Updates all elements from database table apartamentos
@@ -281,7 +281,7 @@ def update_apartamento(
         return e
 
 
-def patch_apartamento(db: Session, apartamento_id: int, apartamento: ApartamentoUpdate):
+def patch_apartamento(db: Session, apartamento_id: str, apartamento: ApartamentoUpdate):
     """
     Updates a specific element from database table apartamentos
 

@@ -1,7 +1,9 @@
 name: estate_system
 services:
-  postgres:
-    image: postgres:latest
+  db:
+    build:
+      context: ./db
+      dockerfile: Dockerfile
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:
@@ -18,11 +20,11 @@ services:
     volumes:
       - ./api:/app
     environment:
-      DATABASE_URL: postgres://user:password@postgres/mydatabase
+      DATABASE_URL: postgres://user:password@db:5432/mydatabase
     ports:
       - "8000:8000"
     depends_on:
-      - postgres
+      - db
     networks:
       - mynetwork
 
