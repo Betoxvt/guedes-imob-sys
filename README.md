@@ -63,6 +63,7 @@
 59. [ ] Criar uma função para analisar o input em `contato` (Aluguéis e Pagamentos) a fim de verificar se é telefone ou email para incluir na padronização.
 60. [ ] Adicionar categoria de "Adiantamento" em Despesas para o caso de adiantamento de valores ao proprietário do apartamento.
 61. [x] Permitir alterações pelo usuário diretamente nos DataFrames utilizados para gerar Relatórios.
+62. [ ] Criar os scripts em SQL para inserir os dados de uma vez e testar o banco e o app.
 
 **Pensar em como utilizar o patch para alterações individuais de campos, ainda não vejo muito sentido nisso, mas como estudo pode ser bom.**
 **Agora até vejo que pode ser útil para atualizar os valores depositados para cada aluguel, e o valores entregues para os proprietarios**

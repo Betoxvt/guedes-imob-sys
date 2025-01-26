@@ -25,17 +25,18 @@ class AluguelBase(BaseModel):
 
 class ApartamentoBase(BaseModel):
     id: str
-    proprietario_id: int
+    proprietario_id: Optional[int]
     cod_celesc: Optional[str]
     cod_gas: Optional[str]
     prov_net: Optional[str]
     wifi: Optional[str]
     wifi_senha: Optional[str]
     lock_senha: Optional[str]
-    dic: Optional[str]
-    rip: Optional[str]
-    insc_imob: Optional[str]
+    cod_imov: Optional[str]
+    cad_imob: Optional[str]
+    ins_imob: Optional[str]
     matricula: Optional[str]
+    rip: Optional[str]
 
 
 class DespesaCat(Enum):

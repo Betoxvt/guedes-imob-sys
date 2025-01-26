@@ -39,7 +39,7 @@ class Apartamento(Base):
         String, nullable=False, unique=True, primary_key=True
     )
     proprietario_id: Mapped[int] = mapped_column(
-        ForeignKey("proprietarios.id"), nullable=False
+        ForeignKey("proprietarios.id"), nullable=True
     )
     cod_celesc: Mapped[str] = mapped_column(String, nullable=True)
     cod_gas: Mapped[str] = mapped_column(String, nullable=True)
@@ -47,10 +47,11 @@ class Apartamento(Base):
     wifi: Mapped[str] = mapped_column(String, nullable=True)
     wifi_senha: Mapped[str] = mapped_column(String, nullable=True)
     lock_senha: Mapped[str] = mapped_column(String, nullable=True)
-    dic: Mapped[str] = mapped_column(String, nullable=True)
-    rip: Mapped[str] = mapped_column(String, nullable=True)
-    insc_imob: Mapped[str] = mapped_column(String, nullable=True)
+    cod_imov: Mapped[str] = mapped_column(String, nullable=True)
+    cad_imob: Mapped[str] = mapped_column(String, nullable=True)
+    ins_imob: Mapped[str] = mapped_column(String, nullable=True)
     matricula: Mapped[str] = mapped_column(String, nullable=True)
+    rip: Mapped[str] = mapped_column(String, nullable=True)
     criado_em: Mapped[date] = mapped_column(
         server_default=func.current_date(), nullable=False
     )
@@ -97,6 +98,7 @@ class Ficha(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     apto_id: Mapped[str] = mapped_column(ForeignKey("apartamentos.id"), nullable=True)
+    aluguel_id: Mapped[int] = mapped_column(ForeignKey("alugueis.id"), nullable=True)
     nome: Mapped[str] = mapped_column(String, nullable=False)
     tipo_residencia: Mapped[str] = mapped_column(String, nullable=False)
     cidade: Mapped[str] = mapped_column(String, nullable=False)
@@ -137,6 +139,7 @@ class Ficha(Base):
 
     apartamento: Mapped["Apartamento"] = relationship(back_populates="fichas")
     alugueis: Mapped[list["Aluguel"]] = relationship(back_populates="ficha")
+    aluguel: Mapped["Aluguel"] = relationship(back_populates="alugueis")
 
 
 class Garagem(Base):
