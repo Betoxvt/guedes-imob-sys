@@ -138,7 +138,7 @@ def read_apartamentos_route(
 
 
 @router.get("/apartamentos/{apartamento_id}", response_model=ApartamentoResponse)
-def read_apartamento_route(apartamento_id: int, db: Session = Depends(get_db)):
+def read_apartamento_route(apartamento_id: str, db: Session = Depends(get_db)):
     apartamento = read_apartamento(db, apartamento_id=apartamento_id)
     if apartamento is None:
         raise HTTPException(status_code=404, detail="Apartamento not found")
@@ -147,7 +147,7 @@ def read_apartamento_route(apartamento_id: int, db: Session = Depends(get_db)):
 
 @router.put("/apartamentos/{apartamento_id}", response_model=ApartamentoResponse)
 def update_apartamento_route(
-    apartamento_id: int, apartamento: ApartamentoCreate, db: Session = Depends(get_db)
+    apartamento_id: str, apartamento: ApartamentoCreate, db: Session = Depends(get_db)
 ):
     db_apartamento = update_apartamento(
         db=db, apartamento_id=apartamento_id, apartamento=apartamento
@@ -159,7 +159,7 @@ def update_apartamento_route(
 
 @router.patch("/apartamentos/{apartamento_id}", response_model=ApartamentoResponse)
 def patch_apartamento_route(
-    apartamento_id: int, apartamento: ApartamentoUpdate, db: Session = Depends(get_db)
+    apartamento_id: str, apartamento: ApartamentoUpdate, db: Session = Depends(get_db)
 ):
     db_apartamento = patch_apartamento(
         db=db, apartamento_id=apartamento_id, apartamento=apartamento
