@@ -12,7 +12,9 @@ class Aluguel(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     apto_id: Mapped[str] = mapped_column(ForeignKey("apartamentos.id"), nullable=False)
-    ficha_id: Mapped[int] = mapped_column(ForeignKey("fichas.id"), nullable=True)
+    ficha_id: Mapped[int] = mapped_column(
+        ForeignKey("fichas.id"), unique=True, nullable=True
+    )
     checkin: Mapped[date] = mapped_column(nullable=False)
     checkout: Mapped[date] = mapped_column(nullable=False)
     diarias: Mapped[int] = mapped_column(nullable=False)
@@ -27,8 +29,15 @@ class Aluguel(Base):
         server_default=func.current_date(), onupdate=func.current_date(), nullable=False
     )
 
-    apartamento: Mapped["Apartamento"] = relationship(back_populates="alugueis")
-    ficha: Mapped["Ficha"] = relationship(back_populates="alugueis")
+    apartamento: Mapped["Apartamento"] = relationship(
+        "Apartamento", foreign_keys=[apto_id], back_populates="alugueis"
+    )
+    ficha: Mapped["Ficha"] = relationship(
+        "Ficha",
+        foreign_keys="[Ficha.aluguel_id]",
+        back_populates="aluguel",
+        uselist=False,
+    )
     pagamentos: Mapped[list["Pagamento"]] = relationship(back_populates="aluguel")
 
 
@@ -59,7 +68,9 @@ class Apartamento(Base):
         server_default=func.current_date(), onupdate=func.current_date(), nullable=False
     )
 
-    proprietario: Mapped["Proprietario"] = relationship(back_populates="apartamentos")
+    proprietario: Mapped["Proprietario"] = relationship(
+        "Proprietario", foreign_keys=[proprietario_id], back_populates="apartamentos"
+    )
     alugueis: Mapped[list["Aluguel"]] = relationship(back_populates="apartamento")
     despesas: Mapped[list["Despesa"]] = relationship(back_populates="apartamento")
     garagens_origem: Mapped[list["Garagem"]] = relationship(
@@ -68,6 +79,8 @@ class Apartamento(Base):
     garagens_destino: Mapped[list["Garagem"]] = relationship(
         back_populates="apartamento_destino", foreign_keys="[Garagem.apto_id_destino]"
     )
+    fichas: Mapped[list["Ficha"]] = relationship(back_populates="apartamento")
+    relatorios: Mapped[list["Relatorio"]] = relationship(back_populates="apartamento")
 
 
 class Despesa(Base):
@@ -95,8 +108,10 @@ class Ficha(Base):
     __tablename__ = "fichas"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    apto_id: Mapped[str] = mapped_column(String, nullable=True)
-    aluguel_id: Mapped[int] = mapped_column(ForeignKey("alugueis.id"), nullable=True)
+    apto_id: Mapped[str] = mapped_column(ForeignKey("apartamentos.id"), nullable=True)
+    aluguel_id: Mapped[int] = mapped_column(
+        ForeignKey("alugueis.id"), unique=True, nullable=True
+    )
     nome: Mapped[str] = mapped_column(String, nullable=False)
     tipo_residencia: Mapped[str] = mapped_column(String, nullable=False)
     cidade: Mapped[str] = mapped_column(String, nullable=False)
@@ -135,8 +150,15 @@ class Ficha(Base):
         server_default=func.current_date(), onupdate=func.current_date(), nullable=False
     )
 
-    apartamento: Mapped["Apartamento"] = relationship(back_populates="fichas")
-    aluguel: Mapped["Aluguel"] = relationship(back_populates="alugueis")
+    apartamento: Mapped["Apartamento"] = relationship(
+        "Apartamento", foreign_keys=[apto_id], back_populates="fichas"
+    )
+    aluguel: Mapped["Aluguel"] = relationship(
+        "Aluguel",
+        # remote_side=[aluguel_id],
+        foreign_keys=[aluguel_id],
+        back_populates="ficha",
+    )
 
 
 class Garagem(Base):
@@ -226,4 +248,4 @@ class Relatorio(Base):
         server_default=func.current_date(), onupdate=func.current_date(), nullable=False
     )
 
-    apartamento: Mapped["Apartamento"] = relationship(back_populates="relatorio")
+    apartamento: Mapped["Apartamento"] = relationship(back_populates="relatorios")

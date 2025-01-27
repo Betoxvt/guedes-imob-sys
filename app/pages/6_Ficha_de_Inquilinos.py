@@ -417,7 +417,7 @@ with tab3:
             aluguel_id: int = st.number_input(
                 label="ID do Aluguel",
                 value=df_up.loc[0, "aluguel_id"],
-                key=6174,
+                key=6364,
                 step=1,
                 format="%d",
             )
@@ -433,7 +433,7 @@ with tab3:
             )
             cidade = st.text_input(
                 label="Naturalidade (cidade) *", value=str(df_up.cidade[0]), key=6304
-            ).title
+            )
             cep = cep_input(
                 st.text_input(label="CEP *", value=str(df_up.cep[0]), key=6305)
             )
@@ -733,22 +733,22 @@ with tab3:
                     value=empty_none(df_up["a9"].iloc[0].get("parentesco")),
                     key=6362,
                 )
-            if st.button("Modificar"):
+            if st.button("Modificar", key=6363):
                 ficha_up_data = empty_none_dict(
                     {
-                        "apto_id": apto_input(apto_id),
+                        "apto_id": apto_id,
                         "aluguel_id": aluguel_id,
                         "nome": nome,
                         "tipo_residencia": tipo_residencia,
                         "cidade": cidade,
-                        "cep": cep_input(cep),
+                        "cep": cep,
                         "uf": uf,
                         "pais": pais,
-                        "tel": tel_input_br(tel),
+                        "tel": tel,
                         "estado_civil": estado_civil,
                         "profissao": profissao,
-                        "rg": rg_input(rg),
-                        "cpf": cpf_input(cpf),
+                        "rg": rg,
+                        "cpf": cpf,
                         "mae": mae,
                         "automovel": automovel,
                         "modelo_auto": modelo_auto,
@@ -758,7 +758,7 @@ with tab3:
                         "checkout": checkout.isoformat(),
                         "observacoes": observacoes,
                         "proprietario": proprietario,
-                        "imob_fone": tel_input_br(imob_fone),
+                        "imob_fone": imob_fone,
                         "a0": {
                             "nome": a0_nome,
                             "doc": a0_doc,

@@ -125,7 +125,7 @@ def showbr_dfdate(df: pd.DataFrame) -> pd.DataFrame:
 
 def str_to_date(str_date: str) -> date:
     try:
-        date_date = pd.to_datetime(arg=str_date, yearfirst=True, dayfirst=True).date()
+        date_date = pd.to_datetime(arg=str_date).date()
     except (ValueError, AttributeError):
         date_date = None
         return str_date
