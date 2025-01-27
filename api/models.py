@@ -217,7 +217,7 @@ class Relatorio(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     apto_id: Mapped[str] = mapped_column(ForeignKey("apartamentos.id"), nullable=False)
-    data: Mapped[date] = mapped_column(date, nullable=False)
+    data: Mapped[date] = mapped_column(nullable=False)
     valor: Mapped[float] = mapped_column(Numeric(10, 2), nullable=False)
     criado_em: Mapped[date] = mapped_column(
         server_default=func.current_date(), nullable=False
