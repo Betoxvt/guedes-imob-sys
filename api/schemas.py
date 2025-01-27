@@ -141,7 +141,7 @@ class PagamentoCat(Enum):
     categoria2 = "Parcela"
     categoria3 = "Integral"
     categoria4 = "Quitação"
-    categoria4 = "Garagem"
+    categoria5 = "Garagem"
 
 
 class PagamentoBase(BaseModel):
