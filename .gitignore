@@ -19,6 +19,7 @@ wheels/
 # Files
 files/
 data_test.csv
+sql/
 
 # Test
 test.py

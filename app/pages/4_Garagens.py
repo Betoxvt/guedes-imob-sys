@@ -20,11 +20,11 @@ with tab1:
         '<p style="font-size: 12px;">Campos com * são obrigatórios</p>',
         unsafe_allow_html=True,
     )
-    apto_id_origem: str = st.text_input(
-        label="ID Apartamento de origem *", value=None, key=4100
+    apto_id_origem: str = apto_input(
+        st.text_input(label="ID Apartamento de origem *", value=None, key=4100)
     )
-    apto_id_destino: str = st.text_input(
-        label="ID Apartamento de destino *", value=None, key=4101
+    apto_id_destino: str = apto_input(
+        st.text_input(label="ID Apartamento de destino *", value=None, key=4101)
     )
     checkin: date = st.date_input(
         label="Check-in *", format="DD/MM/YYYY", key=4102, value=None
@@ -57,8 +57,8 @@ with tab1:
     if st.button("Registrar", key=4107):
         garagem_data = empty_none_dict(
             {
-                "apto_id_origem": apto_input(apto_id_origem),
-                "apto_id_destino": apto_input(apto_id_destino),
+                "apto_id_origem": apto_id_origem,
+                "apto_id_destino": apto_id_destino,
                 "checkin": checkin.isoformat(),
                 "checkout": checkout.isoformat(),
                 "diarias": diarias,
@@ -83,13 +83,13 @@ with tab1:
                         garagem_id = top_data[0].get("id")
                         pagamento_data = empty_none_dict(
                             {
-                                "tipo": "Entrada",
+                                "tipo": "Garagem",
                                 "valor": valor_depositado,
-                                "apto_id": apto_input(apto_id_origem),
                                 "aluguel_id": garagem_id,
-                                "notas": f"Aluguel da vaga de garagem do {apto_input(apto_id_origem)} para {apto_input(apto_id_destino)}",
+                                "notas": f"Aluguel da vaga de garagem do {apto_id_origem} para {apto_id_destino} de {checkin.strftime('%d/%m/%Y')} a {checkout.strftime('%d/%m/%Y')}",
                                 "nome": None,
                                 "contato": None,
+                                "data": date.today(),
                             }
                         )
                         post_pagamento_response = requests.post(
@@ -145,15 +145,19 @@ with tab3:
             garagem_up = update_response.json()
             df_up = pd.DataFrame([garagem_up])
             st.dataframe(df_up.set_index("id"))
-            apto_id_origem: str = st.text_input(
-                label="ID Apartamento de origem *",
-                key=4301,
-                value=df_up.apto_origem_id[0],
+            apto_id_origem: str = apto_input(
+                st.text_input(
+                    label="ID Apartamento de origem *",
+                    key=4301,
+                    value=df_up.apto_origem_id[0],
+                )
             )
-            apto_id_destino: str = st.text_input(
-                label="ID Apartamento de destino *",
-                key=4302,
-                value=df_up.apto_id_destino[0],
+            apto_id_destino: str = apto_input(
+                st.text_input(
+                    label="ID Apartamento de destino *",
+                    key=4302,
+                    value=df_up.apto_id_destino[0],
+                )
             )
             checkin: date = st.date_input(
                 label="Check-in *",
@@ -191,8 +195,8 @@ with tab3:
             saldo = calculate_saldo(valor_total, valor_depositado)
             if st.button("Modificar", key=4308):
                 garagem_up_data = {
-                    "apto_origem_id": apto_input(apto_id_origem),
-                    "apto_id_destino": apto_input(apto_id_destino),
+                    "apto_origem_id": apto_id_origem,
+                    "apto_id_destino": apto_id_destino,
                     "checkin": checkin.isoformat(),
                     "checkout": checkout.isoformat(),
                     "diarias": diarias,

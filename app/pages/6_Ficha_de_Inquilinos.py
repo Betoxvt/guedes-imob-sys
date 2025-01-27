@@ -30,18 +30,19 @@ with tab1:
                         ficha_data = empty_none_dict(
                             {
                                 "apto_id": None,
-                                "nome": df.nome[i],
+                                "aluguel_id": None,
+                                "nome": df.nome[i].title(),
                                 "tipo_residencia": "Temporário",
-                                "cidade": df.cidade[i],
+                                "cidade": df.cidade[i].title(),
                                 "cep": cep_input(df.cep[i]),
-                                "uf": df.uf[i],
-                                "pais": df.pais[i],
+                                "uf": df.uf[i].upper(),
+                                "pais": df.pais[i].title(),
                                 "tel": tel_input_br(df.tel[i]),
                                 "estado_civil": df.estado_civil[i],
-                                "profissao": df.profissao[i],
+                                "profissao": df.profissao[i].title(),
                                 "rg": rg_input(df.rg[i]),
                                 "cpf": cpf_input(df.cpf[i]),
-                                "mae": df.mae[i],
+                                "mae": df.mae[i].title(),
                                 "automovel": df.automovel[i],
                                 "modelo_auto": df.modelo_auto[i],
                                 "placa_auto": df.placa_auto[i],
@@ -136,7 +137,12 @@ with tab1:
         '<p style="font-size: 12px;">Campos com * são obrigatórios</p>',
         unsafe_allow_html=True,
     )
-    apto_id = st.text_input(label="Apartamento", value=None, key=6101)
+    apto_id: str = apto_input(
+        st.text_input(label="Apartamento", value=None, key=6101, max_chars=5)
+    )
+    aluguel_id: int = st.number_input(
+        label="ID do Aluguel", value=None, key=6174, step=1, format="%d"
+    )
     nome = st.text_input(label="Nome completo *", value=None, key=6102)
     tipo_residencia = st.radio(
         label="Tipo de residência *",
@@ -146,10 +152,10 @@ with tab1:
         key=6103,
     )
     cidade = st.text_input(label="Naturalidade (cidade) *", value=None, key=6104)
-    cep = st.text_input(label="CEP *", value=None, key=6105)
-    uf = st.text_input(label="Estado (UF) *", value=None, key=6106)
+    cep = cep_input(st.text_input(label="CEP *", value=None, key=6105))
+    uf = st.text_input(label="Estado (UF) *", value=None, key=6106, max_chars=2)
     pais = st.text_input(label="País *", value=None, key=6107)
-    tel = st.text_input(label="Telefone *", value=None, key=6108)
+    tel = tel_input_br(st.text_input(label="Telefone *", value=None, key=6108))
     estado_civil = st.selectbox(
         label="Estado civíl *",
         index=0,
@@ -163,8 +169,8 @@ with tab1:
         key=6109,
     )
     profissao = st.text_input(label="Profissão *", value=None, key=6110)
-    rg = st.text_input(label="Identidade *", value=None, key=6111)
-    cpf = st.text_input(label="CPF *", value=None, key=6112)
+    rg = rg_input(st.text_input(label="Identidade *", value=None, key=6111))
+    cpf = cpf_input(st.text_input(label="CPF *", value=None, key=6112))
     mae = st.text_input(label="Nome completo da mãe *", value=None, key=6113)
     with st.expander("Dados do Automóvel"):
         automovel = st.text_input(label="Automóvel", value=None, key=6114)
@@ -181,7 +187,9 @@ with tab1:
     st.write(f"Diárias: {diarias}")
     observacoes = st.text_input(label="Observações", value=None, key=6120)
     proprietario = st.text_input(label="Proprietário", value=None, key=6121)
-    imob_fone = st.text_input(label="Telefone Imobiliária", value=None, key=6122)
+    imob_fone = tel_input_br(
+        st.text_input(label="Telefone Imobiliária", value=None, key=6122)
+    )
     with st.expander(label="Acompanhantes 1 a 5"):
         st.markdown("**Acompanhante 01**")
         a0_nome = st.text_input(label="Nome", value=None, key=6123)
@@ -245,18 +253,19 @@ with tab1:
     if st.button("Registrar", key=6173):
         ficha_data = empty_none_dict(
             {
-                "apto_id": apto_input(apto_id),
+                "apto_id": apto_id,
+                "aluguel_id": aluguel_id,
                 "nome": nome,
                 "tipo_residencia": tipo_residencia,
                 "cidade": cidade,
-                "cep": cep_input(cep),
+                "cep": cep,
                 "uf": uf,
                 "pais": pais,
-                "tel": tel_input_br(tel),
+                "tel": tel,
                 "estado_civil": estado_civil,
                 "profissao": profissao,
-                "rg": rg_input(rg),
-                "cpf": cpf_input(cpf),
+                "rg": rg,
+                "cpf": cpf,
                 "mae": mae,
                 "automovel": automovel,
                 "modelo_auto": modelo_auto,
@@ -266,7 +275,7 @@ with tab1:
                 "checkout": checkout.isoformat(),
                 "observacoes": observacoes,
                 "proprietario": proprietario,
-                "imob_fone": tel_input_br(imob_fone),
+                "imob_fone": imob_fone,
                 "a0": {
                     "nome": a0_nome,
                     "doc": a0_doc,
@@ -397,8 +406,20 @@ with tab3:
             df_up = pd.DataFrame([ficha_up])
             st.dataframe(df_up.set_index("id"))
             st.subheader(f"Ficha de Inquilino nº: {update_id}")
-            apto_id = st.text_input(
-                label="Apartamento", value=str(df_up.apto_id[0]), key=6301
+            apto_id = apto_input(
+                st.text_input(
+                    label="Apartamento",
+                    value=str(df_up.apto_id[0]),
+                    key=6301,
+                    max_chars=5,
+                )
+            )
+            aluguel_id: int = st.number_input(
+                label="ID do Aluguel",
+                value=df_up.loc[0, "aluguel_id"],
+                key=6364,
+                step=1,
+                format="%d",
             )
             nome = st.text_input(
                 label="Nome completo *", value=str(df_up.nome[0]), key=6302
@@ -413,10 +434,14 @@ with tab3:
             cidade = st.text_input(
                 label="Naturalidade (cidade) *", value=str(df_up.cidade[0]), key=6304
             )
-            cep = st.text_input(label="CEP *", value=str(df_up.cep[0]), key=6305)
+            cep = cep_input(
+                st.text_input(label="CEP *", value=str(df_up.cep[0]), key=6305)
+            )
             uf = st.text_input(label="Estado (UF) *", value=str(df_up.uf[0]), key=6306)
             pais = st.text_input(label="País *", value=str(df_up.pais[0]), key=6307)
-            tel = st.text_input(label="Telefone *", value=str(df_up.tel[0]), key=6308)
+            tel = tel_input_br(
+                st.text_input(label="Telefone *", value=str(df_up.tel[0]), key=6308)
+            )
             estado_civil = st.selectbox(
                 label="Estado civíl *",
                 options=[
@@ -435,8 +460,13 @@ with tab3:
             rg = st.text_input(
                 label="Identidade (RG) *", value=empty_none(df_up.rg[0]), key=6311
             )
-            cpf = st.text_input(
-                label="CPF *", value=str(df_up.cpf[0]), help="Somente números", key=6312
+            cpf = cpf_input(
+                st.text_input(
+                    label="CPF *",
+                    value=str(df_up.cpf[0]),
+                    help="Somente números",
+                    key=6312,
+                )
             )
             mae = st.text_input(
                 label="Nome completo da mãe *", value=str(df_up.mae[0]), key=6313
@@ -476,10 +506,12 @@ with tab3:
             proprietario = st.text_input(
                 label="Proprietário", value=empty_none(df_up.proprietario[0]), key=6321
             )
-            imob_fone = st.text_input(
-                label="Telefone Imobiliária",
-                value=empty_none(df_up.imob_fone[0]),
-                key=6322,
+            imob_fone = tel_input_br(
+                st.text_input(
+                    label="Telefone Imobiliária",
+                    value=empty_none(df_up.imob_fone[0]),
+                    key=6322,
+                )
             )
             with st.expander("Acompanhantes 1 a 5"):
                 st.markdown("**Acompanhante 01**")
@@ -701,21 +733,22 @@ with tab3:
                     value=empty_none(df_up["a9"].iloc[0].get("parentesco")),
                     key=6362,
                 )
-            if st.button("Modificar"):
+            if st.button("Modificar", key=6363):
                 ficha_up_data = empty_none_dict(
                     {
-                        "apto_id": apto_input(apto_id),
+                        "apto_id": apto_id,
+                        "aluguel_id": aluguel_id,
                         "nome": nome,
                         "tipo_residencia": tipo_residencia,
                         "cidade": cidade,
-                        "cep": cep_input(cep),
+                        "cep": cep,
                         "uf": uf,
                         "pais": pais,
-                        "tel": tel_input_br(tel),
+                        "tel": tel,
                         "estado_civil": estado_civil,
                         "profissao": profissao,
-                        "rg": rg_input(rg),
-                        "cpf": cpf_input(cpf),
+                        "rg": rg,
+                        "cpf": cpf,
                         "mae": mae,
                         "automovel": automovel,
                         "modelo_auto": modelo_auto,
@@ -725,7 +758,7 @@ with tab3:
                         "checkout": checkout.isoformat(),
                         "observacoes": observacoes,
                         "proprietario": proprietario,
-                        "imob_fone": tel_input_br(imob_fone),
+                        "imob_fone": imob_fone,
                         "a0": {
                             "nome": a0_nome,
                             "doc": a0_doc,

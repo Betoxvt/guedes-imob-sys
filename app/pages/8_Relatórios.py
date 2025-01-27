@@ -10,7 +10,7 @@ from reportlab.platypus import Paragraph, SimpleDocTemplate, Table, TableStyle, 
 import requests
 import streamlit as st
 from utils.mydate import showbr_dfdate
-from utils.myfunc import show_response_message
+from utils.myfunc import show_data_output, show_response_message
 from utils.mystr import apto_input
 
 st.title("Relatórios")
@@ -24,27 +24,28 @@ with tab1:
         '<p style="font-size: 12px;">Campos com * são obrigatórios</p>',
         unsafe_allow_html=True,
     )
-    apto: str = apto_input(st.text_input(label="Apartamento *", key=8100, value=None))
-    if apto:
-        apto_response = requests.get(f"http://api:8000/apartamentos/{apto}")
+    apto_id: str = apto_input(
+        st.text_input(label="Apartamento *", key=8100, value=None)
+    )
+    if apto_id:
+        apto_response = requests.get(f"http://api:8000/apartamentos/{apto_id}")
         if apto_response.status_code == 200:
-            pagamentos_response = requests.get("http://api:8000/pagamentos/")
-            if pagamentos_response.status_code == 200:
-                pagamentos = pagamentos_response.json()
-                if pagamentos:
-                    df_pag = pd.DataFrame(pagamentos)
-                    df_pag = df_pag[df_pag["apto_id"] == apto]
-                    df_pag = df_pag[df_pag["tipo"] == "Saída"]
-                    if not df_pag.empty:
-                        df_pag = df_pag.sort_values(by="data", ascending=False)
-                        last_pag = df_pag.iloc[0]
-                        from_day = last_pag.loc["data"]
-                        pago = last_pag.loc["valor"]
+            relatorios_response = requests.get("http://api:8000/relatorios/")
+            if relatorios_response.status_code == 200:
+                relatorios = relatorios_response.json()
+                if relatorios:
+                    df_rel = pd.DataFrame(relatorios)
+                    df_rel = df_rel[df_rel["apto_id"] == apto_id]
+                    if not df_rel.empty:
+                        df_rel = df_rel.sort_values(by="data", ascending=False)
+                        last_rel = df_rel.iloc[0]
+                        from_day = last_rel.loc["data"]
+                        value = last_rel.loc["valor"]
                         st.markdown(
                             f"Último relatório foi em **{datetime.strptime(from_day, "%Y-%m-%d").strftime("%d/%m/%Y")}**"
                         )
                         st.markdown(
-                            f"E foi entregue ao proprietário, um montante de **{locale.currency(pago)}**"
+                            f"E foi entregue ao proprietário, um montante de **{locale.currency(value)}**"
                         )
                         from_day = st.date_input(
                             label="Data de início *",
@@ -71,14 +72,14 @@ with tab1:
                         format="DD/MM/YYYY",
                     )
             else:
-                show_response_message(pagamentos_response)
+                show_response_message(relatorios_response)
             if from_day:
                 despesas_response = requests.get("http://api:8000/despesas/")
                 if despesas_response.status_code == 200:
                     despesas = despesas_response.json()
                     if despesas:
                         df_desp = pd.DataFrame(despesas)
-                        df_desp = df_desp[df_desp["apto_id"] == apto]
+                        df_desp = df_desp[df_desp["apto_id"] == apto_id]
                         df_desp = df_desp[df_desp["data"] > from_day.isoformat()]
                         if not df_desp.empty:
                             df_desp = df_desp.sort_values(by=["data"])
@@ -106,8 +107,9 @@ with tab1:
                             )
                         else:
                             st.warning(
-                                f"Não há despesas para o {apto} desde {from_day}"
+                                f"Não há despesas para o {apto_id} desde {from_day}"
                             )
+                            despesas_tot = 0
                     else:
                         st.warning("Não há despesas")
                 else:
@@ -118,7 +120,7 @@ with tab1:
                     alugueis = alugueis_response.json()
                     if alugueis:
                         df_alug = pd.DataFrame(alugueis)
-                        df_alug = df_alug[df_alug["apto_id"] == apto]
+                        df_alug = df_alug[df_alug["apto_id"] == apto_id]
                         df_alug = df_alug[df_alug["checkin"] > from_day.isoformat()]
                         if not df_alug.empty:
                             df_alug["valor_final"] = df_alug["valor_total"] - (
@@ -175,13 +177,19 @@ with tab1:
                             st.write(
                                 f"Valor líquido dos alugueis: {locale.currency(liquido)}"
                             )
-                            entregar = liquido - despesas_tot
+                        else:
+                            st.warning(
+                                f"Não há alugueis para o {apto_id} desde {from_day}"
+                            )
+                            liquido = 0
+                        entregar = liquido - despesas_tot
+                        if entregar > 0:
                             st.markdown(
                                 f":blue[Valor a entregar: {locale.currency(entregar)}]"
                             )
                         else:
-                            st.warning(
-                                f"Não há despesas para o {apto} desde {from_day}"
+                            st.markdown(
+                                f":red[Atenção. Apartamento devendo: {locale.currency(entregar)}]"
                             )
                     else:
                         st.warning("Não há alugueis")
@@ -191,7 +199,7 @@ with tab1:
             if from_day and not (df_desp.empty or df_alug.empty):
                 gen_relatorio = st.button("Gerar relatório", key=8003)
                 if gen_relatorio:
-                    file_name = f"relatorio_{apto}_{from_day}.pdf"
+                    file_name = f"relatorio_{apto_id}_{from_day}.pdf"
                     doc = SimpleDocTemplate(file_name, pagesize=A4)
                     elements = []
 
@@ -231,17 +239,17 @@ with tab1:
                         ]
                     )
 
-                    despesas_tot = locale.currency(despesas_tot)
-                    liquido = locale.currency(liquido)
-                    entregar = locale.currency(entregar)
-                    from_day = from_day.strftime("%d/%m/%Y")
+                    f_despesas_tot = locale.currency(despesas_tot)
+                    f_liquido = locale.currency(liquido)
+                    f_entregar = locale.currency(entregar)
+                    f_from_day = from_day.strftime("%d/%m/%Y")
 
                     despesas_table.setStyle(style_despesas)
                     alugueis_table.setStyle(style_alugueis)
 
                     elements.append(
                         Paragraph(
-                            f"Apartamento <b><u>{apto}</u></b> a partir de <b><u>{from_day}</u></b>",
+                            f"Apartamento <b><u>{apto_id}</u></b> a partir de <b><u>{f_from_day}</u></b>",
                             style=ParagraphStyle(
                                 name="APTO", fontSize=18, alignment=TA_CENTER
                             ),
@@ -261,7 +269,7 @@ with tab1:
                     elements.append(Spacer(1, 12))
                     elements.append(
                         Paragraph(
-                            f"Total de despesas: {despesas_tot}",
+                            f"Total de despesas: {f_despesas_tot}",
                             style=ParagraphStyle(
                                 name="DESPESAS", fontSize=12, textColor=colors.red
                             ),
@@ -281,21 +289,35 @@ with tab1:
                     elements.append(Spacer(1, 12))
                     elements.append(
                         Paragraph(
-                            f"Total Líquido: {liquido}",
+                            f"Total Líquido: {f_liquido}",
                             style=ParagraphStyle(
                                 name="ALUGUEIS", fontSize=12, textColor=colors.darkblue
                             ),
                         )
                     )
                     elements.append(Spacer(1, 12))
-                    elements.append(
-                        Paragraph(
-                            f"Valor a receber: {liquido} - <font color='red'>{despesas_tot}</font> = {entregar}",
-                            style=ParagraphStyle(
-                                name="TOTAL", fontSize=14, textColor=colors.darkblue
-                            ),
+                    if entregar > 0:
+                        elements.append(
+                            Paragraph(
+                                f"Valor a receber: {f_liquido}<font color='red'> - {f_despesas_tot}</font> = {f_entregar}",
+                                style=ParagraphStyle(
+                                    name="TOTAL_POS",
+                                    fontSize=14,
+                                    textColor=colors.darkblue,
+                                ),
+                            )
                         )
-                    )
+                    else:
+                        elements.append(
+                            Paragraph(
+                                f"Valor está negativo: {f_liquido}<font color='red'> - {f_despesas_tot} = {f_entregar}</font>",
+                                style=ParagraphStyle(
+                                    name="TOTAL_NEG",
+                                    fontSize=14,
+                                    textColor=colors.darkblue,
+                                ),
+                            )
+                        )
                     elements.append(Spacer(1, 24))
                     elements.append(
                         Paragraph(
@@ -313,13 +335,29 @@ with tab1:
                             key=8004,
                         )
                     os.remove(f"./{file_name}")
+
+                    rel_reg = {
+                        "apto_id": apto_id,
+                        "data": date.today().isoformat(),
+                        "valor": entregar,
+                    }
+
+                    post_rel_response = requests.post(
+                        "http://api:8000/relatorios/", json=rel_reg
+                    )
+                    show_response_message(post_rel_response)
+                    if post_rel_response.status_code == 200:
+                        st.markdown("####Dados do relatório registrados com sucesso:")
+                    else:
+                        st.markdown("####NÃO foi possível registrar:")
+                    show_data_output(rel_reg)
         else:
-            st.error(f"Apartamento {apto} não encontrado em nossos registros")
+            st.error(f"Apartamento {apto_id} não encontrado em nossos registros")
             show_response_message(apto_response)
 
 with tab2:
     st.subheader("Editar Relatório")
-    if apto:
+    if apto_id:
         if apto_response.status_code == 200:
             st.markdown("#### Despesas")
             try:
@@ -376,7 +414,7 @@ with tab2:
                     st.markdown(
                         f":blue[Valor a entregar: {locale.currency(edited_entregar)}]"
                     )
-                    if nova_taxa != 0.15:
+                    if round(nova_taxa, 3) != 0.150:
                         st.warning(
                             f"Atenção: Os valores alterados indicam que a taxa de comissão é de {nova_taxa * 100}%. E o valor da comissão com esta alteração é {locale.currency(edited_bruto * nova_taxa)}"
                         )
@@ -386,7 +424,7 @@ with tab2:
                 if from_day and not (edited_df_desp.empty or edited_df_alug.empty):
                     gen_edit_relatorio = st.button("Gerar relatório", key=8200)
                     if gen_edit_relatorio:
-                        file_name = f"relatorio_{apto}_{from_day}.pdf"
+                        file_name = f"relatorio_{apto_id}_{from_day}.pdf"
                         doc = SimpleDocTemplate(file_name, pagesize=A4)
                         elements = []
 
@@ -426,17 +464,17 @@ with tab2:
                             ]
                         )
 
-                        edited_despesas_tot = locale.currency(edited_despesas_tot)
-                        edited_liquido = locale.currency(edited_liquido)
-                        edited_entregar = locale.currency(edited_entregar)
-                        from_day = from_day.strftime("%d/%m/%Y")
+                        f_edited_despesas_tot = locale.currency(edited_despesas_tot)
+                        f_edited_liquido = locale.currency(edited_liquido)
+                        f_edited_entregar = locale.currency(edited_entregar)
+                        f_from_day = from_day.strftime("%d/%m/%Y")
 
                         edited_despesas_table.setStyle(style_despesas)
                         edited_alugueis_table.setStyle(style_alugueis)
 
                         elements.append(
                             Paragraph(
-                                f"Apartamento <b><u>{apto}</u></b> a partir de <b><u>{from_day}</u></b>",
+                                f"Apartamento <b><u>{apto_id}</u></b> a partir de <b><u>{f_from_day}</u></b>",
                                 style=ParagraphStyle(
                                     name="APTO", fontSize=18, alignment=TA_CENTER
                                 ),
@@ -456,7 +494,7 @@ with tab2:
                         elements.append(Spacer(1, 12))
                         elements.append(
                             Paragraph(
-                                f"Total de despesas: {edited_despesas_tot}",
+                                f"Total de despesas: {f_edited_despesas_tot}",
                                 style=ParagraphStyle(
                                     name="DESPESAS", fontSize=12, textColor=colors.red
                                 ),
@@ -476,7 +514,7 @@ with tab2:
                         elements.append(Spacer(1, 12))
                         elements.append(
                             Paragraph(
-                                f"Total Líquido: {edited_liquido}",
+                                f"Total Líquido: {f_edited_liquido}",
                                 style=ParagraphStyle(
                                     name="ALUGUEIS",
                                     fontSize=12,
@@ -487,7 +525,7 @@ with tab2:
                         elements.append(Spacer(1, 12))
                         elements.append(
                             Paragraph(
-                                f"Valor a receber: {edited_liquido} - <font color='red'>{edited_despesas_tot}</font> = {edited_entregar}",
+                                f"Valor a receber: {f_edited_liquido} - <font color='red'>{f_edited_despesas_tot}</font> = {f_edited_entregar}",
                                 style=ParagraphStyle(
                                     name="TOTAL", fontSize=14, textColor=colors.darkblue
                                 ),
@@ -510,10 +548,28 @@ with tab2:
                                 key=8201,
                             )
                         os.remove(f"./{file_name}")
+
+                        rel_reg = {
+                            "apto_id": apto_id,
+                            "data": date.today().isoformat(),
+                            "valor": edited_entregar,
+                        }
+
+                        post_rel_response = requests.post(
+                            "http://api:8000/relatorios/", json=rel_reg
+                        )
+                        show_response_message(post_rel_response)
+                        if post_rel_response.status_code == 200:
+                            st.markdown(
+                                "####Dados do relatório registrados com sucesso:"
+                            )
+                        else:
+                            st.markdown("####NÃO foi possível registrar:")
+                        show_data_output(rel_reg)
             except:
                 None
         else:
-            st.error(f"Apartamento {apto} não encontrado em nossos registros")
+            st.error(f"Apartamento {apto_id} não encontrado em nossos registros")
             show_response_message(apto_response)
     else:
         st.markdown(

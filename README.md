@@ -56,13 +56,18 @@
 52. [x] Separar em duas planilhas, para os dois tipos de aptos, conforme as regras de negócio.
 53. [x] Adicionar a data na tabela de pagamentos e no restante do sistema.
 54. [x] Criar a página para gerar os relatórios.
-55. [ ] Definir relations em `models.py`
+55. [x] Definir relationships de back_populates em `models.py`, para facilitar as querys.
 56. [ ] Mostrar se há depositos para uma reserva, qual é o total, quanto foi depositado, quanto falta, se está paga.
 57. [x] Configurar Docker para instalar locale e setar com pt-br
 58. [ ] Manipular os inputs como nome, etc... com .title, .capitalize, essas coisas para padronização.
 59. [ ] Criar uma função para analisar o input em `contato` (Aluguéis e Pagamentos) a fim de verificar se é telefone ou email para incluir na padronização.
-60. [ ] Adicionar categoria de "Adiantamento" em Despesas para o caso de adiantamento de valores ao proprietário do apartamento.
+60. [x] Adicionar categoria de "Adiantamento" em Despesas para o caso de adiantamento de valores ao proprietário do apartamento.
 61. [x] Permitir alterações pelo usuário diretamente nos DataFrames utilizados para gerar Relatórios.
+62. [x] Criar os scripts em SQL para inserir os dados de uma vez e testar o banco e o app.
+63. [x] Aplicar as mudanças do banco nas páginas do app
+64. [x] criar tabela para relatórios, deixar os pagamentos apenas para os depósitos de reserva, parcelas, etc. relacionados aos alugueis.
+65. [x] Em despesas criar a categoria para adiantamento de valores destinado aos proprietários.
+66. [ ] Utilizar o apto+checkin para encontrar uma aluguel.
 
 **Pensar em como utilizar o patch para alterações individuais de campos, ainda não vejo muito sentido nisso, mas como estudo pode ser bom.**
 **Agora até vejo que pode ser útil para atualizar os valores depositados para cada aluguel, e o valores entregues para os proprietarios**

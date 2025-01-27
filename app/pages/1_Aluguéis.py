@@ -20,7 +20,9 @@ with tab1:
         '<p style="font-size: 12px;">Campos com * são obrigatórios</p>',
         unsafe_allow_html=True,
     )
-    apto_id: str = st.text_input(label="ID Apartamento *", value=None, key=1100)
+    apto_id: str = apto_input(
+        st.text_input(label="ID Apartamento *", value=None, key=1100)
+    )
     ficha_id: int = st.number_input(
         label="ID Ficha", min_value=1, value=None, format="%d", step=1, key=1101
     )
@@ -72,7 +74,7 @@ with tab1:
     if st.button("Registrar", key=1109):
         aluguel_data = empty_none_dict(
             {
-                "apto_id": apto_input(apto_id),
+                "apto_id": apto_id,
                 "ficha_id": ficha_id,
                 "checkin": checkin.isoformat(),
                 "checkout": checkout.isoformat(),
@@ -100,13 +102,13 @@ with tab1:
                         aluguel_id = top_data[0].get("id")
                         pagamento_data = empty_none_dict(
                             {
-                                "tipo": "Entrada",
+                                "tipo": "Reserva",
                                 "valor": valor_depositado,
-                                "apto_id": apto_input(apto_id),
                                 "aluguel_id": aluguel_id,
-                                "notas": "Reserva",
+                                "notas": f"Depósito para reserva do {apto_id} de {checkin.strftime('%d/%m/%Y')} a {checkout.strftime('%d/%m/%Y')}",
                                 "nome": nome,
                                 "contato": contato,
+                                "data": date.today(),
                             }
                         )
                         post_pagamento_response = requests.post(
@@ -162,8 +164,10 @@ with tab3:
             aluguel_up = update_response.json()
             df_up = pd.DataFrame([aluguel_up])
             st.dataframe(df_up, hide_index=True)
-            apto_id: str = st.text_input(
-                label="ID Apartamento *", key=1301, value=df_up.apto_id[0]
+            apto_id: str = apto_input(
+                st.text_input(
+                    label="ID Apartamento *", key=1301, value=df_up.apto_id[0]
+                )
             )
             ficha_id: int = st.number_input(
                 label="ID Ficha",
@@ -219,7 +223,7 @@ with tab3:
             if st.button("Modificar"):
                 aluguel_up_data = empty_none_dict(
                     {
-                        "apto_id": apto_input(apto_id),
+                        "apto_id": apto_id,
                         "ficha_id": ficha_id,
                         "checkin": checkin.isoformat(),
                         "checkout": checkout.isoformat(),
