@@ -19,15 +19,15 @@ with tab1:
         unsafe_allow_html=True,
     )
     nome: str = st.text_input(label="Nome *", key=5000, value=None)
-    cpf: str = st.text_input(label="CPF", key=5101, value=None)
-    tel: str = st.text_input(label="Telefone", key=5102, value=None)
+    cpf: str = cpf_input(st.text_input(label="CPF", key=5101, value=None))
+    tel: str = tel_input_br(st.text_input(label="Telefone", key=5102, value=None))
     email: str = st.text_input(label="E-Mail", key=5103, value=None)
     if st.button("Registrar", key=5104):
         prop_data = empty_none_dict(
             {
                 "nome": nome,
-                "cpf": cpf_input(cpf),
-                "tel": tel_input_br(tel),
+                "cpf": cpf,
+                "tel": tel,
                 "email": email,
             }
         )
@@ -76,9 +76,11 @@ with tab3:
             nome: str = st.text_input(
                 label="Nome *", key=5301, value=str(df_up.nome[0])
             )
-            cpf: str = st.text_input(label="CPF", key=5302, value=str(df_up.cpf[0]))
-            tel: str = st.text_input(
-                label="Telefone", key=5303, value=str(df_up.tel[0])
+            cpf: str = cpf_input(
+                st.text_input(label="CPF", key=5302, value=str(df_up.cpf[0]))
+            )
+            tel: str = tel_input_br(
+                st.text_input(label="Telefone", key=5303, value=str(df_up.tel[0]))
             )
             email: str = st.text_input(
                 label="E-Mail", key=5304, value=str(df_up.email[0])
@@ -87,8 +89,8 @@ with tab3:
                 prop_up_data = empty_none_dict(
                     {
                         "nome": nome,
-                        "cpf": cpf_input(cpf),
-                        "tel": tel_input_br(tel),
+                        "cpf": cpf,
+                        "tel": tel,
                         "email": email,
                     }
                 )

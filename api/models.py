@@ -48,7 +48,7 @@ class Apartamento(Base):
     wifi_senha: Mapped[str] = mapped_column(String, nullable=True)
     lock_senha: Mapped[str] = mapped_column(String, nullable=True)
     cod_imov: Mapped[str] = mapped_column(String, nullable=True)
-    cad_imob: Mapped[str] = mapped_column(String, nullable=True)
+    dic: Mapped[str] = mapped_column(String, nullable=True)
     ins_imob: Mapped[str] = mapped_column(String, nullable=True)
     matricula: Mapped[str] = mapped_column(String, nullable=True)
     rip: Mapped[str] = mapped_column(String, nullable=True)
@@ -62,8 +62,6 @@ class Apartamento(Base):
     proprietario: Mapped["Proprietario"] = relationship(back_populates="apartamentos")
     alugueis: Mapped[list["Aluguel"]] = relationship(back_populates="apartamento")
     despesas: Mapped[list["Despesa"]] = relationship(back_populates="apartamento")
-    fichas: Mapped[list["Ficha"]] = relationship(back_populates="apartamento")
-    pagamentos: Mapped[list["Pagamento"]] = relationship(back_populates="apartamento")
     garagens_origem: Mapped[list["Garagem"]] = relationship(
         back_populates="apartamento_origem", foreign_keys="[Garagem.apto_id_origem]"
     )
@@ -82,7 +80,7 @@ class Despesa(Base):
     )
     valor: Mapped[float] = mapped_column(Numeric(10, 2), nullable=False)
     categoria: Mapped[str] = mapped_column(String, nullable=False)
-    descricao: Mapped[str] = mapped_column(String, nullable=False)
+    descricao: Mapped[str] = mapped_column(String, nullable=True)
     criado_em: Mapped[date] = mapped_column(
         server_default=func.current_date(), nullable=False
     )
@@ -97,7 +95,7 @@ class Ficha(Base):
     __tablename__ = "fichas"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    apto_id: Mapped[str] = mapped_column(ForeignKey("apartamentos.id"), nullable=True)
+    apto_id: Mapped[str] = mapped_column(String, nullable=True)
     aluguel_id: Mapped[int] = mapped_column(ForeignKey("alugueis.id"), nullable=True)
     nome: Mapped[str] = mapped_column(String, nullable=False)
     tipo_residencia: Mapped[str] = mapped_column(String, nullable=False)
@@ -177,11 +175,10 @@ class Pagamento(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     tipo: Mapped[str] = mapped_column(String, nullable=False)
     valor: Mapped[float] = mapped_column(Numeric(10, 2), nullable=False)
-    apto_id: Mapped[str] = mapped_column(ForeignKey("apartamentos.id"), nullable=False)
     aluguel_id: Mapped[int] = mapped_column(ForeignKey("alugueis.id"), nullable=True)
+    notas: Mapped[str] = mapped_column(String, nullable=True)
     nome: Mapped[str] = mapped_column(String, nullable=True)
     contato: Mapped[str] = mapped_column(String, nullable=True)
-    notas: Mapped[str] = mapped_column(String, nullable=True)
     data: Mapped[date] = mapped_column(
         server_default=func.current_date(), nullable=False
     )
@@ -192,7 +189,6 @@ class Pagamento(Base):
         server_default=func.current_date(), onupdate=func.current_date(), nullable=False
     )
 
-    apartamento: Mapped["Apartamento"] = relationship(back_populates="pagamentos")
     aluguel: Mapped["Aluguel"] = relationship(back_populates="pagamentos")
 
 
@@ -214,3 +210,20 @@ class Proprietario(Base):
     apartamentos: Mapped[list["Apartamento"]] = relationship(
         back_populates="proprietario"
     )
+
+
+class Relatorio(Base):
+    __tablename__ = "relatorios"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    apto_id: Mapped[str] = mapped_column(ForeignKey("apartamentos.id"), nullable=False)
+    data: Mapped[date] = mapped_column(date, nullable=False)
+    valor: Mapped[float] = mapped_column(Numeric(10, 2), nullable=False)
+    criado_em: Mapped[date] = mapped_column(
+        server_default=func.current_date(), nullable=False
+    )
+    modificado_em: Mapped[date] = mapped_column(
+        server_default=func.current_date(), onupdate=func.current_date(), nullable=False
+    )
+
+    apartamento: Mapped["Apartamento"] = relationship(back_populates="relatorio")

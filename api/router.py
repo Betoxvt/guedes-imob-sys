@@ -41,6 +41,12 @@ from crud import (
     update_proprietario,
     patch_proprietario,
     delete_proprietario,
+    create_relatorio,
+    read_relatorio,
+    read_relatorios,
+    update_relatorio,
+    patch_relatorio,
+    delete_relatorio,
 )
 from database import get_db
 from fastapi import APIRouter, Depends, HTTPException
@@ -67,6 +73,9 @@ from schemas import (
     ProprietarioCreate,
     ProprietarioResponse,
     ProprietarioUpdate,
+    RelatorioCreate,
+    RelatorioResponse,
+    RelatorioUpdate,
 )
 from typing import List
 
@@ -430,3 +439,56 @@ def delete_pagamento_route(pagamento_id: int, db: Session = Depends(get_db)):
     if db_pagamento is None:
         raise HTTPException(status_code=404, detail="Pagamento not found")
     return db_pagamento
+
+
+@router.post("/relatorios/", response_model=RelatorioResponse)
+def create_relatorio_route(relatorio: RelatorioCreate, db: Session = Depends(get_db)):
+    return create_relatorio(db=db, relatorio=relatorio)
+
+
+@router.get("/relatorios/", response_model=List[RelatorioResponse])
+def read_relatorios_route(
+    offset: int = 0, limit: int = 100, db: Session = Depends(get_db)
+):
+    relatorios = read_relatorios(db, offset=offset, limit=limit)
+    return relatorios
+
+
+@router.get("/relatorios/{relatorio_id}", response_model=RelatorioResponse)
+def read_relatorio_route(relatorio_id: int, db: Session = Depends(get_db)):
+    relatorio = read_relatorio(db, relatorio_id=relatorio_id)
+    if relatorio is None:
+        raise HTTPException(status_code=404, detail="Relatorio not found")
+    return relatorio
+
+
+@router.put("/relatorios/{relatorio_id}", response_model=RelatorioResponse)
+def update_relatorio_route(
+    relatorio_id: int, relatorio: RelatorioCreate, db: Session = Depends(get_db)
+):
+    db_relatorio = update_relatorio(
+        db=db, relatorio_id=relatorio_id, relatorio=relatorio
+    )
+    if db_relatorio is None:
+        raise HTTPException(status_code=404, detail="Relatorio not found")
+    return db_relatorio
+
+
+@router.patch("/relatorios/{relatorio_id}", response_model=RelatorioUpdate)
+def patch_relatorio_route(
+    relatorio_id: int, relatorio: RelatorioUpdate, db: Session = Depends(get_db)
+):
+    db_relatorio = patch_relatorio(
+        db=db, relatorio_id=relatorio_id, relatorio=relatorio
+    )
+    if db_relatorio is None:
+        raise HTTPException(status_code=404, detail="Relatorio not found")
+    return db_relatorio
+
+
+@router.delete("/relatorios/{relatorio_id}", response_model=RelatorioResponse)
+def delete_relatorio_route(relatorio_id: int, db: Session = Depends(get_db)):
+    db_relatorio = delete_relatorio(db, relatorio_id=relatorio_id)
+    if db_relatorio is None:
+        raise HTTPException(status_code=404, detail="Relatorio not found")
+    return db_relatorio

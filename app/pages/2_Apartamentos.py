@@ -40,11 +40,14 @@ with tab1:
     wifi = st.text_input(label="Nome da Rede WiFi", value=None, key=2105)
     wifi_senha = st.text_input(label="Senha da Rede Wifi", value=None, key=2106)
     lock_senha = st.text_input(label="Senha da Fechadura", value=None, key=2107)
-    dic = st.text_input(label="DIC", value=None, key=2108)
-    rip = st.text_input(label="RIP", value=None, key=2109)
-    insc_imob = st.text_input(label="Inscrição Imobiliária", value=None, key=2110)
+    cod_imov = st.text_input(label="Código do Imóvel", value=None, key=2108)
+    dic = st.text_input(label="Cadastro Imobiliário (DIC)", value=None, key=2109)
+    ins_imob = st.text_input(label="Inscrição Imobiliária", value=None, key=2110)
     matricula = st.text_input(label="Matrícula", value=None, key=2111)
-    if st.button("Registrar", key=2112):
+    rip = st.text_input(
+        label="Registro Imobiliário Patrimonial (RIP)", value=None, key=2112
+    )
+    if st.button("Registrar", key=2113):
         apto_data = empty_none_dict(
             {
                 "id": apto_input(id),
@@ -55,10 +58,11 @@ with tab1:
                 "wifi": wifi,
                 "wifi_senha": wifi_senha,
                 "lock_senha": lock_senha,
+                "cod_imov": cod_imov,
                 "dic": dic,
-                "rip": rip,
-                "insc_imob": insc_imob,
+                "ins_imob": ins_imob,
                 "matricula": matricula,
+                "rip": rip,
             }
         )
         try:
@@ -140,15 +144,22 @@ with tab3:
             lock_senha = st.text_input(
                 label="Senha da Fechadura", value=str(df_up.lock_senha[0]), key=2309
             )
-            dic = st.text_input(label="DIC", value=df_up.dic[0], key=2310)
-            rip = st.text_input(label="RIP", value=df_up.rip[0], key=2311)
-            insc_imob = st.text_input(
-                label="Inscrição Imobiliária", value=df_up.insc_imob[0], key=2312
+            cod_imov = st.text_input(
+                label="Código do Imóvel", value=df_up.cod_imov[0], key=2310
+            )
+            dic = st.text_input(
+                label="Cadastro Imobiliário", value=df_up.dic[0], key=2311
+            )
+            ins_imob = st.text_input(
+                label="Inscrição Imobiliária", value=df_up.ins_imob[0], key=2312
             )
             matricula = st.text_input(
                 label="Matrícula", value=df_up.matricula[0], key=2313
             )
-            if st.button("Modificar", key=2314):
+            rip = st.text_input(
+                label="Registro Imobiliário Patrimonial (RIP)", value=None, key=2314
+            )
+            if st.button("Modificar", key=2315):
                 apto_up_data = empty_none_dict(
                     {
                         "id": apto_input(id),
@@ -159,10 +170,11 @@ with tab3:
                         "wifi": wifi,
                         "wifi_senha": wifi_senha,
                         "lock_senha": lock_senha,
+                        "cod_imov": cod_imov,
                         "dic": dic,
-                        "rip": rip,
-                        "insc_imob": insc_imob,
+                        "ins_imob": ins_imob,
                         "matricula": matricula,
+                        "rip": rip,
                     }
                 )
                 try:

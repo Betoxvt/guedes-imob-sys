@@ -4,17 +4,10 @@ import requests
 import streamlit as st
 from utils.mydate import str_to_date
 from utils.myfunc import cat_index, show_data_output, show_response_message
-from utils.mystr import apto_input, empty_none_dict
+from utils.mystr import empty_none_dict
 
 st.set_page_config(page_title="Pagamentos", layout="wide")
 st.title("Pagamentos")
-st.markdown(
-    "Entrada: Pagamento recebido como depósito de reserva, parcela ou total do aluguel"
-)
-st.markdown(
-    "Saída: Pagamento realizados ao entregar valores descritos em relatório ao proprietário do apartamento"
-)
-
 
 tab1, tab2, tab3, tab4, tab5 = st.tabs(
     ["Registrar", "Consultar", "Modificar", "Deletar", "Listar"]
@@ -28,7 +21,7 @@ with tab1:
     )
     tipo: str = st.radio(
         label="Tipo de pagamento *",
-        options=["Entrada", "Saída"],
+        options=["Reserva", "Parcela", "Integral", "Quitação", "Garagem"],
         index=0,
         horizontal=True,
         key=7100,
@@ -40,13 +33,6 @@ with tab1:
         format="%0.2f",
         key=7101,
         value=None,
-    )
-    apto_id: str = apto_input(
-        st.text_input(
-            label="Apartamento",
-            value=None,
-            key=7102,
-        )
     )
     data: date = st.date_input(
         label="Data de pagamento *", format="DD/MM/YYYY", key=7103, value=date.today()
@@ -70,7 +56,6 @@ with tab1:
             {
                 "tipo": tipo,
                 "valor": valor,
-                "apto_id": apto_id,
                 "data": data.isoformat(),
                 "aluguel_id": aluguel_id,
                 "nome": nome,
@@ -122,8 +107,12 @@ with tab3:
             st.dataframe(df_up.set_index("id"))
             tipo: str = st.radio(
                 label="Tipo de pagamento *",
-                options=["Entrada", "Saida"],
-                index=cat_index(df_up, "tipo", ["Entrada", "Saída"]),
+                options=["Reserva", "Parcela", "Integral", "Quitação", "Garagem"],
+                index=cat_index(
+                    df_up,
+                    "tipo",
+                    ["Reserva", "Parcela", "Integral", "Quitação", "Garagem"],
+                ),
                 horizontal=True,
                 key=7100,
             )
@@ -134,13 +123,6 @@ with tab3:
                 format="%0.2f",
                 value=df_up.loc[0, "valor"],
                 key=7301,
-            )
-            apto_id: str = apto_input(
-                st.text_input(
-                    label="Apartamento",
-                    value=df_up.apto_id[0],
-                    key=7302,
-                )
             )
             data: date = st.date_input(
                 label="Data de pagamento *",
@@ -171,7 +153,6 @@ with tab3:
                 pagamento_up_data = empty_none_dict(
                     {
                         "valor": valor,
-                        "apto_id": apto_id,
                         "data": data.isoformat(),
                         "aluguel_id": aluguel_id,
                         "nome": nome,

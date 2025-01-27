@@ -33,7 +33,7 @@ class ApartamentoBase(BaseModel):
     wifi_senha: Optional[str]
     lock_senha: Optional[str]
     cod_imov: Optional[str]
-    cad_imob: Optional[str]
+    dic: Optional[str]
     ins_imob: Optional[str]
     matricula: Optional[str]
     rip: Optional[str]
@@ -41,12 +41,14 @@ class ApartamentoBase(BaseModel):
 
 class DespesaCat(Enum):
     cat1 = "IPTU"
-    cat2 = "CONDOMÍNIO"
-    cat3 = "LUZ"
-    cat4 = "GÁS"
-    cat5 = "INTERNET"
-    cat6 = "MANUTENÇÃO"
-    cat7 = "OUTROS"
+    cat2 = "Condomínio"
+    cat3 = "Ambiental"
+    cat4 = "Luz"
+    cat5 = "Gás"
+    cat6 = "Internet"
+    cat7 = "Manutenção"
+    cat8 = "Adiantamento"
+    cat9 = "Outros"
 
 
 class DespesaBase(BaseModel):
@@ -54,7 +56,7 @@ class DespesaBase(BaseModel):
     data: date
     valor: float
     categoria: str
-    descricao: str
+    descricao: Optional[str]
 
     @field_validator("categoria")
     def check_categoria_despesa_base(cls, v):
@@ -78,6 +80,7 @@ class FichaCivilCat(Enum):
 
 class FichaBase(BaseModel):
     apto_id: Optional[str]
+    aluguel_id: Optional[int]
     nome: str
     tipo_residencia: str
     cidade: str
@@ -134,18 +137,20 @@ class GaragemBase(BaseModel):
 
 
 class PagamentoCat(Enum):
-    categoria1 = "Entrada"
-    categoria2 = "Saída"
+    categoria1 = "Reserva"
+    categoria2 = "Parcela"
+    categoria3 = "Integral"
+    categoria4 = "Quitação"
+    categoria4 = "Garagem"
 
 
 class PagamentoBase(BaseModel):
     tipo: str
     valor: float
-    apto_id: str
-    aluguel_id: Optional[int]
+    aluguel_id: int
+    notas: Optional[str]
     nome: Optional[str]
     contato: Optional[str]
-    notas: Optional[str]
     data: date
 
     @field_validator("tipo")
@@ -160,6 +165,12 @@ class ProprietarioBase(BaseModel):
     cpf: Optional[str]
     tel: Optional[str]
     email: Optional[EmailStr]
+
+
+class RelatorioBase(BaseModel):
+    apto_id: str
+    data: date
+    valor: float
 
 
 # Create schemas
@@ -190,6 +201,10 @@ class PagamentoCreate(PagamentoBase):
 
 
 class ProprietarioCreate(ProprietarioBase):
+    pass
+
+
+class RelatorioCreate(RelatorioBase):
     pass
 
 
@@ -258,6 +273,12 @@ class ProprietarioResponse(ProprietarioBase):
         from_attributes = True
 
 
+class RelatorioResponse(RelatorioBase):
+    id: int
+    criado_em: date
+    modificado_em: date
+
+
 # Update schemas
 
 
@@ -319,3 +340,7 @@ class PagamentoUpdate(PagamentoCreate):
 
 class ProprietarioUpdate(ProprietarioCreate):
     __annotations__ = convert_to_optional(ProprietarioCreate)
+
+
+class RelatorioUpdate(RelatorioCreate):
+    __annotations__ = convert_to_optional(RelatorioCreate)

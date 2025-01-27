@@ -8,6 +8,7 @@ from models import (
     Garagem,
     Pagamento,
     Proprietario,
+    Relatorio,
 )
 import psycopg2
 from schemas import (
@@ -25,6 +26,8 @@ from schemas import (
     PagamentoUpdate,
     ProprietarioCreate,
     ProprietarioUpdate,
+    RelatorioCreate,
+    RelatorioUpdate,
 )
 from sqlalchemy.exc import SQLAlchemyError, DBAPIError
 from sqlalchemy.orm import Session
@@ -939,5 +942,192 @@ def delete_pagamento(db: Session, pagamento_id: int) -> Pagamento:
         return db_pagamento
     except SQLAlchemyError as e:
         print(f"Erro ao deletar pagamento: {e}")
+        db.rollback()
+        raise e
+
+
+def create_relatorio(db: Session, relatorio: RelatorioCreate) -> Relatorio:
+    """
+    Creates a new relatorio record in the database.
+
+    This function takes an `RelatorioCreate` object containing the new relatorio data
+    and persists it to the database.
+
+    Args:
+        db (Session): A SQLAlchemy session to interact with the database.
+        relatorio (RelatorioCreate): An object containing the new relatorio data.
+
+    Returns:
+        Relatorio: The newly created relatorio object.
+
+    Raises:
+        SQLAlchemyError: If an error occurs during the creation.
+    """
+    try:
+        db_relatorio = Relatorio(**relatorio.model_dump())
+        db.add(db_relatorio)
+        db.commit()
+        db.refresh(db_relatorio)
+        return db_relatorio
+    except DBAPIError as e:
+        db.rollback()
+        if isinstance(e.orig, psycopg2.errors.RaiseException):
+            error_msg = str(e.orig.pgerror.split("\n")[0])
+            logging.error(f"Erro ao criar relatorio (trigger): {error_msg}")
+            raise HTTPException(status_code=400, detail=error_msg[8:])
+        else:
+            logging.exception(f"Erro de banco de dados ao criar relatorio: {e}")
+            raise HTTPException(
+                status_code=500, detail="Erro interno do servidor (banco de dados)."
+            )
+    except SQLAlchemyError as e:
+        db.rollback()
+        raise e
+
+
+def read_relatorios(db: Session, offset: int = 0, limit: int = 100) -> List[Relatorio]:
+    """
+    Retrieves relatorios from the database with pagination.
+
+    This function queries the 'relatorios' table in the database and returns the records,
+    ordered by ID in descending order. It allows pagination of the results through
+    the `offset` and `limit` parameters.
+
+    Args:
+        db (Session): A SQLAlchemy session to interact with the database.
+        offset (int, optional): The starting index of the results. Defaults to 0.
+        limit (int, optional): The maximum number of results to be returned. Defaults to 100.
+
+    Returns:
+        List[Relatorio]: A list of `Relatorio` objects from the database.
+
+    Raises:
+        SQLAlchemyError: If an error occurs during the database query.
+    """
+    try:
+        return (
+            db.query(Relatorio)
+            .order_by(Relatorio.id.desc())
+            .offset(offset)
+            .limit(limit)
+            .all()
+        )
+    except SQLAlchemyError as e:
+        raise e
+
+
+def read_relatorio(db: Session, relatorio_id: int) -> Relatorio:
+    """
+    Retrieves a specific relatorio from the database.
+
+    This function queries the database for a relatorio with the given ID.
+
+    Args:
+        db (Session): A SQLAlchemy session to interact with the database.
+        relatorio_id (int): The ID of the relatorio to retrieve.
+
+    Returns:
+        Relatorio: The relatorio object with the specified ID.
+
+    Raises:
+        SQLAlchemyError: If an error occurs during the query.
+    """
+    try:
+        return db.query(Relatorio).filter(Relatorio.id == relatorio_id).first()
+    except SQLAlchemyError as e:
+        raise e
+
+
+def update_relatorio(
+    db: Session, relatorio_id: int, relatorio: RelatorioCreate
+) -> Relatorio:
+    """
+    Updates an existing relatorio in the database.
+
+    This function takes the relatorio ID and an `RelatorioUpdate` object containing the new
+    data, and updates the corresponding record in the database.
+
+    Args:
+        db (Session): A SQLAlchemy session to interact with the database.
+        relatorio_id (int): The ID of the relatorio to be updated.
+        relatorio (RelatorioUpdate): An object containing the updated relatorio data.
+
+    Returns:
+        Relatorio: The updated relatorio object.
+
+    Raises:
+        SQLAlchemyError: If an error occurs during the update.
+    """
+    try:
+        db_relatorio = db.query(Relatorio).filter(Relatorio.id == relatorio_id).first()
+        if db_relatorio is None:
+            return None
+
+        db.query(Relatorio).filter(Relatorio.id == relatorio_id).update(
+            relatorio.model_dump()
+        )
+        db.commit()
+        db.refresh(db_relatorio)
+        return db_relatorio
+    except SQLAlchemyError as e:
+        db.rollback()
+        raise e
+
+
+def patch_relatorio(
+    db: Session, relatorio_id: int, relatorio: RelatorioUpdate
+) -> Relatorio:
+    """
+    Updates specific elements from an existing relatorio in the database.
+
+    This function takes the relatorio ID and an `RelatorioUpdate` object containing the new
+    data, and updates the corresponding record in the database.
+
+    Args:
+        db (Session): SQLAlchemy database session.
+        relatorio_id (int): ID of the relatorio record to update.
+        relatorio (RelatorioUpdate): Data to update.
+
+    Returns:
+        Relatorio: The updated relatorio record.
+    """
+    try:
+        db_relatorio = db.query(Relatorio).filter(Relatorio.id == relatorio_id).first()
+        if db_relatorio is None:
+            return None
+
+        for key, value in relatorio.model_dump(exclude_unset=True).items():
+            setattr(db_relatorio, key, value)
+        db.commit()
+        db.refresh(db_relatorio)
+        return db_relatorio
+    except SQLAlchemyError as e:
+        db.rollback()
+        raise e
+
+
+def delete_relatorio(db: Session, relatorio_id: int) -> Relatorio:
+    """
+    Deletes a relatorio from the database.
+
+    This function deletes the relatorio with the given ID from the database.
+
+    Args:
+        db (Session): A SQLAlchemy session to interact with the database.
+        relatorio_id (int): The ID of the relatorio to be deleted.
+
+    Returns:
+        Relatorio: The deleted relatorio record.
+
+    Raises:
+        SQLAlchemyError: If an error occurs during the deletion.
+    """
+    try:
+        db_relatorio = db.query(Relatorio).filter(Relatorio.id == relatorio_id).first()
+        db.delete(db_relatorio)
+        db.commit()
+        return db_relatorio
+    except SQLAlchemyError as e:
+        print(f"Erro ao deletar relatorio: {e}")
         db.rollback()
         raise e
