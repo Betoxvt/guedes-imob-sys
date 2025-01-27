@@ -53,61 +53,61 @@ with tab1:
                                 "proprietario": None,
                                 "imob_fone": None,
                                 "a0": {
-                                    "nome": df.a0_nome[i].title(),
+                                    "nome": df.a0_nome[i],
                                     "doc": df.a0_doc[i],
                                     "idade": df.a0_idade[i],
                                     "parentesco": df.a0_parentesco[i],
                                 },
                                 "a1": {
-                                    "nome": df.a1_nome[i].title(),
+                                    "nome": df.a1_nome[i],
                                     "doc": df.a1_doc[i],
                                     "idade": df.a1_idade[i],
                                     "parentesco": df.a1_parentesco[i],
                                 },
                                 "a2": {
-                                    "nome": df.a2_nome[i].title(),
+                                    "nome": df.a2_nome[i],
                                     "doc": df.a2_doc[i],
                                     "idade": df.a2_idade[i],
                                     "parentesco": df.a2_parentesco[i],
                                 },
                                 "a3": {
-                                    "nome": df.a3_nome[i].title(),
+                                    "nome": df.a3_nome[i],
                                     "doc": df.a3_doc[i],
                                     "idade": df.a3_idade[i],
                                     "parentesco": df.a3_parentesco[i],
                                 },
                                 "a4": {
-                                    "nome": df.a4_nome[i].title(),
+                                    "nome": df.a4_nome[i],
                                     "doc": df.a4_doc[i],
                                     "idade": df.a4_idade[i],
                                     "parentesco": df.a4_parentesco[i],
                                 },
                                 "a5": {
-                                    "nome": df.a5_nome[i].title(),
+                                    "nome": df.a5_nome[i],
                                     "doc": df.a5_doc[i],
                                     "idade": df.a5_idade[i],
                                     "parentesco": df.a5_parentesco[i],
                                 },
                                 "a6": {
-                                    "nome": df.a6_nome[i].title(),
+                                    "nome": df.a6_nome[i],
                                     "doc": df.a6_doc[i],
                                     "idade": df.a6_idade[i],
                                     "parentesco": df.a6_parentesco[i],
                                 },
                                 "a7": {
-                                    "nome": df.a7_nome[i].title(),
+                                    "nome": df.a7_nome[i],
                                     "doc": df.a7_doc[i],
                                     "idade": df.a7_idade[i],
                                     "parentesco": df.a7_parentesco[i],
                                 },
                                 "a8": {
-                                    "nome": df.a8_nome[i].title(),
+                                    "nome": df.a8_nome[i],
                                     "doc": df.a8_doc[i],
                                     "idade": df.a8_idade[i],
                                     "parentesco": df.a8_parentesco[i],
                                 },
                                 "a9": {
-                                    "nome": df.a9_nome[i].title(),
+                                    "nome": df.a9_nome[i],
                                     "doc": df.a9_doc[i],
                                     "idade": df.a9_idade[i],
                                     "parentesco": df.a9_parentesco[i],
@@ -143,7 +143,7 @@ with tab1:
     aluguel_id: int = st.number_input(
         label="ID do Aluguel", value=None, key=6174, step=1, format="%d"
     )
-    nome = st.text_input(label="Nome completo *", value=None, key=6102).title()
+    nome = st.text_input(label="Nome completo *", value=None, key=6102)
     tipo_residencia = st.radio(
         label="Tipo de residência *",
         options=["Anual", "Temporário"],
@@ -151,12 +151,10 @@ with tab1:
         horizontal=True,
         key=6103,
     )
-    cidade = st.text_input(
-        label="Naturalidade (cidade) *", value=None, key=6104
-    ).title()
+    cidade = st.text_input(label="Naturalidade (cidade) *", value=None, key=6104)
     cep = cep_input(st.text_input(label="CEP *", value=None, key=6105))
-    uf = st.text_input(label="Estado (UF) *", value=None, key=6106, max_chars=2).upper()
-    pais = st.text_input(label="País *", value=None, key=6107).title()
+    uf = st.text_input(label="Estado (UF) *", value=None, key=6106, max_chars=2)
+    pais = st.text_input(label="País *", value=None, key=6107)
     tel = tel_input_br(st.text_input(label="Telefone *", value=None, key=6108))
     estado_civil = st.selectbox(
         label="Estado civíl *",
@@ -170,10 +168,10 @@ with tab1:
         ],
         key=6109,
     )
-    profissao = st.text_input(label="Profissão *", value=None, key=6110).title()
+    profissao = st.text_input(label="Profissão *", value=None, key=6110)
     rg = rg_input(st.text_input(label="Identidade *", value=None, key=6111))
     cpf = cpf_input(st.text_input(label="CPF *", value=None, key=6112))
-    mae = st.text_input(label="Nome completo da mãe *", value=None, key=6113).title()
+    mae = st.text_input(label="Nome completo da mãe *", value=None, key=6113)
     with st.expander("Dados do Automóvel"):
         automovel = st.text_input(label="Automóvel", value=None, key=6114)
         modelo_auto = st.text_input(label="Modelo", value=None, key=6115)
@@ -425,7 +423,7 @@ with tab3:
             )
             nome = st.text_input(
                 label="Nome completo *", value=str(df_up.nome[0]), key=6302
-            ).title()
+            )
             tipo_residencia = st.radio(
                 label="Tipo de residência *",
                 options=["Anual", "Temporário"],
@@ -439,12 +437,8 @@ with tab3:
             cep = cep_input(
                 st.text_input(label="CEP *", value=str(df_up.cep[0]), key=6305)
             )
-            uf = st.text_input(
-                label="Estado (UF) *", value=str(df_up.uf[0]), key=6306
-            ).upper()
-            pais = st.text_input(
-                label="País *", value=str(df_up.pais[0]), key=6307
-            ).title()
+            uf = st.text_input(label="Estado (UF) *", value=str(df_up.uf[0]), key=6306)
+            pais = st.text_input(label="País *", value=str(df_up.pais[0]), key=6307)
             tel = tel_input_br(
                 st.text_input(label="Telefone *", value=str(df_up.tel[0]), key=6308)
             )
@@ -462,7 +456,7 @@ with tab3:
             )
             profissao = st.text_input(
                 label="Profissão *", value=str(df_up.profissao[0]), key=6310
-            ).title()
+            )
             rg = st.text_input(
                 label="Identidade (RG) *", value=empty_none(df_up.rg[0]), key=6311
             )
@@ -476,7 +470,7 @@ with tab3:
             )
             mae = st.text_input(
                 label="Nome completo da mãe *", value=str(df_up.mae[0]), key=6313
-            ).title()
+            )
             with st.expander("Dados do Automóvel"):
                 automovel = st.text_input(
                     label="Automóvel", value=empty_none(df_up.automovel[0]), key=6314
