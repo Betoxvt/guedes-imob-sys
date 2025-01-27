@@ -67,6 +67,7 @@
 63. [x] Aplicar as mudanças do banco nas páginas do app
 64. [x] criar tabela para relatórios, deixar os pagamentos apenas para os depósitos de reserva, parcelas, etc. relacionados aos alugueis.
 65. [x] Em despesas criar a categoria para adiantamento de valores destinado aos proprietários.
+66. [ ] Utilizar o apto+checkin para encontrar uma aluguel.
 
 **Pensar em como utilizar o patch para alterações individuais de campos, ainda não vejo muito sentido nisso, mas como estudo pode ser bom.**
 **Agora até vejo que pode ser útil para atualizar os valores depositados para cada aluguel, e o valores entregues para os proprietarios**
