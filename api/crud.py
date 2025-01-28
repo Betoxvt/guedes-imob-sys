@@ -465,18 +465,25 @@ def create_garagem(db: Session, garagem: GaragemCreate) -> Garagem:
         raise e
 
 
-def read_garagens(db: Session, offset: int = 0, limit: int = 100):
+def read_garagens(
+    db: Session,
+    apto_id_origem: str | None = Query(None, description="ID do apto de origem"),
+    apto_id_destino: str | None = Query(None, description="ID do apto de destino"),
+    offset: int = 0,
+    limit: int = 100,
+):
     """
     Returns all elements from database table garagens
     """
     try:
-        return (
-            db.query(Garagem)
-            .order_by(Garagem.id.desc())
-            .offset(offset)
-            .limit(limit)
-            .all()
-        )
+        query = db.query(Garagem).order_by(Garagem.id.desc())
+
+        if apto_id_origem is not None:
+            query = query.filter_by(Garagem.apto_id_origem == apto_id_origem)
+        if apto_id_destino is not None:
+            query = query.filter_by(Garagem.apto_id_destino == apto_id_destino)
+
+        return query.offset(offset).limit(limit).all()
     except SQLAlchemyError as e:
         print(f"Erro ao buscar garagens: {e}")
         raise e

@@ -251,9 +251,19 @@ def create_garagem_route(garagem: GaragemCreate, db: Session = Depends(get_db)):
 
 @router.get("/garagens/", response_model=List[GaragemResponse])
 def read_garagens_route(
-    offset: int = 0, limit: int = 100, db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    apto_id_origem: str | None = None,
+    apto_id_destino: str | None = None,
+    offset: int = 0,
+    limit: int = 100,
 ):
-    garagens = read_garagens(db, offset=offset, limit=limit)
+    garagens = read_garagens(
+        db,
+        apto_id_origem=apto_id_origem,
+        apto_id_destino=apto_id_destino,
+        offset=offset,
+        limit=limit,
+    )
     return garagens
 
 
