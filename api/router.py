@@ -89,9 +89,15 @@ def create_aluguel_route(aluguel: AluguelCreate, db: Session = Depends(get_db)):
 
 @router.get("/alugueis/", response_model=List[AluguelResponse])
 def read_alugueis_route(
-    offset: int = 0, limit: int = 100, db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    apto_id: str | None = None,
+    checkin: str | None = None,
+    offset: int = 0,
+    limit: int = 100,
 ):
-    alugueis = read_alugueis(db, offset=offset, limit=limit)
+    alugueis = read_alugueis(
+        db, apto_id=apto_id, checkin=checkin, offset=offset, limit=limit
+    )
     return alugueis
 
 
@@ -193,9 +199,12 @@ def create_despesa_route(despesa: DespesaCreate, db: Session = Depends(get_db)):
 
 @router.get("/despesas/", response_model=List[DespesaResponse])
 def read_despesas_route(
-    offset: int = 0, limit: int = 100, db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    apto_id: str | None = None,
+    offset: int = 0,
+    limit: int = 100,
 ):
-    despesas = read_despesas(db, offset=offset, limit=limit)
+    despesas = read_despesas(db, apto_id=apto_id, offset=offset, limit=limit)
     return despesas
 
 
@@ -349,8 +358,22 @@ def create_ficha_route(ficha: FichaCreate, db: Session = Depends(get_db)):
 
 
 @router.get("/fichas/", response_model=List[FichaResponse])
-def read_fichas_route(offset: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    fichas = read_fichas(db, offset=offset, limit=limit)
+def read_fichas_route(
+    db: Session = Depends(get_db),
+    aluguel_id: int | None = None,
+    apto_id: str | None = None,
+    checkin: str | None = None,
+    offset: int = 0,
+    limit: int = 100,
+):
+    fichas = read_fichas(
+        db,
+        aluguel_id=aluguel_id,
+        apto_id=apto_id,
+        checkin=checkin,
+        offset=offset,
+        limit=limit,
+    )
     return fichas
 
 
@@ -395,9 +418,12 @@ def create_pagamento_route(pagamento: PagamentoCreate, db: Session = Depends(get
 
 @router.get("/pagamentos/", response_model=List[PagamentoResponse])
 def read_pagamentos_route(
-    offset: int = 0, limit: int = 100, db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    aluguel_id: int | None = None,
+    offset: int = 0,
+    limit: int = 100,
 ):
-    pagamentos = read_pagamentos(db, offset=offset, limit=limit)
+    pagamentos = read_pagamentos(db, aluguel_id=aluguel_id, offset=offset, limit=limit)
     return pagamentos
 
 

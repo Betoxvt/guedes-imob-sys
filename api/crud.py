@@ -1,4 +1,4 @@
-from fastapi import HTTPException
+from fastapi import HTTPException, Query
 import logging
 from models import (
     Aluguel,
@@ -73,7 +73,13 @@ def create_aluguel(db: Session, aluguel: AluguelCreate) -> Aluguel:
         raise e
 
 
-def read_alugueis(db: Session, offset: int = 0, limit: int = 100) -> List[Aluguel]:
+def read_alugueis(
+    db: Session,
+    apto_id: str | None = Query(None, description="ID do apartamento"),
+    checkin: str | None = Query(None, description="Data do check-in (YYYY-MM-DD)"),
+    offset: int = 0,
+    limit: int = 100,
+) -> List[Aluguel]:
     """
     Retrieves alugueis from the database with pagination.
 
@@ -93,13 +99,15 @@ def read_alugueis(db: Session, offset: int = 0, limit: int = 100) -> List[Alugue
         SQLAlchemyError: If an error occurs during the database query.
     """
     try:
-        return (
-            db.query(Aluguel)
-            .order_by(Aluguel.id.desc())
-            .offset(offset)
-            .limit(limit)
-            .all()
-        )
+        query = db.query(Aluguel).order_by(Aluguel.id.desc())
+
+        if apto_id is not None:
+            query = query.filter(Aluguel.apto_id == apto_id)
+
+        if checkin is not None:
+            query = query.filter(Aluguel.checkin == checkin)
+
+        return query.offset(offset).limit(limit).all()
     except SQLAlchemyError as e:
         raise e
 
@@ -347,18 +355,22 @@ def create_despesa(db: Session, despesa: DespesaCreate) -> Despesa:
         raise e
 
 
-def read_despesas(db: Session, offset: int = 0, limit: int = 100):
+def read_despesas(
+    db: Session,
+    apto_id: str | None = Query(None, description="ID do apartamento"),
+    offset: int = 0,
+    limit: int = 100,
+):
     """
     Returns all elements from database table despesas
     """
     try:
-        return (
-            db.query(Despesa)
-            .order_by(Despesa.id.desc())
-            .offset(offset)
-            .limit(limit)
-            .all()
-        )
+        query = db.query(Despesa).order_by(Despesa.id.desc())
+
+        if apto_id is not None:
+            query = query.filter(Despesa.apto_id == apto_id)
+
+        return query.offset(offset).limit(limit).all()
     except SQLAlchemyError as e:
         print(f"Erro ao buscar despesas: {e}")
         raise e
@@ -678,14 +690,28 @@ def create_ficha(db: Session, ficha: FichaCreate) -> Ficha:
         raise e
 
 
-def read_fichas(db: Session, offset: int = 0, limit: int = 100):
+def read_fichas(
+    db: Session,
+    apto_id: str | None = Query(None, description="ID do apartamento"),
+    checkin: str | None = Query(None, description="Data de check-in"),
+    aluguel_id: int | None = Query(None, description="ID do aluguel"),
+    offset: int = 0,
+    limit: int = 100,
+):
     """
     Returns all elements from database table fichas
     """
     try:
-        return (
-            db.query(Ficha).order_by(Ficha.id.desc()).offset(offset).limit(limit).all()
-        )
+        query = db.query(Ficha).order_by(Ficha.id.desc())
+
+        if aluguel_id is not None:
+            query = query.filter(Ficha.aluguel_id == aluguel_id)
+        if apto_id is not None:
+            query = query.filter(Ficha.apto_id == apto_id)
+        if checkin is not None:
+            query = query.filter(Ficha.checkin == checkin)
+
+        return query.offset(offset).limit(limit).all()
     except SQLAlchemyError as e:
         print(f"Erro ao buscar fichas: {e}")
         raise e
@@ -794,7 +820,12 @@ def create_pagamento(db: Session, pagamento: PagamentoCreate) -> Pagamento:
         raise e
 
 
-def read_pagamentos(db: Session, offset: int = 0, limit: int = 100) -> List[Pagamento]:
+def read_pagamentos(
+    db: Session,
+    aluguel_id: int | None = Query(None, description="ID do aluguel"),
+    offset: int = 0,
+    limit: int = 100,
+) -> List[Pagamento]:
     """
     Retrieves pagamentos from the database with pagination.
 
@@ -814,13 +845,10 @@ def read_pagamentos(db: Session, offset: int = 0, limit: int = 100) -> List[Paga
         SQLAlchemyError: If an error occurs during the database query.
     """
     try:
-        return (
-            db.query(Pagamento)
-            .order_by(Pagamento.id.desc())
-            .offset(offset)
-            .limit(limit)
-            .all()
-        )
+        query = db.query(Pagamento).order_by(Pagamento.id.desc())
+        if aluguel_id is not None:
+            query = query.filter(Pagamento.aluguel_id == aluguel_id)
+        return query.offset(offset).limit(limit).all()
     except SQLAlchemyError as e:
         print(f"Erro ao buscar aluguéis: {e}")
         raise e
