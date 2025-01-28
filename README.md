@@ -68,7 +68,8 @@
 64. [x] criar tabela para relatórios, deixar os pagamentos apenas para os depósitos de reserva, parcelas, etc. relacionados aos alugueis.
 65. [x] Em despesas criar a categoria para adiantamento de valores destinado aos proprietários.
 66. [x] Utilizar o apto+checkin para encontrar uma aluguel.
-67. [ ] Dar um jeito de interagir com os dataframes (para pesquisas ou mais informações)
+67. [x] Dar um jeito de interagir com os dataframes (para pesquisas ou mais informações)
+68. [ ] Adicionar parâmetros de filtro opcionais aos endpoints, para facilitar as consultas.
 
 **Pensar em como utilizar o patch para alterações individuais de campos, ainda não vejo muito sentido nisso, mas como estudo pode ser bom.**
 **Agora até vejo que pode ser útil para atualizar os valores depositados para cada aluguel, e o valores entregues para os proprietarios**

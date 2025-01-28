@@ -4,6 +4,7 @@ import pandas as pd
 import requests
 import streamlit as st
 from utils.mydate import gen_reserv_table, showbr_dfdate, str_to_date
+from utils.myfunc import show_response_message
 from utils.mystr import apto_input
 
 locale.setlocale(locale.LC_ALL, "pt_BR.UTF-8")
@@ -50,25 +51,48 @@ with tab1:
         )
         if event_g.selection["rows"] and event_g.selection["columns"]:
             day_g = event_g.selection["columns"][0]
+            date_g = str_to_date(f"{ano}-{mes}-{day_g}").isoformat()
             index_apto_g = event_g.selection["rows"][0]
             apto_g = st.session_state.planilha_g.iloc[index_apto_g].name
-            st.write(
-                f"Apartamento: {apto_g}. Reserva com check-in em: {day_g}/{mes}/{ano}"
+            st.markdown(f"##### Apartamento: {apto_g}. Data: {day_g}/{mes}/{ano}")
+            alugueis_g_response = requests.get(
+                f"http://api:8000/alugueis/?apto_id={apto_g}&checkin={date_g}"
             )
-            alugueis_g_response = requests.get("http://api:8000/alugueis/")
             if alugueis_g_response.status_code == 200:
                 alugueis_g = alugueis_g_response.json()
-                df_g = pd.DataFrame(alugueis_g)
-                df_g = df_g[df_g["apto_id"] == apto_g]
-                df_g = df_g[
-                    df_g["checkin"] == str_to_date(f"{ano}-{mes}-{day_g}").isoformat()
-                ]
-                if not df_g.empty:
-                    st.write(f"Aluguel em nome de {df_g.iloc[0]['nome']}")
-                    st.write(
-                        f"Valor total: {locale.currency(df_g.iloc[0]['valor_total'])}"
+                df_ag = pd.DataFrame(alugueis_g)
+                if not df_ag.empty:
+                    aluguel_id_ag = df_ag.iloc[0]["id"]
+                    valor_tot_ag = df_ag.iloc[0]["valor_total"]
+                    nome_ag = df_ag.iloc[0]["nome"]
+                    st.markdown(f"#### Reserva em nome de **{nome_ag}**")
+                    st.markdown(
+                        f"#### :blue[Valor total: **{locale.currency(valor_tot_ag)}**]"
                     )
-                    pagamentos_g_response = requests.get("http://api:8000/pagamentos/")
+                    pagamentos_g_response = requests.get(
+                        f"http://api:8000/pagamentos/?aluguel_id={aluguel_id_ag}"
+                    )
+                    if pagamentos_g_response.status_code == 200:
+                        pagamentos_g = pagamentos_g_response.json()
+                        df_pg = pd.DataFrame(pagamentos_g)
+                        if not df_pg.empty:
+                            valor_pago_pg = df_pg["valor"].sum()
+                            pagou_pg = locale.currency(valor_pago_pg)
+                            deve_pg = locale.currency(valor_tot_ag - valor_pago_pg)
+                            st.markdown(f"#### :green[Pago: **{pagou_pg}**]")
+                            st.write(f"#### :orange[Deve: **{deve_pg}**]")
+                        else:
+                            st.write(
+                                f"#### :red[Não há pagamentos para a reserva em **{day_g}/{mes}/{ano}** do apto **{apto_g}**]"
+                            )
+                    else:
+                        show_response_message(pagamentos_g_response)
+                else:
+                    st.markdown(
+                        f"#### :orange[Não há reservas iniciando em **{day_g}/{mes}/{ano}** para o apto **{apto_g}**]"
+                    )
+            else:
+                show_response_message(alugueis_g_response)
 
     if not st.session_state.planilha_p.empty:
         st.subheader("Apartamentos Pequenos")
@@ -80,9 +104,48 @@ with tab1:
         )
         if event_p.selection["rows"] and event_p.selection["columns"]:
             day_p = event_p.selection["columns"][0]
+            date_p = str_to_date(f"{ano}-{mes}-{day_p}").isoformat()
             index_apto_p = event_p.selection["rows"][0]
             apto_p = st.session_state.planilha_p.iloc[index_apto_p].name
-            st.write(f"Apto {apto_p}, dia {day_p}")
+            st.markdown(f"##### Apartamento: {apto_p}. Data: {day_p}/{mes}/{ano}")
+            alugueis_p_response = requests.get(
+                f"http://api:8000/alugueis/?apto_id={apto_p}&checkin={date_p}"
+            )
+            if alugueis_p_response.status_code == 200:
+                alugueis_p = alugueis_p_response.json()
+                df_ap = pd.DataFrame(alugueis_p)
+                if not df_ap.empty:
+                    aluguel_id_ap = df_ap.iloc[0]["id"]
+                    valor_tot_ap = df_ap.iloc[0]["valor_total"]
+                    nome_ap = df_ap.iloc[0]["nome"]
+                    st.markdown(f"#### Reserva em nome de **{nome_ap}**")
+                    st.markdown(
+                        f"#### :blue[Valor total: **{locale.currency(valor_tot_ap)}**]"
+                    )
+                    pagamentos_p_response = requests.get(
+                        f"http://api:8000/pagamentos/?aluguel_id={aluguel_id_ap}"
+                    )
+                    if pagamentos_p_response.status_code == 200:
+                        pagamentos_p = pagamentos_p_response.json()
+                        df_pp = pd.DataFrame(pagamentos_p)
+                        if not df_pp.empty:
+                            valor_pago_pp = df_pp["valor"].sum()
+                            pagou_pp = locale.currency(valor_pago_pp)
+                            deve_pp = locale.currency(valor_tot_ap - valor_pago_pp)
+                            st.markdown(f"#### :green[Pago: **{pagou_pp}**]")
+                            st.write(f"#### :orange[Deve: **{deve_pp}**]")
+                        else:
+                            st.write(
+                                f"#### :red[Não há pagamentos para a reserva em **{day_p}/{mes}/{ano}** do apto **{apto_p}**]"
+                            )
+                    else:
+                        show_response_message(pagamentos_p_response)
+                else:
+                    st.markdown(
+                        f"#### :orange[Não há reservas iniciando em **{day_p}/{mes}/{ano}** para o apto **{apto_p}**]"
+                    )
+            else:
+                show_response_message(alugueis_p_response)
 
 with tab2:
     st.header("Consultar Reservas | Por Apartamento")
