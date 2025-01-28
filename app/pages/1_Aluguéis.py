@@ -1,11 +1,14 @@
 from datetime import date
+import locale
 import pandas as pd
 import requests
 import streamlit as st
-from utils.mydate import brazil_datestr, calculate_diarias, str_to_date
+from utils.mydate import brazil_datestr, calculate_diarias, showbr_dfdate, str_to_date
 from utils.myfunc import show_data_output, show_response_message
 from utils.mynum import calculate_saldo, calculate_valortotal
 from utils.mystr import apto_input, empty_none, empty_none_dict
+
+locale.setlocale(locale.LC_ALL, "pt_BR.UTF-8")
 
 st.set_page_config(page_title="Aluguéis", layout="wide")
 st.title("Aluguéis")
@@ -137,17 +140,100 @@ with tab1:
 
 with tab2:
     st.header("Consultar Aluguéis")
+    st.markdown("#### Por ID")
+    alug_id = None
+    apto = None
+    chkin = None
+    df_alug = pd.DataFrame
+    df_pag = pd.DataFrame
+    get_id = None
+    warn = None
+    valor_aluguel = 0
+    pago = 0
     get_id = st.number_input(
         "ID Aluguel", min_value=1, value=None, format="%d", step=1, key=1200
     )
+    st.markdown("#### Por Apartamento + Check-In")
+    apto = apto_input(st.text_input("Apartamento", value=None, key=1201))
+    chkin = st.date_input("Check-in", value=None, key=1202, format="DD/MM/YYYY")
+    if chkin:
+        chkin = chkin.isoformat()
+
     if get_id:
         get_response = requests.get(f"http://api:8000/alugueis/{get_id}")
         if get_response.status_code == 200:
             aluguel = get_response.json()
-            df_get = pd.DataFrame([aluguel])
-            st.dataframe(df_get, hide_index=True)
+            df_alug = pd.DataFrame([aluguel])
+            alug_id = get_id
         else:
             show_response_message(get_response)
+
+    if apto:
+        get_response = requests.get("http://api:8000/alugueis/")
+        if get_response.status_code == 200:
+            alugueis = get_response.json()
+            df_alug = pd.DataFrame(alugueis)
+            df_alug = df_alug[df_alug["apto_id"] == apto]
+            if df_alug.empty:
+                warn = f"Não há aluguéis para **{apto}**"
+            if chkin:
+                df_alug = df_alug[df_alug["checkin"] == chkin]
+                if not df_alug.empty:
+                    alug_id = df_alug.iloc[0]["id"]
+                    valor_aluguel = df_alug.iloc[0]["valor_total"]
+                else:
+                    warn = f"Não há aluguéis para **{apto}** com check-in em **{str_to_date(chkin).strftime('%d/%m/%Y')}**"
+        else:
+            show_response_message(get_response)
+
+    if chkin:
+        get_response = requests.get("http://api:8000/alugueis/")
+        if get_response.status_code == 200:
+            alugueis = get_response.json()
+            df_alug = pd.DataFrame(alugueis)
+            df_alug = df_alug[df_alug["checkin"] == chkin]
+            if df_alug.empty:
+                warn = f"Não há aluguéis com check-in em **{str_to_date(chkin).strftime('%d/%m/%Y')}**"
+            if apto:
+                df_alug = df_alug[df_alug["apto_id"] == apto]
+                if not df_alug.empty:
+                    alug_id = df_alug.iloc[0]["id"]
+                    valor_aluguel = df_alug.iloc[0]["valor_total"]
+                else:
+                    warn = f"Não há aluguéis para **{apto}** com check-in em **{str_to_date(chkin).strftime('%d/%m/%Y')}**"
+        else:
+            show_response_message(get_response)
+
+    if warn:
+        st.warning(warn)
+
+    if not df_alug.empty:
+        st.dataframe(showbr_dfdate(df_alug), hide_index=True)
+        get_pag_response = requests.get(f"http://api:8000/pagamentos/")
+        if get_pag_response.status_code == 200:
+            pagamentos = get_pag_response.json()
+            df_pag = pd.DataFrame(pagamentos)
+            df_pag = df_pag[df_pag["aluguel_id"] == alug_id]
+            if not df_pag.empty:
+                st.markdown("#### Lista dos pagamentos para este aluguel:")
+                st.dataframe(showbr_dfdate(df_pag), hide_index=True)
+                pago = round(df_pag["valor"].sum(), 2)
+            else:
+                if alug_id:
+                    st.warning("Não há pagamentos registrados para este aluguel")
+                else:
+                    pass
+        else:
+            show_response_message(get_pag_response)
+        if valor_aluguel > 0:
+            st.markdown(f"Valor do Aluguel: {valor_aluguel}")
+            st.markdown(f"Total pago: {pago}")
+            resta = round(valor_aluguel - pago, 2)
+            if resta > 0:
+                st.error(f"Situação: Devendo {locale.currency(resta)}")
+            if resta == 0:
+                st.success(f"Situação: Quitado")
+
 
 with tab3:
     st.header("Modificar Aluguel")

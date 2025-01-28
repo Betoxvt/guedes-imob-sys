@@ -114,7 +114,7 @@ with tab3:
                     ["Reserva", "Parcela", "Integral", "Quitação", "Garagem"],
                 ),
                 horizontal=True,
-                key=7100,
+                key=7301,
             )
             valor: float = st.number_input(
                 label="Valor *",
@@ -122,7 +122,7 @@ with tab3:
                 max_value=90000.00,
                 format="%0.2f",
                 value=df_up.loc[0, "valor"],
-                key=7301,
+                key=7302,
             )
             data: date = st.date_input(
                 label="Data de pagamento *",
@@ -148,10 +148,11 @@ with tab3:
                 value=df_up.contato[0],
                 key=7306,
             )
-            notas: str = st.text_input(label="Notas", value=df_up.notas[0], key=7107)
+            notas: str = st.text_input(label="Notas", value=df_up.notas[0], key=7307)
             if st.button("Modificar", key=7308):
                 pagamento_up_data = empty_none_dict(
                     {
+                        "tipo": tipo,
                         "valor": valor,
                         "data": data.isoformat(),
                         "aluguel_id": aluguel_id,
