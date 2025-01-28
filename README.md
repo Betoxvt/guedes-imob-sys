@@ -49,7 +49,7 @@
 45. [ ] Placeholders e help.
 46. [x] Mostrar uma identificação mais amigável ao inserir IDs.
 47. [x] Incluir DIC, RIP, Inscrição Imobiliária e Matrícula como colunas dos apartamentos.
-48. [ ] Utilizar o apto+checkin para encontrar uma ficha.
+48. [x] Utilizar o apto+checkin para encontrar uma ficha.
 49. [x] Por conveniência, colunas com nome e contato devem estar na table de alugueis.
 50. [x] Consulta de disponibilidade
 51. [x] Bloquear overbooking

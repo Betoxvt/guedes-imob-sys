@@ -355,18 +355,22 @@ def create_despesa(db: Session, despesa: DespesaCreate) -> Despesa:
         raise e
 
 
-def read_despesas(db: Session, offset: int = 0, limit: int = 100):
+def read_despesas(
+    db: Session,
+    apto_id: str | None = Query(None, description="ID do apartamento"),
+    offset: int = 0,
+    limit: int = 100,
+):
     """
     Returns all elements from database table despesas
     """
     try:
-        return (
-            db.query(Despesa)
-            .order_by(Despesa.id.desc())
-            .offset(offset)
-            .limit(limit)
-            .all()
-        )
+        query = db.query(Despesa).order_by(Despesa.id.desc())
+
+        if apto_id is not None:
+            query = query.filter(Despesa.apto_id == apto_id)
+
+        return query.offset(offset).limit(limit).all()
     except SQLAlchemyError as e:
         print(f"Erro ao buscar despesas: {e}")
         raise e
@@ -686,14 +690,28 @@ def create_ficha(db: Session, ficha: FichaCreate) -> Ficha:
         raise e
 
 
-def read_fichas(db: Session, offset: int = 0, limit: int = 100):
+def read_fichas(
+    db: Session,
+    apto_id: str | None = Query(None, description="ID do apartamento"),
+    checkin: str | None = Query(None, description="Data de check-in"),
+    aluguel_id: int | None = Query(None, description="ID do aluguel"),
+    offset: int = 0,
+    limit: int = 100,
+):
     """
     Returns all elements from database table fichas
     """
     try:
-        return (
-            db.query(Ficha).order_by(Ficha.id.desc()).offset(offset).limit(limit).all()
-        )
+        query = db.query(Ficha).order_by(Ficha.id.desc())
+
+        if aluguel_id is not None:
+            query = query.filter(Ficha.aluguel_id == aluguel_id)
+        if apto_id is not None:
+            query = query.filter(Ficha.apto_id == apto_id)
+        if checkin is not None:
+            query = query.filter(Ficha.checkin == checkin)
+
+        return query.offset(offset).limit(limit).all()
     except SQLAlchemyError as e:
         print(f"Erro ao buscar fichas: {e}")
         raise e

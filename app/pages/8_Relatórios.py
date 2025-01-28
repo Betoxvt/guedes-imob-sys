@@ -115,12 +115,13 @@ with tab1:
                 else:
                     show_response_message(despesas_response)
 
-                alugueis_response = requests.get("http://api:8000/alugueis/")
+                alugueis_response = requests.get(
+                    f"http://api:8000/alugueis/?apto_id={apto_id}"
+                )
                 if alugueis_response.status_code == 200:
                     alugueis = alugueis_response.json()
                     if alugueis:
                         df_alug = pd.DataFrame(alugueis)
-                        df_alug = df_alug[df_alug["apto_id"] == apto_id]
                         df_alug = df_alug[df_alug["checkin"] > from_day.isoformat()]
                         if not df_alug.empty:
                             df_alug["valor_final"] = df_alug["valor_total"] - (
