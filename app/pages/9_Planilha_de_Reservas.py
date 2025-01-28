@@ -60,7 +60,7 @@ with tab2:
             )
             df_consult = df_consult.set_index("apto_id")
             if consult_apto in df_consult.index:
-                df_filter = df_consult.loc[consult_apto]
+                df_filter = pd.DataFrame(df_consult.loc[consult_apto])
                 st.dataframe(showbr_dfdate(df_filter))
             else:
                 st.warning(f"O apartamento {consult_apto} não possui reservas")

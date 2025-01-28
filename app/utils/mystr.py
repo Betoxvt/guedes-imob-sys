@@ -10,7 +10,7 @@ def apto_input(input: str) -> str:
     Returns:
         Desired format string.
     """
-    if input is not None:
+    if input is not None and input != "":
         numbers = ""
         letter = ""
         for c in input:

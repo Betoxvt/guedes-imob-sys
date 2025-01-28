@@ -87,7 +87,7 @@ with tab1:
                                 ["apto_id", "id", "criado_em", "modificado_em"], axis=1
                             )
                             desp_ord = ["data", "categoria", "descricao", "valor"]
-                            despesas_tot = df_desp["valor"].sum()
+                            despesas_tot = round(df_desp["valor"].sum(), 2)
                             df_desp = showbr_dfdate(df_desp.reindex(desp_ord, axis=1))
                             df_desp.columns = [
                                 "Data",
@@ -147,9 +147,9 @@ with tab1:
                                 "valor_total",
                                 "valor_final",
                             ]
-                            bruto = df_alug["valor_total"].sum()
-                            comissao = bruto * 0.15
-                            liquido = df_alug["valor_final"].sum()
+                            bruto = round(df_alug["valor_total"].sum(), 2)
+                            comissao = round(bruto * 0.15, 2)
+                            liquido = round(df_alug["valor_final"].sum(), 2)
                             df_alug = showbr_dfdate(df_alug.reindex(alug_ord, axis=1))
                             df_alug.columns = [
                                 "Check-In",
@@ -182,7 +182,7 @@ with tab1:
                                 f"Não há alugueis para o {apto_id} desde {from_day}"
                             )
                             liquido = 0
-                        entregar = liquido - despesas_tot
+                        entregar = round(liquido - despesas_tot, 2)
                         if entregar > 0:
                             st.markdown(
                                 f":blue[Valor a entregar: {locale.currency(entregar)}]"
@@ -374,7 +374,7 @@ with tab2:
                     edited_df_desp = st.data_editor(
                         df_desp_edit, hide_index=True, use_container_width=True
                     )
-                    edited_despesas_tot = edited_df_desp["Valor"].sum()
+                    edited_despesas_tot = round(edited_df_desp["Valor"].sum(), 2)
                     st.markdown(
                         f":red[Valor das Despesas: {locale.currency(edited_despesas_tot)}]"
                     )
@@ -397,10 +397,10 @@ with tab2:
                     edited_df_alug = st.data_editor(
                         df_alug_edit, hide_index=True, use_container_width=True
                     )
-                    edited_bruto = edited_df_alug["Bruto"].sum()
-                    edited_comissao = edited_bruto * 0.15
-                    edited_liquido = edited_df_alug["Líquido"].sum()
-                    nova_taxa = 1 - (edited_liquido / edited_bruto)
+                    edited_bruto = round(edited_df_alug["Bruto"].sum(), 2)
+                    edited_comissao = round(edited_bruto * 0.15, 2)
+                    edited_liquido = round(edited_df_alug["Líquido"].sum(), 2)
+                    nova_taxa = round(1 - (edited_liquido / edited_bruto), 3)
                     st.write(
                         f"Valor bruto dos alugueis: {locale.currency(edited_bruto)}"
                     )
