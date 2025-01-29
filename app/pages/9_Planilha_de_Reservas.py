@@ -14,6 +14,14 @@ st.title("Planilha de Reservas")
 
 tab1, tab2, tab3 = st.tabs(["Planilha", "Reserva por Apto", "Disponibilidade"])
 
+
+def clear_session():
+    if "planilha_g" in st.session_state:
+        st.session_state.pop("planilha_g")
+    if "planilha_p" in st.session_state:
+        st.session_state.pop("planilha_p")
+
+
 with tab1:
     st.markdown(
         '<p style="font-size: 12px;">Campos com * são obrigatórios</p>',
@@ -25,16 +33,17 @@ with tab1:
         options=range(2025, 2027),
         index=date.today().year - 2025,
         key=9100,
+        on_change=clear_session(),
     )
     mes = st.selectbox(
         label="Selecione o mês *",
         options=range(1, 13),
         index=date.today().month - 1,
         key=9101,
+        on_change=clear_session(),
     )
-    if ano and mes:
-        st.markdown(f"### {mes} / {ano}")
-        planilha = gen_reserv_table(ano, mes)
+    st.markdown(f"### {mes} / {ano}")
+    planilha = gen_reserv_table(ano, mes)
     grandes = planilha.index.str.startswith("A") | planilha.index.str.endswith("0")
     pequenos = ~grandes
     if "planilha_g" not in st.session_state:
