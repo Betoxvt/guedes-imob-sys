@@ -129,11 +129,11 @@ class FichaBase(BaseModel):
 class GaragemBase(BaseModel):
     apto_id_origem: str
     apto_id_destino: str
-    checkin: date
-    checkout: date
-    diarias: int
-    valor_diaria: float
-    valor_total: float
+    checkin: Optional[date]
+    checkout: Optional[date]
+    diarias: Optional[int]
+    valor_diaria: Optional[float]
+    valor_total: Optional[float]
 
 
 class PagamentoCat(Enum):

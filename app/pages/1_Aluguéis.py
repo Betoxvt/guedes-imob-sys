@@ -111,7 +111,7 @@ with tab1:
                                 "notas": f"Depósito para reserva do {apto_id} de {checkin.strftime('%d/%m/%Y')} a {checkout.strftime('%d/%m/%Y')}",
                                 "nome": nome,
                                 "contato": contato,
-                                "data": date.today(),
+                                "data": date.today().isoformat(),
                             }
                         )
                         post_pagamento_response = requests.post(

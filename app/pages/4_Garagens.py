@@ -89,7 +89,7 @@ with tab1:
                                 "notas": f"Aluguel da vaga de garagem do {apto_id_origem} para {apto_id_destino} de {checkin.strftime('%d/%m/%Y')} a {checkout.strftime('%d/%m/%Y')}",
                                 "nome": None,
                                 "contato": None,
-                                "data": date.today(),
+                                "data": date.today().isoformat(),
                             }
                         )
                         post_pagamento_response = requests.post(

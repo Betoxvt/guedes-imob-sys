@@ -251,9 +251,19 @@ def create_garagem_route(garagem: GaragemCreate, db: Session = Depends(get_db)):
 
 @router.get("/garagens/", response_model=List[GaragemResponse])
 def read_garagens_route(
-    offset: int = 0, limit: int = 100, db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    apto_id_origem: str | None = None,
+    apto_id_destino: str | None = None,
+    offset: int = 0,
+    limit: int = 100,
 ):
-    garagens = read_garagens(db, offset=offset, limit=limit)
+    garagens = read_garagens(
+        db,
+        apto_id_origem=apto_id_origem,
+        apto_id_destino=apto_id_destino,
+        offset=offset,
+        limit=limit,
+    )
     return garagens
 
 
@@ -420,10 +430,13 @@ def create_pagamento_route(pagamento: PagamentoCreate, db: Session = Depends(get
 def read_pagamentos_route(
     db: Session = Depends(get_db),
     aluguel_id: int | None = None,
+    tipo: str | None = None,
     offset: int = 0,
     limit: int = 100,
 ):
-    pagamentos = read_pagamentos(db, aluguel_id=aluguel_id, offset=offset, limit=limit)
+    pagamentos = read_pagamentos(
+        db, aluguel_id=aluguel_id, tipo=tipo, offset=offset, limit=limit
+    )
     return pagamentos
 
 

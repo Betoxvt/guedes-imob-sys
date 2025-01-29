@@ -102,7 +102,7 @@ def showbr_dfdate(df: pd.DataFrame) -> pd.DataFrame:
         "checkout",
         "criado_em",
         "modificado_em",
-        "data_pagamento",
+        "data",
     ]
     for col in df_new.columns:
         if col in date_columns:
