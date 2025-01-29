@@ -11,8 +11,9 @@ wheels/
 
 # Environment variables
 .env
+users.yaml
 
-# Banco de dados
+# Databases
 *.sqlite
 *.db
 
@@ -26,3 +27,13 @@ test.py
 
 # Visual Studio Code
 .vscode/
+
+# Docker
+# compose.yaml
+db_password.txt
+
+#Other
+*.log
+*~
+*.swp
+.cache

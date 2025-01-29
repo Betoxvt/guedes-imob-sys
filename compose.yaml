@@ -6,10 +6,14 @@ services:
       dockerfile: Dockerfile
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    env_file:
+      - .env
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: mydatabase
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_DB: $POSTGRES_DB
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+    ports:
+      - "5432:5432"
     networks:
       - mynetwork
   
@@ -19,8 +23,10 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./api:/app
+    env_file:
+      - .env
     environment:
-      DATABASE_URL: postgres://user:password@db:5432/mydatabase
+      DATABASE_URL: $DATABASE_URL
     ports:
       - "8000:8000"
     depends_on:
@@ -34,6 +40,8 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./app:/app
+    env_file:
+      - .env
     ports:
       - "8501:8501"
     networks:

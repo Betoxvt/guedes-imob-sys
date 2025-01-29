@@ -18,7 +18,7 @@
 14. [x] Criar todas as páginas.
 15. [ ] Valores default e autocomplete para create, pode se extender às **task 25** e **task 40**.
 16. [ ] Ver como é a configuração para aplicar offset e limit das querys no frontend.
-17. [ ] Fazer o login direito.
+17. [x] Fazer o login direito.
 18. [x] Revisar os dfs, dicts, responses, keys e importações no frontend, paginas 1 a 6.
 19. [x] Marcar campos Obrigatórios com um '*'.
 20. [x] Tentar recriar as páginas que fazem cálculos para exibição instantânea do resultado, aprendi que não pode ser dentro de um `st.form()`.
@@ -40,8 +40,8 @@
 36. [x] Adicionar a página para visualização das tabelas de reservas.
 37. [x] Marcar campos obrigatórios. E resaltalos no caso de ausência ao enviar um registro.
 38. [x] Incluir ao sistema tabela de registros de pagamentos recebidos referentes aos alugueis.
-39. [ ] Criar as views (com dbt?) que serão utilizadas nos relatórios.
-40. [ ] Utilizar variáveis de ambiente (.env) para valores que desejo aplicar automáticamente ao sistema, sem subir para o GitHub.
+39. [ ] Criar as views (com dbt?) para análise de dados.
+40. [x] Utilizar variáveis de ambiente (.env) para valores que desejo aplicar automáticamente ao sistema, sem subir para o GitHub.
 41. [x] Criar função que sera utilizadas para gerar a planilha com as reservas.
 42. [x] Criar trigger para bloquear alugueis de um mesmo apto com datas conflitantes.
 43. [x] Usar como primary-key o próprio nome do apartamento, na table apartamentos. E fazer as devidas alterações no restante do projeto.
@@ -105,25 +105,27 @@ Mais informações:
 
 ### Protótipo
 
-- A princípio, desenvolver um sistema em rede local para os computadores da imobiliária, utilizando a linguagem Python 3.13
-- Configurar o banco de dados PostgreSQL utilizando SQLAlchemy
-- Verificar/Validar dados com Pydantic
-- Backend com FastAPI (inserir, editar, apagar)
-- Frontend com Streamlit. Integração com as funções do fastAPI
-- Gerador de PDF com os dados preenchidos para impressão de fichas dos inquilinos, no mesmo modelo que o exigido pelo condomínio
-- Importar dados do Google Forms e/ou .csv
-- Exibir tabelas (de reservas) mensais com dias como colunas, aptos como linhas, campos preenchidos terão diferença visual para checkin, checkout e dias ocupados. Mais informações, como Contato, valor total e valor já depositado são muito importantes.
+- [x] A princípio, desenvolver um sistema em rede local para os computadores da imobiliária, utilizando a linguagem Python 3.13
+- [x] Configurar o banco de dados PostgreSQL utilizando SQLAlchemy
+- [x] Verificar/Validar dados com Pydantic
+- [x] Backend com FastAPI (inserir, editar, apagar)
+- [x] Frontend com Streamlit. Integração com as funções do fastAPI
+- [x] Gerador de PDF com os dados preenchidos para impressão de fichas dos inquilinos, no mesmo modelo que o exigido pelo condomínio
+- [x] Importar dados do Google Forms e/ou .csv
+- [x] Exibir tabelas (de reservas) mensais com dias como colunas, aptos como linhas, campos preenchidos terão diferença visual para checkin, checkout e dias ocupados. Mais informações, como Contato, valor total e valor já depositado são muito importantes.
 
 ### Primeira versão
 
+- Configurar um servidor local e passar o sistema para este servidor.
 - Criar banco de dados MongoDB para testar
 - Configurar backup automático dos bancos de dados
-- Implantar em contêineres utilizando Docker
+- [x] Implantar em contêineres utilizando Docker
 - Documentar e orquestrar SQL com o DBT-core
 - Aproveitar para utilizar o briefer
+- Fazer uma boa documentação, ouvi falar do MKdocs
 
 ### Segunda versão
 
-- Criar banco de dados vetorial para o funcionamento da IA (ChromeDB?)
+- ?? Criar banco de dados vetorial para o funcionamento da IA (ChromeDB?)
 - Implementar IA (Groq?)
 - Integrar com whatsapp (EvolutionAPI?)
