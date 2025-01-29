@@ -29,6 +29,7 @@
 **/npm-debug.log
 **/obj
 **/secrets.dev.yaml
+**/.users.yaml
 **/values.dev.yaml
 LICENSE
 README.md

@@ -1,23 +1,27 @@
 from datetime import date, timedelta
-import streamlit as st
-import streamlit_authenticator as stauth
-import yaml
-from yaml.loader import SafeLoader
-from utils.myfunc import show_response_message
-from utils.mystr import apto_input
-import requests
-import pandas as pd
+from dotenv import load_dotenv
 import locale
 import numpy as np
+import os
+import pandas as pd
+import requests
+import streamlit as st
+import streamlit_authenticator as stauth
+from utils.myfunc import show_response_message
+from utils.mystr import apto_input
+import yaml
+from yaml.loader import SafeLoader
 
 locale.setlocale(locale.LC_ALL, "pt_BR.UTF-8")
+load_dotenv()
+users_yaml = os.getenv("USERS_PATH")
 
 st.set_page_config(page_title="Pagina Inicial", layout="wide")
 st.title("Página Inicial")
 
 
 def st_authenticator():
-    with open(".users.yaml") as f:
+    with open(users_yaml) as f:
         config = yaml.load(f, Loader=SafeLoader)
         f.close()
 
