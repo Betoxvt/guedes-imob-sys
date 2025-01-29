@@ -18,7 +18,7 @@
 14. [x] Criar todas as páginas.
 15. [ ] Valores default e autocomplete para create, pode se extender às **task 25** e **task 40**.
 16. [ ] Ver como é a configuração para aplicar offset e limit das querys no frontend.
-17. [ ] Fazer o login direito.
+17. [x] Fazer o login direito.
 18. [x] Revisar os dfs, dicts, responses, keys e importações no frontend, paginas 1 a 6.
 19. [x] Marcar campos Obrigatórios com um '*'.
 20. [x] Tentar recriar as páginas que fazem cálculos para exibição instantânea do resultado, aprendi que não pode ser dentro de um `st.form()`.
@@ -41,7 +41,7 @@
 37. [x] Marcar campos obrigatórios. E resaltalos no caso de ausência ao enviar um registro.
 38. [x] Incluir ao sistema tabela de registros de pagamentos recebidos referentes aos alugueis.
 39. [ ] Criar as views (com dbt?) que serão utilizadas nos relatórios.
-40. [ ] Utilizar variáveis de ambiente (.env) para valores que desejo aplicar automáticamente ao sistema, sem subir para o GitHub.
+40. [x] Utilizar variáveis de ambiente (.env) para valores que desejo aplicar automáticamente ao sistema, sem subir para o GitHub.
 41. [x] Criar função que sera utilizadas para gerar a planilha com as reservas.
 42. [x] Criar trigger para bloquear alugueis de um mesmo apto com datas conflitantes.
 43. [x] Usar como primary-key o próprio nome do apartamento, na table apartamentos. E fazer as devidas alterações no restante do projeto.

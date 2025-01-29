@@ -1,10 +1,11 @@
+import os
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 
 
-DATABASE_URL = "postgresql://user:password@db:5432/mydatabase"
+DB_PATH = os.environ.get("DB_PATH")
 
-engine = create_engine(DATABASE_URL)
+engine = create_engine(DB_PATH)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 

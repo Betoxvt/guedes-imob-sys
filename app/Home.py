@@ -1,5 +1,4 @@
 from datetime import date, timedelta
-from dotenv import load_dotenv
 import locale
 import numpy as np
 import os
@@ -13,15 +12,15 @@ import yaml
 from yaml.loader import SafeLoader
 
 locale.setlocale(locale.LC_ALL, "pt_BR.UTF-8")
-load_dotenv()
-users_yaml = os.getenv("USERS_PATH")
+
+USERS_PATH = os.environ.get("USERS_PATH")
 
 st.set_page_config(page_title="Pagina Inicial", layout="wide")
 st.title("Página Inicial")
 
 
 def st_authenticator():
-    with open(users_yaml) as f:
+    with open(USERS_PATH) as f:
         config = yaml.load(f, Loader=SafeLoader)
         f.close()
 

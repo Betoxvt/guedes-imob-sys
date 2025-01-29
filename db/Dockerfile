@@ -7,5 +7,3 @@ RUN apt-get update && apt-get install -y locales \
 ENV LANG pt_BR.UTF-8
 ENV LANGUAGE pt_BR:pt
 ENV LC_ALL pt_BR.UTF-8
-
-COPY init-db.sh /docker-entrypoint-initdb.d/

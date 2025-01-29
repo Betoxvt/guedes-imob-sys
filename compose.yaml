@@ -6,11 +6,14 @@ services:
       dockerfile: Dockerfile
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    secrets:
-      - db_password
+    env_file:
+      - .env
     environment:
-      POSTGRES_USER: betoxvt
-      POSTGRES_DB: estate_system_db
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_DB: $POSTGRES_DB
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+    ports:
+      - "5432:5432"
     networks:
       - mynetwork
   
@@ -20,8 +23,10 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./api:/app
-    secrets:
-      - db_password
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: $DATABASE_URL
     ports:
       - "8000:8000"
     depends_on:
@@ -33,10 +38,10 @@ services:
     build:
       context: ./app
       dockerfile: Dockerfile
-    secrets:
-      - db_password
     volumes:
       - ./app:/app
+    env_file:
+      - .env
     ports:
       - "8501:8501"
     networks:
@@ -45,10 +50,5 @@ services:
 networks:
   mynetwork:
 
-secrets:
-  db_password:
-    file: db_password.txt
-
 volumes:
   postgres_data:
-
