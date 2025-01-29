@@ -12,6 +12,14 @@ from utils.mystr import apto_input, csv_handler, empty_none, empty_none_dict
 st.set_page_config(page_title="Ficha de Inquilinos", layout="wide")
 st.title("Ficha de Inquilinos")
 
+if not st.session_state["authentication_status"]:
+    st.info("Por favor faça o login na Home page e tente novamente.")
+    st.stop()
+else:
+    authenticator = st.session_state.authenticator
+    st.write(f'Usuário: *{st.session_state["name"]}*')
+    authenticator.logout(location="sidebar")
+
 tab1, tab2, tab3, tab4, tab5 = st.tabs(
     ["Registrar", "Consultar", "Modificar", "Deletar", "Listar"]
 )

@@ -14,6 +14,15 @@ from utils.myfunc import show_data_output, show_response_message
 from utils.mystr import apto_input
 
 st.title("Relatórios")
+
+if not st.session_state["authentication_status"]:
+    st.info("Por favor faça o login na Home page e tente novamente.")
+    st.stop()
+else:
+    authenticator = st.session_state.authenticator
+    st.write(f'Usuário: *{st.session_state["name"]}*')
+    authenticator.logout(location="sidebar")
+
 comissao = 0.15
 locale.setlocale(locale.LC_ALL, "pt_BR.UTF-8")
 tab1, tab2 = st.tabs(["Gerar Relatório", "Editar Relatório"])

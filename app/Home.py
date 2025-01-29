@@ -3,7 +3,6 @@ import streamlit as st
 import streamlit_authenticator as stauth
 import yaml
 from yaml.loader import SafeLoader
-from utils.mydate import showbr_dfdate
 from utils.myfunc import show_response_message
 from utils.mystr import apto_input
 import requests
@@ -17,21 +16,34 @@ st.set_page_config(page_title="Pagina Inicial", layout="wide")
 st.title("Página Inicial")
 
 
-with open("config.yaml", "r") as f:
-    config = yaml.load(f, Loader=SafeLoader)
+def st_authenticator():
+    with open(".users.yaml") as f:
+        config = yaml.load(f, Loader=SafeLoader)
+        f.close()
 
-authenticator = stauth.Authenticate(
-    config["credentials"],
-    config["cookie"]["name"],
-    config["cookie"]["key"],
-    config["cookie"]["expiry_days"],
-)
+    authenticator = stauth.Authenticate(
+        config["credentials"],
+        config["cookie"]["name"],
+        config["cookie"]["key"],
+        config["cookie"]["expiry_days"],
+    )
 
-authenticator.login()
+    return authenticator
+
+
+if "authenticator" not in st.session_state:
+    st.session_state.authenticator = st_authenticator()
+
+authenticator = st.session_state.authenticator
+
+try:
+    authenticator.login()
+except Exception as e:
+    st.error(e)
 
 if st.session_state["authentication_status"]:
-    authenticator.logout(location="sidebar")
     st.write(f'Usuário: *{st.session_state["name"]}*')
+    authenticator.logout(location="sidebar")
     st.subheader("Consultas Rápidas")
     tab1, tab2 = st.tabs(["Por Apartamento", "Por Datas"])
 
@@ -254,6 +266,6 @@ if st.session_state["authentication_status"]:
                 show_response_message(alug_response)
 
 elif st.session_state["authentication_status"] is False:
-    st.write("Usuário ou senha incorretos")
+    st.error("Usuário ou senha incorretos")
 elif st.session_state["authentication_status"] is None:
     st.write("Por favor, faça login")

@@ -12,6 +12,14 @@ locale.setlocale(locale.LC_ALL, "pt_BR.UTF-8")
 st.set_page_config(page_title="Planilha de Reservas", layout="wide")
 st.title("Planilha de Reservas")
 
+if not st.session_state["authentication_status"]:
+    st.info("Por favor faça o login na Home page e tente novamente.")
+    st.stop()
+else:
+    authenticator = st.session_state.authenticator
+    st.write(f'Usuário: *{st.session_state["name"]}*')
+    authenticator.logout(location="sidebar")
+
 tab1, tab2, tab3 = st.tabs(["Planilha", "Reserva por Apto", "Disponibilidade"])
 
 

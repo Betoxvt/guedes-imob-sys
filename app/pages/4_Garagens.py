@@ -10,6 +10,14 @@ from utils.mystr import apto_input, empty_none, empty_none_dict
 st.set_page_config(page_title="Garagens | Alugueis e Empréstimos", layout="wide")
 st.title("Garagens | Alugueis e Empréstimos")
 
+if not st.session_state["authentication_status"]:
+    st.info("Por favor faça o login na Home page e tente novamente.")
+    st.stop()
+else:
+    authenticator = st.session_state.authenticator
+    st.write(f'Usuário: *{st.session_state["name"]}*')
+    authenticator.logout(location="sidebar")
+
 tab1, tab2, tab3, tab4, tab5 = st.tabs(
     ["Registrar", "Consultar", "Modificar", "Deletar", "Listar"]
 )
