@@ -1,0 +1,54 @@
+name: estate_system
+services:
+  db:
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    secrets:
+      - db_password
+    environment:
+      POSTGRES_USER: betoxvt
+      POSTGRES_DB: estate_system_db
+    networks:
+      - mynetwork
+  
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    volumes:
+      - ./api:/app
+    secrets:
+      - db_password
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - mynetwork
+
+  app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    secrets:
+      - db_password
+    volumes:
+      - ./app:/app
+    ports:
+      - "8501:8501"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+
+secrets:
+  db_password:
+    file: db_password.txt
+
+volumes:
+  postgres_data:
+

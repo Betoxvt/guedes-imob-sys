@@ -29,4 +29,11 @@ test.py
 .vscode/
 
 # Docker
-compose.yaml
+# compose.yaml
+db_password.txt
+
+#Other
+*.log
+*~
+*.swp
+.cache

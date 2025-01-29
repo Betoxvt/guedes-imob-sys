@@ -1,4 +1,5 @@
-**/files/
+
+
 **/.DS_Store
 **/__pycache__
 **/.venv
@@ -34,3 +35,4 @@ README.md
 .cache
 **/sql/
 **/test.py
+**/files/
