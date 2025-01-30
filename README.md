@@ -1,5 +1,7 @@
 # Sistema para imobiliária, um estudo sobre sistemas
 
+Estou trabalhando neste projeto com o objetivo de facilitar o dia-a-dia no trabalho. Mas não apenas isso, por enquanto na fase do protótipo eu devo aprender mais sobre Python e algumas bibliotecas (FastAPI, SQLAlchemy, Pydantic, Streamlit, Requests, etc.), Banco de Dados (PostgreSQL), SQL, Docker (Compose), Git e GitHub (CLI, versionamento, Pull Requests, Issues) e Servidores (Chaves SSH e Deploy).
+
 ## Problema
 
 A imobiliária deseja um sistema que permita:
