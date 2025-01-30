@@ -130,4 +130,4 @@ Mais informações:
 69. [x] Criar a página inicial, que terá todo tipo de consulta.
 70. [x] Configurar uma máquina para ser o servidor na rede local. IP estático e chave SSH.
 71. [x] Fazer o Deploy e sincronizar utilizando `rsync`.
-72. [ ] Aumentar a segurança do acesso ao servidor, com as configurações do docker.
+72. [x] Mudar o host da API de 0.0.0.0 para o nome do container, com intenção de aumentar um pouco a segurança no protótipo.
