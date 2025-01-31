@@ -5,13 +5,11 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "fastapi>=0.115.5",
+    "fastapi>=0.115.8",
     "psycopg2-binary>=2.9.10",
-    "pydantic[email]>=2.10.2",
+    "pydantic[email]>=2.10.6",
     "reportlab>=4.2.5",
-    "requests>=2.32.3",
-    "sqlalchemy>=2.0.36",
+    "sqlalchemy>=2.0.37",
     "streamlit-authenticator>=0.4.1",
-    "streamlit>=1.41.1",
-    "uvicorn>=0.32.1",
+    "uvicorn>=0.34.0",
 ]
