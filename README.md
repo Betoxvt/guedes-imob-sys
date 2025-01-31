@@ -1,6 +1,65 @@
 # Sistema para imobiliária, um estudo sobre sistemas
 
-## Tasks
+Estou trabalhando neste projeto com o objetivo de facilitar o dia-a-dia no trabalho. Mas não apenas isso, por enquanto na fase do protótipo eu devo aprender mais sobre Python e algumas bibliotecas (FastAPI, SQLAlchemy, Pydantic, Streamlit, Requests, etc.), Banco de Dados (PostgreSQL), SQL, Docker (Compose), Git e GitHub (CLI, versionamento, Pull Requests, Issues) e Servidores (Chaves SSH e Deploy).
+
+## Problema
+
+A imobiliária deseja um sistema que permita:
+
+- Cadastrar imóvel, o número do apartamento e edifício, incluir se possível o código da celesc, do gás, da internet, Wifi - ID e Senha, senha da fechadura
+- Cadastrar proprietário/responsável do imóvel, Nome, CPF, telefone (whatsapp) e e-mail
+- Registrar os gastos variáveis e despesas fixas, detalhados, com data e com a nota (se aplicável)
+- Registrar aluguel/reserva em um calendário, com valor da diária, valor da taxa de limpeza, valor da taxa de administração/comissão (calculado automaticamente)
+- Gerar o relatório descritivo da contabilidade para cada apto, com as datas relacionadas
+- Registrar o valor acumulado de cada apto
+- Registrar saque dos valores de cada apto (com data, descrição e recibo)
+
+Bônus:
+
+- Integrar com AI para consultar datas disponíveis dos apartamentos, via chat com voz
+- Integrar com AI para marcar reservas, via chat com voz
+- Registrar as vagas de garagens, vinculadas ao número do apartamento
+- Registrar aluguel das vagas de garagem, com o preço por dia, e qual apto ocupará
+
+Mais informações:
+
+- Deve permitir a alteração dos dados, editar ou excluir
+- Deve ser possível cancelar reservas
+- Não devem haver custos adicionais
+- Deve ser compatível com windows 10, fedora41 (linux), iOS 18.1.1 e android 14
+
+## Objetivos
+
+### Protótipo
+
+- [x] A princípio, desenvolver um sistema em rede local para os computadores da imobiliária, utilizando a linguagem Python 3.13
+- [x] Configurar o banco de dados PostgreSQL utilizando SQLAlchemy
+- [x] Verificar/Validar dados com Pydantic
+- [x] Backend com FastAPI (inserir, editar, apagar)
+- [x] Frontend com Streamlit. Integração com as funções do fastAPI
+- [x] Gerador de PDF com os dados preenchidos para impressão de fichas dos inquilinos, no mesmo modelo que o exigido pelo condomínio
+- [x] Importar dados do Google Forms e/ou .csv
+- [x] Exibir tabelas (de reservas) mensais com dias como colunas, aptos como linhas, campos preenchidos terão diferença visual para checkin, checkout e dias ocupados. Mais informações, como Contato, valor total e valor já depositado são muito importantes.
+- [x] Configurar uma maquina-servidor em rede local e passar o sistema para este servidor.
+- [x] Implantar em contêineres utilizando Docker
+
+### Primeira versão
+
+- Configurar backup automático dos bancos de dados
+- Salvar imagem/pdf de recibos ou semelhantes, armazenando os links no banco de dados em uma nova tabela para relacionar com as outras tabelas do banco de dados
+- Permitir alterações com tipo de requisição PATCH diretamente nos DataFrames (Estudar a necessidade)
+- (Opcional) Criar banco de dados MongoDB para testar
+- Fazer uma boa documentação, ouvi falar do MKdocs
+- Documentar e orquestrar SQL com o DBT-core
+- Aproveitar para utilizar o briefer
+
+### Segunda versão
+
+- ?? Criar banco de dados vetorial para o funcionamento da IA (ChromeDB?)
+- Implementar IA (Groq?)
+- Integrar com whatsapp (EvolutionAPI?)
+
+## Tasks do protótipo
 
 1. [x] Adicionar colunas para data de criação e data de modificação.
 2. [ ] Criar checks e validations em `models.py`.
@@ -71,61 +130,8 @@
 67. [x] Dar um jeito de interagir com os dataframes (para pesquisas ou mais informações)
 68. [x] Adicionar parâmetros de filtro opcionais aos endpoints, para facilitar as consultas.
 69. [x] Criar a página inicial, que terá todo tipo de consulta.
-
-**Pensar em como utilizar o patch para alterações individuais de campos, ainda não vejo muito sentido nisso, mas como estudo pode ser bom.**
-**Agora até vejo que pode ser útil para atualizar os valores depositados para cada aluguel, e o valores entregues para os proprietarios**
-
-## Problema
-
-A imobiliária deseja um sistema que permita:
-
-- Cadastrar imóvel, o número do apartamento e edifício, incluir se possível o código da celesc, do gás, da internet, Wifi - ID e Senha, senha da fechadura
-- Cadastrar proprietário/responsável do imóvel, Nome, CPF, telefone (whatsapp) e e-mail
-- Registrar os gastos variáveis e despesas fixas, detalhados, com data e com a nota (se aplicável)
-- Registrar aluguel/reserva em um calendário, com valor da diária, valor da taxa de limpeza, valor da taxa de administração/comissão (calculado automaticamente)
-- Gerar o relatório descritivo da contabilidade para cada apto, com as datas relacionadas
-- Registrar o valor acumulado de cada apto
-- Registrar saque dos valores de cada apto (com data, descrição e recibo)
-
-Bônus:
-
-- Integrar com AI para consultar datas disponíveis dos apartamentos, via chat com voz
-- Integrar com AI para marcar reservas, via chat com voz
-- Registrar as vagas de garagens, vinculadas ao número do apartamento
-- Registrar aluguel das vagas de garagem, com o preço por dia, e qual apto ocupará
-
-Mais informações:
-
-- Deve permitir a alteração dos dados, editar ou excluir
-- Deve ser possível cancelar reservas
-- Não devem haver custos adicionais
-- Deve ser compatível com windows 10, fedora41 (linux), iOS 18.1.1 e android 14
-
-## Objetivos
-
-### Protótipo
-
-- [x] A princípio, desenvolver um sistema em rede local para os computadores da imobiliária, utilizando a linguagem Python 3.13
-- [x] Configurar o banco de dados PostgreSQL utilizando SQLAlchemy
-- [x] Verificar/Validar dados com Pydantic
-- [x] Backend com FastAPI (inserir, editar, apagar)
-- [x] Frontend com Streamlit. Integração com as funções do fastAPI
-- [x] Gerador de PDF com os dados preenchidos para impressão de fichas dos inquilinos, no mesmo modelo que o exigido pelo condomínio
-- [x] Importar dados do Google Forms e/ou .csv
-- [x] Exibir tabelas (de reservas) mensais com dias como colunas, aptos como linhas, campos preenchidos terão diferença visual para checkin, checkout e dias ocupados. Mais informações, como Contato, valor total e valor já depositado são muito importantes.
-
-### Primeira versão
-
-- Configurar um servidor local e passar o sistema para este servidor.
-- Criar banco de dados MongoDB para testar
-- Configurar backup automático dos bancos de dados
-- [x] Implantar em contêineres utilizando Docker
-- Documentar e orquestrar SQL com o DBT-core
-- Aproveitar para utilizar o briefer
-- Fazer uma boa documentação, ouvi falar do MKdocs
-
-### Segunda versão
-
-- ?? Criar banco de dados vetorial para o funcionamento da IA (ChromeDB?)
-- Implementar IA (Groq?)
-- Integrar com whatsapp (EvolutionAPI?)
+70. [x] Configurar uma máquina para ser o servidor na rede local. IP estático e chave SSH.
+71. [x] Fazer o Deploy e sincronizar utilizando `rsync`.
+72. [x] Mudar o host da API de 0.0.0.0 para o nome do container, com intenção de aumentar um pouco a segurança no protótipo.
+73. [ ] Usar índices nas tabelas do banco de dados.
+74. [ ] Criar scripts SQL para inserir dados de teste no banco.
