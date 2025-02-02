@@ -177,7 +177,7 @@ if st.session_state["authentication_status"]:
             return pd.Series(
                 np.where(
                     is_index_col,
-                    "color: white; font-weight: bold",
+                    "font-weight: bold",
                     np.where(
                         val == "Livre",
                         "background-color: green",

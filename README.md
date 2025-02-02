@@ -1,6 +1,6 @@
 # Sistema para imobiliária, um estudo sobre sistemas
 
-Estou trabalhando neste projeto com o objetivo de facilitar o dia-a-dia no trabalho. Mas não apenas isso, por enquanto na fase do protótipo eu devo aprender mais sobre Python e algumas bibliotecas (FastAPI, SQLAlchemy, Pydantic, Streamlit, Requests, etc.), Banco de Dados (PostgreSQL), SQL, Docker (Compose), Git e GitHub (CLI, versionamento, Pull Requests, Issues) e Servidores (Chaves SSH e Deploy).
+Estou trabalhando neste projeto com o objetivo de facilitar o dia-a-dia no trabalho de uma imobiliária. Mas não apenas isso, por enquanto na fase do protótipo eu devo aprender mais sobre Python e algumas bibliotecas (FastAPI, SQLAlchemy, Pydantic, Streamlit, Requests, etc.), Banco de Dados (PostgreSQL), SQL, Docker (Compose), Git e GitHub (CLI, versionamento, Pull Requests, Issues) e Servidores (Chaves SSH e Deploy).
 
 ## Problema
 
@@ -45,7 +45,7 @@ Mais informações:
 
 ### Primeira versão
 
-- Configurar backup automático dos bancos de dados
+- Configurar backup automático do banco de dados
 - Salvar imagem/pdf de recibos ou semelhantes, armazenando os links no banco de dados em uma nova tabela para relacionar com as outras tabelas do banco de dados
 - Permitir alterações com tipo de requisição PATCH diretamente nos DataFrames (Estudar a necessidade)
 - (Opcional) Criar banco de dados MongoDB para testar
@@ -75,14 +75,14 @@ Mais informações:
 12. [x] Importar csv para ficha de inquilino.
 13. [x] Refazer os models/schemas/crud: Fix nos tipos de dados que estão int para str (cep, cpf, telefone, rg...)
 14. [x] Criar todas as páginas.
-15. [ ] Valores default e autocomplete para create, pode se extender às **task 25** e **task 40**.
+15. [ ] Valores default para create, pode se extender às **task 25** e **task 40**.
 16. [ ] Ver como é a configuração para aplicar offset e limit das querys no frontend.
 17. [x] Fazer o login direito.
 18. [x] Revisar os dfs, dicts, responses, keys e importações no frontend, paginas 1 a 6.
 19. [x] Marcar campos Obrigatórios com um '*'.
 20. [x] Tentar recriar as páginas que fazem cálculos para exibição instantânea do resultado, aprendi que não pode ser dentro de um `st.form()`.
 21. [ ] Ver quais funções deveriam ser `async`com `asyncio` estudar e aplicar.
-22. [ ] Reduzir as repetições de código com funções e decoradores.
+22. [ ] Reduzir as repetições de código com funções, closures e decoradores.
 23. [x] Melhor aquele esquema do if update_id... etc
 24. [x] A tabela fichas tera um campo para RG ou CPF em vez de dois campos para cada acompanhante (no front pelo menos ta certo).
 25. [ ] Colocar valores que se repetem diretamente no pdf e remover do banco de dados (na verdade deixa assim, quando estiver em produção talvez).
@@ -134,6 +134,7 @@ Mais informações:
 71. [x] Fazer o Deploy e sincronizar utilizando `rsync`.
 72. [x] Mudar o host da API de 0.0.0.0 para o nome do container, com intenção de aumentar um pouco a segurança no protótipo.
 73. [ ] Usar índices nas tabelas do banco de dados.
-74. [ ] Instalar o faker para criar dados fake.
-75. [ ] Criar scripts SQL para inserir dados de teste no banco.
+74. [x] Instalar o faker para criar dados fake.
+75. [x] Criar script para para inserir dados de teste no banco, com SQLAlchemy.
 76. [x] Separar as dependências de cada conteiner e manejar com UV diretamente.
+77. [x] Inserir um pequeno delay para iniciar a API, para que espere o DB ficar completamente pronto.
