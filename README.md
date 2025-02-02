@@ -134,4 +134,6 @@ Mais informações:
 71. [x] Fazer o Deploy e sincronizar utilizando `rsync`.
 72. [x] Mudar o host da API de 0.0.0.0 para o nome do container, com intenção de aumentar um pouco a segurança no protótipo.
 73. [ ] Usar índices nas tabelas do banco de dados.
-74. [ ] Criar scripts SQL para inserir dados de teste no banco.
+74. [ ] Instalar o faker para criar dados fake.
+75. [ ] Criar scripts SQL para inserir dados de teste no banco.
+76. [x] Separar as dependências de cada conteiner e manejar com UV diretamente.
