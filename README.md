@@ -136,5 +136,4 @@ Mais informações:
 73. [ ] Usar índices nas tabelas do banco de dados.
 74. [ ] Instalar o faker para criar dados fake.
 75. [ ] Criar scripts SQL para inserir dados de teste no banco.
-76. [x] Ajeitar as dependências.
-77. [ ] Utilizar um ambiente virtual nas imagens e permitir que o uv instale as dependências nele.
+76. [x] Separar as dependências de cada conteiner e manejar com UV diretamente.
