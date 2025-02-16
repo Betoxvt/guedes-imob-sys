@@ -40,8 +40,8 @@ class ApartamentoBase(BaseModel):
 
 
 class Moeda(Enum):
-    cat1 = "R$"
-    cat2 = "$"
+    cat1 = "BRL"
+    cat2 = "USD"
 
 
 class CaixaBase(BaseModel):
