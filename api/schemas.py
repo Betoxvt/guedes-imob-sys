@@ -39,6 +39,22 @@ class ApartamentoBase(BaseModel):
     rip: Optional[str]
 
 
+class Moeda(Enum):
+    cat1 = "R$"
+    cat2 = "$"
+
+
+class CaixaBase(BaseModel):
+    moeda: str
+    valor: float
+
+    @field_validator("moeda")
+    def check_moeda_base(cls, v):
+        if v in [item.value for item in Moeda]:
+            return v
+        raise ValueError("Categoria inválida")
+
+
 class DespesaCat(Enum):
     cat1 = "IPTU"
     cat2 = "Condomínio"
@@ -184,6 +200,10 @@ class ApartamentoCreate(ApartamentoBase):
     pass
 
 
+class CaixaCreate(CaixaBase):
+    pass
+
+
 class DespesaCreate(DespesaBase):
     pass
 
@@ -221,6 +241,15 @@ class AluguelResponse(AluguelBase):
 
 
 class ApartamentoResponse(ApartamentoBase):
+    criado_em: date
+    modificado_em: date
+
+    class Config:
+        from_attributes = True
+
+
+class CaixaResponse(CaixaBase):
+    id: int
     criado_em: date
     modificado_em: date
 
@@ -288,6 +317,18 @@ class AluguelUpdate(AluguelCreate):
 
 class ApartamentoUpdate(ApartamentoCreate):
     __annotations__ = convert_to_optional(ApartamentoCreate)
+
+
+class CaixaUpdate(CaixaCreate):
+    __annotations__ = convert_to_optional(CaixaCreate)
+
+    @field_validator("moeda")
+    def check_moeda_up(cls, v):
+        if v is None:
+            return v
+        if v in [item.value for item in Moeda]:
+            return v
+        raise ValueError("Categoria inválida")
 
 
 class DespesaUpdate(DespesaCreate):
