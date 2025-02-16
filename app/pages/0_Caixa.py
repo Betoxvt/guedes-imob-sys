@@ -32,3 +32,41 @@ with tab1:
         label="Valor",
         format="%.2f",
     )
+    if st.button("Registrar"):
+        caixa_data = {
+            "moeda": moeda,
+            "valor": valor,
+        }
+        try:
+            post_response = requests.post("http://api:8000/caixa/", json=caixa_data)
+            show_response_message(post_response)
+            if post_response.status_code == 200:
+                st.subheader("Dados inseridos, tudo OK:")
+            else:
+                st.subheader("Dados NÃO inseridos, favor revisar:")
+            show_data_output(caixa_data)
+        except Exception as e:
+            raise e
+
+with tab2:
+    st.header("Consultar Caixa")
+
+    with st.expander(label="Filtros"):
+        start_date = st.date_input(
+            label="Data de Início",
+            value=None,
+            format="DD/MM/YYYY",
+        )
+        end_date = st.date_input(
+            label="Data de Término", value=None, format="DD/MM/YYYY"
+        )
+        signal = st.selectbox(
+            label="Tipo",
+            options=["Todos", "Depósitos", "Saques"],
+        )
+        moeda = st.selectbox(label="Moeda", options=["Todos", "BRL", "USD"])
+
+    if st.button("Consultar"):
+        get_list_response = requests.get(
+            f"http://api:8000/caixa/?start_date={start_date}&end_date={end_date}&signal={signal}&moeda={moeda}"
+        )

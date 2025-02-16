@@ -86,7 +86,7 @@ else:
                     st.subheader("Dados NÃO inseridos, favor revisar:")
                 show_data_output(apto_data)
             except Exception as e:
-                raise (e)
+                raise e
 
     with tab2:
         st.header("Consultar Apartamentos")
@@ -201,7 +201,7 @@ else:
                             st.subheader("Dados NÃO inseridos, favor revisar:")
                         show_data_output(apto_up_data)
                     except Exception as e:
-                        raise (e)
+                        raise e
             else:
                 show_response_message(update_response)
 

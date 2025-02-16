@@ -211,7 +211,7 @@ def read_all_caixa_route(
     db: Session = Depends(get_db),
     start_date: str | None = None,
     end_date: str | None = None,
-    signal: int | None = None,
+    signal: str | None = None,
     moeda: str | None = None,
     offset: int = 0,
     limit: int = 100,

@@ -42,7 +42,7 @@ authenticator = st.session_state.authenticator
 try:
     authenticator.login()
 except Exception as e:
-    st.error(e)
+    st.errore
 
 if st.session_state["authentication_status"]:
     st.write(f'Usuário: *{st.session_state["name"]}*')

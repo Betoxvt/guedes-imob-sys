@@ -385,7 +385,7 @@ def read_all_caixa(
     db: Session,
     start_date: str | None = Query(None, description="Data de início: (YYYY-MM-DD)"),
     end_date: str | None = Query(None, description="Data de término: (YYYY-MM-DD)"),
-    signal: int | None = Query(None, description="Positivo: (1) ou Negativo: (-1)"),
+    signal: int | None = Query(None, description="Positivo ou Negativo"),
     moeda: str | None = Query(None, description="Moeda: BRL, USD"),
     offset: int = 0,
     limit: int = 100,
@@ -417,12 +417,12 @@ def read_all_caixa(
         if end_date is not None:
             query = query.filter(Caixa.criado_em <= end_date)
 
-        if signal > 0:
+        if signal == "Depósitos":
             query = query.filter(Caixa.valor >= 0)
-        if signal < 0:
+        if signal == "Saques":
             query = query.filter(Caixa <= 0)
 
-        if moeda is not None:
+        if moeda is not None and moeda != "Todos":
             query = query.filter(Caixa.moeda == moeda)
 
         return query.offset(offset).limit(limit).all()
