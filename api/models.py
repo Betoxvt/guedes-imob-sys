@@ -83,6 +83,20 @@ class Apartamento(Base):
     relatorios: Mapped[list["Relatorio"]] = relationship(back_populates="apartamento")
 
 
+class Caixa(Base):
+    __tablename__ = "caixa"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    moeda: Mapped[str] = mapped_column(String, nullable=False)
+    valor: Mapped[float] = mapped_column(Numeric(10, 2), nullable=False)
+    criado_em: Mapped[date] = mapped_column(
+        server_default=func.current_date(), nullable=False
+    )
+    modificado_em: Mapped[date] = mapped_column(
+        server_default=func.current_date(), onupdate=func.current_date(), nullable=False
+    )
+
+
 class Despesa(Base):
     __tablename__ = "despesas"
 
