@@ -11,6 +11,12 @@ from crud import (
     update_apartamento,
     patch_apartamento,
     delete_apartamento,
+    create_caixa,
+    read_caixa,
+    read_all_caixa,
+    update_caixa,
+    patch_caixa,
+    delete_caixa,
     create_despesa,
     read_despesas,
     read_despesa,
@@ -58,6 +64,9 @@ from schemas import (
     ApartamentoCreate,
     ApartamentoResponse,
     ApartamentoUpdate,
+    CaixaCreate,
+    CaixaResponse,
+    CaixaUpdate,
     DespesaCreate,
     DespesaResponse,
     DespesaUpdate,
@@ -190,6 +199,67 @@ def delete_apartamento_route(apartamento_id: int, db: Session = Depends(get_db))
     if db_apartamento is None:
         raise HTTPException(status_code=404, detail="Apartamento not found")
     return db_apartamento
+
+
+@router.post("/caixa/", response_model=CaixaResponse)
+def create_caixa_route(caixa: CaixaCreate, db: Session = Depends(get_db)):
+    return create_caixa(db=db, caixa=caixa)
+
+
+@router.get("/caixa/", response_model=List[CaixaResponse])
+def read_all_caixa_route(
+    db: Session = Depends(get_db),
+    start_date: str | None = None,
+    end_date: str | None = None,
+    signal: int | None = None,
+    moeda: str | None = None,
+    offset: int = 0,
+    limit: int = 100,
+):
+    all_caixa = read_all_caixa(
+        db,
+        start_date=start_date,
+        end_date=end_date,
+        signal=signal,
+        moeda=moeda,
+        offset=offset,
+        limit=limit,
+    )
+    return all_caixa
+
+
+@router.get("/caixa/{caixa_id}", response_model=CaixaResponse)
+def read_caixa_route(caixa_id: int, db: Session = Depends(get_db)):
+    caixa = read_caixa(db, caixa_id=caixa_id)
+    if caixa == None:
+        raise HTTPException(status_code=400, detail="Caixa not found")
+    return caixa
+
+
+@router.put("/caixa/{caixa_id}", response_model=CaixaResponse)
+def update_caixa_route(
+    caixa_id: int, caixa: CaixaCreate, db: Session = Depends(get_db)
+):
+    db_caixa = update_caixa(db=db, caixa_id=caixa_id, caixa=caixa)
+    if db_caixa is None:
+        raise HTTPException(status_code=404, detail="Caixa not found")
+    return db_caixa
+
+
+@router.patch("/caixa/{caixa_id}", response_model=CaixaResponse)
+def patch_caixa_route(caixa_id: int, caixa: CaixaUpdate, db: Session = Depends(get_db)):
+    db_caixa = patch_caixa(db=db, caixa_id=caixa_id, caixa=caixa)
+    if db_caixa is None:
+        raise HTTPException(status_code=404, detail="Caixa not found")
+    return db_caixa
+
+
+@router.delete("/caixa/{caixa_id}", response_model=CaixaResponse)
+def delete_caixa_route(caixa_id: int, db: Session = Depends(get_db)):
+    db_caixa = delete_caixa(db, caixa_id=caixa_id)
+    if db_caixa is None:
+        raise HTTPException(status_code=404, detail="Caixa not found")
+    return db_caixa
 
 
 @router.post("/despesas/", response_model=DespesaResponse)

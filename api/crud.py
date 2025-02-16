@@ -383,8 +383,10 @@ def create_caixa(db: Session, caixa: CaixaCreate) -> Caixa:
 
 def read_all_caixa(
     db: Session,
-    apto_id: str | None = Query(None, description="ID do apartamento"),
-    checkin: str | None = Query(None, description="Data do check-in (YYYY-MM-DD)"),
+    start_date: str | None = Query(None, description="Data de início: (YYYY-MM-DD)"),
+    end_date: str | None = Query(None, description="Data de término: (YYYY-MM-DD)"),
+    signal: int | None = Query(None, description="Positivo: (1) ou Negativo: (-1)"),
+    moeda: str | None = Query(None, description="Moeda: BRL, USD"),
     offset: int = 0,
     limit: int = 100,
 ) -> List[Caixa]:
@@ -409,11 +411,19 @@ def read_all_caixa(
     try:
         query = db.query(Caixa).order_by(Caixa.id.desc())
 
-        if apto_id is not None:
-            query = query.filter(Caixa.apto_id == apto_id)
+        if start_date is not None:
+            query = query.filter(Caixa.criado_em >= start_date)
 
-        if checkin is not None:
-            query = query.filter(Caixa.checkin == checkin)
+        if end_date is not None:
+            query = query.filter(Caixa.criado_em <= end_date)
+
+        if signal > 0:
+            query = query.filter(Caixa.valor >= 0)
+        if signal < 0:
+            query = query.filter(Caixa <= 0)
+
+        if moeda is not None:
+            query = query.filter(Caixa.moeda == moeda)
 
         return query.offset(offset).limit(limit).all()
     except SQLAlchemyError as e:
