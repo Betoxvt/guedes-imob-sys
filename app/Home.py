@@ -48,7 +48,7 @@ if st.session_state["authentication_status"]:
     st.write(f'Usuário: *{st.session_state["name"]}*')
     authenticator.logout(location="sidebar")
     st.subheader("Consultas Rápidas")
-    tab1, tab2, tab3 = st.tabs(["Por Apartamento", "Por Datas", "Caixa"])
+    tab1, tab2, tab3 = st.tabs(["Por Apartamento", "Por Datas"])
 
     with tab1:
         apto_id = apto_input(
@@ -267,12 +267,6 @@ if st.session_state["authentication_status"]:
                     st.warning("Não há alugueis e/ou apartamentos registrados")
             else:
                 show_response_message(alug_response)
-
-    with tab3:
-
-        st.markdown("R$ ...")
-        st.markdown("$ ...")
-        st.markdown("Registrar...")
 
 elif st.session_state["authentication_status"] is False:
     st.error("Usuário ou senha incorretos")
