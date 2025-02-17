@@ -420,7 +420,7 @@ def read_all_caixa(
         if signal == "Depósitos":
             query = query.filter(Caixa.valor >= 0)
         if signal == "Saques":
-            query = query.filter(Caixa <= 0)
+            query = query.filter(Caixa.valor <= 0)
 
         if moeda is not None and moeda != "Todos":
             query = query.filter(Caixa.moeda == moeda)
