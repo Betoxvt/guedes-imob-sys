@@ -133,7 +133,7 @@ with tab1:
                                 st.subheader("Dados NÃO inseridos, favor revisar:")
                             show_data_output(ficha_data)
                         except Exception as e:
-                            raise (e)
+                            raise e
             except pd.errors.ParserError:
                 st.error(
                     "Erro: O arquivo enviado não é um CSV válido ou está mal formatado."
@@ -355,7 +355,7 @@ with tab1:
                 st.subheader("Dados NÃO inseridos, favor revisar:")
             show_data_output(ficha_data)
         except Exception as e:
-            raise (e)
+            raise e
 
 with tab2:
     st.header("Consultar Ficha de Inquilino")
@@ -840,7 +840,7 @@ with tab3:
                         st.subheader("Dados NÃO inseridos, favor revisar:")
                     show_data_output(ficha_up_data)
                 except Exception as e:
-                    raise (e)
+                    raise e
 
         else:
             show_response_message(update_response)

@@ -3,6 +3,7 @@ import logging
 from models import (
     Aluguel,
     Apartamento,
+    Caixa,
     Despesa,
     Ficha,
     Garagem,
@@ -16,6 +17,8 @@ from schemas import (
     AluguelUpdate,
     ApartamentoCreate,
     ApartamentoUpdate,
+    CaixaCreate,
+    CaixaUpdate,
     DespesaCreate,
     DespesaUpdate,
     FichaCreate,
@@ -335,6 +338,205 @@ def delete_apartamento(db: Session, apartamento_id: int):
         return db_apartamento
     except SQLAlchemyError as e:
         print(f"Erro ao deletar apartamento: {e}")
+        db.rollback()
+        raise e
+
+
+def create_caixa(db: Session, caixa: CaixaCreate) -> Caixa:
+    """
+    Creates a new caixa record in the database.
+
+    This function takes an `CaixaCreate` object containing the new caixa data
+    and persists it to the database.
+
+    Args:
+        db (Session): A SQLAlchemy session to interact with the database.
+        caixa (CaixaCreate): An object containing the new caixa data.
+
+    Returns:
+        Caixa: The newly created caixa object.
+
+    Raises:
+        SQLAlchemyError: If an error occurs during the creation.
+    """
+    try:
+        db_caixa = Caixa(**caixa.model_dump())
+        db.add(db_caixa)
+        db.commit()
+        db.refresh(db_caixa)
+        return db_caixa
+    except DBAPIError as e:
+        db.rollback()
+        if isinstance(e.orig, psycopg2.errors.RaiseException):
+            error_msg = str(e.orig.pgerror.split("\n")[0])
+            logging.error(f"Erro ao criar caixa (trigger): {error_msg}")
+            raise HTTPException(status_code=400, detail=error_msg[8:])
+        else:
+            logging.exception(f"Erro de banco de dados ao criar caixa: {e}")
+            raise HTTPException(
+                status_code=500, detail="Erro interno do servidor (banco de dados)."
+            )
+    except SQLAlchemyError as e:
+        db.rollback()
+        raise e
+
+
+def read_all_caixa(
+    db: Session,
+    start_date: str | None = Query(None, description="Data de início: (YYYY-MM-DD)"),
+    end_date: str | None = Query(None, description="Data de término: (YYYY-MM-DD)"),
+    signal: int | None = Query(None, description="Positivo ou Negativo"),
+    moeda: str | None = Query(None, description="Moeda: BRL, USD"),
+    offset: int = 0,
+    limit: int = 100,
+) -> List[Caixa]:
+    """
+    Retrieves all_caixa from the database with pagination.
+
+    This function queries the 'caixa' table in the database and returns the records,
+    ordered by ID in descending order. It allows pagination of the results through
+    the `offset` and `limit` parameters.
+
+    Args:
+        db (Session): A SQLAlchemy session to interact with the database.
+        offset (int, optional): The starting index of the results. Defaults to 0.
+        limit (int, optional): The maximum number of results to be returned. Defaults to 100.
+
+    Returns:
+        List[Caixa]: A list of `Caixa` objects from the database.
+
+    Raises:
+        SQLAlchemyError: If an error occurs during the database query.
+    """
+    try:
+        query = db.query(Caixa).order_by(Caixa.id.desc())
+
+        if start_date is not None:
+            query = query.filter(Caixa.criado_em >= start_date)
+
+        if end_date is not None:
+            query = query.filter(Caixa.criado_em <= end_date)
+
+        if signal == "Depósitos":
+            query = query.filter(Caixa.valor >= 0)
+        if signal == "Saques":
+            query = query.filter(Caixa.valor <= 0)
+
+        if moeda is not None and moeda != "Todos":
+            query = query.filter(Caixa.moeda == moeda)
+
+        return query.offset(offset).limit(limit).all()
+    except SQLAlchemyError as e:
+        raise e
+
+
+def read_caixa(db: Session, caixa_id: int) -> Caixa:
+    """
+    Retrieves a specific caixa from the database.
+
+    This function queries the database for a caixa with the given ID.
+
+    Args:
+        db (Session): A SQLAlchemy session to interact with the database.
+        caixa_id (int): The ID of the caixa to retrieve.
+
+    Returns:
+        Caixa: The caixa object with the specified ID.
+
+    Raises:
+        SQLAlchemyError: If an error occurs during the query.
+    """
+    try:
+        return db.query(Caixa).filter(Caixa.id == caixa_id).first()
+    except SQLAlchemyError as e:
+        raise e
+
+
+def update_caixa(db: Session, caixa_id: int, caixa: CaixaCreate) -> Caixa:
+    """
+    Updates an existing caixa in the database.
+
+    This function takes the caixa ID and an `CaixaUpdate` object containing the new
+    data, and updates the corresponding record in the database.
+
+    Args:
+        db (Session): A SQLAlchemy session to interact with the database.
+        caixa_id (int): The ID of the caixa to be updated.
+        caixa (CaixaUpdate): An object containing the updated caixa data.
+
+    Returns:
+        Caixa: The updated caixa object.
+
+    Raises:
+        SQLAlchemyError: If an error occurs during the update.
+    """
+    try:
+        db_caixa = db.query(Caixa).filter(Caixa.id == caixa_id).first()
+        if db_caixa is None:
+            return None
+
+        db.query(Caixa).filter(Caixa.id == caixa_id).update(caixa.model_dump())
+        db.commit()
+        db.refresh(db_caixa)
+        return db_caixa
+    except SQLAlchemyError as e:
+        db.rollback()
+        raise e
+
+
+def patch_caixa(db: Session, caixa_id: int, caixa: CaixaUpdate) -> Caixa:
+    """
+    Updates specific elements from an existing caixa in the database.
+
+    This function takes the caixa ID and an `CaixaUpdate` object containing the new
+    data, and updates the corresponding record in the database.
+
+    Args:
+        db (Session): SQLAlchemy database session.
+        caixa_id (int): ID of the caixa record to update.
+        caixa (CaixaUpdate): Data to update.
+
+    Returns:
+        Caixa: The updated caixa record.
+    """
+    try:
+        db_caixa = db.query(Caixa).filter(Caixa.id == caixa_id).first()
+        if db_caixa is None:
+            return None
+
+        for key, value in caixa.model_dump(exclude_unset=True).items():
+            setattr(db_caixa, key, value)
+        db.commit()
+        db.refresh(db_caixa)
+        return db_caixa
+    except SQLAlchemyError as e:
+        db.rollback()
+        raise e
+
+
+def delete_caixa(db: Session, caixa_id: int) -> Caixa:
+    """
+    Deletes a caixa from the database.
+
+    This function deletes the caixa with the given ID from the database.
+
+    Args:
+        db (Session): A SQLAlchemy session to interact with the database.
+        caixa_id (int): The ID of the caixa to be deleted.
+
+    Returns:
+        Caixa: The deleted caixa record.
+
+    Raises:
+        SQLAlchemyError: If an error occurs during the deletion.
+    """
+    try:
+        db_caixa = db.query(Caixa).filter(Caixa.id == caixa_id).first()
+        db.delete(db_caixa)
+        db.commit()
+        return db_caixa
+    except SQLAlchemyError as e:
+        print(f"Erro ao deletar caixa: {e}")
         db.rollback()
         raise e
 

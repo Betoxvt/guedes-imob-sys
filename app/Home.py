@@ -42,13 +42,13 @@ authenticator = st.session_state.authenticator
 try:
     authenticator.login()
 except Exception as e:
-    st.error(e)
+    st.errore
 
 if st.session_state["authentication_status"]:
     st.write(f'Usuário: *{st.session_state["name"]}*')
     authenticator.logout(location="sidebar")
     st.subheader("Consultas Rápidas")
-    tab1, tab2 = st.tabs(["Por Apartamento", "Por Datas"])
+    tab1, tab2, tab3 = st.tabs(["Por Apartamento", "Por Datas"])
 
     with tab1:
         apto_id = apto_input(

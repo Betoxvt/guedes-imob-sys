@@ -343,7 +343,7 @@ else:
                             st.subheader("Dados NÃO inseridos, favor revisar:")
                         show_data_output(aluguel_up_data)
                     except Exception as e:
-                        raise (e)
+                        raise e
             else:
                 show_response_message(update_response)
 
