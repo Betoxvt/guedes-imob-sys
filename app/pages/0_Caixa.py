@@ -90,7 +90,7 @@ with tab3:
         "ID do Registro de Caixa", min_value=1, value=None, format="%d"
     )
     if update_id:
-        update_response = requests.get(f"http//api:8000/caixa/{update_id}")
+        update_response = requests.get(f"http://api:8000/caixa/{update_id}")
         if update_response.status_code == 200:
             caixa_up = update_response.json()
             df_up = pd.DataFrame([caixa_up])
@@ -111,7 +111,7 @@ with tab3:
                 }
                 try:
                     put_response = requests.put(
-                        f"http://api.8000/caixa/{caixa_up_data}", json=caixa_up_data
+                        f"http://api:8000/caixa/{caixa_up_data}", json=caixa_up_data
                     )
                     show_response_message(put_response)
                     if put_response.status_code == 200:
