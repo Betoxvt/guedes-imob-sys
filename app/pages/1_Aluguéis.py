@@ -21,9 +21,14 @@ else:
     authenticator = st.session_state.authenticator
     st.write(f'Usuário: *{st.session_state["name"]}*')
     authenticator.logout(location="sidebar")
+
     tab1, tab2, tab3, tab4, tab5 = st.tabs(
         ["Registrar", "Consultar", "Modificar", "Deletar", "Listar"]
     )
+
+    ALUG_URL = "http://api:8000/alugueis/"
+    FICHA_URL = "http://api:8000/fichas/"
+    PAG_URL = "http://api:8000/pagamentos/"
 
     with tab1:
         st.header("Registrar Aluguel")
@@ -38,7 +43,7 @@ else:
             label="ID Ficha", min_value=1, value=None, format="%d", step=1, key=1101
         )
         if ficha_id:
-            get_ficha = requests.get(f"http://api:8000/fichas/{ficha_id}")
+            get_ficha = requests.get(f"{FICHA_URL}{ficha_id}")
             if get_ficha.status_code == 200:
                 ficha_data = get_ficha.json()
                 ficha_name = ficha_data["nome"]
@@ -97,17 +102,13 @@ else:
                 }
             )
             try:
-                post_response = requests.post(
-                    "http://api:8000/alugueis/", json=aluguel_data
-                )
+                post_response = requests.post(ALUG_URL, json=aluguel_data)
                 show_response_message(post_response)
                 if post_response.status_code == 200:
                     st.subheader("Dados inseridos, tudo OK:")
                     show_data_output(aluguel_data)
                     if empty_none(valor_depositado) is not None:
-                        get_top_response = requests.get(
-                            "http://api:8000/alugueis/", params={"limit": 1}
-                        )
+                        get_top_response = requests.get(ALUG_URL, params={"limit": 1})
                         if get_top_response.status_code == 200:
                             top_data = get_top_response.json()
                             aluguel_id = top_data[0].get("id")
@@ -123,7 +124,7 @@ else:
                                 }
                             )
                             post_pagamento_response = requests.post(
-                                "http://api:8000/pagamentos/", json=pagamento_data
+                                PAG_URL, json=pagamento_data
                             )
                             show_response_message(post_pagamento_response)
                             if post_pagamento_response.status_code == 200:
@@ -170,7 +171,7 @@ else:
             chkin = chkin.isoformat()
 
         if get_id:
-            get_response = requests.get(f"http://api:8000/alugueis/{get_id}")
+            get_response = requests.get(f"{ALUG_URL}{get_id}")
             if get_response.status_code == 200:
                 aluguel = get_response.json()
                 df_alug = pd.DataFrame([aluguel])
@@ -179,7 +180,7 @@ else:
                 show_response_message(get_response)
 
         if apto:
-            get_response = requests.get("http://api:8000/alugueis/")
+            get_response = requests.get(ALUG_URL)
             if get_response.status_code == 200:
                 alugueis = get_response.json()
                 df_alug = pd.DataFrame(alugueis)
@@ -197,7 +198,7 @@ else:
                 show_response_message(get_response)
 
         if chkin:
-            get_response = requests.get("http://api:8000/alugueis/")
+            get_response = requests.get(ALUG_URL)
             if get_response.status_code == 200:
                 alugueis = get_response.json()
                 df_alug = pd.DataFrame(alugueis)
@@ -219,7 +220,7 @@ else:
 
         if not df_alug.empty:
             st.dataframe(showbr_dfdate(df_alug), hide_index=True)
-            get_pag_response = requests.get(f"http://api:8000/pagamentos/")
+            get_pag_response = requests.get(PAG_URL)
             if get_pag_response.status_code == 200:
                 pagamentos = get_pag_response.json()
                 df_pag = pd.DataFrame(pagamentos)
@@ -254,7 +255,7 @@ else:
             "ID do Aluguel", min_value=1, value=None, format="%d", key=1300
         )
         if update_id:
-            update_response = requests.get(f"http://api:8000/alugueis/{update_id}")
+            update_response = requests.get(f"{ALUG_URL}{update_id}")
             if update_response.status_code == 200:
                 aluguel_up = update_response.json()
                 df_up = pd.DataFrame([aluguel_up])
@@ -273,7 +274,7 @@ else:
                     value=df_up.loc[0, "ficha_id"],
                 )
                 if ficha_id:
-                    get_ficha = requests.get(f"http://api:8000/fichas/{ficha_id}")
+                    get_ficha = requests.get(f"{FICHA_URL}{ficha_id}")
                     if get_ficha.status_code == 200:
                         ficha_data = get_ficha.json()
                         ficha_name = ficha_data["nome"]
@@ -333,7 +334,7 @@ else:
                     )
                     try:
                         put_response = requests.put(
-                            f"http://api:8000/alugueis/{update_id}",
+                            f"{ALUG_URL}{update_id}",
                             json=aluguel_up_data,
                         )
                         show_response_message(put_response)
@@ -353,7 +354,7 @@ else:
             label="ID Aluguel", min_value=1, value=None, format="%d", step=1, key=1400
         )
         if delete_id:
-            show_delete_response = requests.get(f"http://api:8000/alugueis/{delete_id}")
+            show_delete_response = requests.get(f"{ALUG_URL}{delete_id}")
             if show_delete_response.status_code == 200:
                 aluguel_delete = show_delete_response.json()
                 df_delete = pd.DataFrame([aluguel_delete])
@@ -361,9 +362,7 @@ else:
                 delete_confirm = st.checkbox("Confirma que deseja deletar o registro?")
                 delete_button = st.button("Deletar", key=1401)
                 if delete_button and delete_confirm:
-                    delete_response = requests.delete(
-                        f"http://api:8000/alugueis/{delete_id}"
-                    )
+                    delete_response = requests.delete(f"{ALUG_URL}{delete_id}")
                     show_response_message(delete_response)
                 elif delete_button and not delete_confirm:
                     st.warning("Você deve confirmar primeiro para deletar o registro")
@@ -373,7 +372,7 @@ else:
     with tab5:
         st.header("Listar Aluguéis")
         if st.button("Mostrar", key=1500):
-            get_list_response = requests.get(f"http://api:8000/alugueis/")
+            get_list_response = requests.get(ALUG_URL)
             if get_list_response.status_code == 200:
                 alugueis = get_list_response.json()
                 if alugueis:

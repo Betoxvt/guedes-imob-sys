@@ -17,6 +17,8 @@ else:
 
 tab1, tab2, tab3, tab4 = st.tabs(["Registrar", "Consultar", "Modificar", "Deletar"])
 
+CAIXA_URL = "http://api:8000/caixa/"
+
 moedas = ["BRL", "USD"]
 
 with tab1:
@@ -35,7 +37,7 @@ with tab1:
             "valor": valor,
         }
         try:
-            post_response = requests.post("http://api:8000/caixa/", json=caixa_data)
+            post_response = requests.post(CAIXA_URL, json=caixa_data)
             show_response_message(post_response)
             if post_response.status_code == 200:
                 st.subheader("Dados inseridos, tudo OK:")
@@ -72,7 +74,7 @@ with tab2:
         }
 
     if st.button("Consultar"):
-        get_list_response = requests.get(f"http://api:8000/caixa/", params=params)
+        get_list_response = requests.get(CAIXA_URL, params=params)
         if get_list_response.status_code == 200:
             lista = get_list_response.json()
             if lista:
@@ -90,7 +92,7 @@ with tab3:
         "ID do Registro de Caixa", min_value=1, value=None, format="%d"
     )
     if update_id:
-        update_response = requests.get(f"http://api:8000/caixa/{update_id}")
+        update_response = requests.get(f"{CAIXA_URL}{update_id}")
         if update_response.status_code == 200:
             caixa_up = update_response.json()
             df_up = pd.DataFrame([caixa_up])
@@ -111,7 +113,7 @@ with tab3:
                 }
                 try:
                     put_response = requests.put(
-                        f"http://api:8000/caixa/{caixa_up_data}", json=caixa_up_data
+                        f"{CAIXA_URL}{update_id}", json=caixa_up_data
                     )
                     show_response_message(put_response)
                     if put_response.status_code == 200:
@@ -130,7 +132,7 @@ with tab4:
         label="ID Registro", min_value=1, value=None, format="%d"
     )
     if delete_id:
-        show_delete_response = requests.get(f"http://api:8000/caixa/{delete_id}")
+        show_delete_response = requests.get(f"{CAIXA_URL}{delete_id}")
         if show_delete_response.status_code == 200:
             caixa_delete = show_delete_response.json()
             df_delete = pd.DataFrame([caixa_delete])
@@ -138,5 +140,5 @@ with tab4:
             delete_confirm = st.checkbox("Confirma que deseja deletar o registro?")
             delete_button = st.button("Deletar", disabled=(not delete_confirm))
             if delete_button:
-                delete_response = requests.delete(f"http://api:8000/caixa/{delete_id}")
+                delete_response = requests.delete(f"{CAIXA_URL}{delete_id}")
                 show_response_message(delete_response)
