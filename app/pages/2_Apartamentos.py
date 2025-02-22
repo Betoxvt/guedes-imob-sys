@@ -1,3 +1,4 @@
+from Home import APTO_URL, PROP_URL
 import pandas as pd
 import requests
 import streamlit as st
@@ -35,7 +36,7 @@ else:
             key=2101,
         )
         if proprietario_id:
-            get_prop = requests.get(f"http://api:8000/proprietarios/{proprietario_id}")
+            get_prop = requests.get(PROP_URL + proprietario_id)
             if get_prop.status_code == 200:
                 prop_data = get_prop.json()
                 prop_name = prop_data["nome"]
@@ -76,9 +77,7 @@ else:
                 }
             )
             try:
-                post_response = requests.post(
-                    "http://api:8000/apartamentos/", json=apto_data
-                )
+                post_response = requests.post(APTO_URL, json=apto_data)
                 show_response_message(post_response)
                 if post_response.status_code == 200:
                     st.subheader("Dados inseridos, tudo OK:")
@@ -93,7 +92,7 @@ else:
         get_id = st.text_input("ID Apartamento", value=None, key=2200)
         get_id = apto_input(get_id)
         if get_id:
-            get_response = requests.get(f"http://api:8000/apartamentos/{get_id}")
+            get_response = requests.get(APTO_URL + get_id)
             if get_response.status_code == 200:
                 apto = get_response.json()
                 df_get = pd.DataFrame([apto])
@@ -110,7 +109,7 @@ else:
         update_id = st.text_input("ID do Apartamento", value=None, key=2300)
         update_id = apto_input(update_id)
         if update_id:
-            update_response = requests.get(f"http://api:8000/apartamentos/{update_id}")
+            update_response = requests.get(APTO_URL + update_id)
             if update_response.status_code == 200:
                 apto_up = update_response.json()
                 df_up = pd.DataFrame([apto_up])
@@ -127,9 +126,7 @@ else:
                     key=2302,
                 )
                 if proprietario_id:
-                    get_prop = requests.get(
-                        f"http://api:8000/proprietarios/{proprietario_id}"
-                    )
+                    get_prop = requests.get(PROP_URL + proprietario_id)
                     if get_prop.status_code == 200:
                         prop_data = get_prop.json()
                         prop_name = prop_data["nome"]
@@ -191,7 +188,7 @@ else:
                     )
                     try:
                         put_response = requests.put(
-                            f"http://api:8000/apartamentos/{update_id}",
+                            APTO_URL + update_id,
                             json=apto_up_data,
                         )
                         show_response_message(put_response)
@@ -210,9 +207,7 @@ else:
         delete_id = st.text_input(label="ID Apartamento", value=None, key=2400)
         delete_id = apto_input(delete_id)
         if delete_id:
-            show_delete_response = requests.get(
-                f"http://api:8000/apartamentos/{delete_id}"
-            )
+            show_delete_response = requests.get(APTO_URL + delete_id)
             if show_delete_response.status_code == 200:
                 apto_delete = show_delete_response.json()
                 df_delete = pd.DataFrame([apto_delete])
@@ -220,9 +215,7 @@ else:
                 delete_confirm = st.checkbox("Confirma que deseja deletar o registro?")
                 delete_button = st.button("Deletar", key=1401)
                 if delete_button and delete_confirm:
-                    delete_response = requests.delete(
-                        f"http://api:8000/apartamentos/{delete_id}"
-                    )
+                    delete_response = requests.delete(APTO_URL + delete_id)
                     show_response_message(delete_response)
                 elif delete_button and not delete_confirm:
                     st.warning("Você deve confirmar primeiro para deletar o registro")
@@ -232,7 +225,7 @@ else:
     with tab5:
         st.header("Listar Apartamentos")
         if st.button("Mostrar", key=2007):
-            get_list_response = requests.get(f"http://api:8000/apartamentos/")
+            get_list_response = requests.get(APTO_URL)
             if get_list_response.status_code == 200:
                 apartamentos = get_list_response.json()
                 if apartamentos:

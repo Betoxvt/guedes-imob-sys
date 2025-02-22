@@ -1,4 +1,4 @@
-from datetime import date
+from Home import CAIXA_URL
 import pandas as pd
 import requests
 import streamlit as st
@@ -15,130 +15,128 @@ else:
     st.write(f'Usuário: *{st.session_state["name"]}*')
     authenticator.logout(location="sidebar")
 
-tab1, tab2, tab3, tab4 = st.tabs(["Registrar", "Consultar", "Modificar", "Deletar"])
+    tab1, tab2, tab3, tab4 = st.tabs(["Registrar", "Consultar", "Modificar", "Deletar"])
 
-CAIXA_URL = "http://api:8000/caixa/"
+    moedas = ["BRL", "USD"]
 
-moedas = ["BRL", "USD"]
-
-with tab1:
-    st.header("Registrar Fluxo de Caixa")
-    moeda: str = st.selectbox(
-        label="Moeda",
-        options=moedas,
-    )
-    valor: float = st.number_input(
-        label="Valor",
-        format="%.2f",
-    )
-    if st.button("Registrar"):
-        caixa_data = {
-            "moeda": moeda,
-            "valor": valor,
-        }
-        try:
-            post_response = requests.post(CAIXA_URL, json=caixa_data)
-            show_response_message(post_response)
-            if post_response.status_code == 200:
-                st.subheader("Dados inseridos, tudo OK:")
-            else:
-                st.subheader("Dados NÃO inseridos, favor revisar:")
-            show_data_output(caixa_data)
-        except Exception as e:
-            raise e
-
-with tab2:
-    st.header("Consultar Caixa")
-    params = {}
-
-    with st.expander(label="Filtros"):
-        start_date = st.date_input(
-            label="Data de Início",
-            value=None,
-            format="DD/MM/YYYY",
+    with tab1:
+        st.header("Registrar Fluxo de Caixa")
+        moeda: str = st.selectbox(
+            label="Moeda",
+            options=moedas,
         )
-        end_date = st.date_input(
-            label="Data de Término", value=None, format="DD/MM/YYYY"
+        valor: float = st.number_input(
+            label="Valor",
+            format="%.2f",
         )
-        signal = st.selectbox(
-            label="Tipo",
-            options=["Todos", "Depósitos", "Saques"],
-        )
-        moeda = st.selectbox(label="Moeda", options=["Todos", "BRL", "USD"])
+        if st.button("Registrar"):
+            caixa_data = {
+                "moeda": moeda,
+                "valor": valor,
+            }
+            try:
+                post_response = requests.post(CAIXA_URL, json=caixa_data)
+                show_response_message(post_response)
+                if post_response.status_code == 200:
+                    st.subheader("Dados inseridos, tudo OK:")
+                else:
+                    st.subheader("Dados NÃO inseridos, favor revisar:")
+                show_data_output(caixa_data)
+            except Exception as e:
+                raise e
 
-        params = {
-            "start_date": start_date,
-            "end_date": end_date,
-            "signal": signal,
-            "moeda": moeda,
-        }
+    with tab2:
+        st.header("Consultar Caixa")
+        params = {}
 
-    if st.button("Consultar"):
-        get_list_response = requests.get(CAIXA_URL, params=params)
-        if get_list_response.status_code == 200:
-            lista = get_list_response.json()
-            if lista:
-                df_list = pd.DataFrame(lista)
-
-                st.dataframe(df_list.set_index("id"))
-            else:
-                st.warning("Sem dados, verifque os filtros")
-        else:
-            show_response_message(get_list_response)
-
-with tab3:
-    st.header("Modificar Registro de Caixa")
-    update_id = st.number_input(
-        "ID do Registro de Caixa", min_value=1, value=None, format="%d"
-    )
-    if update_id:
-        update_response = requests.get(f"{CAIXA_URL}{update_id}")
-        if update_response.status_code == 200:
-            caixa_up = update_response.json()
-            df_up = pd.DataFrame([caixa_up])
-            st.dataframe(df_up.set_index("id"))
-            moeda: str = st.selectbox(
-                label="Moeda",
-                options=moedas,
-                index=cat_index(df_up, "moeda", moedas),
-                key="moeda_up",
+        with st.expander(label="Filtros"):
+            start_date = st.date_input(
+                label="Data de Início",
+                value=None,
+                format="DD/MM/YYYY",
             )
-            valor: float = st.number_input(
-                label="Valor", format="%.2f", value=df_up.loc[0, "valor"]
+            end_date = st.date_input(
+                label="Data de Término", value=None, format="DD/MM/YYYY"
             )
-            if st.button("Modificar"):
-                caixa_up_data = {
-                    "moeda": moeda,
-                    "valor": valor,
-                }
-                try:
-                    put_response = requests.put(
-                        f"{CAIXA_URL}{update_id}", json=caixa_up_data
-                    )
-                    show_response_message(put_response)
-                    if put_response.status_code == 200:
-                        st.subheader("Dados inseridos, tudo OK:")
-                    else:
-                        st.subheader("Dados NÃO inseridos, favor revisar:")
-                    show_data_output(caixa_up_data)
-                except Exception as e:
-                    raise e
-        else:
-            show_response_message(update_response)
+            signal = st.selectbox(
+                label="Tipo",
+                options=["Todos", "Depósitos", "Saques"],
+            )
+            moeda = st.selectbox(label="Moeda", options=["Todos", "BRL", "USD"])
 
-with tab4:
-    st.header("Deletar Registro de Caixa")
-    delete_id = st.number_input(
-        label="ID Registro", min_value=1, value=None, format="%d"
-    )
-    if delete_id:
-        show_delete_response = requests.get(f"{CAIXA_URL}{delete_id}")
-        if show_delete_response.status_code == 200:
-            caixa_delete = show_delete_response.json()
-            df_delete = pd.DataFrame([caixa_delete])
-            st.dataframe(df_delete.set_index("id"))
-            delete_confirm = st.checkbox("Confirma que deseja deletar o registro?")
-            delete_button = st.button("Deletar", disabled=(not delete_confirm))
-            if delete_button:
-                delete_response = requests.delete(f"{CAIXA_URL}{delete_id}")
-                show_response_message(delete_response)
+            params = {
+                "start_date": start_date,
+                "end_date": end_date,
+                "signal": signal,
+                "moeda": moeda,
+            }
+
+        if st.button("Consultar"):
+            get_list_response = requests.get(CAIXA_URL, params=params)
+            if get_list_response.status_code == 200:
+                lista = get_list_response.json()
+                if lista:
+                    df_list = pd.DataFrame(lista)
+
+                    st.dataframe(df_list.set_index("id"))
+                else:
+                    st.warning("Sem dados, verifque os filtros")
+            else:
+                show_response_message(get_list_response)
+
+    with tab3:
+        st.header("Modificar Registro de Caixa")
+        update_id = st.number_input(
+            "ID do Registro de Caixa", min_value=1, value=None, format="%d"
+        )
+        if update_id:
+            update_response = requests.get(f"{CAIXA_URL}{update_id}")
+            if update_response.status_code == 200:
+                caixa_up = update_response.json()
+                df_up = pd.DataFrame([caixa_up])
+                st.dataframe(df_up.set_index("id"))
+                moeda: str = st.selectbox(
+                    label="Moeda",
+                    options=moedas,
+                    index=cat_index(df_up, "moeda", moedas),
+                    key="moeda_up",
+                )
+                valor: float = st.number_input(
+                    label="Valor", format="%.2f", value=df_up.loc[0, "valor"]
+                )
+                if st.button("Modificar"):
+                    caixa_up_data = {
+                        "moeda": moeda,
+                        "valor": valor,
+                    }
+                    try:
+                        put_response = requests.put(
+                            f"{CAIXA_URL}{update_id}", json=caixa_up_data
+                        )
+                        show_response_message(put_response)
+                        if put_response.status_code == 200:
+                            st.subheader("Dados inseridos, tudo OK:")
+                        else:
+                            st.subheader("Dados NÃO inseridos, favor revisar:")
+                        show_data_output(caixa_up_data)
+                    except Exception as e:
+                        raise e
+            else:
+                show_response_message(update_response)
+
+    with tab4:
+        st.header("Deletar Registro de Caixa")
+        delete_id = st.number_input(
+            label="ID Registro", min_value=1, value=None, format="%d"
+        )
+        if delete_id:
+            show_delete_response = requests.get(f"{CAIXA_URL}{delete_id}")
+            if show_delete_response.status_code == 200:
+                caixa_delete = show_delete_response.json()
+                df_delete = pd.DataFrame([caixa_delete])
+                st.dataframe(df_delete.set_index("id"))
+                delete_confirm = st.checkbox("Confirma que deseja deletar o registro?")
+                delete_button = st.button("Deletar", disabled=(not delete_confirm))
+                if delete_button:
+                    delete_response = requests.delete(f"{CAIXA_URL}{delete_id}")
+                    show_response_message(delete_response)
