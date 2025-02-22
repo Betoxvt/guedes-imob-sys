@@ -147,8 +147,6 @@ else:
                 st.error(f"Um erro inesperado ocorreu: {e}")
 
     with tab2:
-        st.header("Consultar Aluguéis")
-        st.markdown("#### Por ID")
         alug_id = None
         apto = None
         chkin = None
@@ -158,6 +156,8 @@ else:
         warn = None
         valor_aluguel = 0
         pago = 0
+        st.header("Consultar Aluguéis")
+        st.markdown("#### Por ID")
         get_id = st.number_input(
             "ID Aluguel", min_value=1, value=None, format="%d", step=1, key=1200
         )
@@ -331,7 +331,7 @@ else:
                     )
                     try:
                         put_response = requests.put(
-                            f"{ALUG_URL}{update_id}",
+                            ALUG_URL + update_id,
                             json=aluguel_up_data,
                         )
                         show_response_message(put_response)
@@ -357,12 +357,10 @@ else:
                 df_delete = pd.DataFrame([aluguel_delete])
                 st.dataframe(df_delete.set_index("id"))
                 delete_confirm = st.checkbox("Confirma que deseja deletar o registro?")
-                delete_button = st.button("Deletar", key=1401)
-                if delete_button and delete_confirm:
+                delete_button = st.button("Deletar", disabled=(not delete_confirm))
+                if delete_button:
                     delete_response = requests.delete(ALUG_URL + delete_id)
                     show_response_message(delete_response)
-                elif delete_button and not delete_confirm:
-                    st.warning("Você deve confirmar primeiro para deletar o registro")
             else:
                 show_response_message(show_delete_response)
 
