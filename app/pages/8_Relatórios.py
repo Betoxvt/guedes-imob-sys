@@ -127,8 +127,8 @@ else:
                             st.warning("Não há despesas")
                     else:
                         show_response_message(despesas_response)
-
-                    alugueis_response = requests.get(ALUG_URL + "?apto_id=" + apto_id)
+                    params = {"apto_id": apto_id}
+                    alugueis_response = requests.get(ALUG_URL, params=params)
                     if alugueis_response.status_code == 200:
                         alugueis = alugueis_response.json()
                         if alugueis:
