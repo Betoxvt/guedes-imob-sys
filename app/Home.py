@@ -49,7 +49,7 @@ if st.session_state["authentication_status"]:
     authenticator.logout(location="sidebar")
     st.subheader("Consultas Rápidas")
 
-    tab1, tab2, tab3 = st.tabs(["Por Apartamento", "Por Datas"])
+    tab1, tab2 = st.tabs(["Por Apartamento", "Por Datas"])
 
     ALUG_URL = "http://api:8000/alugueis/"
     APTO_URL = "http://api:8000/apartamentos/"
