@@ -11,13 +11,6 @@ from utils.mystr import apto_input
 import yaml
 from yaml.loader import SafeLoader
 
-locale.setlocale(locale.LC_ALL, "pt_BR.UTF-8")
-
-USERS_PATH = os.environ.get("USERS_PATH")
-
-st.set_page_config(page_title="Pagina Inicial", layout="wide")
-st.title("Página Inicial")
-
 
 def st_authenticator():
     with open(USERS_PATH) as f:
@@ -34,6 +27,13 @@ def st_authenticator():
     return authenticator
 
 
+locale.setlocale(locale.LC_ALL, "pt_BR.UTF-8")
+
+USERS_PATH = os.environ.get("USERS_PATH")
+
+st.set_page_config(page_title="Pagina Inicial", layout="wide")
+st.title("Página Inicial")
+
 if "authenticator" not in st.session_state:
     st.session_state.authenticator = st_authenticator()
 
@@ -42,25 +42,36 @@ authenticator = st.session_state.authenticator
 try:
     authenticator.login()
 except Exception as e:
-    st.errore
+    st.error(e)
 
 if st.session_state["authentication_status"]:
     st.write(f'Usuário: *{st.session_state["name"]}*')
     authenticator.logout(location="sidebar")
     st.subheader("Consultas Rápidas")
-    tab1, tab2, tab3 = st.tabs(["Por Apartamento", "Por Datas"])
+
+    tab1, tab2 = st.tabs(["Por Apartamento", "Por Datas"])
+
+    ALUG_URL = "http://api:8000/alugueis/"
+    APTO_URL = "http://api:8000/apartamentos/"
+    CAIXA_URL = "http://api:8000/caixa/"
+    DESP_URL = "http://api:8000/despesas/"
+    FICHA_URL = "http://api:8000/fichas/"
+    GARAGE_URL = "http://api:8000/garagens/"
+    PAG_URL = "http://api:8000/pagamentos/"
+    PROP_URL = "http://api:8000/proprietarios/"
+    RELAT_URL = "http://api:8000/relatorios/"
 
     with tab1:
         apto_id = apto_input(
             st.text_input(label="Apartamento", value=None, max_chars=5, key=10000)
         )
         if apto_id:
-            get_apto_response = requests.get(f"http://api:8000/apartamentos/{apto_id}")
+            get_apto_response = requests.get(APTO_URL + apto_id)
             if get_apto_response.status_code == 200:
                 alugueis_button = st.button("Alugueis", use_container_width=True)
                 if alugueis_button:
                     get_alugueis_response = requests.get(
-                        f"http://api:8000/alugueis/?apto_id={apto_id}"
+                        ALUG_URL + "?apto_id=" + apto_id
                     )
                     if get_alugueis_response.status_code == 200:
                         alugueis = get_alugueis_response.json()
@@ -71,7 +82,7 @@ if st.session_state["authentication_status"]:
                             for index, row in df.iterrows():
                                 aluguel_id = row["id"]
                                 response = requests.get(
-                                    f"http://api:8000/pagamentos/?aluguel_id={aluguel_id}"
+                                    PAG_URL + "?aluguel_id=" + aluguel_id
                                 )
                                 if response.status_code == 200:
                                     data = response.json()
@@ -111,7 +122,7 @@ if st.session_state["authentication_status"]:
                 garagens_button = st.button("Garagens", use_container_width=True)
                 if garagens_button:
                     get_garagens_origem_response = requests.get(
-                        f"http://api:8000/garagens/?apto_id_origem={apto_id}"
+                        GARAGE_URL + " ?apto_id_origem=" + apto_id
                     )
                     if get_garagens_origem_response.status_code == 200:
                         garagens_origem = get_garagens_origem_response.json()
@@ -123,7 +134,11 @@ if st.session_state["authentication_status"]:
                                 aluguel_id = row["id"]
                                 tipo = "Garagem"
                                 response = requests.get(
-                                    f"http://api:8000/pagamentos/?aluguel_id={aluguel_id}&tipo={tipo}"
+                                    PAG_URL
+                                    + "?aluguel_id="
+                                    + aluguel_id
+                                    + "&tipo="
+                                    + tipo
                                 )
                                 if response.status_code == 200:
                                     data = response.json()
@@ -196,7 +211,7 @@ if st.session_state["authentication_status"]:
 
         verify_button = st.button("Verificar")
         if verify_button:
-            aptos_response = requests.get(f"http://api:8000/apartamentos/")
+            aptos_response = requests.get(APTO_URL)
             if aptos_response.status_code == 200:
                 aptos_data = aptos_response.json()
                 df_aptos = pd.DataFrame(aptos_data, columns=["id"])
@@ -205,7 +220,7 @@ if st.session_state["authentication_status"]:
                 df_aptos = df_aptos.set_index("id")
             else:
                 show_response_message(aptos_response)
-            alug_response = requests.get(f"http://api:8000/alugueis/")
+            alug_response = requests.get(ALUG_URL + "")
             if alug_response.status_code == 200:
                 alug_data = alug_response.json()
                 df_alug = pd.DataFrame(
