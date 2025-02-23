@@ -90,7 +90,7 @@ else:
             "ID do Registro de Caixa", min_value=1, value=None, format="%d"
         )
         if update_id:
-            update_response = requests.get(f"{CAIXA_URL}{update_id}")
+            update_response = requests.get(CAIXA_URL + update_id)
             if update_response.status_code == 200:
                 caixa_up = update_response.json()
                 df_up = pd.DataFrame([caixa_up])
@@ -130,7 +130,7 @@ else:
             label="ID Registro", min_value=1, value=None, format="%d"
         )
         if delete_id:
-            show_delete_response = requests.get(f"{CAIXA_URL}{delete_id}")
+            show_delete_response = requests.get(CAIXA_URL + delete_id)
             if show_delete_response.status_code == 200:
                 caixa_delete = show_delete_response.json()
                 df_delete = pd.DataFrame([caixa_delete])
@@ -138,5 +138,7 @@ else:
                 delete_confirm = st.checkbox("Confirma que deseja deletar o registro?")
                 delete_button = st.button("Deletar", disabled=(not delete_confirm))
                 if delete_button:
-                    delete_response = requests.delete(f"{CAIXA_URL}{delete_id}")
+                    delete_response = requests.delete(CAIXA_URL + delete_id)
                     show_response_message(delete_response)
+            else:
+                show_response_message(show_delete_response)
