@@ -1,5 +1,4 @@
 from datetime import date
-from Home import FICHA_URL
 import os
 import pandas as pd
 import requests
@@ -9,6 +8,7 @@ from utils.myfunc import cat_index, show_data_output, show_response_message
 from utils.mynum import cep_input, cpf_input, rg_input, tel_input_br
 from utils.mypdf import fill_ficha
 from utils.mystr import apto_input, csv_handler, empty_none, empty_none_dict
+from utils.urls import FICHA_URL
 
 st.set_page_config(page_title="Ficha de Inquilinos", layout="wide")
 st.title("Ficha de Inquilinos")

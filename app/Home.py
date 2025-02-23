@@ -8,6 +8,7 @@ import streamlit as st
 import streamlit_authenticator as stauth
 from utils.myfunc import show_response_message
 from utils.mystr import apto_input
+from utils.urls import ALUG_URL, APTO_URL, GARAGE_URL, PAG_URL
 import yaml
 from yaml.loader import SafeLoader
 
@@ -50,16 +51,6 @@ if st.session_state["authentication_status"]:
     st.subheader("Consultas Rápidas")
 
     tab1, tab2 = st.tabs(["Por Apartamento", "Por Datas"])
-
-    ALUG_URL = "http://api:8000/alugueis/"
-    APTO_URL = "http://api:8000/apartamentos/"
-    CAIXA_URL = "http://api:8000/caixa/"
-    DESP_URL = "http://api:8000/despesas/"
-    FICHA_URL = "http://api:8000/fichas/"
-    GARAGE_URL = "http://api:8000/garagens/"
-    PAG_URL = "http://api:8000/pagamentos/"
-    PROP_URL = "http://api:8000/proprietarios/"
-    RELAT_URL = "http://api:8000/relatorios/"
 
     with tab1:
         apto_id = apto_input(

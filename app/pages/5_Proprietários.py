@@ -1,10 +1,10 @@
-from Home import PROP_URL
 import pandas as pd
 import requests
 import streamlit as st
 from utils.myfunc import show_data_output, show_response_message
 from utils.mynum import cpf_input, tel_input_br
 from utils.mystr import empty_none_dict
+from utils.urls import PROP_URL
 
 st.set_page_config(page_title="Proprietários", layout="wide")
 st.title("Proprietários")

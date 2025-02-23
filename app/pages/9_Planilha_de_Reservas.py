@@ -1,5 +1,4 @@
 from datetime import date
-from Home import ALUG_URL, PAG_URL
 import locale
 import pandas as pd
 import requests
@@ -7,6 +6,7 @@ import streamlit as st
 from utils.mydate import gen_reserv_table, showbr_dfdate, str_to_date
 from utils.myfunc import show_response_message
 from utils.mystr import apto_input
+from utils.urls import ALUG_URL, PAG_URL
 
 st.set_page_config(page_title="Planilha de Reservas", layout="wide")
 st.title("Planilha de Reservas")

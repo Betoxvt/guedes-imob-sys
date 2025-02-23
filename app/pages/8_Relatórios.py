@@ -1,5 +1,4 @@
 from datetime import date, datetime
-from Home import ALUG_URL, APTO_URL, DESP_URL, RELAT_URL
 import locale
 import os
 import pandas as pd
@@ -13,6 +12,7 @@ import streamlit as st
 from utils.mydate import showbr_dfdate
 from utils.myfunc import show_data_output, show_response_message
 from utils.mystr import apto_input
+from utils.urls import ALUG_URL, APTO_URL, DESP_URL, RELAT_URL
 
 st.set_page_config(page_title="Relatórios", layout="wide")
 st.title("Relatórios")

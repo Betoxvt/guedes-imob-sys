@@ -1,11 +1,11 @@
 from datetime import date
-from Home import PAG_URL
 import pandas as pd
 import requests
 import streamlit as st
 from utils.mydate import str_to_date
 from utils.myfunc import cat_index, show_data_output, show_response_message
 from utils.mystr import empty_none_dict
+from utils.urls import PAG_URL
 
 st.set_page_config(page_title="Pagamentos", layout="wide")
 st.title("Pagamentos")

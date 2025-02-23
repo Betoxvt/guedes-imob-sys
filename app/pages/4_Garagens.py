@@ -1,5 +1,4 @@
 from datetime import date
-from Home import GARAGE_URL, PAG_URL
 import pandas as pd
 import requests
 import streamlit as st
@@ -7,6 +6,7 @@ from utils.mydate import calculate_diarias, str_to_date
 from utils.myfunc import show_data_output, show_response_message
 from utils.mynum import calculate_saldo, calculate_valortotal
 from utils.mystr import apto_input, empty_none, empty_none_dict
+from utils.urls import GARAGE_URL, PAG_URL
 
 st.set_page_config(page_title="Garagens | Alugueis e Empréstimos", layout="wide")
 st.title("Garagens | Alugueis e Empréstimos")

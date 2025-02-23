@@ -1,9 +1,9 @@
-from Home import APTO_URL, PROP_URL
 import pandas as pd
 import requests
 import streamlit as st
 from utils.myfunc import show_data_output, show_response_message
 from utils.mystr import apto_input, empty_none_dict
+from utils.urls import APTO_URL, PROP_URL
 
 st.set_page_config(page_title="Apartamentos", layout="wide")
 st.title("Apartamentos")
