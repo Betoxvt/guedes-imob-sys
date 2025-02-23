@@ -80,6 +80,10 @@ def read_alugueis(
     db: Session,
     apto_id: str | None = Query(None, description="ID do apartamento"),
     checkin: str | None = Query(None, description="Data do check-in (YYYY-MM-DD)"),
+    start: str | None = Query(
+        None,
+        description="Data limite do check-out utilizado para filtrar os aluguéis anteriores a da consulta (check-in) (YYYY-MM-DD)",
+    ),
     offset: int = 0,
     limit: int = 100,
 ) -> List[Aluguel]:
@@ -109,6 +113,9 @@ def read_alugueis(
 
         if checkin is not None:
             query = query.filter(Aluguel.checkin == checkin)
+
+        if start is not None:
+            query = query.filter(Aluguel.checkout >= start)
 
         return query.offset(offset).limit(limit).all()
     except SQLAlchemyError as e:

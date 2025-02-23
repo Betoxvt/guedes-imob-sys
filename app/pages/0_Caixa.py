@@ -1,8 +1,8 @@
-from Home import CAIXA_URL
 import pandas as pd
 import requests
 import streamlit as st
 from utils.myfunc import cat_index, show_data_output, show_response_message
+from utils.urls import CAIXA_URL
 
 st.set_page_config(page_title="Caixa", layout="wide")
 st.title("Caixa")

@@ -1,11 +1,11 @@
 from datetime import date
-from Home import DESP_URL
 import pandas as pd
 import requests
 import streamlit as st
 from utils.mydate import str_to_date
 from utils.myfunc import cat_index, show_data_output, show_response_message
 from utils.mystr import apto_input, empty_none_dict
+from utils.urls import DESP_URL
 
 st.set_page_config(page_title="Despesas", layout="wide")
 st.title("Despesas")
@@ -87,7 +87,7 @@ else:
             "ID Despesa", min_value=1, value=None, format="%d", step=1, key=3200
         )
         if get_id:
-            get_response = requests.get(DESP_URL + get_id)
+            get_response = requests.get(f"{DESP_URL}{get_id}")
             if get_response.status_code == 200:
                 despesa = get_response.json()
                 df_get = pd.DataFrame([despesa])
@@ -116,7 +116,7 @@ else:
             "ID do Despesa", min_value=1, value=None, format="%d", key=3300
         )
         if update_id:
-            update_response = requests.get(DESP_URL + update_id)
+            update_response = requests.get(f"{DESP_URL}{update_id}")
             if update_response.status_code == 200:
                 despesa_up = update_response.json()
                 df_up = pd.DataFrame([despesa_up])
@@ -170,7 +170,7 @@ else:
                     )
                     try:
                         put_response = requests.put(
-                            DESP_URL + update_id,
+                            f"{DESP_URL}{update_id}",
                             json=despesa_up_data,
                         )
                         show_response_message(put_response)
@@ -190,7 +190,7 @@ else:
             label="ID Despesa", min_value=1, value=None, format="%d", key=3400
         )
         if delete_id:
-            show_delete_response = requests.get(DESP_URL + delete_id)
+            show_delete_response = requests.get(f"{DESP_URL}{delete_id}")
             if show_delete_response.status_code == 200:
                 despesa_delete = show_delete_response.json()
                 df_delete = pd.DataFrame([despesa_delete])
@@ -198,7 +198,7 @@ else:
                 delete_confirm = st.checkbox("Confirma que deseja deletar o registro?")
                 delete_button = st.button("Deletar", disabled=(not delete_confirm))
                 if delete_button:
-                    delete_response = requests.delete(DESP_URL + delete_id)
+                    delete_response = requests.delete(f"{DESP_URL}{delete_id}")
                     show_response_message(delete_response)
             else:
                 show_response_message(show_delete_response)

@@ -1,5 +1,4 @@
 from datetime import date, datetime
-from Home import ALUG_URL, APTO_URL, DESP_URL, RELAT_URL
 import locale
 import os
 import pandas as pd
@@ -13,7 +12,9 @@ import streamlit as st
 from utils.mydate import showbr_dfdate
 from utils.myfunc import show_data_output, show_response_message
 from utils.mystr import apto_input
+from utils.urls import ALUG_URL, APTO_URL, DESP_URL, RELAT_URL
 
+st.set_page_config(page_title="Relatórios", layout="wide")
 st.title("Relatórios")
 
 if not st.session_state["authentication_status"]:
@@ -38,7 +39,7 @@ else:
             st.text_input(label="Apartamento *", key=8100, value=None)
         )
         if apto_id:
-            apto_response = requests.get(APTO_URL + apto_id)
+            apto_response = requests.get(f"{APTO_URL}{apto_id}")
             if apto_response.status_code == 200:
                 relatorios_response = requests.get(RELAT_URL)
                 if relatorios_response.status_code == 200:

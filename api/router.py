@@ -101,11 +101,12 @@ def read_alugueis_route(
     db: Session = Depends(get_db),
     apto_id: str | None = None,
     checkin: str | None = None,
+    start: str | None = None,
     offset: int = 0,
     limit: int = 100,
 ):
     alugueis = read_alugueis(
-        db, apto_id=apto_id, checkin=checkin, offset=offset, limit=limit
+        db, apto_id=apto_id, checkin=checkin, start=start, offset=offset, limit=limit
     )
     return alugueis
 

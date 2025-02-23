@@ -1,5 +1,4 @@
 from datetime import date
-from Home import ALUG_URL, PAG_URL
 import locale
 import pandas as pd
 import requests
@@ -7,11 +6,12 @@ import streamlit as st
 from utils.mydate import gen_reserv_table, showbr_dfdate, str_to_date
 from utils.myfunc import show_response_message
 from utils.mystr import apto_input
-
-locale.setlocale(locale.LC_ALL, "pt_BR.UTF-8")
+from utils.urls import ALUG_URL, PAG_URL
 
 st.set_page_config(page_title="Planilha de Reservas", layout="wide")
 st.title("Planilha de Reservas")
+
+locale.setlocale(locale.LC_ALL, "pt_BR.UTF-8")
 
 if not st.session_state["authentication_status"]:
     st.info("Por favor faça o login na Home page e tente novamente.")
@@ -71,8 +71,8 @@ else:
                 index_apto_g = event_g.selection["rows"][0]
                 apto_g = st.session_state.planilha_g.iloc[index_apto_g].name
                 st.markdown(f"##### Apartamento: {apto_g}. Data: {day_g}/{mes}/{ano}")
-                params = {"apto_id": apto_g, "checkin": date_g}
-                alugueis_g_response = requests.get(ALUG_URL, params=params)
+                params_g = {"apto_id": apto_g, "checkin": date_g}
+                alugueis_g_response = requests.get(ALUG_URL, params=params_g)
                 if alugueis_g_response.status_code == 200:
                     alugueis_g = alugueis_g_response.json()
                     df_ag = pd.DataFrame(alugueis_g)
@@ -84,8 +84,8 @@ else:
                         st.markdown(
                             f"#### :blue[Valor total: **{locale.currency(valor_tot_ag)}**]"
                         )
-                        params_ag = {"aluguel_id": aluguel_id_ag}
-                        pagamentos_g_response = requests.get(PAG_URL, params=params_ag)
+                        params_pg = {"aluguel_id": aluguel_id_ag}
+                        pagamentos_g_response = requests.get(PAG_URL, params=params_pg)
                         if pagamentos_g_response.status_code == 200:
                             pagamentos_g = pagamentos_g_response.json()
                             df_pg = pd.DataFrame(pagamentos_g)
@@ -135,8 +135,8 @@ else:
                         st.markdown(
                             f"#### :blue[Valor total: **{locale.currency(valor_tot_ap)}**]"
                         )
-                        params_ap = {"aluguel_id": aluguel_id_ap}
-                        pagamentos_p_response = requests.get(PAG_URL, params=params_ap)
+                        params_pp = {"aluguel_id": aluguel_id_ap}
+                        pagamentos_p_response = requests.get(PAG_URL, params=params_pp)
                         if pagamentos_p_response.status_code == 200:
                             pagamentos_p = pagamentos_p_response.json()
                             df_pp = pd.DataFrame(pagamentos_p)

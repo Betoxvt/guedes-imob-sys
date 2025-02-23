@@ -1,9 +1,9 @@
-from Home import APTO_URL, PROP_URL
 import pandas as pd
 import requests
 import streamlit as st
 from utils.myfunc import show_data_output, show_response_message
 from utils.mystr import apto_input, empty_none_dict
+from utils.urls import APTO_URL, PROP_URL
 
 st.set_page_config(page_title="Apartamentos", layout="wide")
 st.title("Apartamentos")
@@ -36,7 +36,7 @@ else:
             key=2101,
         )
         if proprietario_id:
-            get_prop = requests.get(PROP_URL + proprietario_id)
+            get_prop = requests.get(f"{PROP_URL}{proprietario_id}")
             if get_prop.status_code == 200:
                 prop_data = get_prop.json()
                 prop_name = prop_data["nome"]
@@ -92,7 +92,7 @@ else:
         get_id = st.text_input("ID Apartamento", value=None, key=2200)
         get_id = apto_input(get_id)
         if get_id:
-            get_response = requests.get(APTO_URL + get_id)
+            get_response = requests.get(f"{APTO_URL}{get_id}")
             if get_response.status_code == 200:
                 apto = get_response.json()
                 df_get = pd.DataFrame([apto])
@@ -109,7 +109,7 @@ else:
         update_id = st.text_input("ID do Apartamento", value=None, key=2300)
         update_id = apto_input(update_id)
         if update_id:
-            update_response = requests.get(APTO_URL + update_id)
+            update_response = requests.get(f"{APTO_URL}{update_id}")
             if update_response.status_code == 200:
                 apto_up = update_response.json()
                 df_up = pd.DataFrame([apto_up])
@@ -126,7 +126,7 @@ else:
                     key=2302,
                 )
                 if proprietario_id:
-                    get_prop = requests.get(PROP_URL + proprietario_id)
+                    get_prop = requests.get(f"{PROP_URL}{proprietario_id}")
                     if get_prop.status_code == 200:
                         prop_data = get_prop.json()
                         prop_name = prop_data["nome"]
@@ -188,7 +188,7 @@ else:
                     )
                     try:
                         put_response = requests.put(
-                            APTO_URL + update_id,
+                            f"{APTO_URL}{update_id}",
                             json=apto_up_data,
                         )
                         show_response_message(put_response)
@@ -207,7 +207,7 @@ else:
         delete_id = st.text_input(label="ID Apartamento", value=None, key=2400)
         delete_id = apto_input(delete_id)
         if delete_id:
-            show_delete_response = requests.get(APTO_URL + delete_id)
+            show_delete_response = requests.get(f"{APTO_URL}{delete_id}")
             if show_delete_response.status_code == 200:
                 apto_delete = show_delete_response.json()
                 df_delete = pd.DataFrame([apto_delete])
@@ -215,7 +215,7 @@ else:
                 delete_confirm = st.checkbox("Confirma que deseja deletar o registro?")
                 delete_button = st.button("Deletar", disabled=(not delete_confirm))
                 if delete_button:
-                    delete_response = requests.delete(APTO_URL + delete_id)
+                    delete_response = requests.delete(f"{APTO_URL}{delete_id}")
                     show_response_message(delete_response)
             else:
                 show_response_message(show_delete_response)

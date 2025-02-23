@@ -1,10 +1,10 @@
-from Home import PROP_URL
 import pandas as pd
 import requests
 import streamlit as st
 from utils.myfunc import show_data_output, show_response_message
 from utils.mynum import cpf_input, tel_input_br
 from utils.mystr import empty_none_dict
+from utils.urls import PROP_URL
 
 st.set_page_config(page_title="Proprietários", layout="wide")
 st.title("Proprietários")
@@ -57,7 +57,7 @@ else:
             "ID Proprietário", min_value=1, value=None, format="%d", step=1, key=5200
         )
         if get_id:
-            get_response = requests.get(PROP_URL + get_id)
+            get_response = requests.get(f"{PROP_URL}{get_id}")
             if get_response.status_code == 200:
                 proprietario = get_response.json()
                 df_get = pd.DataFrame([proprietario])
@@ -75,7 +75,7 @@ else:
             "ID do Proprietário", min_value=1, value=None, step=1, format="%d", key=5300
         )
         if update_id:
-            update_response = requests.get(PROP_URL + update_id)
+            update_response = requests.get(f"{PROP_URL}{update_id}")
             if update_response.status_code == 200:
                 prop_up = update_response.json()
                 df_up = pd.DataFrame([prop_up])
@@ -103,7 +103,7 @@ else:
                     )
                     try:
                         put_response = requests.put(
-                            PROP_URL + update_id, json=prop_up_data
+                            f"{PROP_URL}{update_id}", json=prop_up_data
                         )
                         show_response_message(put_response)
                         if put_response.status_code == 200:
@@ -127,7 +127,7 @@ else:
             key=5400,
         )
         if delete_id:
-            show_delete_response = requests.get(PROP_URL + delete_id)
+            show_delete_response = requests.get(f"{PROP_URL}{delete_id}")
             if show_delete_response.status_code == 200:
                 proprietario_delete = show_delete_response.json()
                 df_delete = pd.DataFrame([proprietario_delete])
@@ -135,7 +135,7 @@ else:
                 delete_confirm = st.checkbox("Confirma que deseja deletar o registro?")
                 delete_button = st.button("Deletar", disabled=(not delete_confirm))
                 if delete_button:
-                    delete_response = requests.delete(PROP_URL + delete_id)
+                    delete_response = requests.delete(f"{PROP_URL}{delete_id}")
                     show_response_message(delete_response)
             else:
                 show_response_message(show_delete_response)

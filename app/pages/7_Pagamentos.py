@@ -1,11 +1,11 @@
 from datetime import date
-from Home import PAG_URL
 import pandas as pd
 import requests
 import streamlit as st
 from utils.mydate import str_to_date
 from utils.myfunc import cat_index, show_data_output, show_response_message
 from utils.mystr import empty_none_dict
+from utils.urls import PAG_URL
 
 st.set_page_config(page_title="Pagamentos", layout="wide")
 st.title("Pagamentos")
@@ -92,7 +92,7 @@ else:
             "ID Pagamento", min_value=1, value=None, format="%d", step=1, key=7200
         )
         if get_id:
-            get_response = requests.get(PAG_URL + get_id)
+            get_response = requests.get(f"{PAG_URL}{get_id}")
             if get_response.status_code == 200:
                 pagamento = get_response.json()
                 df_get = pd.DataFrame([pagamento])
@@ -110,7 +110,7 @@ else:
             "ID do Pagamento", min_value=1, value=None, step=1, format="%d", key=7300
         )
         if update_id:
-            update_response = requests.get(PAG_URL + update_id)
+            update_response = requests.get(f"{PAG_URL}{update_id}")
             if update_response.status_code == 200:
                 pagamento_up = update_response.json()
                 df_up = pd.DataFrame([pagamento_up])
@@ -175,7 +175,7 @@ else:
                     )
                     try:
                         put_response = requests.put(
-                            PAG_URL + update_id,
+                            f"{PAG_URL}{update_id}",
                             json=pagamento_up_data,
                         )
                         show_response_message(put_response)
@@ -195,7 +195,7 @@ else:
             label="ID Pagamento", min_value=1, value=None, format="%d", step=1, key=7400
         )
         if delete_id:
-            show_delete_response = requests.get(PAG_URL + delete_id)
+            show_delete_response = requests.get(f"{PAG_URL}{delete_id}")
             if show_delete_response.status_code == 200:
                 pagamento_delete = show_delete_response.json()
                 df_delete = pd.DataFrame([pagamento_delete])
@@ -203,7 +203,7 @@ else:
                 delete_confirm = st.checkbox("Confirma que deseja deletar o registro?")
                 delete_button = st.button("Deletar", disabled=(not delete_confirm))
                 if delete_button:
-                    delete_response = requests.delete(PAG_URL + delete_id)
+                    delete_response = requests.delete(f"{PAG_URL}{delete_id}")
                     show_response_message(delete_response)
             else:
                 show_response_message(show_delete_response)
