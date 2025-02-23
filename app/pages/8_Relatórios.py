@@ -14,6 +14,7 @@ from utils.mydate import showbr_dfdate
 from utils.myfunc import show_data_output, show_response_message
 from utils.mystr import apto_input
 
+st.set_page_config(page_title="Relatórios", layout="wide")
 st.title("Relatórios")
 
 if not st.session_state["authentication_status"]:

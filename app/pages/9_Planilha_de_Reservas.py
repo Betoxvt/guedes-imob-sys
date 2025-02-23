@@ -8,10 +8,10 @@ from utils.mydate import gen_reserv_table, showbr_dfdate, str_to_date
 from utils.myfunc import show_response_message
 from utils.mystr import apto_input
 
-locale.setlocale(locale.LC_ALL, "pt_BR.UTF-8")
-
 st.set_page_config(page_title="Planilha de Reservas", layout="wide")
 st.title("Planilha de Reservas")
+
+locale.setlocale(locale.LC_ALL, "pt_BR.UTF-8")
 
 if not st.session_state["authentication_status"]:
     st.info("Por favor faça o login na Home page e tente novamente.")

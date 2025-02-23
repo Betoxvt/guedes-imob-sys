@@ -10,10 +10,10 @@ from utils.myfunc import show_data_output, show_response_message
 from utils.mynum import calculate_saldo, calculate_valortotal
 from utils.mystr import apto_input, empty_none, empty_none_dict
 
-locale.setlocale(locale.LC_ALL, "pt_BR.UTF-8")
-
 st.set_page_config(page_title="Aluguéis", layout="wide")
 st.title("Aluguéis")
+
+locale.setlocale(locale.LC_ALL, "pt_BR.UTF-8")
 
 if not st.session_state["authentication_status"]:
     st.info("Por favor faça o login na Home page e tente novamente.")
