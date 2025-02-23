@@ -357,8 +357,8 @@ else:
                 df_delete = pd.DataFrame([aluguel_delete])
                 st.dataframe(df_delete.set_index("id"))
                 delete_confirm = st.checkbox("Confirma que deseja deletar o registro?")
-                delete_button = st.button("Deletar", key=1401)
-                if delete_button and delete_confirm:
+                delete_button = st.button("Deletar", disabled=(not delete_confirm))
+                if delete_button:
                     delete_response = requests.delete(f"{ALUG_URL}{delete_id}")
                     show_response_message(delete_response)
             else:
