@@ -40,7 +40,7 @@ else:
             label="ID Ficha", min_value=1, value=None, format="%d", step=1, key=1101
         )
         if ficha_id:
-            get_ficha = requests.get(FICHA_URL + ficha_id)
+            get_ficha = requests.get(f"{FICHA_URL}{ficha_id}")
             if get_ficha.status_code == 200:
                 ficha_data = get_ficha.json()
                 ficha_name = ficha_data["nome"]
@@ -168,7 +168,7 @@ else:
             chkin = chkin.isoformat()
 
         if get_id:
-            get_response = requests.get(ALUG_URL + get_id)
+            get_response = requests.get(f"{ALUG_URL}{get_id}")
             if get_response.status_code == 200:
                 aluguel = get_response.json()
                 df_alug = pd.DataFrame([aluguel])
@@ -252,7 +252,7 @@ else:
             "ID do Aluguel", min_value=1, value=None, format="%d", key=1300
         )
         if update_id:
-            update_response = requests.get(ALUG_URL + update_id)
+            update_response = requests.get(f"{ALUG_URL}{update_id}")
             if update_response.status_code == 200:
                 aluguel_up = update_response.json()
                 df_up = pd.DataFrame([aluguel_up])
@@ -271,7 +271,7 @@ else:
                     value=df_up.loc[0, "ficha_id"],
                 )
                 if ficha_id:
-                    get_ficha = requests.get(FICHA_URL + ficha_id)
+                    get_ficha = requests.get(f"{FICHA_URL}{ficha_id}")
                     if get_ficha.status_code == 200:
                         ficha_data = get_ficha.json()
                         ficha_name = ficha_data["nome"]
@@ -351,7 +351,7 @@ else:
             label="ID Aluguel", min_value=1, value=None, format="%d", step=1, key=1400
         )
         if delete_id:
-            show_delete_response = requests.get(ALUG_URL + delete_id)
+            show_delete_response = requests.get(f"{ALUG_URL}{delete_id}")
             if show_delete_response.status_code == 200:
                 aluguel_delete = show_delete_response.json()
                 df_delete = pd.DataFrame([aluguel_delete])
@@ -359,7 +359,7 @@ else:
                 delete_confirm = st.checkbox("Confirma que deseja deletar o registro?")
                 delete_button = st.button("Deletar", key=1401)
                 if delete_button and delete_confirm:
-                    delete_response = requests.delete(ALUG_URL + delete_id)
+                    delete_response = requests.delete(f"{ALUG_URL}{delete_id}")
                     show_response_message(delete_response)
                 elif delete_button and not delete_confirm:
                     st.warning("Você deve confirmar primeiro para deletar o registro")

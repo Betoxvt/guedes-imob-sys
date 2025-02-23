@@ -129,7 +129,7 @@ else:
             "ID Garagem", min_value=1, value=None, format="%d", step=1, key=4200
         )
         if get_id:
-            get_response = requests.get(GARAGE_URL + get_id)
+            get_response = requests.get(f"{GARAGE_URL}{get_id}")
             if get_response.status_code == 200:
                 garagem = get_response.json()
                 df_get = pd.DataFrame([garagem])
@@ -147,7 +147,7 @@ else:
             "ID do Garagem", min_value=1, value=None, format="%d", step=1, key=4300
         )
         if update_id:
-            update_response = requests.get(GARAGE_URL + update_id)
+            update_response = requests.get(f"{GARAGE_URL}{update_id}")
             if update_response.status_code == 200:
                 garagem_up = update_response.json()
                 df_up = pd.DataFrame([garagem_up])
@@ -212,7 +212,7 @@ else:
                     }
                     try:
                         put_response = requests.put(
-                            GARAGE_URL + update_id,
+                            f"{GARAGE_URL}{update_id}",
                             json=garagem_up_data,
                         )
                         show_response_message(put_response)
@@ -232,7 +232,7 @@ else:
             label="ID Garagem", min_value=1, value=None, format="%d", key=4400
         )
         if delete_id:
-            show_delete_response = requests.get(GARAGE_URL + delete_id)
+            show_delete_response = requests.get(f"{GARAGE_URL}{delete_id}")
             if show_delete_response.status_code == 200:
                 garagem_delete = show_delete_response.json()
                 df_delete = pd.DataFrame([garagem_delete])
@@ -240,7 +240,7 @@ else:
                 delete_confirm = st.checkbox("Confirma que deseja deletar o registro?")
                 delete_button = st.button("Deletar", key=1401)
                 if delete_button and delete_confirm:
-                    delete_response = requests.delete(GARAGE_URL + delete_id)
+                    delete_response = requests.delete(f"{GARAGE_URL}{delete_id}")
                     show_response_message(delete_response)
                 elif delete_button and not delete_confirm:
                     st.warning("Você deve confirmar primeiro para deletar o registro")

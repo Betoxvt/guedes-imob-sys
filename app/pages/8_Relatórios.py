@@ -39,7 +39,7 @@ else:
             st.text_input(label="Apartamento *", key=8100, value=None)
         )
         if apto_id:
-            apto_response = requests.get(APTO_URL + apto_id)
+            apto_response = requests.get(f"{APTO_URL}{apto_id}")
             if apto_response.status_code == 200:
                 relatorios_response = requests.get(RELAT_URL)
                 if relatorios_response.status_code == 200:
@@ -128,8 +128,8 @@ else:
                             st.warning("Não há despesas")
                     else:
                         show_response_message(despesas_response)
-
-                    alugueis_response = requests.get(ALUG_URL + "?apto_id=" + apto_id)
+                    params = {"apto_id": apto_id}
+                    alugueis_response = requests.get(ALUG_URL, params=params)
                     if alugueis_response.status_code == 200:
                         alugueis = alugueis_response.json()
                         if alugueis:

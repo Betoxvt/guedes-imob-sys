@@ -369,7 +369,7 @@ else:
             key=6200,
         )
         if get_id:
-            get_response = requests.get(FICHA_URL + get_id)
+            get_response = requests.get(f"{FICHA_URL}{get_id}")
             if get_response.status_code == 200:
                 ficha = get_response.json()
                 df_get = pd.DataFrame([ficha])
@@ -409,7 +409,7 @@ else:
             "ID da Ficha", min_value=1, value=None, format="%d", step=1, key=6300
         )
         if update_id:
-            update_response = requests.get(FICHA_URL + update_id)
+            update_response = requests.get(f"{FICHA_URL}{update_id}")
             if update_response.status_code == 200:
                 ficha_up = update_response.json()
                 df_up = pd.DataFrame([ficha_up])
@@ -840,7 +840,7 @@ else:
                     )
                     try:
                         put_response = requests.put(
-                            FICHA_URL + update_id, json=ficha_up_data
+                            f"{FICHA_URL}{update_id}", json=ficha_up_data
                         )
                         show_response_message(put_response)
                         if put_response.status_code == 200:
@@ -860,7 +860,7 @@ else:
             label="ID Ficha", min_value=1, value=None, format="%d", step=1, key=6400
         )
         if delete_id:
-            show_delete_response = requests.get(FICHA_URL + delete_id)
+            show_delete_response = requests.get(f"{FICHA_URL}{delete_id}")
             if show_delete_response.status_code == 200:
                 ficha_delete = show_delete_response.json()
                 df_delete = pd.DataFrame([ficha_delete])
@@ -868,7 +868,7 @@ else:
                 delete_confirm = st.checkbox("Confirma que deseja deletar o registro?")
                 delete_button = st.button("Deletar", key=1401)
                 if delete_button and delete_confirm:
-                    delete_response = requests.delete(FICHA_URL + delete_id)
+                    delete_response = requests.delete(f"{FICHA_URL}{delete_id}")
                     show_response_message(delete_response)
                 elif delete_button and not delete_confirm:
                     st.warning("Você deve confirmar primeiro para deletar o registro")

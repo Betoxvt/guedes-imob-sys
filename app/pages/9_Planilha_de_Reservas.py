@@ -71,9 +71,8 @@ else:
                 index_apto_g = event_g.selection["rows"][0]
                 apto_g = st.session_state.planilha_g.iloc[index_apto_g].name
                 st.markdown(f"##### Apartamento: {apto_g}. Data: {day_g}/{mes}/{ano}")
-                alugueis_g_response = requests.get(
-                    ALUG_URL + "?apto_id=" + apto_g + "&checkin=" + date_g
-                )
+                params_g = {"apto_id": apto_g, "checkin": date_g}
+                alugueis_g_response = requests.get(ALUG_URL, params=params_g)
                 if alugueis_g_response.status_code == 200:
                     alugueis_g = alugueis_g_response.json()
                     df_ag = pd.DataFrame(alugueis_g)
@@ -85,9 +84,8 @@ else:
                         st.markdown(
                             f"#### :blue[Valor total: **{locale.currency(valor_tot_ag)}**]"
                         )
-                        pagamentos_g_response = requests.get(
-                            PAG_URL + "?aluguel_id=" + aluguel_id_ag
-                        )
+                        params_pg = {"aluguel_id": aluguel_id_ag}
+                        pagamentos_g_response = requests.get(PAG_URL, params=params_pg)
                         if pagamentos_g_response.status_code == 200:
                             pagamentos_g = pagamentos_g_response.json()
                             df_pg = pd.DataFrame(pagamentos_g)
@@ -124,9 +122,8 @@ else:
                 index_apto_p = event_p.selection["rows"][0]
                 apto_p = st.session_state.planilha_p.iloc[index_apto_p].name
                 st.markdown(f"##### Apartamento: {apto_p}. Data: {day_p}/{mes}/{ano}")
-                alugueis_p_response = requests.get(
-                    ALUG_URL + "?apto_id=" + apto_p + "&checkin=" + date_p
-                )
+                params_p = {"apto_id": apto_p, "checkin": date_p}
+                alugueis_p_response = requests.get(ALUG_URL, params=params_p)
                 if alugueis_p_response.status_code == 200:
                     alugueis_p = alugueis_p_response.json()
                     df_ap = pd.DataFrame(alugueis_p)
@@ -138,9 +135,8 @@ else:
                         st.markdown(
                             f"#### :blue[Valor total: **{locale.currency(valor_tot_ap)}**]"
                         )
-                        pagamentos_p_response = requests.get(
-                            PAG_URL + "?aluguel_id=" + aluguel_id_ap
-                        )
+                        params_pp = {"aluguel_id": aluguel_id_ap}
+                        pagamentos_p_response = requests.get(PAG_URL, params=params_pp)
                         if pagamentos_p_response.status_code == 200:
                             pagamentos_p = pagamentos_p_response.json()
                             df_pp = pd.DataFrame(pagamentos_p)
